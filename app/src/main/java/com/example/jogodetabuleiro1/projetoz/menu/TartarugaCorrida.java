@@ -181,7 +181,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //5= baixo - esquerda
 //6= cima - direita
 //7=cima - esquerda
-
+//8
 
     private int dr = 0;
 
