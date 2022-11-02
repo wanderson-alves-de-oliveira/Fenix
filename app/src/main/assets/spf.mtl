@@ -1,0 +1,13 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Materiais.005
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\smith\\Documents\\APK-2-8-2022-20220806T133250Z-001\\APK-2-8-2022\\Documents\\jogoFenix\\jogo01234\\app\\src\\main\\res\\drawable-v24\\esplosao.png
