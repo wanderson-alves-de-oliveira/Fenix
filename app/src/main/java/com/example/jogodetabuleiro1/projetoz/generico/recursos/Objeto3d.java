@@ -68,6 +68,7 @@ public class Objeto3d implements Serializable {
     private Vetor3 tamanho = new Vetor3(0, 0, 0);
     private String tipo="";
     private String nome;
+    private int dr = 0;
 
     private int quadrosDeanimacao;
     private Vetor3 giroPosition = new Vetor3(0, 0, 0);
@@ -172,6 +173,14 @@ public class Objeto3d implements Serializable {
 
         }
 
+    }
+
+    public int getDr() {
+        return dr;
+    }
+
+    public void setDr(int dr) {
+        this.dr = dr;
     }
 
     public ArrayList<Boolean> isAtirar() {

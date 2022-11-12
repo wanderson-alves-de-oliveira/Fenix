@@ -90,7 +90,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private Objeto3d cubo;
     private ArrayList<Objeto3d> inimigosC;
     private ArrayList<Objeto3d> inimigosB;
-    private ArrayList<Objeto3d> inimigosD;
+    private ArrayList<Objeto3d> inimigosX;
     private ArrayList<Objeto3d> inimigosE;
     private ArrayList<Objeto3d> boss;
 
@@ -142,6 +142,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int modo = 0;
     private int modoE = 2;
     private int modoB = 0;
+    private int modoX = 0;
+
     private int modoBoss = 0;
 
     private Animaisx animal;
@@ -156,6 +158,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int timeModoC = 0;
     private int timeModoE = 0;
     private int timeModoB = 0;
+    private int timeModoX = 0;
+
     private int timeModoBoss = 0;
 
     private int quantidadeDeElementos = 3;
@@ -170,8 +174,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private boolean colidiu = false;
 
 
-    private int[] direcaoX = {0, 7, 2, 0, 6, 3, 0, 5, 4, 6, 7, 6, 3, 1};
+    private int[] direcaoX = {-1,2,3,3,2,0};
 
+    private int[] direcaoX2 = {0,2,3,3,2,0};
 
 //0=baixo
 //1=cima
@@ -186,7 +191,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int dr = 0;
 
 
-    private final float velocidade = 0.006f;
+    private final float velocidade = 0.012f;
     private final float velocidadeinimigo1 = 0.2f;
     private final float velocidadeTiro = 0.6f;
     private final float velocit = 0.6f;
@@ -483,7 +488,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 break;
             case 6:
                 inimigosA = new ArrayList<>();
-                inimigosD = new ArrayList<>();
+                inimigosX = new ArrayList<>();
                 inimigosC = new ArrayList<>();
                 asteroide = new ArrayList<>();
                 inimigosE = new ArrayList<>();
@@ -530,20 +535,20 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         inimigosB.add(new Objeto3d(asset, "inimigo.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigo), new Vetor3(escala * 5f, escala * 5f, escala * 5f)));
                         inimigosA.add(new Objeto3d(asset, "based.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.based), new Vetor3(escala * 5f, escala * 5f, escala * 5f)));
-                        inimigosD.add(new Objeto3d(asset, "inimigod.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigod), new Vetor3(escala * 5f, escala * 5f, escala * 5f)));
+                        inimigosX.add(new Objeto3d(asset, "inimigox.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigox), new Vetor3(escala * 5f, escala * 5f, escala * 5f)));
 
                         asteroide.add(new Objeto3d(asset, "asteroid.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.asteroide), new Vetor3(escala * 5f, escala * 5f, escala * 5f)));
 
 
                     }
 
-                    inimigosD.get(p).loadGLTexture(false);
-                    inimigosD.get(p).setValor(String.valueOf(v));
-                    inimigosD.get(p).setVida(65f);
-                    inimigosD.get(p).setRecoverVida(65f);
-                    inimigosD.get(p).setSplosaoArrayNave(inimigosD.get(p).splosao(inimigosD.get(p), asset, context, 1f));
-                    inimigosD.get(p).setTiroNave(inimigosD.get(p).criarTiros(inimigosD.get(p), 1, asset, "tiroz.obj", R.drawable.tirox, context));
-                    inimigosD.get(p).setRefletir(true);
+                    inimigosX.get(p).loadGLTexture(false);
+                    inimigosX.get(p).setValor(String.valueOf(v));
+                    inimigosX.get(p).setVida(65f);
+                    inimigosX.get(p).setRecoverVida(65f);
+                    inimigosX.get(p).setSplosaoArrayNave(inimigosX.get(p).splosao(inimigosX.get(p), asset, context, 1f));
+                    inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), 1, asset, "tiroz.obj", R.drawable.tirox, context));
+                    inimigosX.get(p).setRefletir(true);
 
                     asteroide.get(p).loadGLTexture(false);
                     asteroide.get(p).setValor(String.valueOf(v));
@@ -590,13 +595,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         distancia + 0.06f, -69));
 
 
-                inimigosD.get(0).setPosition(new Vetor3(0.5f,
+                inimigosX.get(0).setPosition(new Vetor3(0.5f,
                         distancia + 0.03f, -65));
 
-                inimigosD.get(1).setPosition(new Vetor3(0.0f,
+                inimigosX.get(1).setPosition(new Vetor3(0.0f,
                         distancia + 0.03f, -67));
 
-                inimigosD.get(2).setPosition(new Vetor3(-0.5f,
+                inimigosX.get(2).setPosition(new Vetor3(-0.5f,
                         distancia + 0.03f, -69));
 
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.zero);
@@ -645,7 +650,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 boss.get(0).loadGLTexture(false);
                 boss.get(0).setSplosaoArrayNave(boss.get(0).splosao(boss.get(0), asset, context, 0.8f));
                 boss.get(0).setValor(String.valueOf("A"));
-                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0), 30, asset, "tiroz.obj", R.drawable.tiroc, context));
+                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0), 40, asset, "tiroc.obj", R.drawable.tiroc, context));
                 boss.get(0).setVida(150f);
                 boss.get(0).setRecoverVida(150f);
                 boss.get(0).setBoss(true);
@@ -728,7 +733,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     public void carregarCronologia(){
 
-
+         this.time = 0;
+        this.timeModoC = 0;
+        this.timeModoE = 0;
+        this.timeModoB = 0;
+        this.timeModoBoss = 0;
         cronograma = new ArrayList<>();
         Cronograma c = new Cronograma();
         c.setId(2);
@@ -739,10 +748,20 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setModo(0);
         cronograma.add(c);
 
+
+        c = new Cronograma();
+        c.setId(3);
+        c.setPerpetuo(false);
+        c.setTimeIN(100);
+        c.setTimeOUT(40000);
+        c.setTimeMode(1000);
+        c.setModo(1);
+        cronograma.add(c);
+
         c = new Cronograma();
         c.setId(5);
         c.setPerpetuo(true);
-        c.setTimeIN(200);
+        c.setTimeIN(100);
         c.setTimeOUT(4000);
         c.setTimeMode(1000);
         c.setModo(1);
@@ -752,17 +771,28 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setId(1);
         c.setPerpetuo(false);
         c.setTimeIN(400);
-        c.setTimeOUT(1400);
-        c.setTimeMode(2000);
+        c.setTimeOUT(1100);
+        c.setTimeMode(700);
         c.setModo(0);
         cronograma.add(c);
+
+
+        c = new Cronograma();
+        c.setId(1);
+        c.setPerpetuo(false);
+        c.setTimeIN(1200);
+        c.setTimeOUT(6700);
+        c.setTimeMode(1100);
+        c.setModo(2);
+        cronograma.add(c);
+
 
         c = new Cronograma();
         c.setId(1);
         c.setPerpetuo(false);
         c.setTimeIN(2400);
-        c.setTimeOUT(3400);
-        c.setTimeMode(2000);
+        c.setTimeOUT(3100);
+        c.setTimeMode(700);
         c.setModo(1);
         cronograma.add(c);
 
@@ -770,8 +800,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setId(1);
         c.setPerpetuo(false);
         c.setTimeIN(4400);
-        c.setTimeOUT(5400);
-        c.setTimeMode(2000);
+        c.setTimeOUT(5100);
+        c.setTimeMode(700);
         c.setModo(2);
         cronograma.add(c);
 
@@ -806,7 +836,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setPerpetuo(false);
         c.setTimeIN(7000);
         c.setTimeMode(1000);
-        c.setTimeOUT(8000);
+        c.setTimeOUT(8700);
         c.setModo(0);
         cronograma.add(c);
 
@@ -814,8 +844,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setId(1);
         c.setPerpetuo(false);
         c.setTimeIN(7000);
-        c.setTimeMode(800);
-        c.setTimeOUT(8000);
+        c.setTimeMode(700);
+        c.setTimeOUT(7700);
         c.setModo(0);
         cronograma.add(c);
 
@@ -825,24 +855,24 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         c.setPerpetuo(true);
         c.setTimeIN(7000);
         c.setTimeMode(1000);
-        c.setTimeOUT(10000);
+        c.setTimeOUT(8000);
         c.setModo(0);
         cronograma.add(c);
 
         c = new Cronograma();
         c.setId(5);
         c.setPerpetuo(true);
-        c.setTimeIN(8000);
-        c.setTimeOUT(10000);
+        c.setTimeIN(8800);
+        c.setTimeOUT(9000);
         c.setTimeMode(1000);
-        c.setModo(1);
+        c.setModo(2);
         cronograma.add(c);
 
 
         c = new Cronograma();
         c.setId(0);
         c.setPerpetuo(true);
-        c.setTimeIN(10000);
+        c.setTimeIN(9000);
         c.setTimeOUT(25000);
         c.setTimeMode(100);
         c.setModo(0);
@@ -1048,7 +1078,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 obj.setEsplodirNave(false);
                 obj.setTimeEsplosaoNave(0);
                 obj.setEsplosaoNaveId(0);
-                obj.getPosition().setZ(-65);
+                obj.getPosition().setZ(-1000);
                 obj.getPosition().setX(obj.getPosition().x);
                 obj.setVida(obj.getRecoverVida());
                 obj.setGiro((float) (0));
@@ -1058,10 +1088,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 obj.setTipo("N");
                 for (int i = 0; i < tiros.size(); i++) {
-                    tiros.get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -100));
+                    tiros.get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -1000));
                 }
                 for (int i = 0; i < obj.getSplosaoArrayNave().size(); i++) {
-                    obj.getSplosaoArrayNave().get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -100));
+                    obj.getSplosaoArrayNave().get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -1000));
 
 
                 }
@@ -1074,7 +1104,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         if (obj.isBoss()) {
             horaDoBoss = false;
             ativarBoss[boss.indexOf(obj)] = false;
-            timeLine=0;
+            boss.get(boss.indexOf(obj)).setVida(boss.get(boss.indexOf(obj)).getRecoverVida());
+            boss.get(boss.indexOf(obj)).setEsplodirNave(false);
+                timeLine=0;
             carregarCronologia();
 
         }
@@ -1282,12 +1314,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         break;
                     case 1:
                         objeto3ds = inimigosB;
+
                         break;
                     case 2:
                         objeto3ds = inimigosC;
                         break;
                     case 3:
-                        objeto3ds = inimigosD;
+                        objeto3ds = inimigosX;
                         break;
                     case 4:
                         objeto3ds = asteroide;
@@ -1340,6 +1373,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                 break;
                             case 2:
                                 modo = c.getModo();
+                                break;
+                            case 3:
+                                modoX = c.getModo();
                                 break;
                             case 5:
                                 modoE = c.getModo();
@@ -1397,8 +1433,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         esplodirNave(inimigosA.get(p));
 
 
-                    if (inimigosD.get(p).getVida() <= 0)
-                        esplodirNave(inimigosD.get(p));
+                    if (inimigosX.get(p).getVida() <= 0)
+                        esplodirNave(inimigosX.get(p));
 
 
                     if (inimigosB.get(p).getVida() <= 0)
@@ -1410,21 +1446,21 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     calculoarColisaoI(inimigosB.get(p), Fenix);
                     calculoarColisaoI(inimigosA.get(p), Fenix);
-                    calculoarColisaoI(inimigosD.get(p), Fenix);
+                    calculoarColisaoI(inimigosX.get(p), Fenix);
                     calculoarColisaoI(asteroide.get(p), Fenix);
 
 
                     for (Objeto3d pp : tiros) {
                         calculoarColisaoI(inimigosA.get(p), pp);
                         calculoarColisaoI(inimigosB.get(p), pp);
-                        calculoarColisaoI(inimigosD.get(p), pp);
+                        calculoarColisaoI(inimigosX.get(p), pp);
                         calculoarColisaoI(asteroide.get(p), pp);
 
                     }
                     for (Objeto3d pp : inimigosB.get(p).getTiroNave()) {
                         calculoarColisaoI(pp, Fenix);
                     }
-                    for (Objeto3d pp : inimigosD.get(p).getTiroNave()) {
+                    for (Objeto3d pp : inimigosX.get(p).getTiroNave()) {
                         calculoarColisaoI(pp, Fenix);
                     }
 
@@ -1465,7 +1501,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
                     }
-                    moverInimigoD(0, 0, giroybolhas, p);
+                    moverInimigoX(modoX, timeModoX, giroybolhas, p);
                     moverInimigoB(modoB, timeModoB, giroybolhas, p);
                     moverInimigoA(0, 0, giroybolhas, p);
                     moverAsteroide(0, 0, giroybolhas, p);
@@ -1507,54 +1543,64 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     this.modoBoss = direcaoX[this.dr];
 
                 }
-                time = 0;
-                return;
+                 return;
 
             }
 
-            pp.setGiro(0);
+     //       pp.setGiro(0);
             for (Objeto3d ppp : pp.getTiroNave()) {
                 calculoarColisaoI(ppp, Fenix);
             }
             if (true) {
                 pp.atirando(Fenix, velocidade * 2, true);
-                switch (this.modoBoss) {
-                    case 0:
-                        pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z + velocidade));
-
-                        break;
-                    case 1:
-                        pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z - velocidade));
-
-                        break;
-                    case 2:
-                        pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z));
-
-                        break;
-                    case 3:
-                        pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z));
-
-                        break;
-                    case 4:
-                        pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z + velocidade));
-
-                        break;
-                    case 5:
-                        pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z + velocidade));
-
-                        break;
-                    case 6:
-                        pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z - velocidade));
-
-                        break;
-                    case 7:
-                        pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z - velocidade));
-
-                        break;
-                }
+                moverObjFixoPadrao(pp,modoBoss,'z',1f,90);
 
             }
             timeModoBoss++;
+        }
+
+    }
+
+    private void moverObjFixoPadrao(Objeto3d pp, int modo,char dir,float velocidadeG,int limit) {
+
+        switch (modo) {
+            case 0:
+                pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z + velocidade));
+
+                break;
+            case 1:
+                pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z - velocidade));
+
+                break;
+            case 2:
+                pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z));
+                girarOBJ(pp,(limit)*-1,dir,velocidadeG);
+                break;
+            case 3:
+                pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z));
+                girarOBJ(pp,limit,dir,velocidadeG);
+
+                break;
+            case 4:
+                pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z + velocidade));
+                girarOBJ(pp,(limit)*-1,dir,velocidadeG);
+
+                break;
+            case 5:
+                pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z + velocidade));
+                girarOBJ(pp,limit,dir,velocidadeG);
+
+                break;
+            case 6:
+                pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z - velocidade));
+                girarOBJ(pp,(limit)*-1,dir,velocidadeG);
+
+                break;
+            case 7:
+                pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z - velocidade));
+                girarOBJ(pp,limit,dir,velocidadeG);
+
+                break;
         }
 
     }
@@ -1602,6 +1648,44 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 
 
+    private void girarOBJ(Objeto3d obj,int giro,char dir,float velocidadeG) {
+       if(giro!=1000 && giro!=-1000) {
+
+           if (giro > 0 && obj.getGiro() <= giro) {
+               obj.setGiro(obj.getGiro() + velocidadeG);
+           } else if (giro < 0 && obj.getGiro() >= giro) {
+               obj.setGiro(obj.getGiro() - velocidadeG);
+
+           }
+       }else {
+           if (giro > 0  ) {
+               obj.setGiro(obj.getGiro() + velocidadeG);
+           } else if (giro < 0  ) {
+               obj.setGiro(obj.getGiro() - velocidadeG);
+
+           }
+       }
+
+        switch (dir){
+            case 'z':
+                obj.setGiroPosition(new Vetor3(0,0,obj.getGiro()));
+                break;
+            case 'x':
+                obj.setGiroPosition(new Vetor3(obj.getGiro(),0,0));
+                break;
+            case 'y':
+                obj.setGiroPosition(new Vetor3(0,obj.getGiro(),0));
+                break;
+
+        }
+
+
+
+    }
+
+
+
+
     public void moverInimigoB(int modo, int time, float giroybolhas, int p) {
         if (vaiPraCena[1]) {
 
@@ -1628,9 +1712,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         inimigosB.get(2).setPosition(new Vetor3(0.0f,
                                 distancia, -64));
-                        inimigosB.get(0).setTipo("B0");
-                        inimigosB.get(1).setTipo("B0");
-                        inimigosB.get(2).setTipo("B0");
+                        for (int i = 0; i < inimigosB.size(); i++) {
+                            inimigosB.get(i).setTipo("B0");
+                            inimigosB.get(i).setGiro(0);
+                            inimigosB.get(i).setGiroPosition(new Vetor3(0, inimigosB.get(i).getGiro(), 0));
+
+                        }
                         break;
                     case 1:
                         inimigosB.get(0).setPosition(new Vetor3(-1f,
@@ -1677,13 +1764,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     if (inimigosB.get(p).getPosition().z > -58 && p == inimigosB.size() - 1) {
                         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -64));
+                                distancia, -1000));
                         proximoInimigo(1);
                     }
                     break;
@@ -1693,13 +1780,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     if ((inimigosB.get(p).getPosition().z > -58 || inimigosB.get(p).getPosition().x > 1) && p == inimigosB.size() - 1) {
                         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -64));
+                                distancia, -1000));
                         proximoInimigo(1);
                     }
                     break;
@@ -1709,13 +1796,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     if ((inimigosB.get(p).getPosition().z > -58 || inimigosB.get(p).getPosition().x < -1) && p == inimigosB.size() - 1) {
                         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -65));
+                                distancia, -1000));
 
                         inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -64));
+                                distancia, -1000));
                         proximoInimigo(1);
                     }
                     break;
@@ -1728,15 +1815,70 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 
 
-    public void moverInimigoD(int modoB, int timeB, float giroybolhas, int p) {
-        if (vaiPraCena[3] && p < inimigosD.size()) {
-            inimigosD.get(p).setGiro(giroybolhas);
-            inimigosD.get(p).setPosition(new Vetor3(inimigosD.get(p).getPosition().x, inimigosD.get(p).getPosition().getY(), inimigosD.get(p).getPosition().z + (velocidade * 0.65f)));
-            inimigosD.get(p).atirando(Fenix, velocidade * 3, false);
+    public void moverInimigoX(int modo, int time, float giroybolhas, int p) {
+        if (vaiPraCena[3] && p < inimigosX.size()) {
+            if (time == 0) {
+                switch (modo) {
 
-            if (inimigosD.get(p).getPosition().z > -58) {
+                    case 0 :
 
-                inimigosD.get(p).setPosition(new Vetor3(inimigosD.get(p).getPosition().x,
+
+                        inimigosX.get(0).setPosition(new Vetor3(0.5f,
+                                distancia + 0.03f, -65));
+
+                        inimigosX.get(1).setPosition(new Vetor3(0.0f,
+                                distancia + 0.03f, -67));
+
+                        inimigosX.get(2).setPosition(new Vetor3(-0.5f,
+                                distancia + 0.03f, -69));
+                             break;
+
+                    case 1 :
+
+                        inimigosX.get(0).setPosition(new Vetor3(0.5f,
+                                distancia + 0.03f, -64));
+
+                        inimigosX.get(1).setPosition(new Vetor3(0.0f,
+                                distancia + 0.03f, -64));
+
+                        inimigosX.get(2).setPosition(new Vetor3(-0.5f,
+                                distancia + 0.03f, -64));
+                        break;
+                }
+
+            }
+            switch (modo){
+
+                case 0 :
+                    inimigosX.get(p).setGiro(giroybolhas);
+                    inimigosX.get(p).setPosition(new Vetor3(inimigosX.get(p).getPosition().x, inimigosX.get(p).getPosition().getY(), inimigosX.get(p).getPosition().z + (velocidade * 0.65f)));
+                    inimigosX.get(p).atirando(Fenix, velocidade * 3, false);
+                break;
+
+                case 1 :
+                    if (time >= 100) {
+
+                        timeModoX = 0;
+                        if (inimigosX.get(p).getDr() < direcaoX2.length-1) {
+                            inimigosX.get(p).setDr(inimigosX.get(p).getDr()+1);
+                         } else {
+                            inimigosX.get(p).setDr(0);
+
+                        }
+                         return;
+
+                    }
+                    timeModoX++;
+
+                    moverObjFixoPadrao( inimigosX.get(p),direcaoX2[inimigosX.get(p).getDr()],'y',15f,1000);
+                    break;
+
+
+            }
+
+            if (inimigosX.get(p).getPosition().z > -58) {
+
+                inimigosX.get(p).setPosition(new Vetor3(inimigosX.get(p).getPosition().x,
                         distancia + 0.03f, -65));
 
 
@@ -2337,23 +2479,23 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                 }
 
                             }
-                            if (inimigosD.get(p).getPassou().equals("N") && inimigosD.get(p).isTroca() == false) {
-                                if (!inimigosD.get(p).isEsplodirNave()) {
-                                    inimigosD.get(p).draw((GL11) gl2);
+                            if (inimigosX.get(p).getPassou().equals("N") && inimigosX.get(p).isTroca() == false) {
+                                if (!inimigosX.get(p).isEsplodirNave()) {
+                                    inimigosX.get(p).draw((GL11) gl2);
 
-                                    for (int pp = 0; pp < inimigosD.get(p).getTiroNave().size(); pp++) {
-                                        inimigosD.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                        inimigosD.get(p).getTiroNave().get(pp).setImpacto(false);
+                                    for (int pp = 0; pp < inimigosX.get(p).getTiroNave().size(); pp++) {
+                                        inimigosX.get(p).getTiroNave().get(pp).draw((GL11) gl2);
+                                        inimigosX.get(p).getTiroNave().get(pp).setImpacto(false);
                                     }
 
                                 } else {
-                                    if (inimigosD.get(p).getEsplosaoNaveId() < inimigosD.get(p).getSplosaoArrayNave().size()) {
-                                        inimigosD.get(p).getSplosaoArrayNave().get(inimigosD.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                        inimigosD.get(p).getSplosaoArrayNave().get(inimigosD.get(p).getEsplosaoNaveId()).setImpacto(false);
+                                    if (inimigosX.get(p).getEsplosaoNaveId() < inimigosX.get(p).getSplosaoArrayNave().size()) {
+                                        inimigosX.get(p).getSplosaoArrayNave().get(inimigosX.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
+                                        inimigosX.get(p).getSplosaoArrayNave().get(inimigosX.get(p).getEsplosaoNaveId()).setImpacto(false);
                                     }
-                                    for (int pp = 0; pp < inimigosD.get(p).getTiroNave().size(); pp++) {
-                                        inimigosD.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                        inimigosD.get(p).getTiroNave().get(pp).setImpacto(false);
+                                    for (int pp = 0; pp < inimigosX.get(p).getTiroNave().size(); pp++) {
+                                        inimigosX.get(p).getTiroNave().get(pp).draw((GL11) gl2);
+                                        inimigosX.get(p).getTiroNave().get(pp).setImpacto(false);
                                     }
                                 }
 
@@ -2375,7 +2517,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                             inimigosA.get(p).setImpacto(false);
                             inimigosB.get(p).setImpacto(false);
-                            inimigosD.get(p).setImpacto(false);
+                            inimigosX.get(p).setImpacto(false);
                             asteroide.get(p).setImpacto(false);
 
                         }
