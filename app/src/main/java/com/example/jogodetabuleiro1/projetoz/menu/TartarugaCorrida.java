@@ -178,6 +178,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private int[] direcaoX2 = {0,2,3,3,2,0};
 
+
 //0=baixo
 //1=cima
 //2=direita
