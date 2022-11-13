@@ -14,6 +14,7 @@ public class Cronograma {
     private String sinal="=";
     private boolean emMovimento=false;
     private boolean avaliar=false;
+    private boolean ativo=true;
 
     private   ArrayList<Objeto3d> obj;
 
@@ -26,6 +27,14 @@ public class Cronograma {
     }
 
     public Cronograma() {
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public boolean isAvaliar() {
