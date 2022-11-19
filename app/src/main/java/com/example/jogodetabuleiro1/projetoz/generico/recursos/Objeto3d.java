@@ -1,14 +1,13 @@
 package com.example.jogodetabuleiro1.projetoz.generico.recursos;
 
-import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES30;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-import com.example.jogodetabuleiro1.R;
 import com.example.jogodetabuleiro1.projetoz.generico.pegarGrauDeLocalizacao;
 
 import java.io.IOException;
@@ -40,8 +39,8 @@ public class Objeto3d implements Serializable {
     private int timeEsplosaoNave = 0;
     private int esplosaoNaveId = 0;
     private boolean refletir=false;
+    private int indice = -1;
 
-    private ArrayList<Objeto3d> splosaoArrayNave;
     private ArrayList<Objeto3d> tiroNave;
     private ArrayList<Integer> tiroTime ;
     private ArrayList<Boolean> atirar ;
@@ -67,8 +66,9 @@ public class Objeto3d implements Serializable {
     private Vetor3 position = new Vetor3(0, 0, 0);
     private Vetor3 tamanho = new Vetor3(0, 0, 0);
     private String tipo="";
-    private String nome;
+    private String nome="";
     private int dr = 0;
+    private int id=-1;
 
     private int quadrosDeanimacao;
     private Vetor3 giroPosition = new Vetor3(0, 0, 0);
@@ -157,7 +157,13 @@ public class Objeto3d implements Serializable {
     public void setRefletir(boolean refletir) {
         this.refletir = refletir;
     }
+    public int getIndice() {
+        return indice;
+    }
 
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
     public void setCalculosDeImpacto() {
         calculosDeImpacto = new ArrayList<>();
         for (int i = 0; i < verticeBuffer[0].capacity() - 3; i += 3) {
@@ -174,7 +180,21 @@ public class Objeto3d implements Serializable {
         }
 
     }
+    public String getNome() {
+        return nome;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getDr() {
         return dr;
     }
@@ -237,13 +257,7 @@ public class Objeto3d implements Serializable {
         this.esplosaoNaveId = esplosaoNaveId;
     }
 
-    public ArrayList<Objeto3d> getSplosaoArrayNave() {
-        return splosaoArrayNave;
-    }
 
-    public void setSplosaoArrayNave(ArrayList<Objeto3d> splosaoArrayNave) {
-        this.splosaoArrayNave = splosaoArrayNave;
-    }
 
     public ArrayList<Objeto3d> getTiroNave() {
         return tiroNave;
@@ -540,54 +554,7 @@ for(FloatBuffer vrt : verticeBuffer)
 
 
 
-    public  ArrayList<Objeto3d> splosao(Objeto3d obj,AssetManager asset, Context context,float xx) throws IOException {
-        ///CARREGA OS ARQUIS 3D DO ALFABETO
-        ArrayList<Objeto3d> splosaoArray;
-
-        splosaoArray = new ArrayList<>();
-        float x=obj.getTamanho().getX();
-        float y=obj.getTamanho().getY();
-        float z=obj.getTamanho().getZ();
-        splosaoArray.add(new Objeto3d(asset, "sp.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(0).setTransparente(true);
-        splosaoArray.get(0).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spa.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(1).setTransparente(true);
-        splosaoArray.get(1).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spb.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(2).setTransparente(true);
-        splosaoArray.get(2).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spc.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(3).setTransparente(true);
-        splosaoArray.get(3).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spd.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(4).setTransparente(true);
-        splosaoArray.get(4).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spe.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(5).setTransparente(true);
-        splosaoArray.get(5).loadGLTexture(false);
-
-        splosaoArray.add(new Objeto3d(asset, "spf.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x,y,z)));
-        splosaoArray.get(6).setTransparente(true);
-
-        splosaoArray.get(6).loadGLTexture(false);
-        for (int p = 0; p < splosaoArray.size(); p++) {
-            splosaoArray.get(p).setMudarTamanho(true);
-            splosaoArray.get(p).vezes(xx);
-            splosaoArray.get(p).setTransparente(true);
-            splosaoArray.get(p).setRefletir(true);
-        }
-        return  splosaoArray;
-    }
-
-
-
-    public  ArrayList<Objeto3d> criarTiros(Objeto3d obj,int qtd,AssetManager asset,String objFile,int texturaObj, Context context) throws IOException {
+    public  ArrayList<Objeto3d> criarTiros(Objeto3d obj,int qtd,AssetManager asset,String objFile,int texturaObj, Resources res) throws IOException {
         ///CARREGA OS ARQUIS 3D DO ALFABETO
         ArrayList<Objeto3d> tiroArray;
 
@@ -599,7 +566,7 @@ for(FloatBuffer vrt : verticeBuffer)
         float z=obj.getTamanho().getZ();
         for(int t=0;t<qtd;t++) {
 
-            tiroArray.add(new Objeto3d(asset, objFile, BitmapFactory.decodeResource(context.getResources(), texturaObj), new Vetor3(x, y, z)));
+            tiroArray.add(new Objeto3d(asset, objFile, BitmapFactory.decodeResource(res, texturaObj), new Vetor3(x, y, z)));
             // tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
             tiroArray.get(t).loadGLTexture(false);

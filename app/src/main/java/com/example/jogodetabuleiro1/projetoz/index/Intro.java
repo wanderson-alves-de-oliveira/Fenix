@@ -39,13 +39,11 @@ public class Intro extends View implements Runnable {
      public Bitmap wjm = BitmapFactory.decodeResource( this.getResources(), R.drawable.wjm);
     public Bitmap fundo = BitmapFactory.decodeResource( this.getResources(), R.drawable.barconoe);
     public Bitmap bt = BitmapFactory.decodeResource( this.getResources(), R.drawable.btp);
-    public Bitmap aprender = BitmapFactory.decodeResource( this.getResources(), R.drawable.aprender);
 
     public void config() {
         this.wjm = Bitmap.createScaledBitmap( wjm, this.w / 100 * 80, this.h / 100 * 20,false);
         this.fundo = Bitmap.createScaledBitmap( fundo, this.w , this.h ,false);
         this.bt = Bitmap.createScaledBitmap( bt, this.w / 100 * 80, this.h / 100 * 20,false);
-        this.aprender = Bitmap.createScaledBitmap( aprender, this.w / 100 * 100, this.h / 100 * 40,false);
 
     }
 
@@ -114,7 +112,6 @@ public class Intro extends View implements Runnable {
 
             c.drawBitmap( this.fundo,0, 0, this.p );
             c.drawBitmap( this.bt, this.w * 0.10f, this.h * 0.80f, this.p );
-            c.drawBitmap( this.aprender, this.h * 0.02f, this.h * 0.03f, this.p );
 
 
 
