@@ -32,18 +32,17 @@ public class Intro extends View implements Runnable {
     private final Context contexto;
     //private MediaPlayer mm;
     private int valor = 7;
+    private int time = 0;
     private String num = "1";
     DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     int h = this.displayMetrics.heightPixels;
     int w = this.displayMetrics.widthPixels;
      public Bitmap wjm = BitmapFactory.decodeResource( this.getResources(), R.drawable.wjm);
     public Bitmap fundo = BitmapFactory.decodeResource( this.getResources(), R.drawable.barconoe);
-    public Bitmap bt = BitmapFactory.decodeResource( this.getResources(), R.drawable.btp);
 
     public void config() {
         this.wjm = Bitmap.createScaledBitmap( wjm, this.w / 100 * 80, this.h / 100 * 20,false);
         this.fundo = Bitmap.createScaledBitmap( fundo, this.w , this.h ,false);
-        this.bt = Bitmap.createScaledBitmap( bt, this.w / 100 * 80, this.h / 100 * 20,false);
 
     }
 
@@ -69,6 +68,8 @@ public class Intro extends View implements Runnable {
             try {
 
                 Thread.sleep(10);
+
+
             } catch (Exception e) {
 
                 Log.e("Erro",e.getMessage());
@@ -80,6 +81,21 @@ public class Intro extends View implements Runnable {
     }
 
     private void atualizar() {
+        if(time==100){
+            time=1000;
+            Bundle param = new Bundle();
+            param.putInt("nivel", this.valor );
+            param.putBoolean("inico",true);
+
+            Intent intent = new Intent( this.contexto.getApplicationContext(),Tartaruga.class);
+            intent.putExtras(param);
+
+            this.contexto.startActivities(new Intent[]{intent});
+
+        }
+        if(time<100){
+            time++;
+        }
 
         this.postInvalidate();
     }
@@ -111,7 +127,6 @@ public class Intro extends View implements Runnable {
         else {
 
             c.drawBitmap( this.fundo,0, 0, this.p );
-            c.drawBitmap( this.bt, this.w * 0.10f, this.h * 0.80f, this.p );
 
 
 
@@ -127,20 +142,20 @@ public class Intro extends View implements Runnable {
     public boolean onTouchEvent(MotionEvent e) {
 
 
-        if (e.getX() >  0 && e.getY() > this.h * 0.70 ) {
-
-
-            Bundle param = new Bundle();
-            param.putInt("nivel", this.valor );
-            param.putBoolean("inico",true);
-
-            Intent intent = new Intent( this.contexto.getApplicationContext(),Tartaruga.class);
-            intent.putExtras(param);
-
-            this.contexto.startActivities(new Intent[]{intent});
-
-
-        }
+//        if (e.getX() >  0 && e.getY() > this.h * 0.70 ) {
+//
+//
+//            Bundle param = new Bundle();
+//            param.putInt("nivel", this.valor );
+//            param.putBoolean("inico",true);
+//
+//            Intent intent = new Intent( this.contexto.getApplicationContext(),Tartaruga.class);
+//            intent.putExtras(param);
+//
+//            this.contexto.startActivities(new Intent[]{intent});
+//
+//
+//        }
 
 
         return super.onTouchEvent(e);

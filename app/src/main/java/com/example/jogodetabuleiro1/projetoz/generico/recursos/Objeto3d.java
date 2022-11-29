@@ -35,14 +35,19 @@ public class Objeto3d implements Serializable {
     private static String LOGTAG = "NormalMapping";
     private static String assetDirectory = null;
     private boolean atirando=false;
+    private boolean Fenix=false;
+    private boolean  reset=false;
+    private boolean  disparando=false;
     private boolean esplodirNave = false;
     private int timeEsplosaoNave = 0;
     private int esplosaoNaveId = 0;
     private boolean refletir=false;
+    private int refletirTime=0;
     private int indice = -1;
+    private int direcaoZdoTiro=0;
 
     private ArrayList<Objeto3d> tiroNave;
-    private ArrayList<Integer> tiroTime ;
+    private int[] tiroTime ;
     private ArrayList<Boolean> atirar ;
     private boolean boss=false ;
     private int idTiro = 0;
@@ -67,6 +72,8 @@ public class Objeto3d implements Serializable {
     private Vetor3 tamanho = new Vetor3(0, 0, 0);
     private String tipo="";
     private String nome="";
+    private String nomeRef="";
+
     private int dr = 0;
     private int id=-1;
 
@@ -99,6 +106,22 @@ public class Objeto3d implements Serializable {
     private boolean Transparente = false;
     private boolean mudarTamanho = false;
     private float estoraBolha = 100;
+
+    public boolean isReset() {
+        return reset;
+    }
+
+    public void setReset(boolean reset) {
+        this.reset = reset;
+    }
+
+    public String getNomeRef() {
+        return nomeRef;
+    }
+
+    public void setNomeRef(String nomeRef) {
+        this.nomeRef = nomeRef;
+    }
 
     private boolean pause = false;
 
@@ -146,6 +169,14 @@ public class Objeto3d implements Serializable {
         this.esplodiu = esplodiu;
     }
 
+    public int getDirecaoZdoTiro() {
+        return direcaoZdoTiro;
+    }
+
+    public void setDirecaoZdoTiro(int direcaoZdoTiro) {
+        this.direcaoZdoTiro = direcaoZdoTiro;
+    }
+
     public void setImpacto(boolean impacto) {
         this.impacto = impacto;
     }
@@ -159,6 +190,14 @@ public class Objeto3d implements Serializable {
     }
     public int getIndice() {
         return indice;
+    }
+
+    public boolean isFenix() {
+        return Fenix;
+    }
+
+    public void setFenix(boolean fenix) {
+        Fenix = fenix;
     }
 
     public void setIndice(int indice) {
@@ -211,12 +250,12 @@ public class Objeto3d implements Serializable {
         this.atirar.set(pos,b);
     }
 
-    public ArrayList<Integer> getTiroTime() {
+    public int[] getTiroTime() {
         return tiroTime;
     }
 
     public void setTiroTime(int pos,int i) {
-        this.tiroTime.set(pos,i);
+        this.tiroTime[pos]=i;
     }
 
     public float getVida() {
@@ -313,6 +352,14 @@ public class Objeto3d implements Serializable {
 
     public void setPositionXCorrent(float positionXCorrent) {
         this.positionXCorrent = positionXCorrent;
+    }
+
+    public boolean isDisparando() {
+        return disparando;
+    }
+
+    public void setDisparando(boolean disparando) {
+        this.disparando = disparando;
     }
 
     public int getTime() {
@@ -559,18 +606,18 @@ for(FloatBuffer vrt : verticeBuffer)
         ArrayList<Objeto3d> tiroArray;
 
         tiroArray = new ArrayList<>();
-        tiroTime=new ArrayList<>();
+        tiroTime= new  int[qtd];
         atirar=new ArrayList<>();
         float x=obj.getTamanho().getX();
         float y=obj.getTamanho().getY();
         float z=obj.getTamanho().getZ();
         for(int t=0;t<qtd;t++) {
 
-            tiroArray.add(new Objeto3d(asset, objFile, BitmapFactory.decodeResource(res, texturaObj), new Vetor3(x, y, z)));
+            tiroArray.add(new Objeto3d(asset, objFile, BitmapFactory.decodeResource(res, texturaObj), new Vetor3(x, y, z),""));
             // tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
             tiroArray.get(t).loadGLTexture(false);
-            tiroTime.add(0);
+            tiroTime[t]=0;
             atirar.add(false);
         }
 
@@ -581,21 +628,135 @@ for(FloatBuffer vrt : verticeBuffer)
 
 
 
-    public void atirando(Objeto3d alvo,float velocidade,boolean perseguir){
-        if(getTiroNave().size()>0) {
-            if (time == 80) {
-                setAtirar(idTiro, true);
-                if (idTiro < getTiroNave().size() - 1) {
-                    idTiro++;
-                } else {
-                    idTiro = 0;
-                }
-                time = 0;
-            } else {
-                time++;
-            }
+    public void atirando(Objeto3d alvo,float velocidade,boolean perseguir,int tempoDisparo){
+
+       if(!reset) {
+           if (getTiroNave().size() > 0) {
+               if (time == tempoDisparo) {
+                   setAtirar(idTiro, true);
+                   if (idTiro < getTiroNave().size() - 1) {
+                       idTiro++;
+                   } else {
+                       idTiro = 0;
+                   }
+                   time = 0;
+               } else {
+                   time++;
+               }
+               for (int i = 0; i < getTiroNave().size(); i++) {
+                   if (atirar.get(i) == false) {
+                       getTiroNave().get(i).setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+                       float distanciaZFI = (alvo.getPosition().z - getTiroNave().get(i).getPosition().z) / velocidade;
+                       float distanciaXFI = alvo.getPosition().x - getTiroNave().get(i).getPosition().x;
+                       float veloX = distanciaXFI / distanciaZFI;
+                       if (alvo.getPosition().z < getPosition().z) {
+                           getTiroNave().get(i).setDirecaoZdoTiro(1);
+                       } else {
+                           getTiroNave().get(i).setDirecaoZdoTiro(0);
+
+                       }
+                       if (veloX < 0) {
+
+                           if (veloX < (-1 * velocidade)) {
+                               veloX = (-1 * velocidade);
+                               getTiroNave().get(i).setDirecaoZdoTiro(2);
+                           }
+                       } else {
+                           if (veloX > velocidade) {
+                               veloX = velocidade;
+                               getTiroNave().get(i).setDirecaoZdoTiro(2);
+                           }
+                       }
+                       getTiroNave().get(i).setVelocidadeHorizontal(veloX);
+
+
+                       if (alvo.getPosition().x >= getTiroNave().get(i).getPosition().x) {
+                           getTiroNave().get(i).setPositionXCorrent(1);
+                       } else {
+                           getTiroNave().get(i).setPositionXCorrent(0);
+                       }
+                       if (perseguir) {
+                           pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+                           getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+
+                       }
+                   } else {
+
+                       setTiroTime(i, tiroTime[i] + 1);
+                       float controleX;
+                       if (getTiroNave().get(i).getVelocidadeHorizontal() > 0) {
+                           controleX = getTiroNave().get(i).getVelocidadeHorizontal() > velocidade ? velocidade : 0;
+
+                       } else {
+                           controleX = getTiroNave().get(i).getVelocidadeHorizontal() < (-1 * velocidade) ? 0 : velocidade;
+
+
+                       }
+
+
+                       if (perseguir) {
+
+
+                           if (getTiroNave().get(i).getDirecaoZdoTiro() == 1) {
+                               getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z - velocidade);
+                               getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x - getTiroNave().get(i).getVelocidadeHorizontal());
+
+                           } else if (getTiroNave().get(i).getDirecaoZdoTiro() == 0) {
+                               getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
+                               getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
+
+                           } else {
+                               getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 0.002f);
+                               getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
+
+                           }
+
+
+                       } else {
+                           getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
+
+                       }
+
+                       if (tiroTime[i] == 700) {
+                           setAtirar(i, false);
+                           setTiroTime(i, 0);
+                       }
+
+
+                   }
+
+                   if(getTiroNave().get(i).getPosition().z>-58f || getTiroNave().get(i).getPosition().x>2f || getTiroNave().get(i).getPosition().x<-2f){
+                       disparando=false;
+                   }
+
+               }
+           }
+       }else {
+           for (int i = 0; i < getTiroNave().size(); i++) {
+               getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
+               getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
+               if(getTiroNave().get(i).getPosition().z>-58f || getTiroNave().get(i).getPosition().x>2f || getTiroNave().get(i).getPosition().x<-2f){
+                   disparando=false;
+               }
+           }
+           reset=false;
+       }
+
+
+    }
+
+
+
+
+
+    public void atirandoC(Objeto3d alvo,float velocidade){
+        if(!reset) {
             for (int i = 0; i < getTiroNave().size(); i++) {
-                if (atirar.get(i) == false ) {
+                if (this.atirando) {
+                    setAtirar(i, true);
+                }
+
+                if (atirar.get(i) == false) {
                     getTiroNave().get(i).setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
                     float distanciaZFI = (alvo.getPosition().z - getTiroNave().get(i).getPosition().z) / velocidade;
                     float distanciaXFI = alvo.getPosition().x - getTiroNave().get(i).getPosition().x;
@@ -605,72 +766,40 @@ for(FloatBuffer vrt : verticeBuffer)
                     } else {
                         getTiroNave().get(i).setPositionXCorrent(0);
                     }
-                    if(perseguir) {
-                        pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
-                        getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+                    pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+                    getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
 
-                    }
+
                 } else {
 
-                    setTiroTime(i, tiroTime.get(i) + 1);
+                    setTiroTime(i, tiroTime[i] + 1);
                     getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
-
-                    if(getTiroNave().get(i).getVelocidadeHorizontal()<velocidade) {
-                        if(perseguir)
-                             getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
+                    if (getTiroNave().get(i).getVelocidadeHorizontal() < velocidade) {
+                        getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
                     }
-
-                    if (tiroTime.get(i) == 700) {
+                    if (tiroTime[i] >= 700) {
                         setAtirar(i, false);
                         setTiroTime(i, 0);
                     }
 
 
                 }
+
+                if(getTiroNave().get(i).getPosition().z>-58f || getTiroNave().get(i).getPosition().x>2f || getTiroNave().get(i).getPosition().x<-2f){
+                    disparando=false;
+                }
             }
+
+        }else {
+            for (int i = 0; i < getTiroNave().size(); i++) {
+                getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
+                getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
+                if(getTiroNave().get(i).getPosition().z>-58f || getTiroNave().get(i).getPosition().x>2f || getTiroNave().get(i).getPosition().x<-2f){
+                    disparando=false;
+                }
+            }
+            reset=false;
         }
-    }
-
-
-
-
-
-    public void atirandoC(Objeto3d alvo,float velocidade){
-
-           for (int i = 0; i < getTiroNave().size(); i++) {
-               if(this.atirando) {
-                   setAtirar(i, true);
-               }
-
-               if (atirar.get(i) == false) {
-                   getTiroNave().get(i).setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
-                   float distanciaZFI = (alvo.getPosition().z - getTiroNave().get(i).getPosition().z) / velocidade;
-                   float distanciaXFI = alvo.getPosition().x - getTiroNave().get(i).getPosition().x;
-                   getTiroNave().get(i).setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
-                   if (alvo.getPosition().x >= getTiroNave().get(i).getPosition().x) {
-                       getTiroNave().get(i).setPositionXCorrent(1);
-                   } else {
-                       getTiroNave().get(i).setPositionXCorrent(0);
-                   }
-                   pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
-                   getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
-
-
-               } else {
-
-                   setTiroTime(i, tiroTime.get(i) + 1);
-                   getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
-                   if(getTiroNave().get(i).getVelocidadeHorizontal()<velocidade) {
-                       getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
-                   }
-                   if (tiroTime.get(i) >= 700) {
-                       setAtirar(i, false);
-                       setTiroTime(i, 0);
-                   }
-
-
-               }
-           }
 
     }
 
@@ -808,10 +937,10 @@ for(FloatBuffer vrt : verticeBuffer)
 
     }
 
-    public Objeto3d(AssetManager asset, String obj, Bitmap textura, Vetor3 tamanho) throws IOException {
+    public Objeto3d(AssetManager asset, String obj, Bitmap textura, Vetor3 tamanho,String nomeRef) throws IOException {
         leitorDeObj = new LeitorDeObj( asset, obj );
         quadrosDeanimacao=leitorDeObj.quadrosDeanimacao;
-
+        this.nomeRef=nomeRef;
         this.textura = textura;
         this.tamanho = tamanho;
         if (leitorDeObj.texturaT!=null){
@@ -871,11 +1000,36 @@ for(FloatBuffer vrt : verticeBuffer)
 
 
         if(impacto&&refletir){
-            float posicaoLuz[] = {getPosition().x,getPosition().y,getPosition().z, 1};
-            float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
-          gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-          gl.glLightfv( gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0 );
-          gl.glLightfv( gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0 );
+
+
+
+            if (!isFenix()) {
+                float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z, 1};
+                float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
+                gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0);
+
+
+            }else {
+
+
+                float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z-0.1f, 1};
+                float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
+                gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0);
+
+                refletirTime++;
+                if(refletirTime==10){
+                     impacto=false;
+                    refletirTime=0;
+                }
+
+            }
+
+
+
 
         }else {
             float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente

@@ -81,7 +81,7 @@ public class Animaisx {
         this.imgP = imgP;
     }
 
-    public Animaisx(float x3d, float y3d, float x, float y, int w, int h, String valor, com.example.jogodetabuleiro1.projetoz.generico.recursos.Objeto3d Objeto3d, MediaPlayer son) {
+    public Animaisx(float x3d, float y3d, float x, float y, int w, int h, String valor, com.example.jogodetabuleiro1.projetoz.generico.recursos.Objeto3d Objeto3d) {
         this.x = x;
         this.y = y;
         this.w = w;

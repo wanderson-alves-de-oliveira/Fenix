@@ -51,31 +51,31 @@ public class Esplosao {
         float x=obj.getTamanho().getX();
         float y=obj.getTamanho().getY();
         float z=obj.getTamanho().getZ();
-        splosaoArrayNave.add(new Objeto3d(asset, "sp.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "sp.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(0).setTransparente(true);
         splosaoArrayNave.get(0).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spa.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spa.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(1).setTransparente(true);
         splosaoArrayNave.get(1).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spb.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spb.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(2).setTransparente(true);
         splosaoArrayNave.get(2).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spc.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spc.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(3).setTransparente(true);
         splosaoArrayNave.get(3).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spd.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spd.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(4).setTransparente(true);
         splosaoArrayNave.get(4).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spe.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spe.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(5).setTransparente(true);
         splosaoArrayNave.get(5).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spf.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z)));
+        splosaoArrayNave.add(new Objeto3d(asset, "spf.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
         splosaoArrayNave.get(6).setTransparente(true);
 
         splosaoArrayNave.get(6).loadGLTexture(false);

@@ -15,8 +15,17 @@ public class Cronograma {
     private boolean emMovimento=false;
     private boolean avaliar=false;
     private boolean ativo=true;
+    private boolean fim=false;
 
     private   ArrayList<Objeto3d> obj;
+
+    public boolean isFim() {
+        return fim;
+    }
+
+    public void setFim(boolean fim) {
+        this.fim = fim;
+    }
 
     public boolean isBoss() {
         return boss;
