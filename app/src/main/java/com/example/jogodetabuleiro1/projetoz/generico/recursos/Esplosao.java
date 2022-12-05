@@ -1,8 +1,8 @@
 package com.example.jogodetabuleiro1.projetoz.generico.recursos;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 
 import com.example.jogodetabuleiro1.R;
 
@@ -43,7 +43,7 @@ public class Esplosao {
         this.id = id;
     }
 
-    public  Esplosao (Objeto3d obj, AssetManager asset, Resources res, float xx, String nome, int id) throws IOException {
+    public  Esplosao (Context context,Objeto3d obj, AssetManager asset, Resources res, float xx, String nome, int id) throws IOException {
         ///CARREGA OS ARQUIS 3D DO ALFABETO
         this.nome=nome;
         this.id=id;
@@ -51,34 +51,34 @@ public class Esplosao {
         float x=obj.getTamanho().getX();
         float y=obj.getTamanho().getY();
         float z=obj.getTamanho().getZ();
-        splosaoArrayNave.add(new Objeto3d(asset, "sp.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "sp.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(0).setTransparente(true);
-        splosaoArrayNave.get(0).loadGLTexture(false);
+     //   splosaoArrayNave.get(0).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spa.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spa.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(1).setTransparente(true);
-        splosaoArrayNave.get(1).loadGLTexture(false);
+     //   splosaoArrayNave.get(1).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spb.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spb.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(2).setTransparente(true);
-        splosaoArrayNave.get(2).loadGLTexture(false);
+     //   splosaoArrayNave.get(2).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spc.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spc.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(3).setTransparente(true);
-        splosaoArrayNave.get(3).loadGLTexture(false);
+     //   splosaoArrayNave.get(3).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spd.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spd.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(4).setTransparente(true);
-        splosaoArrayNave.get(4).loadGLTexture(false);
+      //  splosaoArrayNave.get(4).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spe.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spe.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(5).setTransparente(true);
-        splosaoArrayNave.get(5).loadGLTexture(false);
+       // splosaoArrayNave.get(5).loadGLTexture(false);
 
-        splosaoArrayNave.add(new Objeto3d(asset, "spf.obj", BitmapFactory.decodeResource(res, R.drawable.esplosao), new Vetor3(x,y,z),""));
+        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spf.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
         splosaoArrayNave.get(6).setTransparente(true);
 
-        splosaoArrayNave.get(6).loadGLTexture(false);
+       // splosaoArrayNave.get(6).loadGLTexture(false);
         for (int p = 0; p < splosaoArrayNave.size(); p++) {
             splosaoArrayNave.get(p).setMudarTamanho(true);
             splosaoArrayNave.get(p).vezes(xx);

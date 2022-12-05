@@ -55,12 +55,15 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int recomecar = 0;
     private float localz = 62;
     private float localy = -17.00f;
+    private float localx = 0;
+
     private int rotacinarFenix = 0;
     private float pontoDoEixoX = 0;
     private float pontoDoEixoY = 0;
     private float turbo = 0.1f;
     private boolean parado = false;
-    private boolean vitoria =false;
+    private boolean vitoria = false;
+    private boolean invulneravel = false;
     private final int QTD_DE_TIROS = 61;
     private int nivelTiro = 12;
     private int nivelTiroTempo = 3;
@@ -95,7 +98,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> inimigosX;
     private ArrayList<Objeto3d> inimigosE;
     private ArrayList<Objeto3d> boss;
-    private ArrayList<Objeto3d> sobrasObj;
+    //private ArrayList<Objeto3d> sobrasObj;
     private ArrayList<Objeto3d> objCenario;
     private ArrayList<Esplosao> esplosaoArrayObj;
 
@@ -206,7 +209,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private final float velocit = 0.6f;
     private boolean luping = false;
     private float escala = 0.2f;
-    private float distancia = 15f;
+    private final float DISTANCIA = 15f;
     private float moduloY = -15f;
     private float modulox = 0;
     private float moduloz = -35;
@@ -306,13 +309,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.musica.setLooping(true);
         this.musica.setVolume(0.4f, 0.4f);
         this.musica.start();
-        this.barra = new Objeto3d(asset, "fundob.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.base), new Vetor3(1f, 1f, 1f), "");
+        this.barra = new Objeto3d(context,R.drawable.basenorm,asset, "fundob.obj",R.drawable.base, new Vetor3(1f, 1f, 1f), "");
         this.barra.setMudarTamanho(true);
         Bitmap seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.seta);
         seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.mensagemBase = new Objeto3d(asset, "quadroConta.obj",
-                    ConvertBitimap.getBitmapBase(390, 190, seta, "Arraste com o dedo para \nguiar a Fenix", 40, 3), new Vetor3(0.5f, 0.4f, 1f), "");
+            this.mensagemBase = new Objeto3d(context,R.drawable.normal,asset, "quadroConta.obj",R.drawable.base, new Vetor3(0.5f, 0.4f, 1f), "");
         }
         this.mensagemBase.setMudarTamanho(true);
         mensagemBase.setPosition(new Vetor3(0, -1f, 1f));
@@ -389,11 +391,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
                 mensagemBase.setPosition(new Vetor3(1, 1f, 1f));
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Até a letra certa da palavra", 40, 3));
-                mensagemBase.loadGLTexture(true);
-                ceu = new Objeto3d(asset, "ceu.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.espaco), new Vetor3(escala * 2, escala, escala), "");
-                ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 16, -62));
+             //   mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Até a letra certa da palavra", 40, 3));
+             //   mensagemBase.loadGLTexture(true);
+                ceu = new Objeto3d(context,R.drawable.nivelnorm,asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+              //  ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, -62));
 
                 break;
 
@@ -404,8 +406,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
                 mensagemBase.setPosition(new Vetor3(1, -2f, 1f));
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando.", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+               // mensagemBase.loadGLTexture(true);
 
 
                 break;
@@ -414,27 +416,28 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.oito);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando..", 80, 3));
-                mensagemBase.loadGLTexture(true);
+             //   mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando..", 80, 3));
+            //    mensagemBase.loadGLTexture(true);
 
 
                 break;
             case 3:
-                setFenix(new Objeto3d(asset, "navez.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.navea), new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), ""));
-                Fenix.loadGLTexture(true);
+                setFenix(new Objeto3d(context,R.drawable.naveanorm,asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), ""));
+             //   Fenix.loadGLTexture(true);
 
                 this.Fenix.setEstado("NBateu");
                 Fenix.setPosition(new Vetor3(0, 16, -62));
                 Fenix.setRefletir(false);
                 Fenix.setRefletir(true);
                 Fenix.setFenix(true);
+                Fenix.setNomeRef("Fenix");
                 splosaoArrayNave = splosao(Fenix);
                 //this.Fenix.setGiroCentral(true);
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.sete);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando...", 80, 3));
-                mensagemBase.loadGLTexture(true);
+            //    mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando...", 80, 3));
+          //      mensagemBase.loadGLTexture(true);
 
                 break;
             case 4:
@@ -442,10 +445,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 quadroB = Bitmap.createScaledBitmap(quadroB, 400, 400, true);
 
-                objeto3dxquadro = new Objeto3d(asset, "figura.obj", quadroB, new Vetor3(escala * 35, escala * 35, escala * 35), "");
+                objeto3dxquadro = new Objeto3d(context,R.drawable.normal,asset, "figura.obj", R.drawable.navea, new Vetor3(escala * 35, escala * 35, escala * 35), "");
 
 
-                objeto3dxquadro.loadGLTexture(true);
+             //   objeto3dxquadro.loadGLTexture(true);
 
                 objeto3dxquadro.setPosition(new Vetor3(0, 0f, 1f));
                 objeto3dxquadro.setTransparente(true);
@@ -458,8 +461,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.seis);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando...", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+                //mensagemBase.loadGLTexture(true);
 
                 break;
 
@@ -482,8 +485,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.cinco);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+              //  mensagemBase.loadGLTexture(true);
                 break;
             case 6:
                 inimigosA = new ArrayList<>();
@@ -492,7 +495,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 asteroide = new ArrayList<>();
                 inimigosE = new ArrayList<>();
                 inimigosB = new ArrayList<>();
-                sobrasObj= new ArrayList<>();
+                //  sobrasObj = new ArrayList<>();
                 objCenario = new ArrayList<>();
                 esplosaoArrayObj = new ArrayList<>();
                 boss = new ArrayList<>();
@@ -501,8 +504,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.quatro);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando.", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+            //    mensagemBase.loadGLTexture(true);
                 break;
 
             case 7:
@@ -510,24 +513,24 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.tres);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando..", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+              //  mensagemBase.loadGLTexture(true);
                 break;
             case 8:
 
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.dois);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Carregando...", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+            //    mensagemBase.loadGLTexture(true);
                 break;
             case 9:
 
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.um);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Falta pouco", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+              //  mensagemBase.loadGLTexture(true);
                 break;
 
             case 10:
@@ -539,18 +542,18 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int p = 0; p < this.quantidadeDeElementos; p++) {
                     char v = alfabeto.charAt(p);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        inimigosB.add(new Objeto3d(asset, "inimigo.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigo), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosB"));
-                        inimigosA.add(new Objeto3d(asset, "based.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.based), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosA"));
-                        inimigosX.add(new Objeto3d(asset, "inimigox.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigox), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosX"));
+                        inimigosB.add(new Objeto3d(context,R.drawable.inimigonorm,asset, "inimigo.obj", R.drawable.inimigo, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosB"));
+                        inimigosA.add(new Objeto3d(context,R.drawable.basednorm,asset, "based.obj",R.drawable.based, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosA"));
+                        inimigosX.add(new Objeto3d(context,R.drawable.inimigoxnorm,asset, "inimigox.obj", R.drawable.inimigox, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosX"));
 
-                        asteroide.add(new Objeto3d(asset, "asteroid.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.asteroide), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "asteroide"));
+                        asteroide.add(new Objeto3d(context,R.drawable.asteroidenorm,asset, "asteroid.obj", R.drawable.asteroide, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "asteroide"));
 
-                        asteroide.get(p).setPosition(new Vetor3(0, distancia, -1 * (69 - p)));
+                        asteroide.get(p).setPosition(new Vetor3(0, DISTANCIA, -1 * (69 - p)));
 
 
                     }
 
-                    inimigosX.get(p).loadGLTexture(true);
+                 //   inimigosX.get(p).loadGLTexture(true);
                     inimigosX.get(p).setValor(String.valueOf(v));
 
 
@@ -559,10 +562,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     inimigosX.get(p).setId(p);
 
                     //   inimigosX.get(p).setSplosaoArrayNave(inimigosX.get(p).splosao(inimigosX.get(p), asset, context.getResources(), 1f));
-                    inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), 5, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
+                    inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p),R.drawable.tiroxxnorm, 5, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
                     inimigosX.get(p).setRefletir(true);
 
-                    asteroide.get(p).loadGLTexture(true);
+                 //   asteroide.get(p).loadGLTexture(true);
                     asteroide.get(p).setValor(String.valueOf(v));
                     asteroide.get(p).setVida(vidaAst * dificuldade);
                     asteroide.get(p).setRecoverVida(vidaAst * dificuldade);
@@ -572,7 +575,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     //      asteroide.get(p).setSplosaoArrayNave(asteroide.get(p).splosao(asteroide.get(p), asset, context.getResources(), 1.3f));
                     asteroide.get(p).setRefletir(true);
 
-                    inimigosB.get(p).loadGLTexture(false);
+                //    inimigosB.get(p).loadGLTexture(false);
                     inimigosB.get(p).setValor(String.valueOf(v));
                     inimigosB.get(p).setVida(vidaB * dificuldade);
                     inimigosB.get(p).setRecoverVida(vidaB * dificuldade);
@@ -580,65 +583,65 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     // esplosaoArrayObj.add(new Esplosao(inimigosB.get(p), asset, context.getResources(), 0.5f,"inimigosB", p));
 
                     //     inimigosB.get(p).setSplosaoArrayNave(inimigosB.get(p).splosao(inimigosB.get(p), asset, context.getResources(), 0.5f));
-                    inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), 1, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
+                    inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p),R.drawable.tirobnorm, 1, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
                     inimigosB.get(p).setRefletir(true);
 
 
-                    inimigosA.get(p).loadGLTexture(true);
+                  //  inimigosA.get(p).loadGLTexture(true);
 
                     //  esplosaoArrayObj.add(new Esplosao(inimigosA.get(p), asset, context.getResources(), 0.8f,"inimigosA", p));
 
                     //   inimigosA.get(p).setSplosaoArrayNave(inimigosA.get(p).splosao(inimigosA.get(p), asset, context.getResources(), 0.8f));
                     inimigosA.get(p).setValor(String.valueOf(v));
-                    inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p), 3, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
+                    inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p),R.drawable.tiroanorm, 3, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
                     inimigosA.get(p).setVida(vidaA * dificuldade);
                     inimigosA.get(p).setRecoverVida(vidaA * dificuldade);
                     inimigosA.get(p).setRefletir(true);
                 }
 
                 asteroide.get(0).setPosition(new Vetor3(-0.5f,
-                        distancia, -68f));
+                        DISTANCIA, -68f));
                 asteroide.get(1).setPosition(new Vetor3(0.0f,
-                        distancia, -67));
+                        DISTANCIA, -67));
 
                 asteroide.get(2).setPosition(new Vetor3(0.5f,
-                        distancia, -66));
+                        DISTANCIA, -66));
 
 
                 inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                        distancia, -65));
+                        DISTANCIA, -65));
 
                 inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                        distancia, -65));
+                        DISTANCIA, -65));
 
                 inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                        distancia, -66));
+                        DISTANCIA, -66));
 
 //                inimigosB.get( 3 ).setPosition( new Vetor3( 0.5f,
 //                        distancia, -64 ) );
 
                 inimigosA.get(0).setPosition(new Vetor3(-0.2f,
-                        distancia + 0.06f, -67));
+                        DISTANCIA + 0.06f, -67));
                 inimigosA.get(1).setPosition(new Vetor3(0.3f,
-                        distancia + 0.06f, -67));
+                        DISTANCIA + 0.06f, -67));
                 inimigosA.get(2).setPosition(new Vetor3(0.0f,
-                        distancia + 0.06f, -69));
+                        DISTANCIA + 0.06f, -69));
 
 
                 inimigosX.get(0).setPosition(new Vetor3(0.5f,
-                        distancia + 0.03f, -65));
+                        DISTANCIA + 0.03f, -65));
 
                 inimigosX.get(1).setPosition(new Vetor3(0.0f,
-                        distancia + 0.03f, -67));
+                        DISTANCIA + 0.03f, -67));
 
                 inimigosX.get(2).setPosition(new Vetor3(-0.5f,
-                        distancia + 0.03f, -69));
+                        DISTANCIA + 0.03f, -69));
 
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.zero);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Ta quase lá", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+              //  mensagemBase.loadGLTexture(true);
 
 //inimigo tipo c------------------------------------------------------------------
                 float vidaCE = 10f;
@@ -646,25 +649,25 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int p = 0; p < 7; p++) {
                     // char v = alfabeto.charAt(p );
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        inimigosC.add(new Objeto3d(asset, "inimigoc.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigoc), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
-                        inimigosE.add(new Objeto3d(asset, "inimigoc.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.inimigoe), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE"));
+                        inimigosC.add(new Objeto3d(context,R.drawable.inimigocnorm,asset, "inimigoc.obj", R.drawable.inimigoc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
+                        inimigosE.add(new Objeto3d(context,R.drawable.inimigoenorm,asset, "inimigoc.obj", R.drawable.inimigoe, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE"));
 
                     }
-                    inimigosC.get(p).loadGLTexture(true);
+                 //   inimigosC.get(p).loadGLTexture(true);
                     inimigosC.get(p).setValor(String.valueOf("v"));
                     inimigosC.get(p).setVida(vidaCE * dificuldade);
                     inimigosC.get(p).setRecoverVida(vidaCE * dificuldade);
 
                     //  esplosaoArrayObj.add(new Esplosao(inimigosC.get(p), asset, context.getResources(), 0.3f,"inimigosC", p));
 
-                    inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                    inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p),R.drawable.tirocnorm, 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                     inimigosC.get(p).setTipo("C");
-                    inimigosC.get(p).setPosition(new Vetor3(-1.5f, distancia, -63f));
+                    inimigosC.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
                     inimigosC.get(p).setRefletir(true);
                     //    inimigosC.get( p ).vezes(0.3f);
 
 
-                    inimigosE.get(p).loadGLTexture(true);
+                  //  inimigosE.get(p).loadGLTexture(true);
                     inimigosE.get(p).setValor(String.valueOf("v"));
                     inimigosE.get(p).setVida(vidaCE * dificuldade);
                     inimigosE.get(p).setRecoverVida(vidaCE * dificuldade);
@@ -673,30 +676,30 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     //     esplosaoArrayObj.add(new Esplosao(inimigosE.get(p), asset, context.getResources(), 0.3f,"inimigosE", p));
 
-                    inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), 1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
+                    inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), R.drawable.tiroenorm,1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
                     inimigosE.get(p).setTipo("E");
-                    inimigosE.get(p).setPosition(new Vetor3(-1.5f, distancia - 0.08f, -63f));
+                    inimigosE.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
                     inimigosE.get(p).setRefletir(true);
                 }
 
 
-                boss.add(new Objeto3d(asset, "bossxa.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.bossxa), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(0).loadGLTexture(true);
+                boss.add(new Objeto3d(context,R.drawable.bossxanorm,asset, "bossxa.obj", R.drawable.bossxa, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+               // boss.get(0).loadGLTexture(true);
                 //    esplosaoArrayObj.add(new Esplosao(boss.get(0), asset, context.getResources(), 0.8f,"boss", 0));
 
                 //   boss.get(0).setSplosaoArrayNave(boss.get(0).splosao(boss.get(0), asset, context.getResources(), 0.8f));
                 boss.get(0).setValor(String.valueOf("A"));
-                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0), 40, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0),R.drawable.tirocnorm, 40, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                 boss.get(0).setVida(vidaBos * dificuldade);
                 boss.get(0).setRecoverVida(vidaBos * dificuldade);
                 boss.get(0).setBoss(true);
                 boss.get(0).setPosition(new Vetor3(0f,
-                        distancia + 0.03f, -1000f));
+                        DISTANCIA + 0.03f, -1000f));
                 boss.get(0).setRefletir(true);
 
 
-                objCenario.add(new Objeto3d(asset, "metal.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.metal), new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
-                objCenario.get(0).loadGLTexture(true);
+                objCenario.add(new Objeto3d(context,R.drawable.metalnorm,asset, "metal.obj",  R.drawable.metal, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+              //  objCenario.get(0).loadGLTexture(true);
                 //    esplosaoArrayObj.add(new Esplosao(boss.get(0), asset, context.getResources(), 0.8f,"boss", 0));
 
                 //   boss.get(0).setSplosaoArrayNave(boss.get(0).splosao(boss.get(0), asset, context.getResources(), 0.8f));
@@ -704,7 +707,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 objCenario.get(0).setVida(150f * dificuldade);
                 objCenario.get(0).setRecoverVida(150f * dificuldade);
                 objCenario.get(0).setPosition(new Vetor3(0f,
-                        distancia - 0.5f, -62));
+                        14.3f, -62));
                 objCenario.get(0).setTransparente(true);
 
                 objCenario.get(0).setRefletir(true);
@@ -715,7 +718,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 int total = inimigosA.size();
                 int po = 0;
                 for (int i = 0; i < total; i++) {
-                    esplosaoArrayObj.add(new Esplosao(inimigosA.get(po), asset, context.getResources(), 0.8f, "inimigosA", po));
+                    esplosaoArrayObj.add(new Esplosao(context,inimigosA.get(po), asset, context.getResources(), 0.8f, "inimigosA", po));
                     esplosaoArrayObj.get(i).setId(po);
                     esplosaoArrayObj.get(i).setNome("inimigosA");
 
@@ -726,7 +729,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
 
 
-                    esplosaoArrayObj.add(new Esplosao(inimigosB.get(po), asset, context.getResources(), 0.8f, "inimigosB", po));
+                    esplosaoArrayObj.add(new Esplosao(context,inimigosB.get(po), asset, context.getResources(), 0.8f, "inimigosB", po));
                     po++;
                 }
 
@@ -734,7 +737,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 po = 0;
 
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
-                    esplosaoArrayObj.add(new Esplosao(inimigosC.get(po), asset, context.getResources(), 0.5f, "inimigosC", po));
+                    esplosaoArrayObj.add(new Esplosao(context,inimigosC.get(po), asset, context.getResources(), 0.5f, "inimigosC", po));
 
                     po++;
                 }
@@ -742,7 +745,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 total += inimigosE.size();
                 po = 0;
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
-                    esplosaoArrayObj.add(new Esplosao(inimigosE.get(po), asset, context.getResources(), 0.5f, "inimigosE", po));
+                    esplosaoArrayObj.add(new Esplosao(context,inimigosE.get(po), asset, context.getResources(), 0.5f, "inimigosE", po));
 
                     po++;
                 }
@@ -752,7 +755,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
 
 
-                    esplosaoArrayObj.add(new Esplosao(inimigosX.get(po), asset, context.getResources(), 0.8f, "inimigosX", po));
+                    esplosaoArrayObj.add(new Esplosao(context,inimigosX.get(po), asset, context.getResources(), 0.8f, "inimigosX", po));
 
                     po++;
                 }
@@ -760,14 +763,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 total += asteroide.size();
                 po = 0;
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
-                    esplosaoArrayObj.add(new Esplosao(asteroide.get(po), asset, context.getResources(), 1f, "asteroide", po));
+                    esplosaoArrayObj.add(new Esplosao(context,asteroide.get(po), asset, context.getResources(), 1f, "asteroide", po));
 
                     po++;
                 }
                 total += boss.size();
                 po = 0;
                 for (int i = esplosaoArrayObj.size(); i < total; i++) {
-                    esplosaoArrayObj.add(new Esplosao(boss.get(po), asset, context.getResources(), 1.3f, "boss", po));
+                    esplosaoArrayObj.add(new Esplosao(context,boss.get(po), asset, context.getResources(), 1.3f, "boss", po));
 
                     po++;
                 }
@@ -776,8 +779,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.zero);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Ja vai...", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+              //  mensagemBase.loadGLTexture(true);
 
                 break;
             case 12:
@@ -785,8 +788,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.zero);
                 seta = Bitmap.createScaledBitmap(seta, 122, 182, false);
 
-                mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Pronto!", 80, 3));
-                mensagemBase.loadGLTexture(true);
+                mensagemBase.setTextura(R.drawable.esplosao);
+               // mensagemBase.loadGLTexture(true);
                 break;
 
             case 13:
@@ -794,8 +797,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 imgq = ConvertBitimap.getBitmapBarraxz(imgq, vida, "frase", (int) (this.wTela * 0.13f));
 
-                quadroInserirPalavra = new Objeto3d(asset, "quadroConta.obj", imgq, new Vetor3(escala * 3.6f, escala * 20.1f, escala * 5.5f), "");
-                quadroInserirPalavra.loadGLTexture(true);
+                quadroInserirPalavra = new Objeto3d(context,R.drawable.normal,asset, "quadroConta.obj",  R.drawable.metal, new Vetor3(escala * 3.6f, escala * 20.1f, escala * 5.5f), "");
+              //  quadroInserirPalavra.loadGLTexture(true);
                 quadroInserirPalavra.setPosition(new Vetor3(0f, 0f, 0f));
                 quadroInserirPalavra.setTransparente(true);
                 tiros = new ArrayList<>();
@@ -803,12 +806,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int i = 0; i < QTD_DE_TIROS; i++) {
 
 
-                    tiros.add(new Objeto3d(asset, "tiroz.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.tironave), new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                    tiros.add(new Objeto3d(context,R.drawable.tironavenorm,asset, "tiroz.obj",R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
 
                     tiros.get(i).vezes(1.8f);
 
 
-                    tiros.get(i).loadGLTexture(true);
+                //    tiros.get(i).loadGLTexture(true);
                     //  tiros.get( i ).setMudarTamanho(true);
                     tiros.get(i).setMover("nulo");
                     //tiros.get(i ).setTransparente(true);
@@ -850,19 +853,20 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         switch (fase) {
             case 1:
 
-                ceu = new Objeto3d(asset, "ceu.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.espaco), new Vetor3(escala * 2, escala, escala), "");
-                ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 16, -62));
-                if(!this.musica.isPlaying()) {
+                ceu = new Objeto3d(context,R.drawable.nivelnorm,asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+               // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, -62));
+
+                if (!this.musica.isPlaying()) {
                     this.musica.seekTo(0);
                     this.musica.start();
                 }
                 c = new Cronograma();
                 c.setId(2);
                 c.setPerpetuo(false);
-                c.setTimeIN(400);
+                c.setTimeIN(100);
                 c.setTimeMode(1000);
-                c.setTimeOUT(1400);
+                c.setTimeOUT(100);
                 c.setModo(0);
                 cronograma.add(c);
 
@@ -870,19 +874,18 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c = new Cronograma();
                 c.setId(5);
                 c.setPerpetuo(false);
-                c.setTimeIN(1000);
-                c.setTimeOUT(2000);
+                c.setTimeIN(800);
+                c.setTimeOUT(800);
                 c.setTimeMode(1000);
                 c.setModo(2);
                 cronograma.add(c);
 
 
-
                 c = new Cronograma();
                 c.setId(1);
                 c.setPerpetuo(false);
-                c.setTimeIN(1400);
-                c.setTimeOUT(2700);
+                c.setTimeIN(1100);
+                c.setTimeOUT(1400);
                 c.setTimeMode(700);
                 c.setModo(0);
                 cronograma.add(c);
@@ -902,9 +905,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             case 2:
 
 
-                ceu = new Objeto3d(asset, "ceu.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.base), new Vetor3(escala * 2, escala, escala), "");
-                ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 16, -62));
+                ceu = new Objeto3d(context,R.drawable.nivelnorm,asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+               // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, -62));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -914,7 +917,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setPerpetuo(false);
                 c.setTimeIN(100);
                 c.setTimeMode(1000);
-                c.setTimeOUT(1100);
+                c.setTimeOUT(100);
                 c.setModo(4);
                 cronograma.add(c);
 
@@ -923,7 +926,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(5);
                 c.setPerpetuo(false);
                 c.setTimeIN(300);
-                c.setTimeOUT(1300);
+                c.setTimeOUT(300);
                 c.setTimeMode(1000);
                 c.setModo(3);
                 cronograma.add(c);
@@ -933,8 +936,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(4);
                 c.setPerpetuo(false);
                 c.setTimeIN(600);
-                c.setTimeOUT(2000);
-                c.setTimeMode(Integer.MAX_VALUE);
+                c.setTimeOUT(600);
+                c.setTimeMode(800);
                 cronograma.add(c);
 
 
@@ -942,7 +945,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(1);
                 c.setPerpetuo(false);
                 c.setTimeIN(1200);
-                c.setTimeOUT(1900);
+                c.setTimeOUT(1200);
                 c.setTimeMode(700);
                 c.setModo(0);
                 cronograma.add(c);
@@ -950,7 +953,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c = new Cronograma();
                 c.setId(-1);
                 c.setPerpetuo(false);
-                c.setTimeIN(1900);
+                c.setTimeIN(2000);
                 c.setTimeOUT(Integer.MAX_VALUE);
                 c.setTimeMode(1000);
                 c.setFim(true);
@@ -959,9 +962,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 break;
             case 3:
 
-                ceu = new Objeto3d(asset, "ceu.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.espaco), new Vetor3(escala * 2, escala, escala), "");
-                ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 16, -62));
+                ceu = new Objeto3d(context,R.drawable.nivelnorm,asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+               // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, -62));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -972,7 +975,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setPerpetuo(false);
                 c.setTimeIN(100);
                 c.setTimeMode(1000);
-                c.setTimeOUT(1100);
+                c.setTimeOUT(100);
                 c.setModo(0);
                 cronograma.add(c);
 
@@ -981,7 +984,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(5);
                 c.setPerpetuo(false);
                 c.setTimeIN(300);
-                c.setTimeOUT(1300);
+                c.setTimeOUT(300);
                 c.setTimeMode(1000);
                 c.setModo(1);
                 cronograma.add(c);
@@ -990,9 +993,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c = new Cronograma();
                 c.setId(2);
                 c.setPerpetuo(false);
-                c.setTimeIN(1200);
+                c.setTimeIN(1400);
                 c.setTimeMode(1000);
-                c.setTimeOUT(2200);
+                c.setTimeOUT(1400);
                 c.setModo(2);
                 cronograma.add(c);
 
@@ -1001,7 +1004,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(5);
                 c.setPerpetuo(false);
                 c.setTimeIN(1400);
-                c.setTimeOUT(2400);
+                c.setTimeOUT(1400);
                 c.setTimeMode(1000);
                 c.setModo(3);
                 cronograma.add(c);
@@ -1012,7 +1015,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setPerpetuo(false);
                 c.setTimeIN(2500);
                 c.setTimeMode(1000);
-                c.setTimeOUT(3500);
+                c.setTimeOUT(2500);
                 c.setModo(4);
                 cronograma.add(c);
 
@@ -1021,7 +1024,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(5);
                 c.setPerpetuo(false);
                 c.setTimeIN(2600);
-                c.setTimeOUT(3600);
+                c.setTimeOUT(2600);
                 c.setTimeMode(1000);
                 c.setModo(0);
                 cronograma.add(c);
@@ -1031,13 +1034,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setId(3);
                 c.setPerpetuo(false);
                 c.setTimeIN(200);
-                c.setTimeOUT(5000);
+                c.setTimeOUT(200);
                 c.setTimeMode(1900);
                 c.setModo(1);
                 c.setAtivo(true);
                 cronograma.add(c);
-
-
 
 
                 c = new Cronograma();
@@ -1051,7 +1052,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 cronograma.add(c);
 
 
-
                 c = new Cronograma();
                 c.setId(-1);
                 c.setPerpetuo(false);
@@ -1063,9 +1063,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 break;
             case 4:
 
-                ceu = new Objeto3d(asset, "ceu.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.espaco), new Vetor3(escala * 2, escala, escala), "");
-                ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 16, -62));
+                ceu = new Objeto3d(context,R.drawable.nivelnorm,asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+              //  ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, -62));
                 this.musica.seekTo(0);
                 this.musica.start();
 
@@ -1075,7 +1075,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 c.setPerpetuo(false);
                 c.setTimeIN(400);
                 c.setTimeMode(1000);
-                c.setTimeOUT(1400);
+                c.setTimeOUT(400);
                 c.setModo(0);
                 cronograma.add(c);
 
@@ -1118,34 +1118,34 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         float x = obj.getTamanho().getX();
         float y = obj.getTamanho().getY();
         float z = obj.getTamanho().getZ();
-        splosaoArray.add(new Objeto3d(asset, "sp.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "sp.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(0).setTransparente(true);
-        splosaoArray.get(0).loadGLTexture(true);
+    //    splosaoArray.get(0).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spa.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spa.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(1).setTransparente(true);
-        splosaoArray.get(1).loadGLTexture(true);
+     //   splosaoArray.get(1).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spb.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spb.obj",R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(2).setTransparente(true);
-        splosaoArray.get(2).loadGLTexture(true);
+       // splosaoArray.get(2).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spc.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spc.obj",R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(3).setTransparente(true);
-        splosaoArray.get(3).loadGLTexture(true);
+      //  splosaoArray.get(3).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spd.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spd.obj",R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(4).setTransparente(true);
-        splosaoArray.get(4).loadGLTexture(true);
+      //  splosaoArray.get(4).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spe.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spe.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(5).setTransparente(true);
-        splosaoArray.get(5).loadGLTexture(true);
+       // splosaoArray.get(5).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(asset, "spf.obj", BitmapFactory.decodeResource(context.getResources(), R.drawable.esplosao), new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spf.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(6).setTransparente(true);
 
-        splosaoArray.get(6).loadGLTexture(true);
+      //  splosaoArray.get(6).loadGLTexture(true);
         for (int p = 0; p < splosaoArray.size(); p++) {
             splosaoArray.get(p).setTransparente(true);
             splosaoArray.get(p).setRefletir(true);
@@ -1314,29 +1314,37 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     + Math.pow(obj.getPosition().y - (obj2.getPosition().y), 2));
 
             //   Fenix.setPosition( new Vetor3( 0, 18,-62 ));
-            if (obj2 == Fenix) {
+
+            if (!obj2.getNomeRef().equals("") && !obj.getNomeRef().equals("") && !esplodirNave && !invulneravel) {
+                if (d <= 0.2f) {
+                    obj.setEsplodirNave(true);
+                    obj2.setEsplodirNave(true);
+                    obj.getPosition().z = -1000f;
+                    obj.setAtivado(false);
+                    obj.setAbatido(true);
+                    esplodirNave = true;
+                    vida--;
+                    barraDeEnergia = 100;
+                }
+            } else if (obj2 == Fenix && !esplodirNave && !invulneravel) {
                 if (d <= 0.2f) {
                     obj2.setImpacto(true);
                     obj.getPosition().z = -57;
-                    if (danoTotal) {
 
-                        esplodirNave = true;
+                    if (obj.isDisparando() || obj.getNomeRef().equals(""))
+                        barraDeEnergia -= 10;
+                    if (barraDeEnergia <= 0) {
                         vida--;
                         barraDeEnergia = 100;
-                    } else {
-                        barraDeEnergia -= 10;
-                        if (barraDeEnergia <= 0) {
-                            vida--;
-                            barraDeEnergia = 100;
-                            esplodirNave = true;
-                        }
-
+                        esplodirNave = true;
                     }
+
+
                 }
 
 
-            } else if (obj2.getPosition().z > -65f) {
-                if (d <= 0.2f) {
+            } else if (obj2.getPosition().z > -64.5f) {
+                if (d <= 0.2f && fogo) {
                     for (Objeto3d p : tiros) {
                         if (obj2 == p) {
                             obj.setVida(obj.getVida() - danoNoInimigo);
@@ -1344,10 +1352,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             obj.setImpacto(true);
                             if (obj.getVida() <= 0) {
                                 obj.setEsplodirNave(true);
+                                obj.setAtivado(false);
+                                obj.setAbatido(true);
 
                             }
 
-                            p.setPosition(new Vetor3(-100, -100, -1002));
+                            p.setPosition(new Vetor3(-1000, -100, -1002));
                             break;
                         }
                     }
@@ -1360,7 +1370,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private void esplodirNave(Objeto3d obj, Esplosao esplosao) {
 
-        if (obj.isEsplodirNave()) {
+        if (obj.isEsplodirNave() && !invulneravel) {
 
 
             if (obj.getTimeEsplosaoNave() < 26) {
@@ -1395,12 +1405,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 alterarModoN(obj);
                 for (int i = 0; i < tiros.size(); i++) {
-                    tiros.get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -1000));
+                    tiros.get(i).setPosition(new Vetor3(-1000, obj.getPosition().y, -1000));
                 }
 
                 for (int i = 0; i < esplosao.getSplosaoArrayNave().size(); i++) {
 
-                    esplosao.getSplosaoArrayNave().get(i).setPosition(new Vetor3(-100, obj.getPosition().y, -1000));
+                    esplosao.getSplosaoArrayNave().get(i).setPosition(new Vetor3(-1000, obj.getPosition().y, -1000));
                 }
 
                 if (obj.isBoss()) {
@@ -1438,8 +1448,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             timeLine();
         }
-        moverInimigoC(modo, timeModoC, 2, inimigosC);
-        moverInimigoC(modoE, timeModoE, 5, inimigosE);
+        for (int i = 0; i < inimigosC.size(); i++) {
+            inidiceEsquadCE(inimigosC.get(i), modo, i);
+            inidiceEsquadCE(inimigosE.get(i), modoE, i);
+            moverInimigoC(modo, inimigosC.get(i).getTimeLineInidvidual(), i, inimigosC.get(i), 'C');
+            moverInimigoC(modoE, inimigosE.get(i).getTimeLineInidvidual(), i, inimigosE.get(i), 'E');
+
+
+        }
 ////////////MONITORA O JOGO REFERENTE A COLISÃO ,VITÓRIA E DERROTA
         if (esplodirNave) {
             if (timeEsplosaoNave < 26) {
@@ -1521,16 +1537,16 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     break;
             }
 
-
-            ceu.setGiro(ceu.getGiro() - 0.06f);
-            ceu.setGiroPosition(new Vetor3(ceu.getGiro(), 0, 0));
+//
+//            ceu.setGiro(ceu.getGiro() - 0.06f);
+//            ceu.setGiroPosition(new Vetor3(ceu.getGiro(), 0, 0));
 
             moduloY -= veloy;
             modulox -= velox;
             moduloz += veloz;
             //  Fenix.giroTotal((GL11) gl2,girox,1,0,0);
             // Fenix.giroTotal((GL11) gl2,giroy,0,1,0);
-            // ceu.setPosition(new Vetor3(0 , 16, -62));
+            //  ceu.setPosition(new Vetor3(0 , 16, -62));
 
 
             Fenix.setGiroPosition(new Vetor3(0, 0, giroyFenix));
@@ -1672,9 +1688,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                objeto3dxquadro.setTextura(ConvertBitimap.getBitmap(this.wTela, this.h, recordeVelhoD, palavrasConquistadas));
+                objeto3dxquadro.setTextura(R.drawable.esplosao);
             }
-            objeto3dxquadro.loadGLTexture(true);
+          //  objeto3dxquadro.loadGLTexture(true);
 
         }
 //////////////////////////////////////////
@@ -1683,6 +1699,76 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
             retornarQuadro = false;
 
+        }
+
+
+    }
+
+    private void inidiceEsquadCE(Objeto3d objArray, int modo, int i) {
+        if (objArray.getTimeLineInidvidual() == 0 || objArray.getPosition().z <= -1000f) {
+            switch (modo) {
+                case 0:
+                    objArray.setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
+                    objArray.setTipo("C");
+
+
+                    break;
+                case 1:
+                    objArray.setPosition(new Vetor3(1.5f, DISTANCIA, -63f));
+                    objArray.setTipo("D");
+
+
+                    break;
+                case 2:
+                    objArray.setPosition(new Vetor3(1.5f, DISTANCIA, -63.6f));
+                    objArray.setTipo("E");
+
+
+                    break;
+
+                case 3:
+                    objArray.setPosition(new Vetor3(-1.5f, DISTANCIA, -63.6f));
+                    objArray.setTipo("F");
+
+
+                    break;
+                case 4:
+                    objArray.setTipo("G");
+                    objArray.setGiroPosition(new Vetor3(0, 0, 0));
+                    switch (i) {
+                        case 0:
+                            objArray.setPosition(new Vetor3(-0.3f, DISTANCIA, -65.8f));
+                            break;
+                        case 1:
+                            objArray.setPosition(new Vetor3(0.3f, DISTANCIA, -65.8f));
+                            break;
+                        case 2:
+                            objArray.setPosition(new Vetor3(-0.1f, DISTANCIA, -65.5f));
+                            break;
+                        case 3:
+                            objArray.setPosition(new Vetor3(0.1f, DISTANCIA, -65.5f));
+                            break;
+                        case 4:
+                            objArray.setPosition(new Vetor3(0.35f, DISTANCIA, -66.1f));
+                            break;
+                        case 5:
+                            objArray.setPosition(new Vetor3(0.0f, DISTANCIA, -65.8f));
+                            break;
+                        case 6:
+                            objArray.setPosition(new Vetor3(-0.35f, DISTANCIA, -66.1f));
+                            break;
+                    }
+                    objArray.setVida(1f);
+                    for (Objeto3d pp : objArray.getTiroNave()) {
+                        objArray.setAtirando(false);
+                        objArray.setAtirar(0, false);
+                        pp.setPosition(new Vetor3(objArray.getPosition().x, DISTANCIA, objArray.getPosition().z));
+
+                    }
+
+
+                    break;
+            }
         }
 
 
@@ -1713,6 +1799,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         vida = 3;
         barraDeEnergia = 100;
         try {
+            timeLine = 0;
             carregarCronologia(fase);
         } catch (IOException e) {
             e.printStackTrace();
@@ -1747,388 +1834,353 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             ArrayList<Objeto3d> objeto3ds = new ArrayList<>();
             String nome = "";
             boolean ativo = false;
-         //   if (!c.isBoss()) {
+            //   if (!c.isBoss()) {
 
-                if (c.getTimeIN() < timeLine && c.getTimeOUT() > timeLine) {
-                    if(c.isFim() && cronograma.size()==1){
-                        vitoria();
-                    } else if(c.isBoss() && cronograma.size()==2){
-                        if(!horaDoBoss) {
-//                            limpar(inimigosA, "inimigosA");
-//                            limpar(inimigosB, "inimigosB");
-//                            limpar(inimigosC, "inimigosC");
-//                            limpar(inimigosE, "inimigosE");
-//                            limpar(inimigosX, "inimigosX");
-//                            limpar(asteroide, "asteroide");
-                        }
-                        ativarBoss[c.getId()] = true;
-                         horaDoBoss=true;
-                    }
+            if (c.getTimeIN() <= timeLine /*&& c.getTimeOUT() > timeLine*/) {
+                if (c.isFim() && cronograma.size() == 1) {
 
-                    //           Log.e("TIME","TIME : "+timeLine);
+                    vitoria();
+                } else if (c.isBoss() && cronograma.size() == 2) {
 
-                    if(!c.isBoss()) {
-
-                        switch (c.getId()) {
-                            case 0:
-                                objeto3ds = inimigosA;
-                                nome = "inimigosA";
-                                break;
-                            case 1:
-                                objeto3ds = inimigosB;
-                                nome = "inimigosB";
-
-                                break;
-                            case 2:
-                                objeto3ds = inimigosC;
-                                nome = "inimigosC";
-
-                                break;
-                            case 3:
-                                objeto3ds = inimigosX;
-                                nome = "inimigosX";
-
-                                //  carregaModoX=c.isAtivo();
-                                c.setAtivo(false);
-                                break;
-                            case 4:
-                                objeto3ds = asteroide;
-                                nome = "asteroide";
-
-                                break;
-                            case 5:
-                                objeto3ds = inimigosE;
-                                nome = "inimigosE";
-
-                                break;
-
-                        }
-
-                    }else {
-                        switch (c.getId()) {
-                            case 0:
-                                objeto3ds = boss;
-                                nome = "boss";
-                                break;
-                        }
-
-
-                    }
-                    c.setEmMovimento(true);
-                    if(c.getId()>-1 && !c.isBoss()) {
-                        vaiPraCena[c.getId()] = true;
-                    }
-//                    for (Objeto3d o : objeto3ds) {
-//                        o.setEsplodiu(false);
-//
-//                    }
-
-                    if (timeLine % c.getTimeMode() == 0 && c.isPerpetuo()) {
-                        switch (c.getId()) {
-                            case 2:
-
-                                modo = c.getModo();
-                                int m = c.getModo() + 1;
-                                String letra = "C";
-                                if (m < 5) {
-                                    switch (m) {
-                                        case 0:
-                                            letra = "C";
-                                            break;
-                                        case 1:
-                                            letra = "D";
-                                            break;
-                                        case 2:
-                                            letra = "E";
-                                            break;
-                                        case 3:
-                                            letra = "F";
-                                            break;
-                                        case 4:
-                                            letra = "G";
-                                            break;
-
-                                    }
-                                    //  cronograma.get(i).setModo(m);
-                                    for (Objeto3d o : objeto3ds) {
-                                        if (o.getTipo().equals("N"))
-                                            o.setTipo(letra);
-                                    }
-                                } else {
-                                    // cronograma.get(i).setModo(0);
-                                    for (Objeto3d o : objeto3ds) {
-                                        o.setTipo("C");
-                                    }
-
-                                }
-
-
-                                break;
-                            case 5:
-                                modoE = c.getModo();
-                                int me = c.getModo() + 1;
-
-                                String letrae = "C";
-                                if (me < 5) {
-                                    switch (me) {
-                                        case 0:
-                                            letrae = "C";
-                                            break;
-                                        case 1:
-                                            letrae = "D";
-                                            break;
-                                        case 2:
-                                            letrae = "E";
-                                            break;
-                                        case 3:
-                                            letrae = "F";
-                                            break;
-                                        case 4:
-                                            letrae = "G";
-                                            break;
-
-                                    }
-                                    //  cronograma.get(i).setModo(m);
-                                    for (Objeto3d o : objeto3ds) {
-                                        if (o.getTipo().equals("N"))
-                                            o.setTipo(letrae);
-                                    }
-                                } else {
-                                    // cronograma.get(i).setModo(0);
-                                    for (Objeto3d o : objeto3ds) {
-                                        o.setTipo("C");
-                                    }
-
-                                }
-
-                                break;
-                        }
-                    }
-
-                    if (!c.isPerpetuo()) {
-
-                        switch (c.getId()) {
-                            case 1:
-                                modoB = c.getModo();
-                                break;
-                            case 2:
-                                modo = c.getModo();
-                                break;
-                            case 3:
-                                modoX = c.getModo();
-                                break;
-                            case 5:
-                                modoE = c.getModo();
-                                break;
-                        }
-                    }
-
-//                    if (timeLine >= c.getTimeOUT() - 1) {
-//                        for (Objeto3d o : objeto3ds) {
-//                            o.setEsplodirNave(true);
-//                            o.setVida(0);
-//                            o.setTimeEsplosaoNave(0);
-//
-//                            String finalNome = nome;
-//                            Esplosao esp = filtro(finalNome, objeto3ds.indexOf(o));
-//                            esplodirNave(o, esp);
-////                           o.getPosition().setZ(-65);
-//                            if (o.getTiroNave() != null) {
-//                                for (Objeto3d oo : o.getTiroNave()) {
-//                                    oo.getPosition().setZ(-65);
-//                                }
-//                            }
-//                        }
-//                    }
-
-
-                } else if (c.isEmMovimento()) {
-
-                    //
-                    if(c.getId()>-1 && !c.isBoss()) {
-                        vaiPraCena[c.getId()] = false;
-                    }
-                    for (Objeto3d o : objeto3ds) {
-                        o.setEsplodirNave(true);
-                        o.setVida(0);
-                        o.setTimeEsplosaoNave(0);
-
-                        String finalNome = nome;
-                        Esplosao esp = filtro(finalNome, objeto3ds.indexOf(o));
-                        esplodirNave(o, esp);
-                        //  o.getPosition().setZ(-65);
-//                        if (o.getTiroNave() != null) {
-//                            for (Objeto3d oo : o.getTiroNave()) {
-//                                oo.getPosition().setZ(-65);
-//                            }
-//                        }
-                    }
-                    c.setEmMovimento(false);
-                    if(c.getId()>-1 && c.getTimeOUT()<=timeLine) {
-                        switch (c.getId()) {
-                            case 0:
-                                objeto3ds = inimigosA;
-                                nome = "inimigosA";
-                                break;
-                            case 1:
-                                objeto3ds = inimigosB;
-                                nome = "inimigosB";
-
-                                break;
-                            case 2:
-                                objeto3ds = inimigosC;
-                                nome = "inimigosC";
-
-                                break;
-                            case 3:
-                                objeto3ds = inimigosX;
-                                nome = "inimigosX";
-
-                                //  carregaModoX=c.isAtivo();
-                                c.setAtivo(false);
-                                break;
-                            case 4:
-                                objeto3ds = asteroide;
-                                nome = "asteroide";
-
-                                break;
-                            case 5:
-                                objeto3ds = inimigosE;
-                                nome = "inimigosE";
-
-                                break;
-
-                        }
-                        for (Objeto3d o : objeto3ds) {
-                            if(o.getPosition().z>-65.02f){
-                                sobrasObj.add(o);
-                            }
-                        }
-
-                        cronograma.remove(c);
-                    }
-                    break;
+                    ativarBoss[c.getId()] = true;
+                    horaDoBoss = true;
                 }
 
-//            }
-//            else {
+                //           Log.e("TIME","TIME : "+timeLine);
+
+                if (!c.isBoss()) {
+
+                    switch (c.getId()) {
+                        case 0:
+                            objeto3ds = inimigosA;
+                            nome = "inimigosA";
+                            break;
+                        case 1:
+                            objeto3ds = inimigosB;
+                            nome = "inimigosB";
+
+                            break;
+                        case 2:
+                            objeto3ds = inimigosC;
+                            nome = "inimigosC";
+
+                            break;
+                        case 3:
+                            objeto3ds = inimigosX;
+                            nome = "inimigosX";
+
+                            c.setAtivo(false);
+                            break;
+                        case 4:
+                            objeto3ds = asteroide;
+                            nome = "asteroide";
+
+                            break;
+                        case 5:
+                            objeto3ds = inimigosE;
+                            nome = "inimigosE";
+
+                            break;
+
+                    }
+
+                } else {
+                    switch (c.getId()) {
+                        case 0:
+                            objeto3ds = boss;
+                            nome = "boss";
+                            break;
+                    }
+
+
+                }
+                c.setEmMovimento(true);
+                if (c.getId() > -1 && !c.isBoss()) {
+                    vaiPraCena[c.getId()] = true;
+
+                    if (c.getTimeIN() == timeLine) {
+                        for (Objeto3d o : objeto3ds) {
+
+                            o.setAtivado(true);
+                            o.setAbatido(false);
+                            o.setTimeLineInidvidual(0);
+                        }
+                    }
+                    int eliminados = 0;
+                    for (Objeto3d o : objeto3ds) {
+
+                        if (!o.isAbatido()) {
+                            o.setAtivado(true);
+
+                        } else {
+                            eliminados++;
+                        }
+
+                    }
+
+                    if (eliminados == objeto3ds.size()) {
+
+                        cronograma.remove(c);
+                        if (cronograma.size() == 1)
+                            cronograma.get(0).setTimeIN(timeLine + 100);
+
+                    }
+                }
+                if (timeLine < c.getTimeIN() && c.isBoss() && cronograma.size() == 2) {
+
+                    c.setTimeIN(timeLine);
+
+                }
+
+                if (timeLine % c.getTimeMode() == 0 && c.isPerpetuo()) {
+                    switch (c.getId()) {
+                        case 2:
+
+                            modo = c.getModo();
+                            int m = c.getModo() + 1;
+                            String letra = "C";
+                            if (m < 5) {
+                                switch (m) {
+                                    case 0:
+                                        letra = "C";
+                                        break;
+                                    case 1:
+                                        letra = "D";
+                                        break;
+                                    case 2:
+                                        letra = "E";
+                                        break;
+                                    case 3:
+                                        letra = "F";
+                                        break;
+                                    case 4:
+                                        letra = "G";
+                                        break;
+
+                                }
+                                //  cronograma.get(i).setModo(m);
+                                for (Objeto3d o : objeto3ds) {
+                                    if (o.getTipo().equals("N"))
+                                        o.setTipo(letra);
+                                }
+                            } else {
+                                // cronograma.get(i).setModo(0);
+                                for (Objeto3d o : objeto3ds) {
+                                    o.setTipo("C");
+                                }
+
+                            }
+
+
+                            break;
+                        case 5:
+                            modoE = c.getModo();
+                            int me = c.getModo() + 1;
+
+                            String letrae = "C";
+                            if (me < 5) {
+                                switch (me) {
+                                    case 0:
+                                        letrae = "C";
+                                        break;
+                                    case 1:
+                                        letrae = "D";
+                                        break;
+                                    case 2:
+                                        letrae = "E";
+                                        break;
+                                    case 3:
+                                        letrae = "F";
+                                        break;
+                                    case 4:
+                                        letrae = "G";
+                                        break;
+
+                                }
+                                //  cronograma.get(i).setModo(m);
+                                for (Objeto3d o : objeto3ds) {
+                                    if (o.getTipo().equals("N"))
+                                        o.setTipo(letrae);
+                                }
+                            } else {
+                                // cronograma.get(i).setModo(0);
+                                for (Objeto3d o : objeto3ds) {
+                                    o.setTipo("C");
+                                }
+
+                            }
+
+                            break;
+                    }
+                }
+
+                if (!c.isPerpetuo()) {
+
+                    switch (c.getId()) {
+                        case 1:
+                            modoB = c.getModo();
+                            break;
+                        case 2:
+                            modo = c.getModo();
+                            break;
+                        case 3:
+                            modoX = c.getModo();
+                            break;
+                        case 5:
+                            modoE = c.getModo();
+                            break;
+                    }
+                }
+
+
+            } else if (c.isEmMovimento()) {
+
+                switch (c.getId()) {
+                    case 0:
+                        objeto3ds = inimigosA;
+                        nome = "inimigosA";
+                        break;
+                    case 1:
+                        objeto3ds = inimigosB;
+                        nome = "inimigosB";
+
+                        break;
+                    case 2:
+                        objeto3ds = inimigosC;
+                        nome = "inimigosC";
+
+                        break;
+                    case 3:
+                        objeto3ds = inimigosX;
+                        nome = "inimigosX";
+
+                        c.setAtivo(false);
+                        break;
+                    case 4:
+                        objeto3ds = asteroide;
+                        nome = "asteroide";
+
+                        break;
+                    case 5:
+                        objeto3ds = inimigosE;
+                        nome = "inimigosE";
+
+                        break;
+
+                }
+                if (c.getId() > -1 && !c.isBoss()) {
+                    vaiPraCena[c.getId()] = false;
+                }
+//                for (Objeto3d o : objeto3ds) {
+//                    o.setEsplodirNave(true);
+//                    o.setVida(0);
+//                    o.setTimeEsplosaoNave(0);
 //
-//                if (cronograma.size() == 2) {
+//                    String finalNome = nome;
+//                    Esplosao esp = filtro(finalNome, objeto3ds.indexOf(o));
+//                    esplodirNave(o, esp);
 //
-//                    if (!horaDoBoss) {
-//                        limpar(inimigosA, "inimigosA");
-//                        limpar(inimigosB, "inimigosB");
-//                        limpar(inimigosC, "inimigosC");
-//                        limpar(inimigosE, "inimigosE");
-//                        limpar(inimigosX, "inimigosX");
-//                        limpar(asteroide, "asteroide");
-//                    }
-//                    horaDoBoss = true;
 //                }
-//
-//            }
+                c.setEmMovimento(false);
+                if (c.getId() > -1 && c.getTimeOUT() <= timeLine) {
+
+//                    for (Objeto3d o : objeto3ds) {
+//                        if (o.getPosition().z > -65.02f) {
+//                            sobrasObj.add(o);
+//                        }
+//                    }
+
+                    cronograma.remove(c);
+                    cronograma.get(0).setTimeIN(timeLine);
+                }
+                break;
+            }
 
 
         }
 
 
-        if (!horaDoBoss) {
+        for (int p = 0; p < inimigosC.size(); p++) {
 
-            for (int p = 0; p < sobrasObj.size(); p++) {
-                moverObjSobra(sobrasObj.get(p), p);
+            if (inimigosC.get(p).getVida() <= 0) {
 
+                Esplosao esp = filtro("inimigosC", p);
+
+                esplodirNave(inimigosC.get(p), esp);
             }
-            for (int p = 0; p < inimigosC.size(); p++) {
 
-                if (inimigosC.get(p).getVida() <= 0) {
+            if (inimigosE.get(p).getVida() <= 0) {
+                //       esplodirNave(inimigosE.get(p));
 
-                    Esplosao esp = filtro("inimigosC", p);
+                String finalNome = "inimigosE";
+                Esplosao esp = filtro(finalNome, p);
+                esplodirNave(inimigosE.get(p), esp);
+            }
+            if (p < inimigosA.size()) {
 
-                    esplodirNave(inimigosC.get(p), esp);
-                }
-
-                if (inimigosE.get(p).getVida() <= 0) {
-                    //       esplodirNave(inimigosE.get(p));
-
-                    String finalNome = "inimigosE";
+                if (inimigosA.get(p).getVida() <= 0) {
+                    //         esplodirNave(inimigosA.get(p));
+                    String finalNome = "inimigosA";
                     Esplosao esp = filtro(finalNome, p);
-                    esplodirNave(inimigosE.get(p), esp);
+                    esplodirNave(inimigosA.get(p), esp);
                 }
-                if (p < inimigosA.size()) {
 
-                    if (inimigosA.get(p).getVida() <= 0) {
-                        //         esplodirNave(inimigosA.get(p));
-                        String finalNome = "inimigosA";
-                        Esplosao esp = filtro(finalNome, p);
-                        esplodirNave(inimigosA.get(p), esp);
-                    }
+                if (inimigosX.get(p).getVida() <= 0) {
+                    //         esplodirNave(inimigosX.get(p));
+                    String finalNome = "inimigosX";
+                    Esplosao esp = filtro(finalNome, p);
+                    esplodirNave(inimigosX.get(p), esp);
+                }
 
-                    if (inimigosX.get(p).getVida() <= 0) {
-                        //         esplodirNave(inimigosX.get(p));
-                        String finalNome = "inimigosX";
-                        Esplosao esp = filtro(finalNome, p);
-                        esplodirNave(inimigosX.get(p), esp);
-                    }
+                if (inimigosB.get(p).getVida() <= 0) {
+                    //         esplodirNave(inimigosB.get(p));
+                    String finalNome = "inimigosB";
+                    Esplosao esp = filtro(finalNome, p);
+                    esplodirNave(inimigosB.get(p), esp);
+                }
 
-                    if (inimigosB.get(p).getVida() <= 0) {
-                        //         esplodirNave(inimigosB.get(p));
-                        String finalNome = "inimigosB";
-                        Esplosao esp = filtro(finalNome, p);
-                        esplodirNave(inimigosB.get(p), esp);
-                    }
-
-                    if (asteroide.get(p).getVida() <= 0) {
-                        //         esplodirNave(asteroide.get(p));
-                        String finalNome = "asteroide";
-                        Esplosao esp = filtro(finalNome, p);
-                        esplodirNave(asteroide.get(p), esp);
-                    }
-                    calculoarColisaoI(inimigosB.get(p), Fenix, true);
-                    calculoarColisaoI(inimigosA.get(p), Fenix, true);
-                    calculoarColisaoI(inimigosX.get(p), Fenix, true);
-                    calculoarColisaoI(asteroide.get(p), Fenix, true);
+                if (asteroide.get(p).getVida() <= 0) {
+                    //         esplodirNave(asteroide.get(p));
+                    String finalNome = "asteroide";
+                    Esplosao esp = filtro(finalNome, p);
+                    esplodirNave(asteroide.get(p), esp);
+                }
+                calculoarColisaoI(inimigosB.get(p), Fenix, true);
+                calculoarColisaoI(inimigosA.get(p), Fenix, true);
+                calculoarColisaoI(inimigosX.get(p), Fenix, true);
+                calculoarColisaoI(asteroide.get(p), Fenix, true);
 
 
-                    for (Objeto3d pp : tiros) {
-                        calculoarColisaoI(inimigosA.get(p), pp, false);
-                        calculoarColisaoI(inimigosB.get(p), pp, false);
-                        calculoarColisaoI(inimigosX.get(p), pp, false);
-                        calculoarColisaoI(asteroide.get(p), pp, false);
+                for (Objeto3d pp : tiros) {
+                    calculoarColisaoI(inimigosA.get(p), pp, false);
+                    calculoarColisaoI(inimigosB.get(p), pp, false);
+                    calculoarColisaoI(inimigosX.get(p), pp, false);
+                    calculoarColisaoI(asteroide.get(p), pp, false);
 
-                    }
-                    for (Objeto3d pp : inimigosB.get(p).getTiroNave()) {
-                        calculoarColisaoI(pp, Fenix, false);
-                    }
-                    for (Objeto3d pp : inimigosX.get(p).getTiroNave()) {
-                        calculoarColisaoI(pp, Fenix, false);
-                    }
+                }
+                for (Objeto3d pp : inimigosB.get(p).getTiroNave()) {
+                    calculoarColisaoI(pp, Fenix, false);
+                }
+                for (Objeto3d pp : inimigosX.get(p).getTiroNave()) {
+                    calculoarColisaoI(pp, Fenix, false);
+                }
 
-                    Float positionx = inimigosB.get(p).getPosition().getX();
-                    Float giroybolhas = inimigosB.get(p).getGiro();
+                Float positionx = inimigosB.get(p).getPosition().getX();
+                Float giroybolhas = inimigosB.get(p).getGiro();
 
-                    if (inimigosB.get(p).getPosition().getZ() < Fenix.getPosition().getZ()) {
+                if (inimigosB.get(p).getPosition().getZ() < Fenix.getPosition().getZ()) {
 
-                        if (positionx < Fenix.getPosition().getX()
-                        ) {
-                            positionx += (velocidadeinimigo1 * 0.6f);
-                            if (giroybolhas < 30) {
-                                giroybolhas += 3.0f;
-                            }
-                        } else if (positionx > Fenix.getPosition().getX() + Fenix.getTamanho().getX()
-                        ) {
-                            positionx -= (velocidadeinimigo1 * 0.6f);
-                            if (giroybolhas > -30) {
-                                giroybolhas -= 3.0f;
-                            }
-                        } else {
-                            if (giroybolhas > 0) {
-                                giroybolhas -= 3.0f;
-                            } else {
-                                giroybolhas += 3.0f;
-
-                            }
-
-
+                    if (positionx < Fenix.getPosition().getX()
+                    ) {
+                        positionx += (velocidadeinimigo1 * 0.6f);
+                        if (giroybolhas < 30) {
+                            giroybolhas += 3.0f;
+                        }
+                    } else if (positionx > Fenix.getPosition().getX() + Fenix.getTamanho().getX()
+                    ) {
+                        positionx -= (velocidadeinimigo1 * 0.6f);
+                        if (giroybolhas > -30) {
+                            giroybolhas -= 3.0f;
                         }
                     } else {
                         if (giroybolhas > 0) {
@@ -2140,38 +2192,63 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
                     }
-                    moverInimigoX(modoX, timeModoX, giroybolhas, p);
-                    moverInimigoB(modoB, timeModoB, giroybolhas, p);
-                    moverInimigoA(0, 0, giroybolhas, p);
-                    moverAsteroide(0, 0, giroybolhas, p);
-                    moverObjCenario(objCenario.get(0), p);
+                } else {
+                    if (giroybolhas > 0) {
+                        giroybolhas -= 3.0f;
+                    } else {
+                        giroybolhas += 3.0f;
 
+                    }
 
 
                 }
+                moverInimigoX(modoX, timeModoX, giroybolhas, p);
+                moverInimigoB(modoB, timeModoB, giroybolhas, p);
+                moverInimigoA(0, 0, giroybolhas, p);
+                moverAsteroide(0, 0, giroybolhas, p);
+             //   moverObjCenario(objCenario.get(0), p);
+
 
             }
 
-        } else {
+        }
 
+        if (horaDoBoss) {
+
+            if (!boss.get(0).isAbatido()) {
+                boss.get(0).setAtivado(true);
+            }
+
+
+            for (int p = 0; p < inimigosC.size(); p++) {
+                if (p < inimigosA.size()) {
+                    moverInimigoX(modoX, timeModoX, 0, p);
+                    moverInimigoB(modoB, timeModoB, 0, p);
+                    moverInimigoA(0, 0, 0, p);
+                    moverAsteroide(0, 0, 0, p);
+               //     moverObjCenario(objCenario.get(0), p);
+
+                }
+            }
             if (boss.get(0).getVida() <= 0) {
-                //esplodirNave(boss.get(0));
 
                 String finalNome = "boss";
                 Esplosao esp = filtro(finalNome, 0);
                 esplodirNave(boss.get(0), esp);
-                for(Cronograma c : cronograma){
-                    if(c.isBoss()){
+                for (Objeto3d pp : boss.get(0).getTiroNave()) {
+                    pp.getPosition().z = -1000f;
+                }
+                for (Cronograma c : cronograma) {
+                    if (c.isBoss()) {
                         cronograma.remove(c);
+                        cronograma.get(0).setTimeIN(timeLine + 100);
                         break;
                     }
                 }
-               // newLevel();
-            }
-            for (int p = 0; p < sobrasObj.size(); p++) {
-                moverObjSobra(sobrasObj.get(p), p);
+
 
             }
+
             for (Objeto3d pp : tiros) {
                 calculoarColisaoI(boss.get(0), pp, false);
             }
@@ -2180,24 +2257,26 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
         }
-
+        moverFase();
     }
 
     private void vitoria() {
 
-        vitoria=true;
-        if(!this.victory.isPlaying()){
+        vitoria = true;
+        invulneravel = true;
+        if (!this.victory.isPlaying()) {
             this.victory.start();
             this.musica.pause();
             this.musica.seekTo(0);
         }
-        acelerarando+=0.002f;
-        Fenix.getPosition().z-=acelerarando;
+        acelerarando += 0.002f;
+        Fenix.getPosition().z -= acelerarando;
         Fenix.setAtirando(false);
-        if(Fenix.getPosition().z<=-65f){
-            vitoria=false;
-            acelerarando=0;
-            Fenix.getPosition().z=-62f;
+        if (Fenix.getPosition().z <= -65f) {
+            vitoria = false;
+            acelerarando = 0;
+            timeLine = 0;
+            Fenix.getPosition().z = -62f;
             restart();
             newLevel();
 
@@ -2215,22 +2294,24 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         }
 
     }
-    private void moverObjSobra(Objeto3d pp, int p) {
 
-        if (pp.getPosition().z > -57) {
-          sobrasObj.remove(pp);
+//    private void moverObjSobra(Objeto3d pp, int p) {
+//
+//        if (pp.getPosition().z > -57) {
+//            sobrasObj.remove(pp);
+//
+//        } else {
+//            pp.getPosition().z += velocidade;
+//
+//        }
+//
+//
+//    }
 
-        } else {
-            pp.getPosition().z+=velocidade;
-
-        }
-
-
-    }
     private void moverObjCenario(Objeto3d pp, int p) {
 
         if (pp.getPosition().z < -57) {
-            pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z + (velocidade * 0.06f)));
+            pp.setPosition(new Vetor3(pp.getPosition().x, pp.getPosition().getY(), pp.getPosition().z + (velocidade / 2)  ));
 
         } else {
             pp.getPosition().setZ(-68);
@@ -2254,24 +2335,22 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private void moverBoss(int modoBoss, int time, int i, Objeto3d pp, int index) {
 
-        if (ativarBoss[index]) {
+        if (pp.isAtivado()) {
 
 
-                if(pp.getPosition().z < -65f) {
-                    pp.setPosition(new Vetor3(0f,
-                            distancia + 0.03f, -65f));
-                    pp.getPosition().setX(0);
+            if (pp.getPosition().z < -65f) {
+                pp.setPosition(new Vetor3(0f,
+                        DISTANCIA + 0.03f, -65f));
+                pp.getPosition().setX(0);
 
-                }
+            }
 
-                if (pp.getPosition().z < -63.5f) {
-                    pp.getPosition().setZ(pp.getPosition().z + velocidade);
-               } else {
-                    carregaModoBoss = false;
+            if (pp.getPosition().z < -63.5f) {
+                pp.getPosition().setZ(pp.getPosition().z + velocidade);
+            } else {
+                carregaModoBoss = false;
 
-                }
-
-
+            }
 
 
             if (!carregaModoBoss) {
@@ -2297,13 +2376,15 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     calculoarColisaoI(ppp, Fenix, false);
                 }
                 if (true) {
-                    pp.atirando(Fenix, velocidade * 2, true, 20);
+                    pp.setDisparando(true);
                     moverObjFixoPadrao(pp, modoBoss, 'z', 1f, 90);
 
                 }
                 timeModoBoss++;
             }
         }
+        disparandoOBJ(pp, 20);
+
     }
 
 
@@ -2356,7 +2437,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     public void moverInimigoA(int modoB, int timeB, float giroybolhas, int p) {
 
-        if (vaiPraCena[0]) {
+        if (inimigosA.get(p).isAtivado()) {
             inimigosA.get(p).setGiro(giroybolhas);
             inimigosA.get(p).setPosition(new Vetor3(inimigosA.get(p).getPosition().x, inimigosA.get(p).getPosition().getY(), inimigosA.get(p).getPosition().z + velocidade));
             for (Objeto3d pp : inimigosA.get(p).getTiroNave()) {
@@ -2364,10 +2445,16 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
             if (inimigosA.get(p).getPosition().z > -58) {
                 for (Objeto3d pp : inimigosA.get(p).getTiroNave()) {
-                    inimigosA.get(p).setAtirando(false);
-                    inimigosA.get(p).setAtirar(0, false);
-                    pp.setPosition(new Vetor3(inimigosA.get(p).getPosition().x, distancia + 0.06f, inimigosA.get(p).getPosition().z));
+                    pp.setPosition(new Vetor3(inimigosA.get(p).getPosition().x, DISTANCIA + 0.06f, inimigosA.get(p).getPosition().z));
                 }
+
+                inimigosA.get(p).setPosition(new Vetor3(-0.3f,
+                        DISTANCIA, -1000));
+                inimigosA.get(p).setAtirando(false);
+                inimigosA.get(p).setAtirar(0, false);
+                inimigosA.get(p).setAbatido(true);
+                inimigosA.get(p).setAtivado(false);
+                inimigosA.get(p).setEsplodiu(false);
             } else {
                 if (inimigosA.get(p).getPosition().z < -59f) {
                     inimigosA.get(p).setDisparando(true);
@@ -2375,11 +2462,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
             if (inimigosA.get(p).getPosition().z > -58) {
                 inimigosA.get(0).setPosition(new Vetor3(-0.2f,
-                        distancia + 0.06f, -67));
+                        DISTANCIA + 0.06f, -67));
                 inimigosA.get(1).setPosition(new Vetor3(0.3f,
-                        distancia + 0.06f, -67));
+                        DISTANCIA + 0.06f, -67));
                 inimigosA.get(2).setPosition(new Vetor3(0.0f,
-                        distancia + 0.06f, -69));
+                        DISTANCIA + 0.06f, -69));
 
                 inimigosA.get(0).setEsplodiu(false);
                 inimigosA.get(1).setEsplodiu(false);
@@ -2390,9 +2477,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
         }
 
-        if (inimigosA.get(p).isDisparando())
-            inimigosA.get(p).atirando(Fenix, velocidade * 2, true, 40);
-
+        disparandoOBJ(inimigosA.get(p), 30);
     }
 
     private void proximoInimigo(int i) {
@@ -2440,7 +2525,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
     public void moverInimigoB(int modo, int time, float giroybolhas, int p) {
-        if (vaiPraCena[1]) {
+        if (inimigosB.get(p).isAtivado()) {
 
 
             if (time >= 2000) {
@@ -2458,13 +2543,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 switch (modo) {
                     case 0:
                         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -65));
+                                DISTANCIA, -65));
 
                         inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -65));
+                                DISTANCIA, -65));
 
                         inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -66));
+                                DISTANCIA, -66));
                         for (int i = 0; i < inimigosB.size(); i++) {
                             inimigosB.get(i).setTipo("B0");
                             inimigosB.get(i).setGiro(0);
@@ -2474,13 +2559,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         break;
                     case 1:
                         inimigosB.get(0).setPosition(new Vetor3(-1f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         inimigosB.get(1).setPosition(new Vetor3(-1.5f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         inimigosB.get(2).setPosition(new Vetor3(-2f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         for (int i = 0; i < inimigosB.size(); i++) {
                             inimigosB.get(i).setTipo("B1");
@@ -2491,13 +2576,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         break;
                     case 2:
                         inimigosB.get(0).setPosition(new Vetor3(1f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         inimigosB.get(1).setPosition(new Vetor3(1.5f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         inimigosB.get(2).setPosition(new Vetor3(2f,
-                                distancia, -62.5f));
+                                DISTANCIA, -62.5f));
 
                         for (int i = 0; i < inimigosB.size(); i++) {
                             inimigosB.get(i).setTipo("B1");
@@ -2517,21 +2602,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         inimigosB.get(p).setDisparando(true);
                     }
-                    if (inimigosB.get(p).getPosition().z > -58 && p == inimigosB.size() - 1) {
-                        inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -1000));
+                    if (inimigosB.get(p).getPosition().z > -59) {
+                        inimigosB.get(p).setPosition(new Vetor3(-0.3f,
+                                DISTANCIA, -1000));
 
-                        inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -1000));
+                        inimigosB.get(p).setAbatido(true);
+                        inimigosB.get(p).setAtivado(false);
+                        inimigosB.get(p).setEsplodiu(false);
 
-                        inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -1000));
-
-
-                        inimigosB.get(0).setEsplodiu(false);
-                        inimigosB.get(1).setEsplodiu(false);
-                        inimigosB.get(2).setEsplodiu(false);
-                        proximoInimigo(1);
 
                     }
                     break;
@@ -2541,21 +2619,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         inimigosB.get(p).setDisparando(true);
                     }
-                    if ((inimigosB.get(p).getPosition().z > -58 || inimigosB.get(p).getPosition().x > 1) && p == inimigosB.size() - 1) {
-                        inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -1000));
+                    if ((inimigosB.get(p).getPosition().z > -59 || inimigosB.get(p).getPosition().x > 1)) {
 
-                        inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -1000));
+                        inimigosB.get(p).setPosition(new Vetor3(-0.3f,
+                                DISTANCIA, -1000));
 
-                        inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -1000));
-
-
-                        inimigosB.get(0).setEsplodiu(false);
-                        inimigosB.get(1).setEsplodiu(false);
-                        inimigosB.get(2).setEsplodiu(false);
-                        proximoInimigo(1);
+                        inimigosB.get(p).setAbatido(true);
+                        inimigosB.get(p).setAtivado(false);
+                        inimigosB.get(p).setEsplodiu(false);
                     }
                     break;
                 case 2:
@@ -2564,22 +2635,15 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     if (inimigosB.get(p).getPosition().z < -59f) {
                         inimigosB.get(p).setDisparando(true);
                     }
-                    if ((inimigosB.get(p).getPosition().z > -58 || inimigosB.get(p).getPosition().x < -1) && p == inimigosB.size() - 1) {
-                        inimigosB.get(0).setPosition(new Vetor3(-0.3f,
-                                distancia, -1000));
+                    if ((inimigosB.get(p).getPosition().z > -59 || inimigosB.get(p).getPosition().x < -1)) {
 
-                        inimigosB.get(1).setPosition(new Vetor3(0.3f,
-                                distancia, -1000));
+                        inimigosB.get(p).setPosition(new Vetor3(-0.3f,
+                                DISTANCIA, -1000));
 
-                        inimigosB.get(2).setPosition(new Vetor3(0.0f,
-                                distancia, -1000));
+                        inimigosB.get(p).setAbatido(true);
+                        inimigosB.get(p).setAtivado(false);
+                        inimigosB.get(p).setEsplodiu(false);
 
-
-                        inimigosB.get(0).setEsplodiu(false);
-                        inimigosB.get(1).setEsplodiu(false);
-                        inimigosB.get(2).setEsplodiu(false);
-
-                        proximoInimigo(1);
                     }
                     break;
             }
@@ -2588,42 +2652,54 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             timeModoB++;
 
         }
-        if (inimigosB.get(p).isDisparando())
-            inimigosB.get(p).atirando(Fenix, velocidade * 2, true, 40);
+
+        disparandoOBJ(inimigosB.get(p), 30);
 
     }
 
+    public void moverFase() {
+        if (timeLine > 0 && !vitoria && !perdeu && !horaDoBoss) {
+            ceu.setPosition(new Vetor3(0, 14, ceu.getPosition().z = ceu.getPosition().z + (velocidade / 2)));
+
+
+
+            if (objCenario.get(0).getPosition().z < -57) {
+                objCenario.get(0).setPosition(new Vetor3(objCenario.get(0).getPosition().x, objCenario.get(0).getPosition().getY(), objCenario.get(0).getPosition().z + (velocidade / 2)  ));
+
+            } else {
+                objCenario.get(0).getPosition().setZ(-68);
+
+            }
+
+
+
+        }
+
+
+
+
+    }
 
     public void moverInimigoX(int modo, int time, float giroybolhas, int p) {
-        if (vaiPraCena[3]) {
-            if (carregaModoX) {
-                carregaModoX = false;
+        if (inimigosX.get(p).isAtivado()) {
+            if (inimigosX.get(p).isCarregamentoIndividual()) {
+                inimigosX.get(p).setCarregamentoIndividual(false);
+                float[] vz = {- -65, -65.5f, -66, -66.5f};
+
                 switch (modo) {
 
                     case 0:
 
 
-                        inimigosX.get(0).setPosition(new Vetor3(0.5f,
-                                distancia + 0.03f, -65));
-
-                        inimigosX.get(1).setPosition(new Vetor3(0.0f,
-                                distancia + 0.03f, -67));
-
-                        inimigosX.get(2).setPosition(new Vetor3(-0.5f,
-                                distancia + 0.03f, -69));
+                        inimigosX.get(p).setPosition(new Vetor3(0.5f,
+                                DISTANCIA + 0.03f, vz[(int) (Math.random() * 4)]));
 
 
                     case 1:
 
 
-                        inimigosX.get(0).setPosition(new Vetor3(0.0f,
-                                distancia + 0.03f, -65));
-
-                        inimigosX.get(1).setPosition(new Vetor3(0.0f,
-                                distancia + 0.03f, -67));
-
-                        inimigosX.get(2).setPosition(new Vetor3(-0.0f,
-                                distancia + 0.03f, -69));
+                        inimigosX.get(p).setPosition(new Vetor3(0.0f,
+                                DISTANCIA + 0.03f, vz[(int) (Math.random() * 4)]));
 
 
                         break;
@@ -2632,7 +2708,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
 
             if (inimigosX.get(p).getPosition().z < -59f) {
-                inimigosX.get(p).atirando(Fenix, velocidade * 2, true, 30);
+                inimigosX.get(p).setDisparando(true);
             } else {
                 for (Objeto3d o : inimigosX.get(p).getTiroNave()) {
                     o.getPosition().z = -100;
@@ -2647,6 +2723,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     if (inimigosX.get(p).getPosition().z < -59f) {
                         inimigosX.get(p).setDisparando(true);
+                    } else {
+
+                        inimigosX.get(p).setAbatido(true);
+                        inimigosX.get(p).setAtivado(false);
                     }
                     break;
 
@@ -2664,8 +2744,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     }
 
-                    if (inimigosX.get(inimigosX.size() - 1).getPosition().z <= -1000) {
-                        carregaModoX = true;
+                    if (inimigosX.get(p).getPosition().z <= -900) {
+                        inimigosX.get(p).setCarregamentoIndividual(true);
                     }
                     timeModoX++;
                     inimigosX.get(p).setDisparando(true);
@@ -2674,430 +2754,384 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
             }
 
-            if (inimigosX.get(p).getPosition().z > -58) {
+            if (inimigosX.get(p).getPosition().z > -59) {
 
                 inimigosX.get(p).setPosition(new Vetor3(inimigosX.get(p).getPosition().x,
-                        distancia + 0.03f, -65));
+                        DISTANCIA + 0.03f, -65));
                 inimigosX.get(p).setEsplodiu(false);
 
-                proximoInimigo(3);
+
+                inimigosX.get(p).setAbatido(true);
+                inimigosX.get(p).setAtivado(false);
+
 
             }
         }
 
-        if (inimigosX.get(p).isDisparando())
+
+        if (inimigosX.get(p).isDisparando()) {
             moverObjFixoPadrao(inimigosX.get(p), direcaoX2[inimigosX.get(p).getDr()], 'y', 15f, 1000);
+        }
+
+        disparandoOBJ(inimigosX.get(p), 30);
+    }
+
+    private void disparandoOBJ(Objeto3d ob, int tempoDisparo) {
+
+        if (ob.getTiroNave().get(ob.getIdTiroAux()).isDisparando()) {
+            ob.atirando(Fenix, velocidade * 2, true, tempoDisparo);
+
+        }
+
 
     }
 
-
     public void moverAsteroide(int modoB, int timeB, float giroybolhas, int p) {
-        if (vaiPraCena[4]) {
+        if (asteroide.get(p).isAtivado()) {
             asteroide.get(p).setGiro(giroybolhas);
 
-            if(asteroide.get(0).getPosition().z < -68f) {
+            if (asteroide.get(0).getPosition().z < -68f) {
                 asteroide.get(0).setPosition(new Vetor3(-0.5f,
-                        distancia, -68f));
+                        DISTANCIA, -68f));
             }
-                if(asteroide.get(1).getPosition().z < -67f) {
-                    asteroide.get(1).setPosition(new Vetor3(0.0f,
-                            distancia, -67));
-                }
-                    if(asteroide.get(2).getPosition().z < -66f) {
-                        asteroide.get(2).setPosition(new Vetor3(0.5f,
-                                distancia, -66));
-                    }
+            if (asteroide.get(1).getPosition().z < -67f) {
+                asteroide.get(1).setPosition(new Vetor3(0.0f,
+                        DISTANCIA, -67));
+            }
+            if (asteroide.get(2).getPosition().z < -66f) {
+                asteroide.get(2).setPosition(new Vetor3(0.5f,
+                        DISTANCIA, -66));
+            }
 
 
             asteroide.get(p).setPosition(new Vetor3(asteroide.get(p).getPosition().x, asteroide.get(p).getPosition().getY(), asteroide.get(p).getPosition().z + velocidade));
 
-            if (asteroide.get(p).getPosition().z > -58 && p == asteroide.size() - 1) {
+            if (asteroide.get(p).getPosition().z > -59) {
                 float[] vz = {- -65, -65.5f, -66};
 
-                asteroide.get(0).setEsplodiu(false);
-                asteroide.get(1).setEsplodiu(false);
-                asteroide.get(2).setEsplodiu(false);
-                asteroide.get(0).setPosition(new Vetor3(-0.5f,
-                        distancia, vz[(int) (Math.random() * 3)]));
-                asteroide.get(1).setPosition(new Vetor3(0.0f,
-                        distancia, vz[(int) (Math.random() * 3)]));
 
-                asteroide.get(2).setPosition(new Vetor3(0.5f,
-                        distancia, vz[(int) (Math.random() * 3)]));
-                proximoInimigo(4);
+                asteroide.get(p).setAbatido(true);
+                asteroide.get(p).setAtivado(false);
+
+                asteroide.get(p).setEsplodiu(false);
+
+                asteroide.get(p).setPosition(new Vetor3(-0.5f,
+                        DISTANCIA, vz[(int) (Math.random() * 3)]));
+
             }
         }
     }
 
-    public void moverInimigoC(int modo, int time, int cena, ArrayList<Objeto3d> objArray) {
-        if (vaiPraCena[cena]) {
+    public void moverInimigoC(int modo, int time, int i, Objeto3d obj, char tipo) {
+        if (obj.isAtivado()) {
 
-            if (time >= 1000) {
+            if (((time >= i * 100 && (modo == 0 || modo == 1)) || (time >= i * 50 && (modo == 2 || modo == 3)) || modo == 4)) {
 
-                timeModoE = 0;
-                timeModoC = 0;
+                if (time >= 1000) {
 
-                time = 0;
+                    obj.setTimeLineInidvidual(0);
 
+                    return;
 
-                proximoInimigo(cena);
-
-                return;
-
-            }
-
-            if (time == 0) {
-                switch (modo) {
-                    case 0:
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setPosition(new Vetor3(-1.5f, distancia, -63f));
-                            objArray.get(i).setTipo("C");
-
-                        }
-                        break;
-                    case 1:
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setPosition(new Vetor3(1.5f, distancia, -63f));
-                            objArray.get(i).setTipo("D");
-
-                        }
-                        break;
-                    case 2:
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setPosition(new Vetor3(1.5f, distancia, -63.6f));
-                            objArray.get(i).setTipo("E");
-
-                        }
-                        break;
-
-                    case 3:
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setPosition(new Vetor3(-1.5f, distancia, -63.6f));
-                            objArray.get(i).setTipo("F");
-
-                        }
-                        break;
-                    case 4:
-                        objArray.get(0).setTipo("G");
-                        objArray.get(1).setTipo("G");
-                        objArray.get(2).setTipo("G");
-                        objArray.get(3).setTipo("G");
-                        objArray.get(4).setTipo("G");
-                        objArray.get(5).setTipo("G");
-                        objArray.get(6).setTipo("G");
-                        objArray.get(0).setPosition(new Vetor3(-0.3f, distancia, -65.8f));
-                        objArray.get(1).setPosition(new Vetor3(0.3f, distancia, -65.8f));
-                        objArray.get(2).setPosition(new Vetor3(-0.1f, distancia, -65.5f));
-                        objArray.get(3).setPosition(new Vetor3(0.1f, distancia, -65.5f));
-
-                        objArray.get(4).setPosition(new Vetor3(0.35f, distancia, -66.1f));
-                        objArray.get(5).setPosition(new Vetor3(0.0f, distancia, -65.8f));
-                        objArray.get(6).setPosition(new Vetor3(-0.35f, distancia, -66.1f));
-
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setVida(1f);
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                objArray.get(i).setAtirando(false);
-                                objArray.get(i).setAtirar(0, false);
-                                pp.setPosition(new Vetor3(objArray.get(i).getPosition().x, distancia, objArray.get(i).getPosition().z));
-
-                            }
-                        }
-
-                        break;
                 }
-            } else {
+
 
                 switch (modo) {
                     case 0:
-                        for (int i = 0; i < objArray.size(); i++) {
 
 
-                            if (objArray.get(i).getPosition().x > 0)
-                                objArray.get(i).setAtirando(true);
+                        if (obj.getPosition().x > 0)
+                            obj.setAtirando(true);
 
-                            objArray.get(i).setDisparando(true);
+                        obj.setDisparando(true);
 
-                            calculoarColisaoI(objArray.get(i), Fenix, true);
-                            for (Objeto3d pp : tiros) {
-                                calculoarColisaoI(objArray.get(i), pp, false);
-                            }
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                calculoarColisaoI(pp, Fenix, false);
-                            }
-
-
-                            if (time > i * 70 && objArray.get(i).getTipo().equals("C")) {
-                                float x = objArray.get(i).getPosition().x;
-                                float z = objArray.get(i).getPosition().z;
-                                double distancia = calculoarDistancia(objArray.get(i), new Vetor3(-0.5f, this.distancia, -61.5f));
-                                if (x < 0.0f) {
-                                    objArray.get(i).setGiro((float) (objArray.get(i).getGiro() + distancia));
-                                }
-
-                                objArray.get(i).setGiroPosition(new Vetor3(0, objArray.get(i).getGiro(), 0));
-                                if (x < -0.5f) {
-                                    x += distancia * 0.01;
-                                    z += distancia * (0.01 * distancia);
-
-                                } else {
-                                    x += distancia * 0.01;
-                                    z -= distancia * (0.01 * distancia);
-
-                                }
-
-                                objArray.get(i).setPosition(new Vetor3(x, objArray.get(i).getPosition().getY(), z));
-
-                                if (objArray.get(i).getPosition().z < -65.5) {
-                                    objArray.get(i).setPosition(new Vetor3(-1.5f, this.distancia, -63));
-                                    objArray.get(i).setGiro((float) (0));
-                                    objArray.get(i).setGiroPosition(new Vetor3(0, 0, 0));
-
-                                    alterarModoN(objArray.get(i));
-                                }
-
-                                for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                    float xx = pp.getPosition().x;
-                                    if (pp.getPosition().z > -58 && (xx < -2 || xx > 2)) {
-                                        objArray.get(i).setAtirando(false);
-                                        objArray.get(i).setAtirar(0, false);
-                                        pp.setPosition(objArray.get(i).getPosition());
-                                        objArray.get(i).setEsplodiu(false);
-
-                                    }
-                                }
-
-
-                            }
+                        calculoarColisaoI(obj, Fenix, true);
+                        for (Objeto3d pp : tiros) {
+                            calculoarColisaoI(obj, pp, false);
+                        }
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            calculoarColisaoI(pp, Fenix, false);
                         }
 
+
+                        if (obj.getTipo().equals("C")) {
+                            float x = obj.getPosition().x;
+                            float z = obj.getPosition().z;
+                            double distancia = calculoarDistancia(obj, new Vetor3(-0.5f, this.DISTANCIA, -61.5f));
+                            if (x < 0.0f) {
+                                obj.setGiro((float) (obj.getGiro() + distancia));
+                            }
+
+                            obj.setGiroPosition(new Vetor3(0, obj.getGiro(), 0));
+                            if (x < -0.5f) {
+                                x += distancia * 0.01;
+                                z += distancia * (0.01 * distancia);
+
+                            } else {
+                                x += distancia * 0.01;
+                                z -= distancia * (0.01 * distancia);
+
+                            }
+
+                            obj.setPosition(new Vetor3(x, obj.getPosition().getY(), z));
+
+                            if (obj.getPosition().z < -65.5) {
+                                obj.setPosition(new Vetor3(-1.5f, this.DISTANCIA, -63));
+                                obj.setGiro((float) (0));
+                                obj.setGiroPosition(new Vetor3(0, 0, 0));
+
+                                alterarModoN(obj);
+                            }
+
+                            for (Objeto3d pp : obj.getTiroNave()) {
+                                float xx = pp.getPosition().x;
+                                if (pp.getPosition().z > -58 && (xx < -2 || xx > 2)) {
+                                    obj.setAtirando(false);
+                                    obj.setAtirar(0, false);
+
+                                    pp.setPosition(obj.getPosition());
+                                    obj.setEsplodiu(false);
+
+                                }
+                            }
+
+
+                        }
+
+                        if (obj.getPosition().x > 1.0f && obj.getPosition().z < -65f) {
+                            obj.setAbatido(true);
+                            obj.setAtivado(false);
+                        }
                         break;
 
 
                     case 1:
-                        for (int i = 0; i < objArray.size(); i++) {
 
 
-                            if (objArray.get(i).getPosition().x < 0)
-                                objArray.get(i).setAtirando(true);
+                        if (obj.getPosition().x < 0)
+                            obj.setAtirando(true);
 
-                            objArray.get(i).setDisparando(true);
-                            calculoarColisaoI(objArray.get(i), Fenix, true);
-                            for (Objeto3d pp : tiros) {
-                                calculoarColisaoI(objArray.get(i), pp, false);
+                        obj.setDisparando(true);
+                        calculoarColisaoI(obj, Fenix, true);
+                        for (Objeto3d pp : tiros) {
+                            calculoarColisaoI(obj, pp, false);
+                        }
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            calculoarColisaoI(pp, Fenix, false);
+                        }
+
+
+                        if (obj.getTipo().equals("D")) {
+                            float x = obj.getPosition().x;
+                            float z = obj.getPosition().z;
+                            double distancia = calculoarDistancia(obj, new Vetor3(0.5f, this.DISTANCIA, -61.5f));
+                            if (x > 0.1f) {
+                                obj.setGiro((float) (obj.getGiro() - distancia));
                             }
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                calculoarColisaoI(pp, Fenix, false);
+
+                            obj.setGiroPosition(new Vetor3(0, obj.getGiro(), 0));
+                            if (x > 0.5f) {
+                                x -= distancia * 0.01;
+                                z += distancia * (0.01 * distancia);
+
+                            } else {
+                                x -= distancia * 0.01;
+                                z -= distancia * (0.01 * distancia);
+
                             }
 
+                            obj.setPosition(new Vetor3(x, obj.getPosition().getY(), z));
 
-                            if (time > i * 70 && objArray.get(i).getTipo().equals("D")) {
-                                float x = objArray.get(i).getPosition().x;
-                                float z = objArray.get(i).getPosition().z;
-                                double distancia = calculoarDistancia(objArray.get(i), new Vetor3(0.5f, this.distancia, -61.5f));
-                                if (x > 0.1f) {
-                                    objArray.get(i).setGiro((float) (objArray.get(i).getGiro() - distancia));
-                                }
+                            if (obj.getPosition().z < -65.5) {
+                                obj.setPosition(new Vetor3(1.5f, this.DISTANCIA, -63));
+                                obj.setGiro((float) (0));
+                                obj.setGiroPosition(new Vetor3(0, 0, 0));
 
-                                objArray.get(i).setGiroPosition(new Vetor3(0, objArray.get(i).getGiro(), 0));
-                                if (x > 0.5f) {
-                                    x -= distancia * 0.01;
-                                    z += distancia * (0.01 * distancia);
+                                alterarModoN(obj);
+                            }
 
-                                } else {
-                                    x -= distancia * 0.01;
-                                    z -= distancia * (0.01 * distancia);
-
-                                }
-
-                                objArray.get(i).setPosition(new Vetor3(x, objArray.get(i).getPosition().getY(), z));
-
-                                if (objArray.get(i).getPosition().z < -65.5) {
-                                    objArray.get(i).setPosition(new Vetor3(1.5f, this.distancia, -63));
-                                    objArray.get(i).setGiro((float) (0));
-                                    objArray.get(i).setGiroPosition(new Vetor3(0, 0, 0));
-
-                                    alterarModoN(objArray.get(i));
-                                }
-
-                                for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                    float xx = pp.getPosition().x;
-                                    if (pp.getPosition().z > -58 && (xx < -2 || xx > 2)) {
-                                        objArray.get(i).setAtirando(false);
-                                        objArray.get(i).setAtirar(0, false);
-                                        pp.setPosition(objArray.get(i).getPosition());
-                                        objArray.get(i).setEsplodiu(false);
+                            for (Objeto3d pp : obj.getTiroNave()) {
+                                float xx = pp.getPosition().x;
+                                if (pp.getPosition().z > -58 && (xx < -2 || xx > 2)) {
+                                    obj.setAtirando(false);
+                                    obj.setAtirar(0, false);
+                                    pp.setPosition(obj.getPosition());
+                                    obj.setEsplodiu(false);
 
 
-                                    }
                                 }
                             }
                         }
 
+                        if (obj.getPosition().x < -1.0f && obj.getPosition().z < -65f) {
+                            obj.setAbatido(true);
+                            obj.setAtivado(false);
+                        }
                         break;
 
                     case 2:
-                        for (int i = 0; i < objArray.size(); i++) {
 
 
-                            calculoarColisaoI(objArray.get(i), Fenix, true);
-                            for (Objeto3d pp : tiros) {
-                                calculoarColisaoI(objArray.get(i), pp, false);
-                            }
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                calculoarColisaoI(pp, Fenix, false);
-                            }
-
-
-                            if (time > i * 50 && objArray.get(i).getTipo().equals("E")) {
-                                float x = objArray.get(i).getPosition().x;
-                                float z = objArray.get(i).getPosition().z;
-                                Vetor3 v = new Vetor3(-1, this.distancia, -60f);
-                                double distancia = calculoarDistancia(objArray.get(i), v);
-
-                                objArray.get(i).setGiro(315f);
-                                objArray.get(i).setGiroPosition(new Vetor3(0, objArray.get(i).getGiro(), 0));
-                                if (distancia > 0) {
-                                    x -= velocidade * 2;
-                                    z += velocidade * 2;
-
-                                }
-
-                                objArray.get(i).setPosition(new Vetor3(x, objArray.get(i).getPosition().getY(), z));
-
-                                if (objArray.get(i).getPosition().z >= -59) {
-                                    objArray.get(i).setPosition(new Vetor3(1.5f, this.distancia, -63.3f));
-                                    objArray.get(i).setGiro((float) (0));
-                                    objArray.get(i).setGiroPosition(new Vetor3(0, 0, 0));
-                                    objArray.get(i).setEsplodiu(false);
-
-                                    alterarModoN(objArray.get(i));
-                                    objArray.get(i).setAtirando(false);
-                                    objArray.get(i).setAtirar(0, false);
-                                    for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                        pp.setPosition(new Vetor3(-100, this.distancia, -61.5f));
-                                    }
-                                }
-                            }
+                        calculoarColisaoI(obj, Fenix, true);
+                        for (Objeto3d pp : tiros) {
+                            calculoarColisaoI(obj, pp, false);
+                        }
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            calculoarColisaoI(pp, Fenix, false);
                         }
 
-                        break;
 
-                    case 3:
-                        for (int i = 0; i < objArray.size(); i++) {
+                        if (obj.getTipo().equals("E")) {
+                            float x = obj.getPosition().x;
+                            float z = obj.getPosition().z;
+                            Vetor3 v = new Vetor3(-1, this.DISTANCIA, -60f);
+                            double distancia = calculoarDistancia(obj, v);
 
-
-                            calculoarColisaoI(objArray.get(i), Fenix, true);
-                            for (Objeto3d pp : tiros) {
-                                calculoarColisaoI(objArray.get(i), pp, false);
-                            }
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                calculoarColisaoI(pp, Fenix, false);
-                            }
-
-
-                            if (time > i * 50 && objArray.get(i).getTipo().equals("F")) {
-                                float x = objArray.get(i).getPosition().x;
-                                float z = objArray.get(i).getPosition().z;
-                                Vetor3 v = new Vetor3(1, this.distancia, -60f);
-                                double distancia = calculoarDistancia(objArray.get(i), v);
-
-                                objArray.get(i).setGiro(45f);
-                                objArray.get(i).setGiroPosition(new Vetor3(0, objArray.get(i).getGiro(), 0));
-                                if (distancia > 0) {
-                                    x += velocidade * 2;
-                                    z += velocidade * 2;
-
-                                }
-
-                                objArray.get(i).setPosition(new Vetor3(x, objArray.get(i).getPosition().getY(), z));
-
-                                if (objArray.get(i).getPosition().z >= -59) {
-                                    objArray.get(i).setPosition(new Vetor3(-1.5f, this.distancia, -63.3f));
-                                    objArray.get(i).setGiro((float) (0));
-                                    objArray.get(i).setGiroPosition(new Vetor3(0, 0, 0));
-                                    objArray.get(i).setEsplodiu(false);
-
-                                    alterarModoN(objArray.get(i));
-                                    objArray.get(i).setAtirando(false);
-                                    objArray.get(i).setAtirar(0, false);
-                                    for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                        pp.setPosition(new Vetor3(-100, this.distancia, -61.5f));
-                                    }
-                                }
-                            }
-                        }
-
-                        break;
-
-
-                    case 4:
-                        for (int i = 0; i < objArray.size(); i++) {
-                            objArray.get(i).setDisparando(true);
-
-                            calculoarColisaoI(objArray.get(i), Fenix, true);
-                            for (Objeto3d pp : tiros) {
-                                calculoarColisaoI(objArray.get(i), pp, false);
-                            }
-                            for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                calculoarColisaoI(pp, Fenix, false);
-                            }
-
-
-                            if (objArray.get(i).getTipo().equals("G")) {
-                                float x = objArray.get(i).getPosition().x;
-                                float z = objArray.get(i).getPosition().z;
-
+                            obj.setGiro(315f);
+                            obj.setGiroPosition(new Vetor3(0, obj.getGiro(), 0));
+                            if (distancia > 0) {
+                                x -= velocidade * 2;
                                 z += velocidade * 2;
 
-                                objArray.get(i).setPosition(new Vetor3(x, objArray.get(i).getPosition().getY(), z));
+                            }
 
-                                if (objArray.get(i).getPosition().z >= -59) {
-                                    objArray.get(i).setPosition(new Vetor3(1.5f, this.distancia, -65));
-                                    objArray.get(i).setGiro((float) (0));
-                                    objArray.get(i).setGiroPosition(new Vetor3(0, 0, 0));
-                                    objArray.get(i).setEsplodiu(false);
+                            obj.setPosition(new Vetor3(x, obj.getPosition().getY(), z));
 
-                                    alterarModoN(objArray.get(i));
+                            if (obj.getPosition().z >= -59) {
+                                obj.setPosition(new Vetor3(1.5f, this.DISTANCIA, -63.3f));
+                                obj.setGiro((float) (0));
+                                obj.setGiroPosition(new Vetor3(0, 0, 0));
+                                obj.setEsplodiu(false);
 
-                                }
-
-                                for (Objeto3d pp : objArray.get(i).getTiroNave()) {
-                                    float xx = pp.getPosition().x;
-                                    if (pp.getPosition().z > -59 || xx < -2 || xx > 2) {
-                                        objArray.get(i).setAtirando(false);
-                                        objArray.get(i).setAtirar(0, false);
-                                        objArray.get(i).setEsplodiu(false);
-
-                                        pp.setPosition(new Vetor3(objArray.get(i).getPosition().x, this.distancia, -65));
-                                    }
-
-                                    if (pp.getPosition().z > -63f && pp.getPosition().z < -59f)
-                                        objArray.get(i).setAtirando(true);
-
-
+                                alterarModoN(obj);
+                                obj.setAtirando(false);
+                                obj.setAtirar(0, false);
+                                for (Objeto3d pp : obj.getTiroNave()) {
+                                    pp.setPosition(new Vetor3(-100, this.DISTANCIA, -61.5f));
                                 }
                             }
+                        }
+                        if (obj.getPosition().z > -60) {
+                            obj.setAbatido(true);
+                            obj.setAtivado(false);
+                        }
+
+                        break;
+                    case 3:
+                        calculoarColisaoI(obj, Fenix, true);
+                        for (Objeto3d pp : tiros) {
+                            calculoarColisaoI(obj, pp, false);
+                        }
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            calculoarColisaoI(pp, Fenix, false);
+                        }
+
+
+                        if (obj.getTipo().equals("F")) {
+                            float x = obj.getPosition().x;
+                            float z = obj.getPosition().z;
+                            Vetor3 v = new Vetor3(1, this.DISTANCIA, -60f);
+                            double distancia = calculoarDistancia(obj, v);
+
+                            obj.setGiro(45f);
+                            obj.setGiroPosition(new Vetor3(0, obj.getGiro(), 0));
+                            if (distancia > 0) {
+                                x += velocidade * 2;
+                                z += velocidade * 2;
+
+                            }
+
+                            obj.setPosition(new Vetor3(x, obj.getPosition().getY(), z));
+
+                            if (obj.getPosition().z >= -59) {
+                                obj.setPosition(new Vetor3(-1.5f, this.DISTANCIA, -63.3f));
+                                obj.setGiro((float) (0));
+                                obj.setGiroPosition(new Vetor3(0, 0, 0));
+                                obj.setEsplodiu(false);
+
+                                alterarModoN(obj);
+                                obj.setAtirando(false);
+                                obj.setAtirar(0, false);
+                                for (Objeto3d pp : obj.getTiroNave()) {
+                                    pp.setPosition(new Vetor3(-100, this.DISTANCIA, -61.5f));
+                                }
+                            }
+                        }
+
+                        if (obj.getPosition().z > -60) {
+                            obj.setAbatido(true);
+                            obj.setAtivado(false);
+                        }
+                        break;
+
+
+                    case 4:
+                        obj.setDisparando(true);
+
+                        calculoarColisaoI(obj, Fenix, true);
+                        for (Objeto3d pp : tiros) {
+                            calculoarColisaoI(obj, pp, false);
+                        }
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            calculoarColisaoI(pp, Fenix, false);
+                        }
+
+
+                        //                  if (obj.getTipo().equals("G")) {
+                        float x = obj.getPosition().x;
+                        float z = obj.getPosition().z;
+
+                        z += velocidade * 2;
+
+                        obj.setPosition(new Vetor3(x, obj.getPosition().getY(), z));
+
+                        if (obj.getPosition().z >= -59) {
+                            obj.setPosition(new Vetor3(1.5f, this.DISTANCIA, -65));
+                            obj.setGiro((float) (0));
+                            obj.setGiroPosition(new Vetor3(0, 0, 0));
+                            obj.setEsplodiu(false);
+
+                            alterarModoN(obj);
+
+                        }
+
+                        for (Objeto3d pp : obj.getTiroNave()) {
+                            float xx = pp.getPosition().x;
+                            if (pp.getPosition().z > -59 || xx < -2 || xx > 2) {
+                                obj.setAtirando(false);
+                                obj.setAtirar(0, false);
+                                obj.setEsplodiu(false);
+
+                                pp.setPosition(new Vetor3(obj.getPosition().x, this.DISTANCIA, -65));
+                            }
+
+                            if (pp.getPosition().z > -63f && pp.getPosition().z < -59f)
+                                obj.setAtirando(true);
+
+
+                        }
+                        //   }
+                        if (obj.getPosition().z > -60) {
+                            obj.setAbatido(true);
+                            obj.setAtivado(false);
                         }
 
                         break;
 
                 }
             }
-            if (objArray.equals(inimigosC)) {
-                timeModoC++;
+            obj.setTimeLineInidvidual(obj.getTimeLineInidvidual() + 1);
 
-            } else {
-                timeModoE++;
 
-            }
         }
-        for (int i = 0; i < objArray.size(); i++) {
-            if (objArray.get(i).isDisparando())
-                objArray.get(i).atirandoC(Fenix, velocidade * 2);
-        }
+
+
+        if (obj.isDisparando())
+            obj.atirandoC(Fenix, velocidade * 2);
+
 
     }
+
 
     private void alterarModoN(Objeto3d o) {
         o.setTipo("N");
@@ -3165,7 +3199,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
         this.gl2 = gl;
-        barra.loadGLTexture(true);
+      //  barra.loadGLTexture(true);
 
         // mensagemBase.loadGLTexture(true);
 
@@ -3193,7 +3227,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     @Override
     public void onDrawFrame(GL10 gl) {
         // limpa a tela e os buffer
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+            gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
+
+
+
 
         if (carregado) {
 
@@ -3221,209 +3259,56 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
             if (!this.perdeu && !this.venceu) {
-               // if (!horaDoBoss) {
-                    for (int p = 0; p < inimigosC.size(); p++) {
-                        if (inimigosC.get(p).getPassou().equals("N") && inimigosC.get(p).isTroca() == false) {
-                            if (!inimigosC.get(p).isEsplodirNave()) {
-                                inimigosC.get(p).draw((GL11) gl2);
+                for (int p = 0; p < inimigosC.size(); p++) {
 
-                                for (int pp = 0; pp < inimigosC.get(p).getTiroNave().size(); pp++) {
-                                    inimigosC.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    inimigosC.get(p).getTiroNave().get(pp).setImpacto(false);
+                    desenhar(inimigosC.get(p), "inimigosC", p);
+
+                    desenhar(inimigosE.get(p), "inimigosE", p);
+                    inimigosC.get(p).setImpacto(false);
+                    inimigosE.get(p).setImpacto(false);
+
+                    try {
+
+                        if (p < inimigosB.size()) {
+                            desenhar(inimigosB.get(p), "inimigosB", p);
+                            desenhar(inimigosA.get(p), "inimigosA", p);
+                            desenhar(inimigosX.get(p), "inimigosX", p);
+
+
+                            if (asteroide.get(p).getPassou().equals("N") && asteroide.get(p).isTroca() == false) {
+                                if (!asteroide.get(p).isEsplodirNave()) {
+                                    asteroide.get(p).draw((GL11) gl2);
+
+                                } else {
+                                    Esplosao esp = filtro("asteroide", p);
+                                    if (asteroide.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
+
+                                        esp.getSplosaoArrayNave().get(asteroide.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
+                                        esp.getSplosaoArrayNave().get(asteroide.get(p).getEsplosaoNaveId()).setImpacto(false);
+                                    }
+
 
                                 }
-
-                            } else {
-
-                                //todo
-
-                                Esplosao esp = filtro("inimigosC", p);
-                                if (inimigosC.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-                                    esp.getSplosaoArrayNave().get(inimigosC.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                    esp.getSplosaoArrayNave().get(inimigosC.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                }
-
-
-                                for (int pp = 0; pp < inimigosC.get(p).getTiroNave().size(); pp++) {
-                                    inimigosC.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    inimigosC.get(p).getTiroNave().get(pp).setImpacto(false);
-
-                                }
-
                             }
-                            inimigosC.get(p).setImpacto(false);
+
+                            inimigosA.get(p).setImpacto(false);
+                            inimigosB.get(p).setImpacto(false);
+                            inimigosX.get(p).setImpacto(false);
+                            asteroide.get(p).setImpacto(false);
+
                         }
 
 
-                        if (inimigosE.get(p).getPassou().equals("N") && inimigosE.get(p).isTroca() == false) {
-                            if (!inimigosE.get(p).isEsplodirNave()) {
-                                inimigosE.get(p).draw((GL11) gl2);
-
-                                for (int pp = 0; pp < inimigosE.get(p).getTiroNave().size(); pp++) {
-                                    inimigosE.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    inimigosE.get(p).getTiroNave().get(pp).setImpacto(false);
-
-                                }
-
-                            } else {
-                                Esplosao esp = filtro("inimigosE", p);
-                                if (inimigosE.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                    esp.getSplosaoArrayNave().get(inimigosE.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                    esp.getSplosaoArrayNave().get(inimigosE.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                }
-                                for (int pp = 0; pp < inimigosE.get(p).getTiroNave().size(); pp++) {
-                                    inimigosE.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    inimigosE.get(p).getTiroNave().get(pp).setImpacto(false);
-
-                                }
-
-
-                            }
-                            inimigosE.get(p).setImpacto(false);
-                        }
-
-
-                        try {
-
-                            if (p < inimigosB.size()) {
-                                if (inimigosB.get(p).getPassou().equals("N") && inimigosB.get(p).isTroca() == false) {
-                                    if (!inimigosB.get(p).isEsplodirNave()) {
-                                        inimigosB.get(p).draw((GL11) gl2);
-
-                                        for (int pp = 0; pp < inimigosB.get(p).getTiroNave().size(); pp++) {
-                                            inimigosB.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosB.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    } else {
-                                        Esplosao esp = filtro("inimigosB", p);
-                                        if (inimigosB.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                            esp.getSplosaoArrayNave().get(inimigosB.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                            esp.getSplosaoArrayNave().get(inimigosB.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                        }
-                                        for (int pp = 0; pp < inimigosB.get(p).getTiroNave().size(); pp++) {
-                                            inimigosB.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosB.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    }
-                                }
-
-
-                                if (inimigosA.get(p).getPassou().equals("N") && inimigosA.get(p).isTroca() == false) {
-                                    if (!inimigosA.get(p).isEsplodirNave()) {
-                                        inimigosA.get(p).draw((GL11) gl2);
-
-                                        for (int pp = 0; pp < inimigosA.get(p).getTiroNave().size(); pp++) {
-                                            inimigosA.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosA.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    } else {
-                                        Esplosao esp = filtro("inimigosA", p);
-
-                                        if (inimigosA.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                            esp.getSplosaoArrayNave().get(inimigosA.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                            esp.getSplosaoArrayNave().get(inimigosA.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                        }
-
-                                        for (int pp = 0; pp < inimigosA.get(p).getTiroNave().size(); pp++) {
-                                            inimigosA.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosA.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    }
-                                }
-                                if (inimigosX.get(p).getPassou().equals("N") && inimigosX.get(p).isTroca() == false) {
-                                    if (!inimigosX.get(p).isEsplodirNave()) {
-                                        inimigosX.get(p).draw((GL11) gl2);
-
-                                        for (int pp = 0; pp < inimigosX.get(p).getTiroNave().size(); pp++) {
-                                            inimigosX.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosX.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    } else {
-                                        Esplosao esp = filtro("inimigosX", p);
-
-                                        if (inimigosX.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                            esp.getSplosaoArrayNave().get(inimigosX.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                            esp.getSplosaoArrayNave().get(inimigosX.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                        }
-
-                                        for (int pp = 0; pp < inimigosX.get(p).getTiroNave().size(); pp++) {
-                                            inimigosX.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                            inimigosX.get(p).getTiroNave().get(pp).setImpacto(false);
-                                        }
-
-                                    }
-                                }
-
-
-                                if (asteroide.get(p).getPassou().equals("N") && asteroide.get(p).isTroca() == false) {
-                                    if (!asteroide.get(p).isEsplodirNave()) {
-                                        asteroide.get(p).draw((GL11) gl2);
-
-                                    } else {
-                                        Esplosao esp = filtro("asteroide", p);
-                                        if (asteroide.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                            esp.getSplosaoArrayNave().get(asteroide.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                            esp.getSplosaoArrayNave().get(asteroide.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                        }
-
-
-                                    }
-                                }
-
-                                inimigosA.get(p).setImpacto(false);
-                                inimigosB.get(p).setImpacto(false);
-                                inimigosX.get(p).setImpacto(false);
-                                asteroide.get(p).setImpacto(false);
-
-                            }
-
-                        } catch (Exception e) {
-                            p = 0;
-                        }
+                    } catch (Exception e) {
+                        p = 0;
                     }
+                }
 
 
-                    for (int p = 0; p < boss.size(); p++) {
-                        if (boss.get(p).getPassou().equals("N") && boss.get(p).isTroca() == false) {
-                            if (!boss.get(p).isEsplodirNave()) {
-                                boss.get(p).draw((GL11) gl2);
-
-                                for (int pp = 0; pp < boss.get(p).getTiroNave().size(); pp++) {
-                                    boss.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    boss.get(p).getTiroNave().get(pp).setImpacto(false);
-
-                                }
-
-                            } else {
-                                Esplosao esp = filtro("boss", 0);
-
-                                if (boss.get(p).getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-
-                                    esp.getSplosaoArrayNave().get(boss.get(p).getEsplosaoNaveId()).draw((GL11) gl2);
-                                    esp.getSplosaoArrayNave().get(boss.get(p).getEsplosaoNaveId()).setImpacto(false);
-                                }
-
-
-                                for (int pp = 0; pp < boss.get(p).getTiroNave().size(); pp++) {
-                                    boss.get(p).getTiroNave().get(pp).draw((GL11) gl2);
-                                    boss.get(p).getTiroNave().get(pp).setImpacto(false);
-
-                                }
-
-                            }
-                            boss.get(p).setImpacto(false);
-                        }
-                    }
+                for (int p = 0; p < boss.size(); p++) {
+                    desenhar(boss.get(p), "boss", p);
+                    boss.get(p).setImpacto(false);
+                }
 
 
             }
@@ -3434,24 +3319,26 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //            gl.glRotatef( (giroy)*-1, 0, 1, 0 );
 //
             // pontoDoEixozTela+=0.02;
-            gl.glRotatef(80, 1, 0, 0);
-//globo
 
-
-            gl.glTranslatef(0, localy, localz);
 
             if (!parado) {
                 controle();
                 if (timeLine == 1) {
                     localz = 62f;
                     localy = -17.00f;
+                    localx = Fenix.getPosition().x * -1;
+
                 }
             } else {
 
 
-            restart();
+                restart();
 
             }
+            gl.glRotatef(80, 1, 0, 0);
+//globo
+
+            gl.glTranslatef(localx, localy, localz);
 
 
             if (this.pause) {
@@ -3469,9 +3356,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             if (carga >= 13) {
                 //   gl.glClearColor(0.4f, 0.1f, 0.1f, 0.1f );
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    quadroInserirPalavra.setTextura(ConvertBitimap.getBitmapBolha("   COMEÇAR", 70, 3));
+                    quadroInserirPalavra.setTextura(R.drawable.esplosao);
                 }
-                quadroInserirPalavra.loadGLTexture(true);
+               // quadroInserirPalavra.loadGLTexture(true);
                 quadroInserirPalavra.draw((GL11) gl2);
                 tempoDeEspera--;
             } else {
@@ -3487,10 +3374,39 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         }
     }
 
+    private void desenhar(Objeto3d o, String nome, int p) {
+        if (o.getPassou().equals("N") && o.isTroca() == false && o.getPosition().x > -1.5f && o.getPosition().x < 1.5f) {
+            if (!o.isEsplodirNave()) {
+                o.draw((GL11) gl2);
+
+                for (int pp = 0; pp < o.getTiroNave().size(); pp++) {
+                    o.getTiroNave().get(pp).draw((GL11) gl2);
+                    o.getTiroNave().get(pp).setImpacto(false);
+                }
+
+            } else {
+                Esplosao esp = filtro(nome, p);
+
+                if (o.getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
+
+                    esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).draw((GL11) gl2);
+                    //        esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).setImpacto(false);
+                }
+
+                for (int pp = 0; pp < o.getTiroNave().size(); pp++) {
+                    o.getTiroNave().get(pp).draw((GL11) gl2);
+                    o.getTiroNave().get(pp).setImpacto(false);
+                }
+
+            }
+        }
+    }
+
+
     private void restart() {
 
         recomecar++;
-vitoria=false;
+        vitoria = false;
         if (recomecar == 100) {
             parado = false;
             this.perdeu = false;
@@ -3507,6 +3423,7 @@ vitoria=false;
             resaetarTudo(inimigosC);
             resaetarTudo(inimigosE);
             resaetarTudo(inimigosX);
+            //  resaetarTudo(sobrasObj);
             resaetarTudo(boss);
 
             timeModoBoss = 0;
@@ -3518,6 +3435,14 @@ vitoria=false;
             timeModoX = 0;
             alterarNivelDeTiro(12);
             horaDoBoss = false;
+            this.animal.setX(0);
+            velox = 0;
+            veloz = -62f;
+            Fenix.getPosition().x = 0;
+            Fenix.getPosition().z = -62f;
+            invulneravel = false;
+        //    ceu.setPosition(new Vetor3(0, -16, -65f));
+
             for (int i = 0; i < vaiPraCena.length; i++) {
                 vaiPraCena[i] = false;
             }
@@ -3582,7 +3507,7 @@ vitoria=false;
 
     public void moverPersonagem(MotionEvent event) {
 
-        if(vitoria){
+        if (vitoria) {
             return;
         }
 //        if(Fenix.getPosition().z>-60.9f){
@@ -3639,7 +3564,13 @@ vitoria=false;
         }
 
 
-        if (this.xx + this.xr < this.w * 0.23 && this.xx + this.xr > (this.w * 0.23) * -1) {
+        if (this.xx + this.xr < this.w * 0.24 && this.xx + this.xr > (this.w * 0.24
+        ) * -1) {
+
+            localx = ((this.animal.getX() * 0.14f) * (0.14f * turbo)) * -1;
+        }
+
+        if (this.xx + this.xr < this.w * 0.40 && this.xx + this.xr > (this.w * 0.40) * -1) {
             this.animal.setX(this.xx + this.xr);
 
 
@@ -3928,23 +3859,26 @@ vitoria=false;
             o.setGiroPosition(new Vetor3(0, 0, 0));
             Esplosao esp = filtro(o.getNomeRef(), objeto3ds.indexOf(o));
             o.setAtirando(false);
-            for (int i = 0; i < o.getTiroTime().length; i++) {
+            if (o.getTiroTime() != null) {
+                for (int i = 0; i < o.getTiroTime().length; i++) {
 
-                o.getTiroTime()[i] = 0;
+                    o.getTiroTime()[i] = 0;
+                }
             }
-            for (int ii = 0; ii < esp.getSplosaoArrayNave().size(); ii++) {
-                esp.getSplosaoArrayNave().get(ii).getPosition().setZ(-65f);
-                esp.setEsplosaoNaveId(0);
 
-            }
-            for (Objeto3d t : o.getTiroNave()) {
+            if (o.getTiroNave() != null) {
+                for (Objeto3d t : o.getTiroNave()) {
 
-                t.getPosition().z = -1000f;
+                    t.getPosition().z = -1000f;
+                }
             }
+            o.setTimeLineInidvidual(0);
             o.setEsplosaoNaveId(0);
             o.setTimeEsplosaoNave(0);
             o.setEsplodiu(false);
-             o.setEsplodirNave(false);
+            o.setEsplodirNave(false);
+            o.setAtivado(false);
+            o.setAbatido(false);
         }
         horaDoBoss = false;
         for (int i = 0; i < vaiPraCena.length; i++) {
