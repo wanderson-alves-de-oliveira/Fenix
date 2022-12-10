@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.jogodetabuleiro1.R;
@@ -91,7 +90,7 @@ public class Intro extends View implements Runnable {
             intent.putExtras(param);
 
             this.contexto.startActivities(new Intent[]{intent});
-
+ System.exit(0);
         }
         if(time<100){
             time++;
@@ -138,27 +137,5 @@ public class Intro extends View implements Runnable {
 
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-
-
-//        if (e.getX() >  0 && e.getY() > this.h * 0.70 ) {
-//
-//
-//            Bundle param = new Bundle();
-//            param.putInt("nivel", this.valor );
-//            param.putBoolean("inico",true);
-//
-//            Intent intent = new Intent( this.contexto.getApplicationContext(),Tartaruga.class);
-//            intent.putExtras(param);
-//
-//            this.contexto.startActivities(new Intent[]{intent});
-//
-//
-//        }
-
-
-        return super.onTouchEvent(e);
-    }
 
 }

@@ -974,8 +974,9 @@ public class Objeto3d implements Serializable {
         texturaBuffer = byteBuffer.asFloatBuffer();
         texturaBuffer.put(texture);
         texturaBuffer.position(0);
-
-        m_BumpmapID = createTexture( context, this.normalMap,1);
+if(this.normalMap!=0) {
+    m_BumpmapID = createTexture(context, this.normalMap, 1);
+}
         m_MainTexture = createTexture( context, this.textura,0);
 
     }
@@ -1150,67 +1151,74 @@ public class Objeto3d implements Serializable {
             gl.glEnable(GL11.GL_BLEND);// abilita mistura de cores
             gl.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);//
         }
-        gl.glFrontFace( GLES30.GL_CW );
-        gl.glVertexPointer( 3, GLES30.GL_FLOAT, 0, verticeBuffer[cont] );
-        if (texturaBuffer != null) {
-            gl.glClientActiveTexture(GL10.GL_TEXTURE0);
-            gl.glBindTexture(GLES30.GL_TEXTURE_2D, textures[0]);
-            gl.glTexCoordPointer(2, GLES30.GL_FLOAT, 0, texturaBuffer);
-        }
-        // Draw the vertices as triangle strip
-        GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesDeVertices.length,GL11.GL_UNSIGNED_SHORT, indiceBuffer);
-        if (indicesNormais != null) {
-            gl.glNormalPointer(GLES30.GL_FLOAT, 0, NormaisBuffer[cont]);
-            GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesNormais.length, GLES30.GL_UNSIGNED_SHORT, indiceNormaisBuffer);
+        if(verticeBuffer[cont]!=null) {
+            gl.glFrontFace(GLES30.GL_CW);
+            gl.glVertexPointer(3, GLES30.GL_FLOAT, 0, verticeBuffer[cont]);
         }
         if (texturaBuffer != null) {
+
             gl.glEnable(GL10.GL_TEXTURE_2D);
             gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
             gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
             gl.glClientActiveTexture(GL10.GL_TEXTURE0);
-            //     gl.glClientActiveTexture(GL10.GL_TEXTURE1);
-            gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
 
-
-            gl.glClientActiveTexture(GL10.GL_TEXTURE1);
-            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
-            gl.glMatrixMode(GL10.GL_MODELVIEW);
             gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
             gl.glNormalPointer(GL10.GL_FLOAT, 0, NormaisBuffer[cont]);
+            gl.glBindTexture(GLES30.GL_TEXTURE_2D, textures[0]);
+            gl.glTexCoordPointer(2, GLES30.GL_FLOAT, 0, texturaBuffer);
+
+            // Draw the vertices as triangle strip
+            GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesDeVertices.length, GL11.GL_UNSIGNED_SHORT, indiceBuffer);
+            if (indicesNormais != null) {
+                gl.glNormalPointer(GLES30.GL_FLOAT, 0, NormaisBuffer[cont]);
+                GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesNormais.length, GLES30.GL_UNSIGNED_SHORT, indiceNormaisBuffer);
+            }
+//
+//                gl.glClientActiveTexture(GL10.GL_TEXTURE0);
+//                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+//                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
+
+//
+//                gl.glClientActiveTexture(GL10.GL_TEXTURE1);
+//                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
+//                gl.glMatrixMode(GL10.GL_MODELVIEW);
+//
 
 
-        gl.glColorPointer(4, GL10.GL_UNSIGNED_BYTE, 0, m_ColorData);
-        float lightAngle=0.03f;
-        float x,y,z;
-        x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
-        y = 0.0f;
-        z = (float) Math.cos(lightAngle * (3.14159 / 180.0f));
+//
+//                gl.glColorPointer(4, GL10.GL_UNSIGNED_BYTE, 0, m_ColorData);
+//                float lightAngle = 0.03f;
+//                float x, y, z;
+//                x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
+//                y = 0.0f;
+//                z = (float) Math.cos(lightAngle * (3.14159 / 180.0f));
+//
+//                // Half shifting to have a value between 0.0f and 1.0f.
+//                x = x * 0.5f + 0.5f; //3
+//                y = y * 0.5f + 0.5f;
+//                z = z * 0.5f + 0.5f;
+//
+//                gl.glColor4f(x, y, z, 1.0f); //4
 
-        // Half shifting to have a value between 0.0f and 1.0f.
-        x = x * 0.5f + 0.5f; //3
-        y = y * 0.5f + 0.5f;
-        z = z * 0.5f + 0.5f;
+            if(normalMap!=0) {
+                gl.glActiveTexture(gl.GL_TEXTURE1); //5
+                gl.glBindTexture(gl.GL_TEXTURE_2D, textures[1]);
 
-        gl.glColor4f(x, y, z, 1.0f); //4
-
-            gl.glActiveTexture(gl.GL_TEXTURE1); //5
-            gl.glBindTexture(gl.GL_TEXTURE_2D, m_BumpmapID);
-
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GLES30.GL_TEXTURE); //8
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
-
-
-            gl.glActiveTexture(gl.GL_TEXTURE0); //10
-            gl.glBindTexture(gl.GL_TEXTURE_2D, textures[0]);
+                gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
+                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
+                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GLES30.GL_TEXTURE); //8
+                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
 
 
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_MODULATE);
+                gl.glActiveTexture(gl.GL_TEXTURE0); //10
+                gl.glBindTexture(gl.GL_TEXTURE_2D, textures[0]);
 
+
+                gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_MODULATE);
+            }
         }
-  gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (2+1)*2*(1-1)+2);
+
+          //gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (2+1)*2*(1-1)+2);
 
         gl.glPopMatrix();
 
@@ -1226,7 +1234,7 @@ public class Objeto3d implements Serializable {
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, image, 0); // 4
         GLES30.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,GL10.GL_LINEAR); // 5a
         GLES30.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,GL10.GL_LINEAR); // 5b
-        image.recycle(); //6
+       // image.recycle(); //6
         return resource;
 
     }

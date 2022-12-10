@@ -54,7 +54,6 @@ public class Tartaruga extends AppCompatActivity {
         }
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onResume() {
         super.onResume();
