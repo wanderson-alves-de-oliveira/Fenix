@@ -899,7 +899,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 // this.musica = MediaPlayer.create(context, R.raw.musicb);
                 ceu = new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(5, 10, ceoZ));
+                ceu.setPosition(new Vetor3(-5, 10, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -911,7 +911,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 ceoZ = -62;
                 ceu = new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 //  ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(10, 10, ceoZ));
+                ceu.setPosition(new Vetor3(-10, 10, ceoZ));
                 this.musica.seekTo(0);
                 this.musica.start();
 
@@ -922,9 +922,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 nivelTiroTempo = 5;
                 this.musica = MediaPlayer.create(context, R.raw.musicc);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 10, ceoZ));
+                ceu.setPosition(new Vetor3(-15, 10, ceoZ));
 
                 if (!this.musica.isPlaying()) {
                     this.musica.seekTo(0);
@@ -937,9 +937,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             case 5:
                 ceoZ = -62;
                 // this.musica = MediaPlayer.create(context, R.raw.musicb);
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.prediosa, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 10, ceoZ));
+                ceu.setPosition(new Vetor3(-20, 10, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -948,9 +948,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             case 6:
                 // this.musica = MediaPlayer.create(context, R.raw.musicd);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.prediosb, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 //  ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 10, ceoZ));
+                ceu.setPosition(new Vetor3(-25, 10, ceoZ));
                 this.musica.seekTo(0);
                 this.musica.start();
 
@@ -962,9 +962,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 this.musica = MediaPlayer.create(context, R.raw.musica);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+                ceu.setPosition(new Vetor3(-30, 14, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -975,9 +975,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 this.musica = MediaPlayer.create(context, R.raw.musica);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivela, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+                ceu.setPosition(new Vetor3(-35, 14, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -987,9 +987,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 this.musica = MediaPlayer.create(context, R.raw.musica);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivelb, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+                ceu.setPosition(new Vetor3(-40, 14, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
@@ -1000,9 +1000,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 this.musica = MediaPlayer.create(context, R.raw.musica);
                 ceoZ = -62;
-                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.eruption, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
-                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+                ceu.setPosition(new Vetor3(-45, 14, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
