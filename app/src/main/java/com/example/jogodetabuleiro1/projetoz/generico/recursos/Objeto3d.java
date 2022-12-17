@@ -81,8 +81,8 @@ public class Objeto3d implements Serializable {
     private String tipo = "";
     private String nome = "";
     private String nomeRef = "";
-    int m_BumpmapID;
-    int m_MainTexture;
+    private   int m_BumpmapID;
+    private   int m_MainTexture;
 
     static int level = 0;
 
@@ -687,6 +687,7 @@ public class Objeto3d implements Serializable {
             tiroArray.add(new Objeto3d(context, norm,asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
              tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
+            tiroArray.get(t).vezes(3);
            //  tiroArray.get(t).loadGLTexture(false);
             tiroTime[t] = 0;
             atirar.add(false);
@@ -701,7 +702,7 @@ public class Objeto3d implements Serializable {
 
         if (!reset) {
             if (getTiroNave().size() > 0) {
-                if (time == tempoDisparo) {
+                if (time >= tempoDisparo) {
                     setAtirar(idTiro, true);
                     if (idTiro < getTiroNave().size() - 1) {
                         idTiro++;
@@ -786,7 +787,7 @@ public class Objeto3d implements Serializable {
 
                         }
 
-                        if (tiroTime[i] == 700) {
+                        if (tiroTime[i] == 1000|| getTiroNave().get(i).getPosition().z>-59f) {
                             setAtirar(i, false);
                             setTiroTime(i, 0);
                         }
@@ -974,10 +975,7 @@ public class Objeto3d implements Serializable {
         texturaBuffer = byteBuffer.asFloatBuffer();
         texturaBuffer.put(texture);
         texturaBuffer.position(0);
-if(this.normalMap!=0) {
-    m_BumpmapID = createTexture(context, this.normalMap, 1);
-}
-        m_MainTexture = createTexture( context, this.textura,0);
+
 
     }
 
@@ -1013,6 +1011,12 @@ if(this.normalMap!=0) {
         this.tamanho = tamanho;
         this.context=context;
         m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
+
+
+
+        this.m_BumpmapID = createTexture(context, this.normalMap, 1);
+        this.m_MainTexture = createTexture( context, this.textura,0);
+
         if (leitorDeObj.texturaT != null) {
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
         }
@@ -1030,19 +1034,6 @@ if(this.normalMap!=0) {
         //loaudImg();
     }
 
-//private void loaudImg(){
-//
-//        if (texturaBuffer != null) {
-//            textures[0] = 0;
-//            textures[1] = 0;
-//            texturaBuffer.clear();
-//            texturaBuffer.put(texture);
-//            texturaBuffer.position(0);
-//
-//            m_BumpmapID = createTexture( context, this.normalMap,0);
-//            m_MainTexture = createTexture( context, this.textura,0);
-//    }
-//}
 
     protected static FloatBuffer makeFloatBuffer(float[] arr)
     {
@@ -1078,6 +1069,8 @@ if(this.normalMap!=0) {
 
 
 
+
+
         if (quadrosDeanimacao > 1) {
             if (inicio) {
                 if (cont == quadrosDeanimacao - 1) {
@@ -1104,24 +1097,27 @@ if(this.normalMap!=0) {
 
 
             if (!isFenix()) {
-                float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z, 1};
-                float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
-                gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0);
-
-
+                float[] ambientLight = {0.0f, 1.0f, 0.0f, 1.0f};//cor amarela do ambiente
+                float posicaoLuz[] = {-1f,0,-65f , 1f};
+                gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
+                refletirTime++;
+                if (refletirTime == 20) {
+                    impacto = false;
+                    refletirTime = 0;
+                }
             } else {
 
 
                 float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z - 0.1f, 1};
                 float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
-                gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0);
+                gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
 
                 refletirTime++;
-                if (refletirTime == 10) {
+                if (refletirTime == 20) {
                     impacto = false;
                     refletirTime = 0;
                 }
@@ -1131,10 +1127,10 @@ if(this.normalMap!=0) {
 
         }else {
             float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
-            float posicaoLuz[] = {-1f,0,-65f , 1f};
-            gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-            gl.glLightfv(gl.GL_LIGHT1, gl.GL_AMBIENT, ambientLight, 0);
-            gl.glLightfv(gl.GL_LIGHT1, gl.GL_POSITION, posicaoLuz, 0);
+            float posicaoLuz[] = {-1f,0,-30f , 1f};
+            gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+            gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
+            gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
 
 
         }
@@ -1147,78 +1143,84 @@ if(this.normalMap!=0) {
 
 
         if (Transparente) {
-            gl.glEnable(GL11.GL_ALPHA_TEST);// abilita camada alpha
-            gl.glEnable(GL11.GL_BLEND);// abilita mistura de cores
-            gl.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);//
+            gl.glEnable(GL11 .GL_ALPHA_TEST);// abilita camada alpha
+            gl.glEnable(GL11 .GL_BLEND);// abilita mistura de cores
+            gl.glBlendFunc(GL11 .GL_SRC_ALPHA, GL11 .GL_ONE_MINUS_SRC_ALPHA);//
         }
         if(verticeBuffer[cont]!=null) {
-            gl.glFrontFace(GLES30.GL_CW);
-            gl.glVertexPointer(3, GLES30.GL_FLOAT, 0, verticeBuffer[cont]);
+            gl.glFrontFace(gl.GL_CW);
+            gl.glVertexPointer(3, GL11 .GL_FLOAT, 0, verticeBuffer[cont]);
         }
         if (texturaBuffer != null) {
 
             gl.glEnable(GL10.GL_TEXTURE_2D);
-            gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-            gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-            gl.glClientActiveTexture(GL10.GL_TEXTURE0);
+            gl.glEnableClientState(GL11 .GL_VERTEX_ARRAY);
+            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
 
-            gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-            gl.glNormalPointer(GL10.GL_FLOAT, 0, NormaisBuffer[cont]);
-            gl.glBindTexture(GLES30.GL_TEXTURE_2D, textures[0]);
-            gl.glTexCoordPointer(2, GLES30.GL_FLOAT, 0, texturaBuffer);
+
+
+            gl.glEnableClientState(GL11 .GL_NORMAL_ARRAY);
+            gl.glNormalPointer(GL11 .GL_FLOAT, 0, NormaisBuffer[cont]);
+            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
 
             // Draw the vertices as triangle strip
-            GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesDeVertices.length, GL11.GL_UNSIGNED_SHORT, indiceBuffer);
-            if (indicesNormais != null) {
-                gl.glNormalPointer(GLES30.GL_FLOAT, 0, NormaisBuffer[cont]);
-                GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesNormais.length, GLES30.GL_UNSIGNED_SHORT, indiceNormaisBuffer);
-            }
-//
-//                gl.glClientActiveTexture(GL10.GL_TEXTURE0);
-//                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-//                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
-
-//
-//                gl.glClientActiveTexture(GL10.GL_TEXTURE1);
-//                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texturaBuffer);
-//                gl.glMatrixMode(GL10.GL_MODELVIEW);
-//
 
 
 //
-//                gl.glColorPointer(4, GL10.GL_UNSIGNED_BYTE, 0, m_ColorData);
-//                float lightAngle = 0.03f;
-//                float x, y, z;
-//                x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
-//                y = 0.0f;
-//                z = (float) Math.cos(lightAngle * (3.14159 / 180.0f));
+
+                gl.glColorPointer(4, GL11 .GL_UNSIGNED_BYTE, 0, m_ColorData);
+                float lightAngle = 0f;
+                float x, y, z;
+                x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
+                y = 0.0f;
+                z = (float) Math.cos(lightAngle * (3.14159 / 180.0f));
+
+                // Half shifting to have a value between 0.0f and 1.0f.
+                x = x * 0.5f + 0.5f; //3
+                y = y * 0.5f + 0.5f;
+                z = z * 0.5f + 0.5f;
+
+                gl.glColor4f(x, y, z, 1.0f); //4
+
+
+
+
+            gl.glTexEnvf(GL11 .GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11 .GL_REPLACE);
+            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
+            gl.glEnable(GL11 .GL_TEXTURE_2D);
 //
-//                // Half shifting to have a value between 0.0f and 1.0f.
-//                x = x * 0.5f + 0.5f; //3
-//                y = y * 0.5f + 0.5f;
-//                z = z * 0.5f + 0.5f;
-//
-//                gl.glColor4f(x, y, z, 1.0f); //4
 
-            if(normalMap!=0) {
-                gl.glActiveTexture(gl.GL_TEXTURE1); //5
-                gl.glBindTexture(gl.GL_TEXTURE_2D, textures[1]);
+            gl.glClientActiveTexture(GL11 .GL_TEXTURE1);
+            gl.glActiveTexture(GL11 .GL_TEXTURE1);
+            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
+            gl.glBindTexture(GL11 .GL_TEXTURE_2D,  textures[1]);
 
-                gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
-                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
-                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GLES30.GL_TEXTURE); //8
-                gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
+            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
+            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
+            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GL11.GL_TEXTURE); //8
+            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
 
-
-                gl.glActiveTexture(gl.GL_TEXTURE0); //10
-                gl.glBindTexture(gl.GL_TEXTURE_2D, textures[0]);
+            gl.glClientActiveTexture(GL11 .GL_TEXTURE0);
+            gl.glActiveTexture(GL11 .GL_TEXTURE0);
+            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
+            gl.glBindTexture(GL11 .GL_TEXTURE_2D,textures[0]);
 
 
-                gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_MODULATE);
-            }
+
+            gl.glTexEnvf(GL11 .GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11 .GL_MODULATE);
+            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
+            gl.glEnable(GL11 .GL_TEXTURE_2D);
+
+
+
+             //   gl.glNormalPointer(gl.GL_FLOAT, 0, NormaisBuffer[cont]);
+                gl.glDrawElements(GL11 .GL_TRIANGLES, indicesNormais.length, GL11 .GL_UNSIGNED_SHORT, indiceNormaisBuffer);
+
+            gl.glDrawElements(GL11 .GL_TRIANGLES, indicesDeVertices.length, GL11 .GL_UNSIGNED_SHORT, indiceBuffer);
+
         }
 
-          //gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (2+1)*2*(1-1)+2);
+
 
         gl.glPopMatrix();
 
@@ -1231,86 +1233,14 @@ if(this.normalMap!=0) {
 
         GLES30.glGenTextures( 1, textures,0 );
         GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[i] );
-        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, image, 0); // 4
-        GLES30.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,GL10.GL_LINEAR); // 5a
-        GLES30.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,GL10.GL_LINEAR); // 5b
-       // image.recycle(); //6
+        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
+        image.recycle(); //6
         return resource;
 
     }
 
-
-
-    static float lightAngle=0.03f;
-    public void multiTextureBumpMap(GL10 gl, int mainTexture, int normalTexture){
-
-        float x,y,z;
-
-//        lightAngle+=0.3; //1
-//
-//        if(lightAngle>180)
-//            lightAngle=0;
-
-        // Set up the light vector.
-        x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
-        y = 0.0f;
-        z = (float) Math.cos(lightAngle * (3.14159 / 180.0f));
-
-        // Half shifting to have a value between 0.0f and 1.0f.
-        x = x * 0.5f + 0.5f; //3
-        y = y * 0.5f + 0.5f;
-        z = z * 0.5f + 0.5f;
-
-        gl.glColor4f(x, y, z, 1.0f); //4
-
-        //The color and normal map are combined.
-        gl.glActiveTexture(gl.GL_TEXTURE0); //5
-        gl.glBindTexture(gl.GL_TEXTURE_2D, mainTexture);
-
-        gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
-        gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
-        gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GLES30.GL_TEXTURE); //8
-        gl.glTexEnvf(gl.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
-
-
-        gl.glActiveTexture(gl.GL_TEXTURE1); //10
-        gl.glBindTexture(gl.GL_TEXTURE_2D, normalTexture);
-
-     //   gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE); //11
-    }
-
-
-
-
-
-//    public void loadGLTexture(boolean reciclar) {
-//        if (texturaBuffer != null) {
-//            textures[0] = 0;
-//            textures[1] = 0;
-//            texturaBuffer.clear();
-//            texturaBuffer.put( texture );
-//            texturaBuffer.position( 0 );
-//            // loading texture
-//            //bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.casco);
-//
-//            // generate one texture pointer
-//            GLES30.glGenTextures( 1, textures, 0 );
-//            GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[0] );
-//            GLES30.glTexParameterf( GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR );
-//            GLES30.glTexParameterf( GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR );
-//            GLUtils.texImage2D( GLES30.GL_TEXTURE_2D, level, textura, 0 );
-//            //Different possible texture parameters, e.positionY. GL10.GL_CLAMP_TO_EDGE
-//            // gl2.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_REPEAT);
-//
-//
-//
-//            // Use Android GLUtils to specify a two-dimensional texture image from our bitmap
-//            if (reciclar) {
-//                textura.recycle();
-//            }
-//
-//        }
-//    }
 
     public double grauDeGiro(Objeto3d alvo) {
         float distanciaX=alvo.getPosition().x-getPosition().x;

@@ -24,6 +24,7 @@ import com.example.jogodetabuleiro1.projetoz.generico.memoria.Animaisx;
 import com.example.jogodetabuleiro1.projetoz.generico.recursos.ConvertBitimap;
 import com.example.jogodetabuleiro1.projetoz.generico.recursos.Cronograma;
 import com.example.jogodetabuleiro1.projetoz.generico.recursos.Esplosao;
+import com.example.jogodetabuleiro1.projetoz.generico.recursos.Fase;
 import com.example.jogodetabuleiro1.projetoz.generico.recursos.Objeto3d;
 import com.example.jogodetabuleiro1.projetoz.generico.recursos.Vetor3;
 import com.example.jogodetabuleiro1.projetoz.index.Tartaruga;
@@ -69,7 +70,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int nivelTiro = 12;
     private int nivelTiroTempo = 15;
     private int nivelTiroIndex = 0;
-    private int danoNoInimigo = 1;
+    private int danoNoInimigo = 2;
     private float pontoDoEixoYInicio = 0;
     private float pontoDoEixoYFimm = 0;
     private float pontoDoEixoXInicio = 0;
@@ -310,7 +311,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.musica = MediaPlayer.create(context, R.raw.musica);
         this.musica.setLooping(true);
         this.musica.setVolume(0.4f, 0.4f);
-        this.musica.start();
+     //   this.musica.start();
         this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "fundob.obj", R.drawable.base, new Vetor3(1f, 1f, 1f), "");
         this.barra.setMudarTamanho(true);
         Bitmap seta = BitmapFactory.decodeResource(context.getResources(), R.drawable.seta);
@@ -395,7 +396,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 ceoZ = -62;
                 //   mensagemBase.setTextura(ConvertBitimap.getBitmapBase((int) (w * 0.69f), 0, seta, "Até a letra certa da palavra", 40, 3));
                 //   mensagemBase.loadGLTexture(true);
-                ceu = new Objeto3d(context,R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "prediosx.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
                 //  ceu.loadGLTexture(true);
                 ceu.setPosition(new Vetor3(0, 14, ceoZ));
 
@@ -564,7 +565,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     inimigosX.get(p).setId(p);
 
                     //   inimigosX.get(p).setSplosaoArrayNave(inimigosX.get(p).splosao(inimigosX.get(p)}, asset, context.getResources(), 1f));
-                    inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), 0, 5, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
+                    inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), R.drawable.tiroxxnorm, 5, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
                     inimigosX.get(p).setRefletir(true);
 
                     //   asteroide.get(p).loadGLTexture(true);
@@ -585,7 +586,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     // esplosaoArrayObj.add(new Esplosao(inimigosB.get(p)}, asset, context.getResources(), 0.5f,"inimigosB", p));
 
                     //     inimigosB.get(p).setSplosaoArrayNave(inimigosB.get(p).splosao(inimigosB.get(p)}, asset, context.getResources(), 0.5f));
-                    inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), 0, 1, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
+                    inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), R.drawable.tirobnorm, 1, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
                     inimigosB.get(p).setRefletir(true);
 
 
@@ -595,7 +596,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     //   inimigosA.get(p).setSplosaoArrayNave(inimigosA.get(p).splosao(inimigosA.get(p)}, asset, context.getResources(), 0.8f));
                     inimigosA.get(p).setValor(String.valueOf(v));
-                    inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p), 0, 3, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
+                    inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p), R.drawable.tiroanorm, 3, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
                     inimigosA.get(p).setVida(vidaA * dificuldade);
                     inimigosA.get(p).setRecoverVida(vidaA * dificuldade);
                     inimigosA.get(p).setRefletir(true);
@@ -662,7 +663,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     //  esplosaoArrayObj.add(new Esplosao(inimigosC.get(p)}, asset, context.getResources(), 0.3f,"inimigosC", p));
 
-                    inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), 0, 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                    inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), R.drawable.tirocnorm, 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                     inimigosC.get(p).setTipo("C");
                     inimigosC.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
                     inimigosC.get(p).setRefletir(true);
@@ -678,7 +679,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     //     esplosaoArrayObj.add(new Esplosao(inimigosE.get(p)}, asset, context.getResources(), 0.3f,"inimigosE", p));
 
-                    inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p),0, 1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
+                    inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), R.drawable.tiroenorm, 1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
                     inimigosE.get(p).setTipo("E");
                     inimigosE.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
                     inimigosE.get(p).setRefletir(true);
@@ -691,7 +692,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 //   boss.get(0).setSplosaoArrayNave(boss.get(0).splosao(boss.get(0)}, asset, context.getResources(), 0.8f));
                 boss.get(0).setValor(String.valueOf("A"));
-                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0), 0, 40, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                boss.get(0).setTiroNave(boss.get(0).criarTiros(boss.get(0), R.drawable.tirocnorm, 40, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                 boss.get(0).setVida(vidaBos * dificuldade);
                 boss.get(0).setRecoverVida(vidaBos * dificuldade);
                 boss.get(0).setBoss(true);
@@ -733,7 +734,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //                objCenario.get(2).setTransparente(true);
 //
 //                objCenario.get(2).setRefletir(true);
-              //  objCenario.get(2).vezes(45f);
+                //  objCenario.get(2).vezes(45f);
                 carregarCronologia(fase);
                 break;
             case 11:
@@ -819,7 +820,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 imgq = ConvertBitimap.getBitmapBarraxz(imgq, vida, "frase", (int) (this.wTela * 0.13f));
 
-                quadroInserirPalavra = new Objeto3d(context,0, asset, "quadroConta.obj", R.drawable.metal, new Vetor3(escala * 3.6f, escala * 20.1f, escala * 5.5f), "");
+                quadroInserirPalavra = new Objeto3d(context, R.drawable.tirocnorm, asset, "quadroConta.obj", R.drawable.metal, new Vetor3(escala * 3.6f, escala * 20.1f, escala * 5.5f), "");
                 //  quadroInserirPalavra.loadGLTexture(true);
                 quadroInserirPalavra.setPosition(new Vetor3(0f, 0f, 0f));
                 quadroInserirPalavra.setTransparente(true);
@@ -828,7 +829,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 for (int i = 0; i < QTD_DE_TIROS; i++) {
 
 
-                    tiros.add(new Objeto3d(context, 0, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                    tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
 
                     tiros.get(i).vezes(1.8f);
 
@@ -870,14 +871,18 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.timeModoX = 0;
         carregaModoX = true;
         carregaModoBoss = true;
-        cronograma = new ArrayList<>();
+     //   cronograma = new ArrayList<>();
         Cronograma c;
+        Fase f = new Fase();
+        nivelTiroTempo = 3;
+        nivelTiro=60;
+        cronograma=f.gerarFase(fase);
         switch (fase) {
             case 1:
-                nivelTiroTempo=5;
+                nivelTiroTempo = 5;
                 this.musica = MediaPlayer.create(context, R.raw.musicc);
                 ceoZ = -62;
-                ceu = new Objeto3d(context,R.drawable.prediosnorm, asset, "predios.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
                 ceu.setPosition(new Vetor3(0, 10, ceoZ));
 
@@ -885,431 +890,148 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     this.musica.seekTo(0);
                     this.musica.start();
                 }
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(100);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(200);
-                c.setTimeOUT(200);
-                c.setTimeMode(1000);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(1);
-                c.setPerpetuo(false);
-                c.setTimeIN(500);
-                c.setTimeOUT(1400);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(800);
-                c.setTimeOUT(500);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(4);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(1300);
-                c.setTimeOUT(200);
-                c.setTimeMode(1000);
-                c.setModo(3);
-                cronograma.add(c);
-
-
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(1500);
-                c.setTimeOUT(500);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(1);
-                c.setPerpetuo(false);
-                c.setTimeIN(1700);
-                c.setTimeOUT(1400);
-                c.setTimeMode(700);
-                c.setModo(1);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(1900);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(2);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(2000);
-                c.setTimeOUT(600);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(2200);
-                c.setTimeOUT(200);
-                c.setTimeMode(1000);
-                c.setModo(4);
-                cronograma.add(c);
-
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(2300);
-                c.setTimeOUT(200);
-                c.setTimeMode(1000);
-                c.setModo(3);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(1);
-                c.setPerpetuo(false);
-                c.setTimeIN(2400);
-                c.setTimeOUT(1400);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(2500);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(3);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(2500);
-                c.setTimeOUT(200);
-                c.setTimeMode(1000);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(-1);
-                c.setPerpetuo(false);
-                c.setTimeIN(3000);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(1000);
-                c.setFim(true);
-                cronograma.add(c);
 
                 break;
 
 
             case 2:
                 ceoZ = -62;
-               // this.musica = MediaPlayer.create(context, R.raw.musicb);
-                ceu = new Objeto3d(context,R.drawable.prediosnorm, asset, "predios.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
+                // this.musica = MediaPlayer.create(context, R.raw.musicb);
+                ceu = new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(5, 10, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+
+                break;
+            case 3:
+                // this.musica = MediaPlayer.create(context, R.raw.musicd);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+                //  ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(10, 10, ceoZ));
+                this.musica.seekTo(0);
+                this.musica.start();
+
+
+                break;
+
+            case 4:
+                nivelTiroTempo = 5;
+                this.musica = MediaPlayer.create(context, R.raw.musicc);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 10, ceoZ));
+
+                if (!this.musica.isPlaying()) {
+                    this.musica.seekTo(0);
+                    this.musica.start();
+                }
+
+                break;
+
+
+            case 5:
+                ceoZ = -62;
+                // this.musica = MediaPlayer.create(context, R.raw.musicb);
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.prediosa, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
                 ceu.setPosition(new Vetor3(0, 10, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
 
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(100);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(4);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(300);
-                c.setTimeOUT(300);
-                c.setTimeMode(1000);
-                c.setModo(3);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(4);
-                c.setPerpetuo(false);
-                c.setTimeIN(600);
-                c.setTimeOUT(600);
-                c.setTimeMode(800);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(1);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeOUT(1200);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(1400);
-                c.setTimeOUT(300);
-                c.setTimeMode(1000);
-                c.setModo(4);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(1500);
-                c.setTimeOUT(300);
-                c.setTimeMode(1000);
-                c.setModo(4);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(1600);
-                c.setTimeOUT(1200);
-                c.setTimeMode(700);
-                c.setModo(0);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(1800);
-                c.setTimeOUT(1900);
-                c.setTimeMode(700);
-                c.setModo(1);
-                cronograma.add(c);
-
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(2000);
-                c.setTimeOUT(300);
-                c.setTimeMode(1000);
-                c.setModo(3);
-                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(2000);
-                c.setTimeOUT(1200);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(-1);
-                c.setPerpetuo(false);
-                c.setTimeIN(4000);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(1000);
-                c.setFim(true);
-                cronograma.add(c);
-
                 break;
-            case 3:
-               // this.musica = MediaPlayer.create(context, R.raw.musicd);
+            case 6:
+                // this.musica = MediaPlayer.create(context, R.raw.musicd);
                 ceoZ = -62;
-                ceu = new Objeto3d(context,R.drawable.prediosnorm, asset, "predios.obj", R.drawable.predios, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "predios.obj", R.drawable.prediosb, new Vetor3(escala * 2, escala, escala), "");
                 //  ceu.loadGLTexture(true);
                 ceu.setPosition(new Vetor3(0, 10, ceoZ));
                 this.musica.seekTo(0);
                 this.musica.start();
 
 
-                c = new Cronograma();
-                c.setId(1);
-                c.setPerpetuo(false);
-                c.setTimeIN(400);
-                c.setTimeMode(1000);
-                c.setTimeOUT(400);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeOUT(25000);
-                c.setTimeMode(100);
-                c.setModo(0);
-                c.setBoss(true);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(-1);
-                c.setPerpetuo(false);
-                c.setTimeIN(1400);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(1000);
-                c.setFim(true);
-                cronograma.add(c);
-
                 break;
-            case 4:
+
+
+            case 7:
 
                 this.musica = MediaPlayer.create(context, R.raw.musica);
                 ceoZ = -62;
-                ceu = new Objeto3d(context,R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), "");
                 // ceu.loadGLTexture(true);
                 ceu.setPosition(new Vetor3(0, 14, ceoZ));
 
                 this.musica.seekTo(0);
                 this.musica.start();
 
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(100);
-                c.setTimeMode(1000);
-                c.setTimeOUT(100);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(300);
-                c.setTimeOUT(300);
-                c.setTimeMode(1000);
-                c.setModo(1);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(1400);
-                c.setTimeMode(1000);
-                c.setTimeOUT(1400);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(1400);
-                c.setTimeOUT(1400);
-                c.setTimeMode(1000);
-                c.setModo(3);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(2);
-                c.setPerpetuo(false);
-                c.setTimeIN(2500);
-                c.setTimeMode(1000);
-                c.setTimeOUT(2500);
-                c.setModo(4);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(5);
-                c.setPerpetuo(false);
-                c.setTimeIN(2600);
-                c.setTimeOUT(2600);
-                c.setTimeMode(1000);
-                c.setModo(0);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(200);
-                c.setTimeOUT(200);
-                c.setTimeMode(1900);
-                c.setModo(1);
-                c.setAtivo(true);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(3500);
-                c.setTimeOUT(25000);
-                c.setTimeMode(100);
-                c.setModo(0);
-                c.setBoss(true);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(-1);
-                c.setPerpetuo(false);
-                c.setTimeIN(3000);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(1000);
-                c.setFim(true);
-                cronograma.add(c);
                 break;
 
+            case 8:
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivela, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+                break;
+            case 9:
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.nivelb, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+                break;
+
+            case 10:
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "nivel.obj", R.drawable.eruption, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+                break;
+            case 11:
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "fase_base.obj", R.drawable.eruption, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+                break;
+            case 12:
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                ceoZ = -62;
+                ceu = new Objeto3d(context, R.drawable.nivelnorm, asset, "fase_base.obj", R.drawable.eruptiona, new Vetor3(escala * 2, escala, escala), "");
+                // ceu.loadGLTexture(true);
+                ceu.setPosition(new Vetor3(0, 14, ceoZ));
+
+                this.musica.seekTo(0);
+                this.musica.start();
+
+                break;
 
 
         }
@@ -1327,31 +1049,31 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         float x = obj.getTamanho().getX();
         float y = obj.getTamanho().getY();
         float z = obj.getTamanho().getZ();
-        splosaoArray.add(new Objeto3d(context, 0, asset, "sp.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "sp.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(0).setTransparente(true);
         //    splosaoArray.get(0).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spa.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "spa.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(1).setTransparente(true);
         //   splosaoArray.get(1).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spb.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "spb.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(2).setTransparente(true);
         // splosaoArray.get(2).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spc.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "spc.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(3).setTransparente(true);
         //  splosaoArray.get(3).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spd.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "spd.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(4).setTransparente(true);
         //  splosaoArray.get(4).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spe.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, R.drawable.esplosaonorm, asset, "spe.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(5).setTransparente(true);
         // splosaoArray.get(5).loadGLTexture(true);
 
-        splosaoArray.add(new Objeto3d(context, 0, asset, "spf.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context,  R.drawable.esplosaonorm, asset, "spf.obj", R.drawable.esplosao, new Vetor3(x, y, z), ""));
         splosaoArray.get(6).setTransparente(true);
 
         //  splosaoArray.get(6).loadGLTexture(true);
@@ -1583,22 +1305,22 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
             if (obj.getTimeEsplosaoNave() < 26) {
-try {
-    if (obj.getTimeEsplosaoNave() == 0) {
-        son(2);
-    }
+                try {
+                    if (obj.getTimeEsplosaoNave() == 0) {
+                        son(2);
+                    }
 
-    if (obj.getEsplosaoNaveId() < esplosao.getSplosaoArrayNave().size())
-        esplosao.getSplosaoArrayNave().get(obj.getEsplosaoNaveId()).setPosition(new Vetor3(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z));
+                    if (obj.getEsplosaoNaveId() < esplosao.getSplosaoArrayNave().size())
+                        esplosao.getSplosaoArrayNave().get(obj.getEsplosaoNaveId()).setPosition(new Vetor3(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z));
 
 
-    if (obj.getTimeEsplosaoNave() % 5 == 0 && obj.getEsplosaoNaveId() < esplosao.getSplosaoArrayNave().size()) {
-        obj.setEsplosaoNaveId(obj.getEsplosaoNaveId() + 1);
-    }
-    obj.setTimeEsplosaoNave(obj.getTimeEsplosaoNave() + 1);
-}catch (Exception e){
-    Log.e("TC",e.getMessage());
-}
+                    if (obj.getTimeEsplosaoNave() % 5 == 0 && obj.getEsplosaoNaveId() < esplosao.getSplosaoArrayNave().size()) {
+                        obj.setEsplosaoNaveId(obj.getEsplosaoNaveId() + 1);
+                    }
+                    obj.setTimeEsplosaoNave(obj.getTimeEsplosaoNave() + 1);
+                } catch (Exception e) {
+                    Log.e("TC", e.getMessage());
+                }
 
             } else {
 
@@ -1615,9 +1337,9 @@ try {
 
 
                 alterarModoN(obj);
-                for (int i = 0; i < tiros.size(); i++) {
-                    tiros.get(i).setPosition(new Vetor3(-1000, obj.getPosition().y, -1000));
-                }
+//                for (int i = 0; i < tiros.size(); i++) {
+//                    tiros.get(i).setPosition(new Vetor3(-1000, obj.getPosition().y, -1000));
+//                }
 
                 for (int i = 0; i < esplosao.getSplosaoArrayNave().size(); i++) {
 
@@ -1997,7 +1719,7 @@ try {
     }
 
     private void newLevel() {
-        if (fase < 4) {
+        if (fase < 12) {
             fase++;
         } else {
             fase = 1;
@@ -2024,12 +1746,12 @@ try {
 //            }
 //        }
 
- //       if (timeLine == 0) {
+        //       if (timeLine == 0) {
 //            nivelTiro = 12;
 //            alterarNivelDeTiro(12);
- //       } else if (timeLine == 400) {
-            alterarNivelDeTiro(24);
-   //    }
+        //       } else if (timeLine == 400) {
+        alterarNivelDeTiro(24);
+        //    }
 //        else if (timeLine == 800) {
 //            alterarNivelDeTiro(36);
 //        } else if (timeLine == 1200) {
@@ -2656,20 +2378,20 @@ try {
             }
 
             if (inimigosA.get(p).getPosition().z <= -900) {
-                inimigosA.get(p).getPosition().z= (float) ((-65-p)-(Math.random()*10));
-                inimigosA.get(p).getPosition().x= (float) (-1+(Math.random()*2));
+                inimigosA.get(p).getPosition().z = (float) ((-65 - p) - (Math.random() * 10));
+                inimigosA.get(p).getPosition().x = (float) (-1 + (Math.random() * 2));
             }
 
 
             if (inimigosA.get(p).getPosition().z > -58) {
-                for (Objeto3d pp : inimigosA.get(p).getTiroNave()) {
-                    pp.setPosition(new Vetor3(inimigosA.get(p).getPosition().x, DISTANCIA + 0.06f, inimigosA.get(p).getPosition().z));
-                }
+//                for (Objeto3d pp : inimigosA.get(p).getTiroNave()) {
+//                    pp.setPosition(new Vetor3(inimigosA.get(p).getPosition().x, DISTANCIA + 0.06f, inimigosA.get(p).getPosition().z));
+//                }
 
                 inimigosA.get(p).setPosition(new Vetor3(-0.3f,
                         DISTANCIA, -1000));
-                inimigosA.get(p).setAtirando(false);
-                inimigosA.get(p).setAtirar(0, false);
+//                inimigosA.get(p).setAtirando(false);
+//                inimigosA.get(p).setAtirar(0, false);
                 inimigosA.get(p).setAbatido(true);
                 inimigosA.get(p).setAtivado(false);
                 inimigosA.get(p).setEsplodiu(false);
@@ -2878,7 +2600,7 @@ try {
     public void moverFase() {
         if (timeLine > 0 && !vitoria && !perdeu && !horaDoBoss) {
             ceoZ = ceu.getPosition().z + (velocidade / 2);
-            ceu.setPosition(new Vetor3(0, ceu.getPosition().y, ceoZ));
+            ceu.setPosition(new Vetor3(ceu.getPosition().x, ceu.getPosition().y, ceoZ));
 //            if (objCenario != null) {
 //                objCenario.get(0).setPosition(new Vetor3(0, 14, ceu.getPosition().z));
 //
@@ -2902,6 +2624,10 @@ try {
 //                }
 //
 //            }
+        }else {
+            ceoZ = ceu.getPosition().z + (velocidade / 4);
+            ceu.setPosition(new Vetor3(ceu.getPosition().x, ceu.getPosition().y, ceoZ));
+
         }
 
     }
@@ -2916,14 +2642,14 @@ try {
 
                     case 0:
 
-                        inimigosX.get(p).setPosition(new Vetor3((float) (-1+(Math.random()*2)),
+                        inimigosX.get(p).setPosition(new Vetor3((float) (-1 + (Math.random() * 2)),
                                 DISTANCIA + 0.03f, vz[(int) (Math.random() * 4)]));
 
 
                     case 1:
 
 
-                        inimigosX.get(p).setPosition(new Vetor3((float) (-1+(Math.random()*2)),
+                        inimigosX.get(p).setPosition(new Vetor3((float) (-1 + (Math.random() * 2)),
                                 DISTANCIA + 0.03f, vz[(int) (Math.random() * 4)]));
 
 
@@ -3374,28 +3100,20 @@ try {
         gl.glClearDepthf(1.0f);                              //Depth Buffer Setup
         gl.glDepthFunc(GL10.GL_LEQUAL);                  //The Type Of Depth Testing To Do
         gl.glEnable(GL10.GL_LIGHTING);//ABILITA A LUZ
-
         gl.glEnable(GL10.GL_LIGHT1);
         gl.glEnable(GL10.GL_LIGHT0);
         gl.glEnable(GL10.GL_DEPTH_TEST);                  //Enables Depth Testing
         gl.glShadeModel(GL10.GL_SMOOTH);                  //abilita sombreamento
-
         gl.glEnable(GL10.GL_COLOR_MATERIAL);//abilita uso de matrial
         GLES20.glCullFace(GLES20.GL_FRONT);//desenha somente a parte de fora do objeto
-
-        float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
-
-
+        float[]  ambientLight =new float[] {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
         ByteBuffer vbg = ByteBuffer.allocateDirect(amarelo.length * 4);
         vbg.order(ByteOrder.nativeOrder());
         corBufferG = vbg.asFloatBuffer();
         corBufferG.put(amarelo);
         corBufferG.position(0);
-
         float posicaoLuz[] = {0, -30, 0, 1};
-
         gl.glLightfv(gl.GL_COLOR_MATERIAL, gl.GL_FRONT, corBufferG);
-
         float especularidade[] = {1.0f, 1.0f, 1.0f, 1.0f};
         int especMaterial = 120;
 // Define a concentração do brilho
@@ -3458,7 +3176,6 @@ try {
 
 
         if (carregado) {
-
 
 
             mensagemBase.draw((GL11) gl2);
@@ -3527,12 +3244,12 @@ try {
                     }
                 }
 
-if(horaDoBoss) {
-    for (int p = 0; p < boss.size(); p++) {
-        desenhar(boss.get(p), "boss", p);
-        boss.get(p).setImpacto(false);
-    }
-}
+                if (horaDoBoss) {
+                    for (int p = 0; p < boss.size(); p++) {
+                        desenhar(boss.get(p), "boss", p);
+                        boss.get(p).setImpacto(false);
+                    }
+                }
 
             }
             gl.glPopMatrix();
@@ -3603,10 +3320,7 @@ if(horaDoBoss) {
                 if (!o.isEsplodirNave()) {
                     o.draw((GL11) gl2);
 
-                    for (int pp = 0; pp < o.getTiroNave().size(); pp++) {
-                        o.getTiroNave().get(pp).draw((GL11) gl2);
-                        o.getTiroNave().get(pp).setImpacto(false);
-                    }
+
 
                 } else {
                     Esplosao esp = filtro(nome, p);
@@ -3617,15 +3331,22 @@ if(horaDoBoss) {
                         //        esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).setImpacto(false);
                     }
 
-                    for (int pp = 0; pp < o.getTiroNave().size(); pp++) {
-                        o.getTiroNave().get(pp).draw((GL11) gl2);
-                        o.getTiroNave().get(pp).setImpacto(false);
-                    }
+
 
                 }
             }
-        }catch (Exception e){
-            Log.e("TC",e.getMessage());
+            for (int pp = 0; pp < o.getTiroNave().size(); pp++) {
+                if (o.getTiroNave().get(pp).getPosition().z > -65 && o.getTiroNave().get(pp).getPosition().z < -59 &&
+                        o.getTiroNave().get(pp).getPosition().x > -1.5f &&
+                        o.getTiroNave().get(pp).getPosition().x < 1.5f) {
+
+                    o.getTiroNave().get(pp).draw((GL11) gl2);
+                    o.getTiroNave().get(pp).setImpacto(false);
+                }
+            }
+
+            } catch (Exception e) {
+            Log.e("TC", e.getMessage());
         }
     }
 
@@ -3955,124 +3676,125 @@ if(horaDoBoss) {
     }
 
     private void atirar() {
-                tempoDisparo++;
-                //aumentarNivelTiro(4);
+        tempoDisparo++;
+        //aumentarNivelTiro(4);
 
-                if (tempoDisparo >= nivelTiroTempo) {
-                    if (tiros.get(idDisparo).getMover().equals("nulo")) {
-                        switch (nivelTiro) {
-                            case 12:
+        if (tempoDisparo >= nivelTiroTempo) {
+            if (tiros.get(idDisparo).getMover().equals("nulo")) {
+                switch (nivelTiro) {
+                    case 12:
 
-                                tempoDisparo = 0;
-                                tiros.get(idDisparo).setMover("disparar");
-                                if (idDisparoQTD < 11) {
-                                    idDisparo++;
-                                    idDisparoQTD++;
-                                } else {
-                                    idDisparo = 0;
-                                    idDisparoQTD = 0;
-                                }
-
-
-                                break;
-                            case 24:
-                                tiros.get(idDisparo).setMover("disparar");
-                                tiros.get(idDisparo2).setMover("disparar");
-                                tempoDisparo = 0;
-                                if (idDisparoQTD < 11) {
-                                    idDisparo++;
-                                    idDisparo2++;
-                                    idDisparoQTD++;
-                                } else {
-                                    idDisparo = 0;
-                                    idDisparo2 = 12;
-                                    idDisparoQTD = 0;
-                                }
-                                break;
-                            case 36:
-                                tiros.get(idDisparo).setMover("disparar");
-                                tiros.get(idDisparo2).setMover("disparar");
-                                tiros.get(idDisparo3).setMover("disparar");
-
-                                tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 5.0f, tiros.get(idDisparo).getGiroPosition().z));
-                                tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -5.0f, tiros.get(idDisparo2).getGiroPosition().z));
-
-                                tempoDisparo = 0;
-                                if (idDisparoQTD < 11) {
-                                    idDisparo++;
-                                    idDisparo2++;
-                                    idDisparo3++;
-                                    idDisparoQTD++;
-                                } else {
-                                    idDisparo = 0;
-                                    idDisparo2 = 12;
-                                    idDisparo3 = 24;
-                                    idDisparoQTD = 0;
-                                }
-                                break;
-
-                            case 48:
-
-                                tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 10.0f, tiros.get(idDisparo).getGiroPosition().z));
-                                tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -10.0f, tiros.get(idDisparo2).getGiroPosition().z));
-
-                                tiros.get(idDisparo).setMover("disparar");
-                                tiros.get(idDisparo2).setMover("disparar");
-                                tiros.get(idDisparo3).setMover("disparar");
-                                tiros.get(idDisparo4).setMover("disparar");
-
-                                tempoDisparo = 0;
-                                if (idDisparoQTD < 11) {
-                                    idDisparo++;
-                                    idDisparo2++;
-                                    idDisparo3++;
-                                    idDisparo4++;
-                                    idDisparoQTD++;
-                                } else {
-                                    idDisparo = 0;
-                                    idDisparo2 = 12;
-                                    idDisparo3 = 24;
-                                    idDisparo4 = 36;
-                                    idDisparoQTD = 0;
-                                }
-                                break;
-
-                            case 60:
-                                tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 10.0f, tiros.get(idDisparo).getGiroPosition().z));
-                                tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -10.0f, tiros.get(idDisparo2).getGiroPosition().z));
-                                tiros.get(idDisparo3).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 5.0f, tiros.get(idDisparo).getGiroPosition().z));
-                                tiros.get(idDisparo5).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -5.0f, tiros.get(idDisparo2).getGiroPosition().z));
-
-                                tiros.get(idDisparo).setMover("disparar");
-                                tiros.get(idDisparo2).setMover("disparar");
-                                tiros.get(idDisparo3).setMover("disparar");
-                                tiros.get(idDisparo4).setMover("disparar");
-                                tiros.get(idDisparo5).setMover("disparar");
-                                tempoDisparo = 0;
-                                if (idDisparoQTD < 11 && idDisparo5 < 60) {
-                                    idDisparo++;
-                                    idDisparo2++;
-                                    idDisparo3++;
-                                    idDisparo4++;
-                                    idDisparo5++;
-                                    idDisparoQTD++;
-                                } else {
-                                    idDisparo = 0;
-                                    idDisparo2 = 12;
-                                    idDisparo3 = 24;
-                                    idDisparo4 = 36;
-                                    idDisparo5 = 48;
-                                    idDisparoQTD = 0;
-                                }
-
-
-                                break;
-
+                        tempoDisparo = 0;
+                        tiros.get(idDisparo).setMover("disparar");
+                        if (idDisparoQTD < 11) {
+                            idDisparo++;
+                            idDisparoQTD++;
+                        } else {
+                            idDisparo = 0;
+                            idDisparoQTD = 0;
                         }
 
-                    }
+
+                        break;
+                    case 24:
+                        tiros.get(idDisparo).setMover("disparar");
+                        tiros.get(idDisparo2).setMover("disparar");
+                        tempoDisparo = 0;
+                        if (idDisparoQTD < 11) {
+                            idDisparo++;
+                            idDisparo2++;
+                            idDisparoQTD++;
+                        } else {
+                            idDisparo = 0;
+                            idDisparo2 = 12;
+                            idDisparoQTD = 0;
+                        }
+                        break;
+                    case 36:
+                        tiros.get(idDisparo).setMover("disparar");
+                        tiros.get(idDisparo2).setMover("disparar");
+                        tiros.get(idDisparo3).setMover("disparar");
+
+                        tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 5.0f, tiros.get(idDisparo).getGiroPosition().z));
+                        tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -5.0f, tiros.get(idDisparo2).getGiroPosition().z));
+
+                        tempoDisparo = 0;
+                        if (idDisparoQTD < 11) {
+                            idDisparo++;
+                            idDisparo2++;
+                            idDisparo3++;
+                            idDisparoQTD++;
+                        } else {
+                            idDisparo = 0;
+                            idDisparo2 = 12;
+                            idDisparo3 = 24;
+                            idDisparoQTD = 0;
+                        }
+                        break;
+
+                    case 48:
+
+                        tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 10.0f, tiros.get(idDisparo).getGiroPosition().z));
+                        tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -10.0f, tiros.get(idDisparo2).getGiroPosition().z));
+
+                        tiros.get(idDisparo).setMover("disparar");
+                        tiros.get(idDisparo2).setMover("disparar");
+                        tiros.get(idDisparo3).setMover("disparar");
+                        tiros.get(idDisparo4).setMover("disparar");
+
+                        tempoDisparo = 0;
+                        if (idDisparoQTD < 11) {
+                            idDisparo++;
+                            idDisparo2++;
+                            idDisparo3++;
+                            idDisparo4++;
+                            idDisparoQTD++;
+                        } else {
+                            idDisparo = 0;
+                            idDisparo2 = 12;
+                            idDisparo3 = 24;
+                            idDisparo4 = 36;
+                            idDisparoQTD = 0;
+                        }
+                        break;
+
+                    case 60:
+                        tiros.get(idDisparo).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 10.0f, tiros.get(idDisparo).getGiroPosition().z));
+                        tiros.get(idDisparo2).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -10.0f, tiros.get(idDisparo2).getGiroPosition().z));
+                        tiros.get(idDisparo3).setGiroPosition(new Vetor3(tiros.get(idDisparo).getGiroPosition().x, 5.0f, tiros.get(idDisparo).getGiroPosition().z));
+                        tiros.get(idDisparo5).setGiroPosition(new Vetor3(tiros.get(idDisparo2).getGiroPosition().x, -5.0f, tiros.get(idDisparo2).getGiroPosition().z));
+
+                        tiros.get(idDisparo).setMover("disparar");
+                        tiros.get(idDisparo2).setMover("disparar");
+                        tiros.get(idDisparo3).setMover("disparar");
+                        tiros.get(idDisparo4).setMover("disparar");
+                        tiros.get(idDisparo5).setMover("disparar");
+                        tempoDisparo = 0;
+                        if (idDisparoQTD < 11 && idDisparo5 < 60) {
+                            idDisparo++;
+                            idDisparo2++;
+                            idDisparo3++;
+                            idDisparo4++;
+                            idDisparo5++;
+                            idDisparoQTD++;
+                        } else {
+                            idDisparo = 0;
+                            idDisparo2 = 12;
+                            idDisparo3 = 24;
+                            idDisparo4 = 36;
+                            idDisparo5 = 48;
+                            idDisparoQTD = 0;
+                        }
+
+
+                        break;
+
                 }
+
             }
+        }
+    }
+
     private void resaetarTudo(ArrayList<Objeto3d> objeto3ds) {
         for (Objeto3d o : objeto3ds) {
 

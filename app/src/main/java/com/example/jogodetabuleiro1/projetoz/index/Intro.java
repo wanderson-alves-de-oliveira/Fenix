@@ -37,7 +37,7 @@ public class Intro extends View implements Runnable {
     int h = this.displayMetrics.heightPixels;
     int w = this.displayMetrics.widthPixels;
      public Bitmap wjm = BitmapFactory.decodeResource( this.getResources(), R.drawable.wjm);
-    public Bitmap fundo = BitmapFactory.decodeResource( this.getResources(), R.drawable.barconoe);
+    public Bitmap fundo = BitmapFactory.decodeResource( this.getResources(), R.drawable.fenixintro);
 
     public void config() {
         this.wjm = Bitmap.createScaledBitmap( wjm, this.w / 100 * 80, this.h / 100 * 20,false);
