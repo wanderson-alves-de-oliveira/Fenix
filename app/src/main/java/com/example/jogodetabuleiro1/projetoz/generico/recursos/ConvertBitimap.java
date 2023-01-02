@@ -29,10 +29,11 @@ import java.util.List;
 
 public class ConvertBitimap {
 
-
+    public ConvertBitimap() {
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Bitmap getBitmap(VectorDrawable vectorDrawable) {
+    private  Bitmap getBitmap(VectorDrawable vectorDrawable) {
         Bitmap bitmap = Bitmap.createBitmap(300,300,Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0,0,canvas.getWidth(),canvas.getHeight());
@@ -41,7 +42,7 @@ public class ConvertBitimap {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmap(Context context, int drawableId, int cor1, int cor2, int cor3, boolean muda) {
+    public  Bitmap getBitmap(Context context, int drawableId, int cor1, int cor2, int cor3, boolean muda) {
         Drawable drawable = ContextCompat.getDrawable(context,drawableId);
 
         if (drawable instanceof BitmapDrawable) {
@@ -59,7 +60,7 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmap(Context context, int drawableId, int alp, int cor1, int cor2, int cor3, boolean muda) {
+    public  Bitmap getBitmap(Context context, int drawableId, int alp, int cor1, int cor2, int cor3, boolean muda) {
         Drawable drawable = ContextCompat.getDrawable(context,drawableId);
 
         if (drawable instanceof BitmapDrawable) {
@@ -77,7 +78,7 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmap(String vectorDrawable,int t,int p) {
+    public  Bitmap getBitmap(String vectorDrawable,int t,int p) {
         int largura=0;
         switch (vectorDrawable.length()){
             case 1:
@@ -117,67 +118,61 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmapBolha(String vectorDrawable, int t, int c) {
+    public  Bitmap getBitmapBolha(String vectorDrawable, int t, int c) {
         int largura=0;
         int p;
-        switch (vectorDrawable.length()){
-            case 1:
-                largura=200;
-                p=60;
-                break;
-
-            case 2:
-                largura=410;
-                p=100;
-
-                break;
-
-            default:
-                largura=600;
-                p=30;
-
-                break;
-
-        }
-
+        largura=200;
+        p=60;
         Paint pincel = new Paint(  );
-        if(c==0) {
-            pincel.setColor( Color.rgb( 140,205,205 ) );
-        }else  if(c==1) {
-
-            pincel.setColor( Color.rgb( 240,105,55 ) );
-
-        }else  if(c==2) {
-
-            pincel.setColor( Color.argb( 240,(int) (175 * Math.random()) + 20,(int) (105 * Math.random()) + 80,(int) (175 * Math.random()) + 80));
-
-        }else  if(c==3) {
-
-            pincel.setColor( Color.argb( 250,(int) (175 * Math.random()) + 20,(int) (105 * Math.random()) + 80,(int) (175 * Math.random()) + 80));
-
-        }
-
-
-        Bitmap bitmap = Bitmap.createBitmap(largura,300,Bitmap.Config.ARGB_8888);
-
-
-        Canvas canvas = new Canvas(bitmap);
-
-
-
+    Bitmap bitmapx = Bitmap.createBitmap(largura,largura,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmapx);
+        pincel.setColor( Color.argb( 255,90,90,240));
         canvas.drawRoundRect( 0 ,0 ,
-                largura,300,
-                0,0,pincel );
-
-
-        pincel.setColor( Color.argb( 255,255,255,255));
+                largura*0.95f,largura*0.95f,
+                100,100,pincel );
+        pincel.setColor( Color.argb( 155,100,200,100));
+        canvas.drawRoundRect( largura*0.1f ,largura*0.1f ,
+                largura*0.85f,largura*0.85f,
+                100,100,pincel );
+        pincel.setColor( Color.argb( 255,150,100,240));
         pincel.setTextSize( t );
-        canvas.drawText( vectorDrawable,p,180,pincel);
-
-        return bitmap;
+        if(vectorDrawable.length()==1) {
+            canvas.drawText(vectorDrawable, 80, 140, pincel);
+        }else {
+            canvas.drawText(vectorDrawable, 40, 140, pincel);
+        }
+        return bitmapx;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmapBarraxz(Bitmap img, int positionLetra, String palavra, int t) {
+    public  Bitmap getBitmapBolha2(String vectorDrawable, int t, int c) {
+        int largura=0;
+        int p;
+        largura=200;
+        p=60;
+        Paint pincel = new Paint(  );
+        Bitmap bitmapx = Bitmap.createBitmap(largura,largura,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmapx);
+        pincel.setColor( Color.argb( 255,250,90,90));
+        canvas.drawRoundRect( 0 ,0 ,
+                largura*0.95f,largura*0.95f,
+                100,100,pincel );
+        pincel.setColor( Color.argb( 155,250,200,100));
+        canvas.drawRoundRect( largura*0.1f ,largura*0.1f ,
+                largura*0.85f,largura*0.85f,
+                100,100,pincel );
+        pincel.setColor( Color.argb( 255,150,100,240));
+        pincel.setTextSize( t );
+        if(vectorDrawable.length()==1) {
+            canvas.drawText(vectorDrawable, 80, 140, pincel);
+        }else {
+            canvas.drawText(vectorDrawable, 40, 140, pincel);
+        }
+        return bitmapx;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public  Bitmap getBitmapBarraxz(Bitmap img, int positionLetra, String palavra, int t) {
         int p=220;
         //img = Bitmap.createScaledBitmap(img,80,75, false);
 
@@ -204,7 +199,7 @@ public class ConvertBitimap {
         return bitmap;
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmapBarra(List<Bitmap> imag, int positionLetra, String palavra, int t, int vida, AssetManager asset) {
+    public  Bitmap getBitmapBarra(List<Bitmap> imag, int positionLetra, String palavra, int t, int vida, AssetManager asset) {
         int p=50;
 
         Bitmap  img = Bitmap.createScaledBitmap(imag.get( 0 ),80,75, false);
@@ -278,7 +273,7 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmap(String palavra) {
+    public  Bitmap getBitmap(String palavra) {
         int largura=0;
         switch (palavra.length()){
             case 1:
@@ -326,7 +321,7 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static Bitmap getBitmap(float h, float w, long recordeVelhoD, long PalavrasConquistadas) {
+    public  Bitmap getBitmap(float h, float w, long recordeVelhoD, long PalavrasConquistadas) {
 
         Paint pincel = new Paint();
         pincel.setColor( Color.argb( 120,(int) (175 * Math.random()) + 20,(int) (105 * Math.random()) + 80,(int) (175 * Math.random()) + 80 ) );
@@ -369,7 +364,7 @@ public class ConvertBitimap {
 
 
 
-    public static Bitmap getBitmapPlacar(Bitmap img,int acerto,int erro) {
+    public  Bitmap getBitmapPlacar(Bitmap img,int acerto,int erro) {
         int largura=600;
 
 
@@ -401,7 +396,7 @@ public class ConvertBitimap {
     }
 
 
-    public static Bitmap getBitmapBase(int x , int y,Bitmap seta,String vectorDrawable, int t, int c) {
+    public  Bitmap getBitmapBase(int x , int y,Bitmap seta,String vectorDrawable, int t, int c) {
         int largura=840;
         int p=30;
 

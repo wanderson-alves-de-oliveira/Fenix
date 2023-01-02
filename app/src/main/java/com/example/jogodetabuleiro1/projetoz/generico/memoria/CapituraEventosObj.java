@@ -10,7 +10,7 @@ import android.media.MediaPlayer;
  * Created by wanderson on 16/11/17.
  */
 
-public class Animaisx {
+public class CapituraEventosObj {
     private float x;
     private float y;
     private float x3d;
@@ -30,7 +30,7 @@ public class Animaisx {
     private boolean bateu;
     private String valor="";
     MediaPlayer son;
-    public Animaisx() {
+    public CapituraEventosObj() {
     }
 
     public float getX3d() {
@@ -81,7 +81,7 @@ public class Animaisx {
         this.imgP = imgP;
     }
 
-    public Animaisx(float x3d, float y3d, float x, float y, int w, int h, String valor, com.example.jogodetabuleiro1.projetoz.generico.recursos.Objeto3d Objeto3d) {
+    public CapituraEventosObj(float x3d, float y3d, float x, float y, int w, int h, String valor, com.example.jogodetabuleiro1.projetoz.generico.recursos.Objeto3d Objeto3d) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -93,7 +93,7 @@ public class Animaisx {
 
         this.son=son;
     }
-    public Animaisx(float x3d, float y3d, float x, float y, int w, int h, String valor,   MediaPlayer son) {
+    public CapituraEventosObj(float x3d, float y3d, float x, float y, int w, int h, String valor, MediaPlayer son) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -104,7 +104,7 @@ public class Animaisx {
 
         this.son=son;
     }
-    public Animaisx(float x,float y,int w,int h,String valor,Bitmap img,MediaPlayer son) {
+    public CapituraEventosObj(float x, float y, int w, int h, String valor, Bitmap img, MediaPlayer son) {
         this.x = x;
         this.y = y;
         this.w = w;

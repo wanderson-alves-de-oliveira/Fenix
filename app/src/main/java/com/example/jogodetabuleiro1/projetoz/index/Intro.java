@@ -34,9 +34,9 @@ public class Intro extends View implements Runnable {
     private int time = 0;
     private String num = "1";
     DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-    int h = this.displayMetrics.heightPixels;
+    int h = (int) (this.displayMetrics.heightPixels+(this.displayMetrics.heightPixels*0.1));
     int w = this.displayMetrics.widthPixels;
-     public Bitmap wjm = BitmapFactory.decodeResource( this.getResources(), R.drawable.wjm);
+     public Bitmap wjm = BitmapFactory.decodeResource( this.getResources(), R.drawable.wao);
     public Bitmap fundo = BitmapFactory.decodeResource( this.getResources(), R.drawable.fenixintro);
 
     public void config() {

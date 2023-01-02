@@ -78,6 +78,7 @@ public class Objeto3d implements Serializable {
     private LeitorDeObj leitorDeObj;
     private Vetor3 position = new Vetor3(0, 0, 0);
     private Vetor3 tamanho = new Vetor3(0, 0, 0);
+    private Bitmap texturaBitimap;
     private String tipo = "";
     private String nome = "";
     private String nomeRef = "";
@@ -120,6 +121,14 @@ public class Objeto3d implements Serializable {
     private boolean Transparente = false;
     private boolean mudarTamanho = false;
     private float estoraBolha = 100;
+
+    public Bitmap getTexturaBitimap() {
+        return texturaBitimap;
+    }
+
+    public void setTexturaBitimap(Bitmap texturaBitimap) {
+        this.texturaBitimap = texturaBitimap;
+    }
 
     public boolean isReset() {
         return reset;
@@ -1011,29 +1020,46 @@ public class Objeto3d implements Serializable {
         this.tamanho = tamanho;
         this.context=context;
         m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
-
-
-
         this.m_BumpmapID = createTexture(context, this.normalMap, 1);
         this.m_MainTexture = createTexture( context, this.textura,0);
-
         if (leitorDeObj.texturaT != null) {
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
         }
-        //setVertices(leitorDeObj.emQuadrarVertecisA( 0 ));//PEGA OS VERTICES DO arquivo.obj
         setVertices();//PEGA OS VERTICES DO arquivo.obj
-
         if (leitorDeObj.vertecisNormais != null) {
             setVerticesNormais();//PEGA AS NORMALVERTICES DO arquivo.obj
         }
         setIndicesDeVertices(indicesDeVertices = leitorDeObj.indexesA);//PEGA OS INDICES DOS  VERTICES DO arquivo.obj
-
         setIndicesNormais(indicesNormais = leitorDeObj.indexesAN);//PEGA OS INDICES DOS  NORMALVERTICES DO arquivo.obj
         nome = leitorDeObj.getNome();
         leitorDeObj = null;
-        //loaudImg();
     }
 
+
+    public Objeto3d( Context context,int res,AssetManager asset, String obj, Bitmap texturaBitimap, Vetor3 tamanho, String nomeRef) throws IOException {
+        leitorDeObj = new LeitorDeObj(asset, obj);
+        this.m_UseMipmapping=true;
+        this.normalMap=res;
+        quadrosDeanimacao = leitorDeObj.quadrosDeanimacao;
+        this.nomeRef = nomeRef;
+        this.texturaBitimap = texturaBitimap;
+        this.tamanho = tamanho;
+        this.context=context;
+        m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
+         createTexture(context, this.normalMap, 1);
+         createTexture2(texturaBitimap,0);
+        if (leitorDeObj.texturaT != null) {
+            setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
+        }
+        setVertices();//PEGA OS VERTICES DO arquivo.obj
+        if (leitorDeObj.vertecisNormais != null) {
+            setVerticesNormais();//PEGA AS NORMALVERTICES DO arquivo.obj
+        }
+        setIndicesDeVertices(indicesDeVertices = leitorDeObj.indexesA);//PEGA OS INDICES DOS  VERTICES DO arquivo.obj
+        setIndicesNormais(indicesNormais = leitorDeObj.indexesAN);//PEGA OS INDICES DOS  NORMALVERTICES DO arquivo.obj
+        nome = leitorDeObj.getNome();
+        leitorDeObj = null;
+    }
 
     protected static FloatBuffer makeFloatBuffer(float[] arr)
     {
@@ -1240,6 +1266,29 @@ public class Objeto3d implements Serializable {
         return resource;
 
     }
+    public void   createTexture2( Bitmap image,int i)
+    {
+        GLES30.glGenTextures( 1, textures,0 );
+        GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[i] );
+        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
+        image.recycle(); //6
+
+    }
+
+    public void LoadTexture(Bitmap image)
+    {
+
+        GLES30.glGenTextures( 1, textures,0 );
+        GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[0] );
+        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, 0, image, 0); // 4
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
+        image.recycle(); //6
+
+    }
+
 
 
     public double grauDeGiro(Objeto3d alvo) {

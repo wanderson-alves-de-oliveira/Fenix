@@ -296,15 +296,7 @@ public class Fase {
                 cronograma.add(c);
 
 
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeOUT(25000);
-                c.setTimeMode(100);
-                c.setModo(0);
-                c.setBoss(true);
-                cronograma.add(c);
+
 
 
                 c = new Cronograma();
@@ -446,7 +438,7 @@ public class Fase {
                 c.setId(1);
                 c.setPerpetuo(false);
                 c.setTimeIN(2400);
-                c.setTimeOUT(1400);
+                c.setTimeOUT(2400);
                 c.setTimeMode(700);
                 c.setModo(0);
                 cronograma.add(c);
@@ -455,7 +447,7 @@ public class Fase {
                 c.setId(2);
                 c.setPerpetuo(false);
                 c.setTimeIN(2500);
-                c.setTimeMode(1000);
+                c.setTimeMode(2500);
                 c.setTimeOUT(100);
                 c.setModo(3);
                 cronograma.add(c);
@@ -474,7 +466,7 @@ public class Fase {
                 c = new Cronograma();
                 c.setId(-1);
                 c.setPerpetuo(false);
-                c.setTimeIN(3000);
+                c.setTimeIN(4000);
                 c.setTimeOUT(Integer.MAX_VALUE);
                 c.setTimeMode(1000);
                 c.setFim(true);
@@ -605,15 +597,7 @@ public class Fase {
                 cronograma.add(c);
 
 
-                c = new Cronograma();
-                c.setId(0);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeOUT(25000);
-                c.setTimeMode(100);
-                c.setModo(0);
-                c.setBoss(true);
-                cronograma.add(c);
+
 
 
                 c = new Cronograma();
@@ -1130,6 +1114,169 @@ public class Fase {
                 cronograma.add(c);
 
                 break;
+
+            default:
+
+                c = new Cronograma();
+                c.setId(2);
+                c.setPerpetuo(false);
+                c.setTimeIN(100);
+                c.setTimeMode(1000);
+                c.setTimeOUT(100);
+                c.setModo(0);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(5);
+                c.setPerpetuo(false);
+                c.setTimeIN(200);
+                c.setTimeOUT(200);
+                c.setTimeMode(1000);
+                c.setModo(2);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(1);
+                c.setPerpetuo(false);
+                c.setTimeIN(500);
+                c.setTimeOUT(1400);
+                c.setTimeMode(700);
+                c.setModo(0);
+                cronograma.add(c);
+
+                c = new Cronograma();
+                c.setId(0);
+                c.setPerpetuo(false);
+                c.setTimeIN(800);
+                c.setTimeOUT(500);
+                c.setTimeMode(700);
+                c.setModo(0);
+                cronograma.add(c);
+
+
+
+
+                c = new Cronograma();
+                c.setId(2);
+                c.setPerpetuo(false);
+                c.setTimeIN(1200);
+                c.setTimeMode(1000);
+                c.setTimeOUT(100);
+                c.setModo(4);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(5);
+                c.setPerpetuo(false);
+                c.setTimeIN(1300);
+                c.setTimeOUT(200);
+                c.setTimeMode(1000);
+                c.setModo(3);
+                cronograma.add(c);
+
+
+
+                c = new Cronograma();
+                c.setId(0);
+                c.setPerpetuo(false);
+                c.setTimeIN(1500);
+                c.setTimeOUT(500);
+                c.setTimeMode(700);
+                c.setModo(0);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(1);
+                c.setPerpetuo(false);
+                c.setTimeIN(1700);
+                c.setTimeOUT(1400);
+                c.setTimeMode(700);
+                c.setModo(1);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(2);
+                c.setPerpetuo(false);
+                c.setTimeIN(1900);
+                c.setTimeMode(1000);
+                c.setTimeOUT(100);
+                c.setModo(2);
+                cronograma.add(c);
+
+                c = new Cronograma();
+                c.setId(0);
+                c.setPerpetuo(false);
+                c.setTimeIN(2000);
+                c.setTimeOUT(600);
+                c.setTimeMode(700);
+                c.setModo(0);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(5);
+                c.setPerpetuo(false);
+                c.setTimeIN(2200);
+                c.setTimeOUT(200);
+                c.setTimeMode(1000);
+                c.setModo(4);
+                cronograma.add(c);
+
+
+
+                c = new Cronograma();
+                c.setId(2);
+                c.setPerpetuo(false);
+                c.setTimeIN(2300);
+                c.setTimeOUT(200);
+                c.setTimeMode(1000);
+                c.setModo(3);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(1);
+                c.setPerpetuo(false);
+                c.setTimeIN(2400);
+                c.setTimeOUT(1400);
+                c.setTimeMode(700);
+                c.setModo(0);
+                cronograma.add(c);
+
+                c = new Cronograma();
+                c.setId(2);
+                c.setPerpetuo(false);
+                c.setTimeIN(2500);
+                c.setTimeMode(1000);
+                c.setTimeOUT(100);
+                c.setModo(3);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(5);
+                c.setPerpetuo(false);
+                c.setTimeIN(2500);
+                c.setTimeOUT(200);
+                c.setTimeMode(1000);
+                c.setModo(2);
+                cronograma.add(c);
+
+
+                c = new Cronograma();
+                c.setId(-1);
+                c.setPerpetuo(false);
+                c.setTimeIN(3000);
+                c.setTimeOUT(Integer.MAX_VALUE);
+                c.setTimeMode(1000);
+                c.setFim(true);
+                cronograma.add(c);
+
         }
         /////////////////////////////////////////////////////////////////////////////////
 return cronograma;
