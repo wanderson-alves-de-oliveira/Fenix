@@ -8,11 +8,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.jogodetabuleiro1"
-        minSdkVersion 16
+        applicationId "com.wao.fenix"
+        minSdkVersion 19
         targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,4 +39,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.gms:play-services-games-v2:17.0.0'
+
 }
