@@ -17,13 +17,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wao.fenix.R;
-import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
-import com.wao.fenix.projetoz.generico.recursos.SelecteControll;
-import com.wao.fenix.projetoz.modelo.EstatusFase;
 import com.wao.fenix.projetoz.dao.BDEstatusFase;
 import com.wao.fenix.projetoz.generico.recursos.Alerta;
 import com.wao.fenix.projetoz.generico.recursos.ConvertBitimap;
+import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
+import com.wao.fenix.projetoz.generico.recursos.SelecteControll;
 import com.wao.fenix.projetoz.generico.recursos.Vetor3;
+import com.wao.fenix.projetoz.modelo.EstatusFase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -38,15 +38,19 @@ import javax.microedition.khronos.opengles.GL11;
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Renderer, GLSurfaceView.OnTouchListener {
     private Objeto3d barra;
+    private Objeto3d telaIntro;
 
     private int moverFundo = 0;
     private int fase = 0;
+    private float volumeSon = 0.40f;
 
     private boolean selectFase = true;
     private boolean comMusica = true;
     private boolean comSons = true;
 
     private TartarugaCorrida tut;
+
+
     private TelaResultados result;
 
     private float pontoDoEixoYInicio = 0;
@@ -58,6 +62,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private GL10 gl2;
     private int fasecarregada = 0;
 
+    private int musicas = 0;
+    private boolean musicaBoss = false;
+    private boolean musicaInicioFase = false;
 
     //private Objeto3d quadroInserirPalavra;
     private Objeto3d bolhaRef;
@@ -81,6 +88,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     private MediaPlayer musica;
 
+    private boolean regularSon = true;
 
     private boolean pause = true;
 
@@ -166,33 +174,52 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         switch (carga) {
             case 0:
 
+//                TarefaAsync t = new TarefaAsync(context,asset);
+//
+//                t.execute(tut);
+
                 bolhas = new ArrayList<>();
+
+                this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixintro, new Vetor3(1f, 1f, 1f), "");
+                this.telaIntro.setMudarTamanho(true);
+                this.telaIntro.setPosition(new Vetor3(0, 0.02f, -0.9f));
+                this.telaIntro.vezes(1.5f);
+                this.telaIntro.setGiroPosition(new Vetor3(90, 0f, 0f));
+                this.telaIntro.loadGLTexture();
+
+
+                carga++;
+                break;
+
+            case 1:
                 this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.espacodd, new Vetor3(1f, 1f, 1f), "");
                 this.barra.setMudarTamanho(true);
                 this.barra.setPosition(new Vetor3(0, -0.05f, -0.9f));
                 this.barra.vezes(50);
                 this.barra.setGiroPosition(new Vetor3(95, 0f, 0f));
                 this.barra.loadGLTexture();
-                bolhaRef = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf("$")), 100), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
+
+
+                bolhaRef = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", R.drawable.wao, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
                 bolhaRef.setValor(String.valueOf(0));
                 bolhaRef.setGiroPosition(new Vetor3(95, 0f, 0f));
                 bolhaRef.setTransparente(true);
                 bolhaRef.setPosition(new Vetor3(-100, -0.08f, -0.1f));
                 // selecao(0, 10, ultimaPassada);
                 // bolhaRef.loadGLTexture();
-                selecao(0, 25, ultimaPassada);
+
 
                 carga++;
                 break;
 
-            case 1:
+            case 2:
 
-
+                selecao(0, 10, ultimaPassada);
                 btfundo = new Objeto3d(context, R.drawable.inimigonorm, asset, "btstart.obj", R.drawable.btfundo, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
                 btfundo.setValor(String.valueOf(0));
                 btfundo.setGiroPosition(new Vetor3(95, 0f, 0f));
                 btfundo.setTransparente(true);
-                btfundo.vezes(0.3f);
+                btfundo.vezes(0.35f);
                 btfundo.getGiroPosition().x = -200f;
                 btfundo.loadGLTexture();
                 btfundo.setPosition(new Vetor3(0f, -0.11f, -0.08f));
@@ -201,7 +228,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 btfundoup.setValor(String.valueOf(0));
                 btfundoup.setGiroPosition(new Vetor3(95, 0f, 0f));
                 btfundoup.setTransparente(true);
-                btfundoup.vezes(0.3f);
+                btfundoup.vezes(0.35f);
                 btfundoup.getGiroPosition().x = 200f;
                 btfundoup.loadGLTexture();
                 btfundoup.setPosition(new Vetor3(0f, 0.030f, -0.08f));
@@ -230,21 +257,20 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 btStart.vezes(0.1f);
                 btStart.setPosition(new Vetor3(0.00f, -0.09f, -0.089f));
                 btStart.loadGLTexture();
-                selecao(25, 40, ultimaPassada);
 
 
                 carga++;
 
-                break;
-            case 2:
-
-
-
-                carga++;
                 break;
             case 3:
+                //  selecao(25, 40, ultimaPassada);
+
+                carga++;
+                break;
+            case 4:
 
 
+                // selecao(40, 64, ultimaPassada);
                 if (ultimaPassada > 4) {
                     while (bolhas.get((int) (ultimaPassada - 1)).getPosition().y > -0.04f) {
                         for (Objeto3d ob : bolhas) {
@@ -304,7 +330,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
         this.eglConfig = config;
 
-        if (fasecarregada==0) {
+        if (fasecarregada == 0) {
             gl.glEnable(GL10.GL_TEXTURE_2D);                  //abilita mapeamento de textura
             gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);       //  Background preto
             gl.glClearDepthf(1.0f);                              //Depth Buffer Setup
@@ -353,14 +379,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_CLAMP_TO_EDGE);
 
 
-        } else if (fasecarregada==1) {
+        } else if (fasecarregada == 1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                 tut.onSurfaceCreated(gl, this.eglConfig);
 
             }
             //  fasecarregada = false;
-        }else if (fasecarregada==2) {
+        } else if (fasecarregada == 2) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                 result.onSurfaceCreated(gl, this.eglConfig);
@@ -393,7 +419,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onDrawFrame(GL10 gl) {
-        if (fasecarregada==1) {
+        if (fasecarregada == 1) {
 
             if (tut == null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -404,7 +430,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     }
                 }
                 try {
-               //     musica.pause();
+                    //     musica.pause();
 
                     tut = new TartarugaCorrida(context, asset, fase, comSons, comMusica);
 
@@ -416,6 +442,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 tut.onDrawFrame((GL11) gl);
 
+
             } else {
 
 
@@ -423,19 +450,32 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 if (tut.selectFase) {
                     fasecarregada = 0;
+                    musicaInicioFase = false;
+                    mudarMusica(-2);
                     try {
                         mudarLista();
                         tut.selectFase = false;
-                     } catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
 
             }
+            if (tut.isHoraDoBoss() && !musicaBoss) {
+                mudarMusica(-1);
+
+            } else if (!tut.isHoraDoBoss() && musicaBoss && !tut.isBossEliminado() && fasecarregada == 1) {
+                mudarMusica(fase);
+                musicaBoss = false;
+            } else if (musicaInicioFase) {
+                mudarMusica(fase);
+                musicaBoss = false;
+                musicaInicioFase = false;
+            }
 
 
-        } else  if (fasecarregada==2) {
+        } else if (fasecarregada == 2) {
 
             if (result == null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -446,9 +486,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     }
                 }
                 try {
-                   // musica.pause();
+                    // musica.pause();
 
-                    result = new  TelaResultados(context, asset);
+                    result = new TelaResultados(context, asset);
 
                     result.onSurfaceCreated(gl, this.eglConfig);
 
@@ -477,7 +517,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
 
 
-        }else {
+        } else {
 
             gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
@@ -488,7 +528,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glTranslatef(0, 0.04f, -0.01f);
 
 
-            if (carga > 0) {
+            if (carga > 0 && carga <= 1) {
+
+                this.telaIntro.draw((GL11) gl2);
+            }
+            if (carga > 1) {
                 this.barra.draw((GL11) gl2);
                 if (moverFundo == 0) {
                     this.barra.getPosition().x += 0.0002f;
@@ -503,6 +547,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 }
             }
             if (carga > 3) {
+
+
                 controleDeTela();
                 for (int p = 0; p < bolhas.size(); p++) {
                     bolhas.get(p).draw((GL11) gl2);
@@ -519,7 +565,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             } else {
                 if (bolhaRef != null) {
                     bolhaRef.setPosition(new Vetor3(0, -0.02f, -0.1f));
-                    bolhaRef.setGiroPosition(new Vetor3(95, bolhaRef.getGiroPosition().y + 8, 0));
+                    //   bolhaRef.setGiroPosition(new Vetor3(95, bolhaRef.getGiroPosition().y + 8, 0));
                     bolhaRef.draw((GL11) gl2);
 
                 }
@@ -537,6 +583,86 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 e.printStackTrace();
             }
         }
+    }
+
+    private void mudarMusica(int num) {
+
+
+        switch (num) {
+            case 0:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    this.musica = null;
+                }
+
+                this.musica = MediaPlayer.create(context, R.raw.musicb);
+                this.musica.setLooping(true);
+                this.musica.setVolume(0.4f, 0.4f);
+                this.musica.start();
+                break;
+            case 1:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    this.musica = null;
+                }
+
+                this.musica = MediaPlayer.create(context, R.raw.musicc);
+                this.musica.setLooping(true);
+                this.musica.setVolume(0.4f, 0.4f);
+                this.musica.start();
+                break;
+            case 2:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    this.musica = null;
+                }
+
+                this.musica = MediaPlayer.create(context, R.raw.musicd);
+                this.musica.setLooping(true);
+                this.musica.setVolume(0.4f, 0.4f);
+                this.musica.start();
+                break;
+            case -2:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    this.musica = null;
+                }
+
+                this.musica = MediaPlayer.create(context, R.raw.musica);
+                this.musica.setLooping(true);
+                this.musica.setVolume(0.4f, 0.4f);
+                this.musica.start();
+
+                break;
+            case -1:
+                if (regularSon) {
+                    volumeSon-=0.004;
+                }else {
+                    volumeSon+=0.004;
+                }
+                if (volumeSon <=0) {
+                    if (this.musica.isPlaying()) {
+                        this.musica.pause();
+                        this.musica = null;
+                    }
+
+                    this.musica = MediaPlayer.create(context, R.raw.musice);
+                    this.musica.setLooping(true);
+                   // this.musica.setVolume(0.4f, 0.4f);
+                    this.musica.start();
+                    regularSon=false;
+                }
+                this.musica.setVolume(volumeSon, volumeSon);
+
+                if (volumeSon >=0.40) {
+                    musicaBoss=true;
+                    regularSon=true;
+
+                }
+                break;
+        }
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -664,8 +790,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         boolean sel = false;
         for (Objeto3d obj : bolhas) {
             double start = calculoarDistancia(obj, bolhaRef.getPosition());
-             if (start <= 0.025 || iniciaraProxima) {
-                sel=true;
+            if (start <= 0.025 || iniciaraProxima) {
+                sel = true;
                 bolhaRef.getPosition().y = -100;
                 bolhaRef.getPosition().x = -100;
                 ConvertBitimap convertBitimap = new ConvertBitimap();
@@ -674,6 +800,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 if (!iniciaraProxima)
                     fase = Integer.valueOf(obj.getValor());
                 iniciaraProxima = false;
+
                 long i = bdEstatusFase.buscarUltima().getId();
                 bdEstatusFase.fechar();
                 if (fase <= i) {
@@ -694,8 +821,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             selectFase = false;
                             alerta.fechar();
                             fasecarregada = 1;
+                            musicaInicioFase = true;
                             if (tut != null) {
-                                tut.destroy();
+                                // tut.destroy();
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     if (Looper.myLooper() == null) {
                                         Looper.prepare();
@@ -723,23 +851,23 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
         }
 
-        double option = calculoarDistancia(btoptions,bolhaRef.getPosition() );
+        double option = calculoarDistancia(btoptions, bolhaRef.getPosition());
 
         if (option <= 0.015 && !sel) {
             SelecteControll selecteControll = new SelecteControll(context);
             selecteControll.enviarAlerta().show();
 
-            if(comMusica) {
+            if (comMusica) {
                 selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#127127"));
 
-            }else {
+            } else {
                 selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#999999"));
 
             }
-            if(comSons) {
+            if (comSons) {
                 selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#127127"));
 
-            }else {
+            } else {
                 selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#999999"));
 
             }
@@ -749,14 +877,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 public void onClick(View v) {
 
 
-                    if(comMusica) {
+                    if (comMusica) {
                         selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#999999"));
-                        comMusica=false;
+                        comMusica = false;
                         if (musica.isPlaying())
                             musica.pause();
-                    }else {
+                    } else {
                         selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#127127"));
-                        comMusica=true;
+                        comMusica = true;
                         if (!musica.isPlaying())
                             musica.start();
                     }
@@ -767,12 +895,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             selecteControll.getBtSon().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(comSons) {
+                    if (comSons) {
                         selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#999999"));
-                        comSons=false;
-                    }else {
+                        comSons = false;
+                    } else {
                         selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#127127"));
-                        comSons=true;
+                        comSons = true;
                     }
 
                 }
@@ -785,7 +913,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     selecteControll.fechar();
                 }
             });
-
 
 
         }
@@ -832,7 +959,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     @Override
     public boolean onTouch(View view, MotionEvent event) {
 
-        if (fasecarregada==0) {
+        if (fasecarregada == 0) {
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -886,9 +1013,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
 
 
-        }else  if (tut != null && fasecarregada==1) {
+        } else if (tut != null && fasecarregada == 1) {
             tut.onTouch(view, event);
-        }else  if (result != null && fasecarregada==2) {
+        } else if (result != null && fasecarregada == 2) {
             result.onTouch(view, event);
         }
 

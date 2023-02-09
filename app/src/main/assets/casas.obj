@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib casas.mtl
 frames: 1
+texture: 1
 o Plane.001_Plane.073
 v -6.827137 1.287455 2.494583
 v -4.241176 1.287455 2.494583

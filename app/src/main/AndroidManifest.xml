@@ -27,7 +27,8 @@
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
-        <activity android:name="com.wao.fenix.projetoz.index.MainJogo"
+        <activity android:name="com.wao.fenix.projetoz.index.Tartaruga"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,14 +38,6 @@
         </activity>
 
 
-        <activity
-            android:name="com.wao.fenix.projetoz.index.Tartaruga"
-            android:label="@string/title_activity_menu_act"
-            android:background="@color/colorPrimary"
-
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
     </application>
 
 </manifest>

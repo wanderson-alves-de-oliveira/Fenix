@@ -51,37 +51,11 @@ public class Esplosao {
         float x=obj.getTamanho().getX();
         float y=obj.getTamanho().getY();
         float z=obj.getTamanho().getZ();
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "sp.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(0).setTransparente(true);
-//        splosaoArrayNave.get(0).loadGLTexture();
-//
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spa.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(1).setTransparente(true);
-//       splosaoArrayNave.get(1).loadGLTexture();
-//
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spb.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(2).setTransparente(true);
-//       splosaoArrayNave.get(2).loadGLTexture();
-//
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spc.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(3).setTransparente(true);
-//       splosaoArrayNave.get(3).loadGLTexture();
+        splosaoArrayNave.add(new Objeto3d(context, R.drawable.esplosaonorm,asset, "sp.obj",R.drawable.espp, new Vetor3(x,y,z),"esp"));
 
-        splosaoArrayNave.add(new Objeto3d(context, R.drawable.esplosaonorm,asset, "spb.obj",R.drawable.esplosao, new Vetor3(x,y,z),""));
-        splosaoArrayNave.get(0).setTransparente(true);
- // splosaoArrayNave.get(0).loadGLTexture();
-//
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spe.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(5).setTransparente(true);
-//       splosaoArrayNave.get(5).loadGLTexture();
-//
-//        splosaoArrayNave.add(new Objeto3d(context,R.drawable.esplosaonorm,asset, "spf.obj", R.drawable.esplosao, new Vetor3(x,y,z),""));
-//        splosaoArrayNave.get(6).setTransparente(true);
-//
-//      splosaoArrayNave.get(6).loadGLTexture();
         for (int p = 0; p < splosaoArrayNave.size(); p++) {
             splosaoArrayNave.get(p).setMudarTamanho(true);
-            splosaoArrayNave.get(p).vezes(0.4f);
+         splosaoArrayNave.get(p).vezes(xx);
             splosaoArrayNave.get(p).setTransparente(true);
             splosaoArrayNave.get(p).setRefletir(true);
             splosaoArrayNave.get(p).loadGLTexture();

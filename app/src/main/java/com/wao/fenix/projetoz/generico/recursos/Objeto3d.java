@@ -66,11 +66,12 @@ public class Objeto3d implements Serializable {
     public short[] indicesDeVertices;
     private short[] indicesNormais;
     private int textura;
+    private int qtdtextura=1;
     float texture[];
     private float[] verticesNormais;
     private int[] textures = new int[2];
-    private FloatBuffer texturaBuffer;
     public FloatBuffer[] verticeBuffer;
+
     private float positionYdoObj = 0;
     public int time = 0;
     private boolean esplodiu = false;
@@ -78,6 +79,7 @@ public class Objeto3d implements Serializable {
     private FloatBuffer[] NormaisBuffer;
     private ShortBuffer indiceBuffer;
     private ShortBuffer indiceNormaisBuffer;
+    private FloatBuffer texturaBuffer;
     private LeitorDeObj leitorDeObj;
     private Vetor3 position = new Vetor3(0, 0, 0);
     private Vetor3 tamanho = new Vetor3(0, 0, 0);
@@ -542,6 +544,9 @@ public class Objeto3d implements Serializable {
         this.textura = textura;
     }
 
+    public int getTextura() {
+        return textura;
+    }
 
     public Vetor3 getTamanho() {
         return this.tamanho;
@@ -732,7 +737,7 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public void atirando(Objeto3d alvo, float velocidade, boolean perseguir, int tempoDisparo) {
+    public void atirando(Objeto3d alvo, float velocidade, boolean perseguir, int tempoDisparo, Vetor3 posit) {
 
         if (!reset) {
             if (getTiroNave().size() > 0) {
@@ -806,6 +811,9 @@ public class Objeto3d implements Serializable {
                                 getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x - getTiroNave().get(i).getVelocidadeHorizontal());
 
                             } else if (getTiroNave().get(i).getDirecaoZdoTiro() == 0) {
+                                if(getTiroNave().get(i).getPosition().z<=-900){
+                                    getTiroNave().get(i).getPosition().setZ(posit.z);
+                                }
                                 getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
                                 getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
 
@@ -1004,14 +1012,14 @@ public class Objeto3d implements Serializable {
 
 
         //ARMAZENA texture EM BUFFER
-        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(texture.length * 4);
-        byteBuffer.order(ByteOrder.nativeOrder());
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect( texture.length * 4 );
+        byteBuffer.order( ByteOrder.nativeOrder() );
         texturaBuffer = byteBuffer.asFloatBuffer();
-        texturaBuffer.put(texture);
-        texturaBuffer.position(0);
-
+        texturaBuffer.put( texture );
+        texturaBuffer.position( 0 );
 
     }
+
 
 	/*CONSTRUTOR DO OBJETO CONTENDO COMO PARAMETROS
                    (asset="local do arquivo.obj",obj="nome do arquivo.obj",textura="imagem de pintura do objeto"
@@ -1024,10 +1032,7 @@ public class Objeto3d implements Serializable {
     public void descarregar() {
 
 
-        texturaBuffer = null;
         verticeBuffer = null;
-
-
         NormaisBuffer = null;
         indiceBuffer = null;
         indiceNormaisBuffer = null;
@@ -1048,6 +1053,7 @@ public class Objeto3d implements Serializable {
         this.m_BumpmapID = createTexture(context, this.normalMap, 1);
        this.m_MainTexture = createTexture( context, this.textura,0);
         if (leitorDeObj.texturaT != null) {
+            qtdtextura=leitorDeObj.getTesturas();
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
         }
         setVertices();//PEGA OS VERTICES DO arquivo.obj
@@ -1112,114 +1118,91 @@ public class Objeto3d implements Serializable {
     }
 
     public void draw(GL11 gl) {
-        gl2 = gl;
-
-
-
-        gl.glPushMatrix();
-
-
-
-
-
-        if (quadrosDeanimacao > 1) {
-            if (inicio) {
-                if (cont == quadrosDeanimacao - 1) {
-                    inicio = false;
+        try{
+            gl2 = gl;
+            gl.glPushMatrix();
+            if (quadrosDeanimacao > 1) {
+                if (inicio) {
+                    if (cont == quadrosDeanimacao - 1) {
+                        inicio = false;
+                    } else {
+                        cont++;
+                    }
                 } else {
-                    cont++;
+
+                    if (cont == 0) {
+                        inicio = true;
+                    } else {
+                        cont--;
+                    }
+
                 }
+            }
+            if (mudarTamanho) {
+                gl.glScalef(tamanho.getX(), tamanho.getY(), tamanho.getZ());
+            }
+            if (impacto && refletir) {
+                if (!isFenix()) {
+                    float[] ambientLight = {0.0f, 1.0f, 0.0f, 1.0f};//cor amarela do ambiente
+                    float posicaoLuz[] = {-1f, 0, -65f, 1f};
+                    gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+                    refletirTime++;
+                    if (refletirTime == 20) {
+                        impacto = false;
+                        refletirTime = 0;
+                    }
+                } else {
+
+
+                    float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z - 0.1f, 1};
+                    float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
+                    gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+
+                    refletirTime++;
+                    if (refletirTime == 20) {
+                        impacto = false;
+                        refletirTime = 0;
+                    }
+
+                }
+
+
             } else {
+                float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
+                float posicaoLuz[] = {-1f, 0, -30f, 1f};
+                gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
 
-                if (cont == 0) {
-                    inicio = true;
-                } else {
-                    cont--;
-                }
 
             }
-        }
-        if (mudarTamanho) {
-            gl.glScalef(tamanho.getX(), tamanho.getY(), tamanho.getZ());
-        }
-
-
-        if (impacto && refletir) {
-
-
-            if (!isFenix()) {
-                float[] ambientLight = {0.0f, 1.0f, 0.0f, 1.0f};//cor amarela do ambiente
-                float posicaoLuz[] = {-1f,0,-65f , 1f};
-                gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
-                refletirTime++;
-                if (refletirTime == 20) {
-                    impacto = false;
-                    refletirTime = 0;
-                }
-            } else {
-
-
-                float posicaoLuz[] = {getPosition().x, getPosition().y, getPosition().z - 0.1f, 1};
-                float[] ambientLight = {1.0f, 0.2f, 0.0f, 1.0f};//cor amarela do ambiente
-                gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
-
-                refletirTime++;
-                if (refletirTime == 20) {
-                    impacto = false;
-                    refletirTime = 0;
-                }
-
+            gl.glTranslatef(getPosition().getX(), getPosition().getY(), getPosition().getZ());
+            gl.glRotatef(getGiroPosition().y, 0, 1, 0);
+            gl.glRotatef(getGiroPosition().x, 1, 0, 0);
+            gl.glRotatef(getGiroPosition().z, 0, 0, 1);
+            if (Transparente) {
+                gl.glEnable(GL11.GL_ALPHA_TEST);// abilita camada alpha
+                gl.glEnable(GL11.GL_BLEND);// abilita mistura de cores
+                gl.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);//
             }
+            if (verticeBuffer[cont] != null) {
+                gl.glFrontFace(gl.GL_CW);
+                gl.glVertexPointer(3, GL11.GL_FLOAT, 0, verticeBuffer[cont]);
+            }
+            if (texturaBuffer != null) {
 
-
-        }else {
-            float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
-            float posicaoLuz[] = {-1f,0,-30f , 1f};
-            gl.glLightModelfv(GL11 .GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-            gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_AMBIENT, ambientLight, 0);
-            gl.glLightfv(GL11 .GL_LIGHT1, GL11 .GL_POSITION, posicaoLuz, 0);
-
-
-        }
-
-
-        gl.glTranslatef(getPosition().getX(), getPosition().getY(), getPosition().getZ());
-        gl.glRotatef(getGiroPosition().y, 0, 1, 0);
-        gl.glRotatef(getGiroPosition().x, 1, 0, 0);
-        gl.glRotatef(getGiroPosition().z, 0, 0, 1);
-
-
-        if (Transparente) {
-            gl.glEnable(GL11 .GL_ALPHA_TEST);// abilita camada alpha
-            gl.glEnable(GL11 .GL_BLEND);// abilita mistura de cores
-            gl.glBlendFunc(GL11 .GL_SRC_ALPHA, GL11 .GL_ONE_MINUS_SRC_ALPHA);//
-        }
-        if(verticeBuffer[cont]!=null) {
-            gl.glFrontFace(gl.GL_CW);
-            gl.glVertexPointer(3, GL11 .GL_FLOAT, 0, verticeBuffer[cont]);
-        }
-        if (texturaBuffer != null) {
-
-            gl.glEnable(GL10.GL_TEXTURE_2D);
-            gl.glEnableClientState(GL11 .GL_VERTEX_ARRAY);
-            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
-
-
-
-            gl.glEnableClientState(GL11 .GL_NORMAL_ARRAY);
-            gl.glNormalPointer(GL11 .GL_FLOAT, 0, NormaisBuffer[cont]);
-            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
-
-            // Draw the vertices as triangle strip
-
-
-//
-
-                gl.glColorPointer(4, GL11 .GL_UNSIGNED_BYTE, 0, m_ColorData);
+                gl.glEnable(GL10.GL_TEXTURE_2D);
+                gl.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+                gl.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+                gl.glEnableClientState(GL11.GL_NORMAL_ARRAY);
+                gl.glNormalPointer(GL11.GL_FLOAT, 0, NormaisBuffer[cont]);
+                gl.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texturaBuffer);
+                // Draw the vertices as triangle strip
+                gl.glColorPointer(4, GL11.GL_UNSIGNED_BYTE, 0, m_ColorData);
                 float lightAngle = 0f;
                 float x, y, z;
                 x = (float) Math.sin(lightAngle * (3.14159 / 180.0f)); //2
@@ -1232,51 +1215,42 @@ public class Objeto3d implements Serializable {
                 z = z * 0.5f + 0.5f;
 
                 gl.glColor4f(x, y, z, 1.0f); //4
-
-
-
-
-            gl.glTexEnvf(GL11 .GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11 .GL_REPLACE);
-            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
-            gl.glEnable(GL11 .GL_TEXTURE_2D);
+                gl.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_REPLACE);
+                gl.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texturaBuffer);
+                gl.glEnable(GL11.GL_TEXTURE_2D);
 //
+                if (textures[0] == 0) {
+                    loadGLTexture();
+                }
+                gl.glClientActiveTexture(GL11.GL_TEXTURE1);
+                gl.glActiveTexture(GL11.GL_TEXTURE1);
+                gl.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+                gl.glBindTexture(GL11.GL_TEXTURE_2D, textures[1]);
 
-            if( textures[0]==0){
-                loadGLTexture();
+                gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
+                gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
+                gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GL11.GL_TEXTURE); //8
+                gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
+
+                gl.glClientActiveTexture(GL11.GL_TEXTURE0);
+                gl.glActiveTexture(GL11.GL_TEXTURE0);
+                gl.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+                gl.glBindTexture(GL11.GL_TEXTURE_2D, textures[0]);
+
+
+                gl.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+                gl.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texturaBuffer);
+                gl.glEnable(GL11.GL_TEXTURE_2D);
+                gl.glNormalPointer(gl.GL_FLOAT, 0, NormaisBuffer[cont]);
+                gl.glDrawElements(GL11.GL_TRIANGLES, indicesNormais.length, GL11.GL_UNSIGNED_SHORT, indiceNormaisBuffer);
+                gl.glDrawElements(GL11.GL_TRIANGLES, indicesDeVertices.length, GL11.GL_UNSIGNED_SHORT, indiceBuffer);
+
             }
-            gl.glClientActiveTexture(GL11 .GL_TEXTURE1);
-            gl.glActiveTexture(GL11 .GL_TEXTURE1);
-            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
-            gl.glBindTexture(GL11 .GL_TEXTURE_2D,  textures[1]);
+            gl.glPopMatrix();
+        }catch (Exception e){
 
-            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11.GL_COMBINE);//6
-            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_COMBINE_RGB, GL11.GL_DOT3_RGB); //7
-            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC0_RGB, GL11.GL_TEXTURE); //8
-            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL11.GL_SRC1_RGB, GL11.GL_PREVIOUS);
-
-            gl.glClientActiveTexture(GL11 .GL_TEXTURE0);
-            gl.glActiveTexture(GL11 .GL_TEXTURE0);
-            gl.glEnableClientState(GL11 .GL_TEXTURE_COORD_ARRAY);
-            gl.glBindTexture(GL11 .GL_TEXTURE_2D,textures[0]);
-
-
-
-            gl.glTexEnvf(GL11 .GL_TEXTURE_ENV, GL11 .GL_TEXTURE_ENV_MODE, GL11 .GL_MODULATE);
-            gl.glTexCoordPointer(2, GL11 .GL_FLOAT, 0, texturaBuffer);
-            gl.glEnable(GL11 .GL_TEXTURE_2D);
-
-
-
-               gl.glNormalPointer(gl.GL_FLOAT, 0, NormaisBuffer[cont]);
-                gl.glDrawElements(GL11 .GL_TRIANGLES, indicesNormais.length, GL11 .GL_UNSIGNED_SHORT, indiceNormaisBuffer);
-
-            gl.glDrawElements(GL11 .GL_TRIANGLES, indicesDeVertices.length, GL11 .GL_UNSIGNED_SHORT, indiceBuffer);
-
+            Log.e("GL",e.getMessage());
         }
-
-
-
-        gl.glPopMatrix();
 
     }
 
@@ -1320,14 +1294,14 @@ public class Objeto3d implements Serializable {
     public void loadGLTexture() {
 
 
-        if (texturaBuffer != null) {
+        if (texturaBuffer  != null) {
 
             Bitmap image = BitmapFactory.decodeResource(context.getResources(), textura); // 1
 
             textures[0] = 0;
-            texturaBuffer.clear();
-            texturaBuffer.put( texture );
-            texturaBuffer.position( 0 );
+            texturaBuffer .clear();
+            texturaBuffer .put( texture );
+            texturaBuffer .position( 0 );
             GLES20.glGenTextures( 1, textures, 0 );
 
             GLES20.glBindTexture( GLES20.GL_TEXTURE_2D, textures[0] );

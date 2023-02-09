@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib arvores.mtl
 frames: 1
+texture: 1
 o Plane.001
 v -1.000000 1.370133 1.087190
 v 1.000000 1.370133 1.087190

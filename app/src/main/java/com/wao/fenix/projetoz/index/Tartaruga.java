@@ -148,6 +148,7 @@ public class Tartaruga extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        jogo.pausar(false);
 
             hideSystemUI();
 
@@ -155,7 +156,7 @@ public class Tartaruga extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-       //jogo.pausar(true);
+        jogo.pausar(true);
         hideSystemUI();
 
     }

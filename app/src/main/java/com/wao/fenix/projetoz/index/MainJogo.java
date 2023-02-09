@@ -41,6 +41,8 @@ public class MainJogo extends AppCompatActivity {
         }
     }
 
+
+
     protected int hideSystemBars() {
         return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

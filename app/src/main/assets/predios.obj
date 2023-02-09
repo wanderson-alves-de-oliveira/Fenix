@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib predios.mtl
 frames: 1
+texture: 1
 o Grid
 v -5.109241 0.000000 -5.501513
 v -4.122027 0.000000 -5.501513

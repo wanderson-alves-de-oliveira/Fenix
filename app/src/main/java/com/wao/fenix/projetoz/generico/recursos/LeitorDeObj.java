@@ -14,6 +14,7 @@ public class LeitorDeObj {
 
     public float[] vertecisA;
     public int quadrosDeanimacao ;
+    public int testuras ;
     public float[] vertecisANormais;
     public float[] texturaT;
     public short[] indexesA;
@@ -53,6 +54,14 @@ public class LeitorDeObj {
 
     public void setQuadrosDeanimacao(int quadrosDeanimacao) {
         this.quadrosDeanimacao = quadrosDeanimacao;
+    }
+
+    public int getTesturas() {
+        return testuras;
+    }
+
+    public void setTesturas(int testuras) {
+        this.testuras = testuras;
     }
 
     public LeitorDeObj(AssetManager asset, String obj) throws IOException {

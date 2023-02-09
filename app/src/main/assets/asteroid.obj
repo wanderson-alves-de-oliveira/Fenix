@@ -3,6 +3,7 @@
 mtllib asteroid.mtl
 o Esfera_icosaédrica
 frames: 1
+texture: 1
 v 0.001921 -0.126583 0.004304
 v 0.114875 -0.042442 0.114428
 v -0.040150 -0.042442 0.133785

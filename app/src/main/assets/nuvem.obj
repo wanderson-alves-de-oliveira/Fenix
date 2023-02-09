@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib nuvem.mtl
 frames: 1
+texture: 1
 
 o Icosphere
 v 0.096090 0.024763 0.295740

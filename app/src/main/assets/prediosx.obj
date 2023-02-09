@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib prediosx.mtl
 frames: 1
+texture: 1
 
 o Plane
 v -5.279537 0.191753 11.429888

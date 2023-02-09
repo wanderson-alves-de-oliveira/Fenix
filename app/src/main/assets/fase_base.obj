@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib fase_base.mtl
 frames: 1
+texture: 1
 o Plane
 v -3.453852 0.000000 9.692177
 v 3.453852 0.000000 9.692177

@@ -2,6 +2,7 @@
 # www.blender.org
 mtllib fundob.mtl
 frames: 1
+texture: 1
 v -2.168938 -2.205752 -0.807816
 v 2.168938 -2.205752 -0.807816
 v 2.168937 2.205752 -0.807816

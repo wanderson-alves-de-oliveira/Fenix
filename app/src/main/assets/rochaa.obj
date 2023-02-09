@@ -3,6 +3,7 @@
 mtllib untitled.mtl
 o Icosphere
 frames: 1
+texture: 1
 v -1.641136 -0.281154 3.330795
 v -1.471223 -0.221492 3.454243
 v -1.829087 -0.326427 3.720414
