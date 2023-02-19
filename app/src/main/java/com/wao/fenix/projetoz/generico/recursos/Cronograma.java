@@ -2,7 +2,7 @@ package com.wao.fenix.projetoz.generico.recursos;
 
 import java.util.ArrayList;
 
-public class Cronograma {
+public class Cronograma implements Comparable<Cronograma>{
     private int id;
     private int timeIN;
     private int timeOUT;
@@ -126,4 +126,12 @@ public class Cronograma {
         this.emMovimento = emMovimento;
     }
 
+    @Override public int compareTo(Cronograma outroCronograma) {
+        if (this.getTimeIN() < outroCronograma.getTimeIN()) {
+            return -1;
+        } if (this.getTimeIN() > outroCronograma.getTimeIN()) {
+            return 1;
+        }
+        return 0;
+    }
 }

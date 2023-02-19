@@ -39,6 +39,9 @@ public class Objeto3d implements Serializable {
     private static String assetDirectory = null;
     private boolean atirando = false;
     private boolean abatidoPelaNave = false;
+    public boolean invulneravel = false;
+    public boolean retorno = false;
+
 
     private boolean Fenix = false;
     private boolean reset = false;
@@ -59,7 +62,10 @@ public class Objeto3d implements Serializable {
     FloatBuffer m_ColorData;
     private ArrayList<Objeto3d> tiroNave;
     private int[] tiroTime;
+    private int tiroTimex=0;
     private ArrayList<Boolean> atirar;
+    private Boolean atirarx =true;
+    private String origem="";
     private boolean boss = false;
     private int idTiro = 0;
     private boolean impacto = false;
@@ -203,6 +209,14 @@ public class Objeto3d implements Serializable {
         } else {
             idTiroAux = 0;
         }
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
     }
 
     public String getTipo() {
@@ -713,8 +727,7 @@ public class Objeto3d implements Serializable {
     public ArrayList<Objeto3d> criarTiros(Objeto3d obj,int norm, int qtd, AssetManager asset, String objFile, int texturaObj, Resources res) throws IOException {
         ///CARREGA OS ARQUIS 3D DO ALFABETO
         ArrayList<Objeto3d> tiroArray;
-
-        tiroArray = new ArrayList<>();
+         tiroArray = new ArrayList<>();
         tiroTime = new int[qtd];
         atirar = new ArrayList<>();
         float x = obj.getTamanho().getX();
@@ -725,6 +738,7 @@ public class Objeto3d implements Serializable {
             tiroArray.add(new Objeto3d(context, norm,asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
              tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
+            tiroArray.get(t).setOrigem(obj.getValor());
             tiroArray.get(t).vezes(3);
             tiroArray.get(t).loadGLTexture();
            //  tiroArray.get(t).loadGLTexture(false);
@@ -737,7 +751,7 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public void atirando(Objeto3d alvo, float velocidade, boolean perseguir, int tempoDisparo, Vetor3 posit) {
+    public void atirando(Vetor3 alvo, float velocidade, boolean perseguir, int tempoDisparo, Vetor3 posit) {
 
         if (!reset) {
             if (getTiroNave().size() > 0) {
@@ -908,6 +922,74 @@ public class Objeto3d implements Serializable {
                 }
             }
             reset = false;
+        }
+
+    }
+
+
+
+
+
+    public void atirandoUm(Vetor3 alvo,Vetor3 origem, float velocidade) {
+
+                     setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+                    float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
+                    float distanciaXFI = alvo.getPosition().x - getPosition().x;
+                     setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
+                    if (alvo.getPosition().x >= getPosition().x) {
+                         setPositionXCorrent(1);
+                    } else {
+                         setPositionXCorrent(0);
+                    }
+                    pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+                    setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+
+
+                    getPosition().setZ(getPosition().z + velocidade);
+                    if (getVelocidadeHorizontal() < velocidade) {
+                        getPosition().setX(getPosition().x + getVelocidadeHorizontal());
+                    }
+
+
+                if (getPosition().z >= alvo.z ||getPosition().z < -70f)  {
+
+                setPosition(origem);
+                setGiroPosition(new Vetor3(0f, 0f, 0f));
+
+
+        }
+
+    }
+
+
+
+    public void atirandoUmGiro(Vetor3 alvo,Vetor3 origem, float velocidade, boolean retorno) {
+
+        setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+        float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
+        float distanciaXFI = alvo.getPosition().x - getPosition().x;
+        setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
+        if (alvo.getPosition().x >= getPosition().x) {
+            setPositionXCorrent(1);
+        } else {
+            setPositionXCorrent(0);
+        }
+        pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+        setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+
+
+        getPosition().setZ(getPosition().z + velocidade);
+        if (getVelocidadeHorizontal() < velocidade) {
+            getPosition().setX(getPosition().x + getVelocidadeHorizontal());
+        }
+
+
+        if (getPosition().z >= alvo.z ||getPosition().z < -70f || retorno)  {
+
+            setPosition(origem);
+            setGiroPosition(new Vetor3(0f, 0f, 0f));
+           this.retorno=true;
+
         }
 
     }

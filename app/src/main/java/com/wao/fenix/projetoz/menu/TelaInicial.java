@@ -87,10 +87,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private String tipo = "brinquedo";
 
     private MediaPlayer musica;
+    private MediaPlayer musicaBossFase;
 
+    private ArrayList<MediaPlayer> musicaFase;
     private boolean regularSon = true;
 
     private boolean pause = true;
+    private int musicaAtual = -1;
+    private int musicaAnterior = -2;
 
 
     private int carga = -1;
@@ -149,6 +153,22 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         this.h = this.displayMetrics.heightPixels;
         this.w = 720;
         this.wTela = this.displayMetrics.widthPixels;
+        this.musicaFase = new ArrayList<>();
+        MediaPlayer m = MediaPlayer.create(context, R.raw.musicb);
+        m.setLooping(true);
+        this.musicaFase.add(m);
+        MediaPlayer m1 = MediaPlayer.create(context, R.raw.musicc);
+        m1.setLooping(true);
+        this.musicaFase.add(m1);
+        MediaPlayer m2 = MediaPlayer.create(context, R.raw.musicd);
+        m2.setLooping(true);
+        this.musicaFase.add(m2);
+
+
+        this.musicaBossFase = MediaPlayer.create(context, R.raw.musice);
+        this.musicaBossFase.setLooping(true);
+        this.musicaBossFase.setVolume(0.4f, 0.4f);
+
 
         this.musica = MediaPlayer.create(context, R.raw.musica);
         this.musica.setLooping(true);
@@ -400,17 +420,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     public void pausar(boolean p) {
 
-        if (p) {
-            this.pause = false;
-            this.musica.pause();
-            // pausar( true );
-
-        } else {
-            this.pause = true;
-            this.musica.start();
-            //pausar( false );
-        }
-
+        pauseMusica(musicaAtual, p);
 
     }
 
@@ -451,7 +461,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 if (tut.selectFase) {
                     fasecarregada = 0;
                     musicaInicioFase = false;
-                    mudarMusica(-2);
+                    mudarMusica(-2, false, true);
                     try {
                         mudarLista();
                         tut.selectFase = false;
@@ -462,16 +472,20 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
 
             }
-            if (tut.isHoraDoBoss() && !musicaBoss) {
-                mudarMusica(-1);
 
-            } else if (!tut.isHoraDoBoss() && musicaBoss && !tut.isBossEliminado() && fasecarregada == 1) {
-                mudarMusica(fase);
-                musicaBoss = false;
-            } else if (musicaInicioFase) {
-                mudarMusica(fase);
-                musicaBoss = false;
-                musicaInicioFase = false;
+            String[] fasex = String.valueOf(fase).split("");
+            int indiceLevel = 0;
+            if (fasex.length > 1) {
+                indiceLevel = Integer.parseInt(fasex[0]);
+            } else {
+                indiceLevel = 0;
+            }
+            if (tut.isHoraDoBoss() && !musicaBoss) {
+                mudarMusica(-1, true, false);
+
+            } else if (musicaInicioFase || (!tut.isHoraDoBoss() && musicaBoss && !tut.isBossEliminado() && fasecarregada == 1)) {
+                mudarMusica(indiceLevel, false, false);
+
             }
 
 
@@ -527,7 +541,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glRotatef(0, 0, 0, 0);
             gl.glTranslatef(0, 0.04f, -0.01f);
 
+            if (!musicaInicioFase) {
+                mudarMusica(-2, false, true);
 
+            }
             if (carga > 0 && carga <= 1) {
 
                 this.telaIntro.draw((GL11) gl2);
@@ -585,85 +602,199 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         }
     }
 
-    private void mudarMusica(int num) {
+    private void mudarMusica(int num, boolean mboss, boolean mMusica) {
 
 
         switch (num) {
             case 0:
                 if (this.musica.isPlaying()) {
                     this.musica.pause();
-                    this.musica = null;
+                    musicaAnterior = -2;
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
                 }
 
-                this.musica = MediaPlayer.create(context, R.raw.musicb);
-                this.musica.setLooping(true);
-                this.musica.setVolume(0.4f, 0.4f);
-                this.musica.start();
+                musicaAtual = 0;
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(0), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(0), mboss, mMusica);
+
+                }
                 break;
             case 1:
                 if (this.musica.isPlaying()) {
                     this.musica.pause();
-                    this.musica = null;
+                    musicaAnterior = -2;
+
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
                 }
 
-                this.musica = MediaPlayer.create(context, R.raw.musicc);
-                this.musica.setLooping(true);
-                this.musica.setVolume(0.4f, 0.4f);
-                this.musica.start();
+
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(1), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(1), mboss, mMusica);
+
+                }
+                musicaAtual = 1;
+
                 break;
             case 2:
                 if (this.musica.isPlaying()) {
                     this.musica.pause();
-                    this.musica = null;
+                    musicaAnterior = -2;
+
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
                 }
 
-                this.musica = MediaPlayer.create(context, R.raw.musicd);
-                this.musica.setLooping(true);
-                this.musica.setVolume(0.4f, 0.4f);
-                this.musica.start();
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(2), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(2), mboss, mMusica);
+
+                }
+                musicaAtual = 2;
+
                 break;
             case -2:
-                if (this.musica.isPlaying()) {
-                    this.musica.pause();
-                    this.musica = null;
-                }
+                regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
 
-                this.musica = MediaPlayer.create(context, R.raw.musica);
-                this.musica.setLooping(true);
-                this.musica.setVolume(0.4f, 0.4f);
-                this.musica.start();
+                musicaAtual = -2;
 
                 break;
             case -1:
-                if (regularSon) {
-                    volumeSon-=0.004;
-                }else {
-                    volumeSon+=0.004;
-                }
-                if (volumeSon <=0) {
-                    if (this.musica.isPlaying()) {
-                        this.musica.pause();
-                        this.musica = null;
-                    }
 
-                    this.musica = MediaPlayer.create(context, R.raw.musice);
-                    this.musica.setLooping(true);
-                   // this.musica.setVolume(0.4f, 0.4f);
+                regularSontul(this.musicaFase.get(0), this.musicaBossFase, mboss, mMusica);
+                musicaAtual = -1;
+
+                break;
+        }
+
+
+    }
+
+
+    private void pauseMusica(int num, boolean p) {
+
+
+        switch (num) {
+            case 0:
+                if (p) {
+                    this.pause = false;
+                    this.musicaFase.get(0).pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaFase.get(0).start();
+                    //pausar( false );
+                }
+
+
+                break;
+            case 1:
+
+
+                if (p) {
+                    this.pause = false;
+                    this.musicaFase.get(1).pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaFase.get(1).start();
+                    //pausar( false );
+                }
+
+
+                break;
+            case 2:
+
+
+                if (p) {
+                    this.pause = false;
+                    this.musicaFase.get(2).pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaFase.get(2).start();
+                    //pausar( false );
+                }
+                break;
+            case -2:
+                if (p) {
+                    this.pause = false;
+                    this.musica.pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
                     this.musica.start();
-                    regularSon=false;
+                    //pausar( false );
                 }
-                this.musica.setVolume(volumeSon, volumeSon);
 
-                if (volumeSon >=0.40) {
-                    musicaBoss=true;
-                    regularSon=true;
 
+                break;
+            case -1:
+
+
+                if (p) {
+                    this.pause = false;
+                    this.musicaBossFase.pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaBossFase.start();
+                    //pausar( false );
                 }
                 break;
         }
 
 
     }
+
+    private void regularSontul(MediaPlayer m1, MediaPlayer m2, boolean mboss, boolean mMusica) {
+
+        if (regularSon) {
+            volumeSon -= 0.004;
+
+        } else {
+            volumeSon += 0.004;
+
+        }
+        if (volumeSon <= 0.008) {
+            if (m1.isPlaying()) {
+                m1.pause();
+            }
+            volumeSon += 0.004;
+            m1.setVolume(volumeSon, volumeSon);
+            m2.setVolume(volumeSon, volumeSon);
+            m2.seekTo(0);
+            m2.start();
+            regularSon = false;
+        }
+        m1.setVolume(volumeSon, volumeSon);
+        m2.setVolume(volumeSon, volumeSon);
+
+        if (volumeSon >= 0.40) {
+            musicaBoss = mboss;
+            musicaInicioFase = mMusica;
+            regularSon = true;
+
+        }
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void mudarLista() throws IOException {

@@ -1,6 +1,7 @@
 package com.wao.fenix.projetoz.generico.recursos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Fase {
@@ -11,7 +12,15 @@ public class Fase {
     public ArrayList<Cronograma> gerarFase(int fase) {
         Cronograma c;
         ArrayList<Cronograma> cronograma = new ArrayList<>();
-
+        String[] fasex = String.valueOf(fase).split("");
+        int indice = 1;
+        int indiceLevel = 1;
+        if (fasex.length > 1) {
+            indice = Integer.parseInt(fasex[1]);
+            indiceLevel = Integer.parseInt(fasex[0] + 1);
+        } else {
+            indice = Integer.parseInt(fasex[0]);
+        }
         ArrayList<Integer> pos = new ArrayList<>();
         pos.add(0);
         pos.add(1);
@@ -19,99 +28,117 @@ public class Fase {
         pos.add(3);
         pos.add(4);
         pos.add(5);
-int dificult=1;
-        for (int i = 0; i < dificult; i++) {
 
-            int in = pos.get(new Random().nextInt(pos.size()));
-            int mod = 0;
-            c = new Cronograma();
-            c.setId(in);
-            c.setPerpetuo(false);
-            c.setTimeIN(50 + (700 * i));
-            c.setTimeOUT(50 + (700 * i));
-            c.setTimeMode(700);
-
-            switch (in) {
-                case 0:
-                case 1:
-                    mod = 0;
-                    break;
-                case 2:
-                case 5:
-                    mod = new Random().nextInt(5);
-                    break;
-                case 3:
-                    mod = new Random().nextInt(3);
-                    break;
+//        pos.add(2);
+//        pos.add(5);
+//        pos.add(2);
+//        pos.add(5);
+//        pos.add(2);
+//        pos.add(5);
+        int dificult = indice < 7 ? indice : 6;
+        int base = 1 + (fase * indiceLevel);
+        int nivel = 1;
 
 
-            }
-            c.setModo(mod);
-            if (in != 4) {
-                cronograma.add(c);
-            }
+        for (int ii = 0; ii < base; ii++) {
 
-            pos.remove(pos.indexOf(in));
-        }
-
-        pos = new ArrayList<>();
-        pos.add(0);
-        pos.add(1);
-        pos.add(2);
-        pos.add(3);
-        pos.add(4);
-        pos.add(5);
-
-        for (int i = 0; i < dificult; i++) {
-
-            int in = pos.get(new Random().nextInt(pos.size()));
-            int mod = 0;
-            c = new Cronograma();
-            c.setId(in);
-            c.setPerpetuo(false);
-            c.setTimeIN(50 + (750 * i));
-            c.setTimeOUT(50 + (750 * i));
-            c.setTimeMode(700);
-
-            switch (in) {
-                case 0:
-                case 1:
-                    mod = 0;
-                    break;
-                case 2:
-                case 5:
-                    mod = new Random().nextInt(5);
-                    break;
-                case 3:
-                    mod = new Random().nextInt(3);
-                    break;
-
-
-            }
-            c.setModo(mod);
-            if (in != 4) {
-
-                for (Cronograma cc: cronograma) {
-                    if(cc.getId()==c.getId() && cc.getTimeIN()+700>=c.getTimeIN()){
-                        c.setTimeIN(cc.getTimeIN()+701);
-                        c.setTimeOUT(cc.getTimeOUT()+751);
-                        break;
-                    }
+            //    for (int i = 0; i < dificult; i++) {
+            if (pos.size() > 0) {
+                int in = pos.get(new Random().nextInt(pos.size()));
+                if (in < 0) {
+                    in *= -1;
                 }
-                cronograma.add(c);
-            }
+                int mod = 0;
+                c = new Cronograma();
+                c.setId(in);
+                c.setPerpetuo(false);
+                c.setTimeIN((50 + (100 * ii)) * nivel);
+                c.setTimeOUT((50 + (100 * ii)) * nivel);
+                c.setTimeMode(700);
 
-            pos.remove(pos.indexOf(in));
+                switch (in) {
+                    case 0:
+                    case 1:
+                        mod = 0;
+                        break;
+                    case 2:
+                    case 5:
+                        mod = new Random().nextInt(5);
+                        break;
+                    case 3:
+                        mod = new Random().nextInt(3);
+                        break;
+
+
+                }
+                c.setModo(mod);
+                if (in != 4) {
+                    cronograma.add(c);
+                }
+
+                //   pos.remove(pos.indexOf(in));
+            }
+            //  }
+
+//            pos = new ArrayList<>();
+//            pos.add(0);
+//            pos.add(1);
+//            pos.add(2);
+//            pos.add(3);
+//            pos.add(4);
+//            pos.add(5);
+//
+//            for (int i = 0; i < dificult; i++) {
+//                if (pos.size() > 0) {
+//                    int in = pos.get(new Random().nextInt(pos.size()));
+//                    int mod = 0;
+//                    c = new Cronograma();
+//                    c.setId(in);
+//                    c.setPerpetuo(false);
+//                    c.setTimeIN((50 + (700 * i))*nivel);
+//                    c.setTimeOUT((50 + (700 * i))*nivel);
+//                    c.setTimeMode(700);
+//
+//                    switch (in) {
+//                        case 0:
+//                        case 1:
+//                            mod = 0;
+//                            break;
+//                        case 2:
+//                        case 5:
+//                            mod = new Random().nextInt(5);
+//                            break;
+//                        case 3:
+//                            mod = new Random().nextInt(3);
+//                            break;
+//
+//
+//                    }
+//                    c.setModo(mod);
+//                    if (in != 4) {
+//
+//                        for (Cronograma cc : cronograma) {
+//                            if (cc.getId() == c.getId() && cc.getTimeIN() + 700 >= c.getTimeIN()) {
+//                                c.setTimeIN(cc.getTimeIN() + 701);
+//                                c.setTimeOUT(cc.getTimeOUT() + 751);
+//                                break;
+//                            }
+//                        }
+//                        cronograma.add(c);
+//                    }
+//
+//                    pos.remove(pos.indexOf(in));
+//                }
+//            }
+            // nivel++;
         }
 
-
-
-        if(fase==1){
+        if (true) {
             c = new Cronograma();
             c.setId(100);
             c.setPerpetuo(false);
-            c.setTimeIN(2800);
-            c.setTimeOUT(25000);
+            c.setTimeIN(Integer.MAX_VALUE - 50);
+            c.setTimeOUT(Integer.MAX_VALUE - 50);
             c.setTimeMode(100);
             c.setModo(0);
             c.setBoss(true);
@@ -119,273 +146,83 @@ int dificult=1;
         }
 
 
-
         c = new Cronograma();
         c.setId(-1);
         c.setPerpetuo(false);
-        c.setTimeIN(3000);
+        c.setTimeIN(Integer.MAX_VALUE);
         c.setTimeOUT(Integer.MAX_VALUE);
         c.setTimeMode(1000);
         c.setFim(true);
         cronograma.add(c);
+        Collections.sort(cronograma);
+//        for (int i = 0; i < cronograma.size() - 1; i++) {
+//
+//            while (cronograma.get(i).getId() == cronograma.get(i + 1).getId() && cronograma.get(i).getTimeIN() + 1200 > cronograma.get(i + 1).getTimeIN()) {
+//                cronograma.get(i + 1).setTimeIN(cronograma.get(i + 1).getTimeIN() + 1);
+//            }
+//
+//        }
 
-        switch (20) {
-            case 1:
+        ArrayList<Cronograma> a = new ArrayList<>();
+        ArrayList<Cronograma> b = new ArrayList<>();
 
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(100);
-                c.setTimeOUT(100);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
+        for (int i = 0; i < cronograma.size() - 1; i++) {
 
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(800);
-                c.setTimeOUT(800);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
+            if (cronograma.get(i).getId() == 2) {
+                a.add(cronograma.get(i));
+            }
 
-
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(1600);
-                c.setTimeOUT(1600);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(2400);
-                c.setTimeOUT(2400);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(3);
-                c.setPerpetuo(false);
-                c.setTimeIN(1800);
-                c.setTimeOUT(1900);
-                c.setTimeMode(700);
-                c.setModo(2);
-                cronograma.add(c);
-
-
-                c = new Cronograma();
-                c.setId(-1);
-                c.setPerpetuo(false);
-                c.setTimeIN(4000);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(1000);
-                c.setFim(true);
-                cronograma.add(c);
-
-
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(100);
-//                c.setTimeMode(1000);
-//                c.setTimeOUT(100);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(5);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(200);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(2);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(1);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(500);
-//                c.setTimeOUT(1400);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//                c = new Cronograma();
-//                c.setId(0);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(800);
-//                c.setTimeOUT(500);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//
-//
-//
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(1200);
-//                c.setTimeMode(1000);
-//                c.setTimeOUT(100);
-//                c.setModo(4);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(5);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(1300);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(3);
-//                cronograma.add(c);
-//
-//
-//
-//                c = new Cronograma();
-//                c.setId(0);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(1500);
-//                c.setTimeOUT(500);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(1);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(1700);
-//                c.setTimeOUT(1400);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(1900);
-//                c.setTimeMode(1000);
-//                c.setTimeOUT(100);
-//                c.setModo(2);
-//                cronograma.add(c);
-//
-//                c = new Cronograma();
-//                c.setId(0);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2000);
-//                c.setTimeOUT(600);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(5);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2200);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(4);
-//                cronograma.add(c);
-//
-//
-//
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2300);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(3);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(1);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2600);
-//                c.setTimeOUT(2600);
-//                c.setTimeMode(700);
-//                c.setModo(0);
-//                cronograma.add(c);
-//
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2700);
-//                c.setTimeMode(1000);
-//                c.setTimeOUT(100);
-//                c.setModo(3);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(5);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(2700);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(2);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(3);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(3200);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(1);
-//                cronograma.add(c);
-//
-//
-//                c = new Cronograma();
-//                c.setId(2);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(3500);
-//                c.setTimeOUT(200);
-//                c.setTimeMode(1000);
-//                c.setModo(4);
-//                cronograma.add(c);
-//
-//
-//
-//                c = new Cronograma();
-//                c.setId(-1);
-//                c.setPerpetuo(false);
-//                c.setTimeIN(4000);
-//                c.setTimeOUT(Integer.MAX_VALUE);
-//                c.setTimeMode(1000);
-//                c.setFim(true);
-//                cronograma.add(c);
-
-                c = new Cronograma();
-                c.setId(100);
-                c.setPerpetuo(false);
-                c.setTimeIN(1200);
-                c.setTimeOUT(25000);
-                c.setTimeMode(100);
-                c.setModo(0);
-                c.setBoss(true);
-                cronograma.add(c);
-
+            if (cronograma.get(i).getId() == 5) {
+                b.add(cronograma.get(i));
+            }
 
 
         }
+
+        for (int i = 0; i < a.size() - 1; i++) {
+
+            while (a.get(i).getTimeIN() + 1200 > a.get(i + 1).getTimeIN()) {
+                a.get(i + 1).setTimeIN(a.get(i + 1).getTimeIN() + 1);
+            }
+
+        }
+
+
+        for (int i = 0; i < b.size() - 1; i++) {
+
+            while (b.get(i).getTimeIN() + 1200 > b.get(i + 1).getTimeIN()) {
+                b.get(i + 1).setTimeIN(b.get(i + 1).getTimeIN() + 1);
+            }
+
+        }
+
+
+        for (int i = 0; i < cronograma.size() - 1; i++) {
+
+            if (a.size() > 0) {
+                if (cronograma.get(i).getId() == a.get(0).getId()) {
+                    cronograma.set(i, a.get(0));
+                    a.remove(a.get(0));
+                }
+            }
+
+            if (b.size() > 0) {
+
+                if (cronograma.get(i).getId() == b.get(0).getId()) {
+                    cronograma.set(i, b.get(0));
+                    b.remove(b.get(0));
+
+                }
+            }
+
+        }
+
+
+        //Collections.sort(cronograma);
+
         /////////////////////////////////////////////////////////////////////////////////
         return cronograma;
     }
+
+
 }
