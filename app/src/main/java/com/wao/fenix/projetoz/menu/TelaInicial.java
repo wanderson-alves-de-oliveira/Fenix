@@ -65,6 +65,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private int musicas = 0;
     private boolean musicaBoss = false;
     private boolean musicaInicioFase = false;
+    private boolean iniciomenu = true;
+
 
     //private Objeto3d quadroInserirPalavra;
     private Objeto3d bolhaRef;
@@ -93,7 +95,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private boolean regularSon = true;
 
     private boolean pause = true;
-    private int musicaAtual = -1;
+    private int musicaAtual = -2;
     private int musicaAnterior = -2;
 
 
@@ -541,7 +543,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glRotatef(0, 0, 0, 0);
             gl.glTranslatef(0, 0.04f, -0.01f);
 
-            if (!musicaInicioFase) {
+            if (!musicaInicioFase ) {
                 mudarMusica(-2, false, true);
 
             }
@@ -666,7 +668,25 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 break;
             case -2:
-                regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
+           //    regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
+
+                     if (musicaBossFase.isPlaying()) {
+                        musicaBossFase.pause();
+                    }
+              //  musica.setVolume(0.40f, 0.40f);
+                musica.seekTo(0);
+                musica.start();
+
+                    musicaBoss = false;
+                    musicaInicioFase = true;
+                    regularSon = true;
+
+
+
+
+              //  mudarMusica(-2, false, true);
+
+
 
                 musicaAtual = -2;
 
@@ -953,6 +973,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             alerta.fechar();
                             fasecarregada = 1;
                             musicaInicioFase = true;
+                            iniciomenu = false;
                             if (tut != null) {
                                 // tut.destroy();
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

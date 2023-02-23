@@ -41,6 +41,7 @@ public class Objeto3d implements Serializable {
     private boolean abatidoPelaNave = false;
     public boolean invulneravel = false;
     public boolean retorno = false;
+    public boolean  timeLimpar= true;
 
 
     private boolean Fenix = false;
@@ -463,6 +464,11 @@ public class Objeto3d implements Serializable {
             for (Objeto3d o : tiroNave) {
                 o.setDisparandoSub(true);
             }
+        }else {
+
+            this.disparando = disparandoax;
+
+
         }
     }
 
@@ -851,7 +857,7 @@ public class Objeto3d implements Serializable {
 
                     }
 
-                    if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+                    if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 1.49f || getTiroNave().get(i).getPosition().x < -1.49f) {
                         getTiroNave().get(i).setDisparando(false);
                     }
 
@@ -861,7 +867,7 @@ public class Objeto3d implements Serializable {
             for (int i = 0; i < getTiroNave().size(); i++) {
                 getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
                 getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
-                if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+                if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 1.49f || getTiroNave().get(i).getPosition().x < -1.49f) {
                     getTiroNave().get(i).setDisparando(false);
                 }
             }
@@ -908,7 +914,7 @@ public class Objeto3d implements Serializable {
 
                 }
 
-                if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
                     getTiroNave().get(i).setDisparando(false);
                 }
             }
@@ -917,7 +923,7 @@ public class Objeto3d implements Serializable {
             for (int i = 0; i < getTiroNave().size(); i++) {
                 getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
                 getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
-                if (getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
                     getTiroNave().get(i).setDisparando(false);
                 }
             }
