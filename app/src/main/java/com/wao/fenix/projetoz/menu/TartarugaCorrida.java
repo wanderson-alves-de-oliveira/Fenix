@@ -1842,6 +1842,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     int i = tiros.size();
                     tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
                     tiros.get(i).vezes(1.8f);
+                    tiros.get(i).setOrigem("Fenix1");
+
                     tiros.get(i).setMover("nulo");
                 } else {
                     carga++;
@@ -2097,7 +2099,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         for (int p = 0; p < this.quantidadeDeElementos; p++) {
             char v = alfabeto.charAt(p);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ataqueEspecial.add(new Objeto3d(context, R.drawable.inimigoxnorm, asset, "sp.obj", R.drawable.espp, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "ataqueEspecial"));
+                ataqueEspecial.add(new Objeto3d(context, R.drawable.inimigoxnorm, asset, "sp.obj", R.drawable.espp, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                 ataqueEspecial.get(p).vezes(6f);
                 ataqueEspecial.get(p).setValor(String.valueOf(v));
                 ataqueEspecial.get(p).setVida(vidaX * dificuldade);
@@ -2107,6 +2109,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 ataqueEspecial.get(p).setRefletir(true);
                 ataqueEspecial.get(p).setAtivado(false);
                 ataqueEspecial.get(p).setMover("nulo");
+                ataqueEspecial.get(p).setAtivado(false);
+                ataqueEspecial.get(p).setOrigem("Fenix2");
+
                 //  inimigosX.get(p).loadGLTexture();
             }
 
@@ -2841,9 +2846,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
                 } else if (obj2.getPosition().z > -64.5f) {
-                    if (d < 0.2f && fogo) {
-                        for (Objeto3d p : tiros) {
-                            if (obj2 == p) {
+                    if (d < 0.2f && fogo && obj2.getOrigem().equals("Fenix1")) {
+                 //       for (Objeto3d p : tiros) {
+                           // if (obj2.getOrigem().equals("Fenix1")) {
                                 obj.setVida(obj.getVida() - danoNoInimigo);
                                 // obj.vezes(0.1f);
                                 obj.setImpacto(true);
@@ -2857,14 +2862,50 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     obj.setAbatido(true);
                                     obj.setAbatidoPelaNave(true);
                                     positiomAnteriorBoss = new Vetor3(obj.getPosition());
-                                    break;
+
                                 }
 
-                                p.setPosition(new Vetor3(-1000, p.getPosition().y, -1002));
-                                break;
-                            }
-                        }
+                            obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
+                                ;
+                          //  }
+                       // }
                     }
+
+                    if (d < 3f && fogo && obj2.getOrigem().equals("Fenix2")) {
+                        //       for (Objeto3d p : tiros) {
+                        // if (obj2.getOrigem().equals("Fenix1")) {
+                        obj.setVida(obj.getVida() - (danoNoInimigo*10));
+                        // obj.vezes(0.1f);
+                        obj.setImpacto(true);
+                        if (obj.getVida() <= 0) {
+                            if (!obj.isAbatido()) {
+                                inimigosEliminados++;
+                                rastreio.add(obj.getNomeRef());
+                            }
+                            obj.setEsplodirNave(true);
+                            obj.setAtivado(false);
+                            obj.setAbatido(true);
+                            obj.setAbatidoPelaNave(true);
+                            positiomAnteriorBoss = new Vetor3(obj.getPosition());
+
+                            limparTiros(inimigosX);
+                            limparTiros(inimigosA);
+                            limparTiros(inimigosB);
+                            limparTiros(inimigosC);
+                            limparTiros(inimigosE);
+                            limparTiros(inimigosE2);
+                            limparTiros(inimigosC2);
+
+
+
+                        }
+
+                  //      obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
+                        ;
+                        //  }
+                        // }
+                    }
+
                 }
             }
 
@@ -2873,6 +2914,15 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         }
         return vai;
         /////////////////////////////////
+    }
+
+    public void  limparTiros(ArrayList<Objeto3d> x){
+        for (Objeto3d ob :x ) {
+            for (Objeto3d obb :ob.getTiroNave() ) {
+                obb.getPosition().z = -57;
+            }
+
+        }
     }
 
     private void esplodirNave(Objeto3d obj, Esplosao esplosao) {
