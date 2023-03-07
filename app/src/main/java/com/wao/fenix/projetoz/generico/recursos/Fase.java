@@ -49,7 +49,7 @@ public class Fase {
 //        pos.add(6);
 //        pos.add(7);
         int dificult = indice < 7 ? indice : 6;
-        int base = 100 + (fase * indiceLevel);
+        int base = 25 + (fase * indiceLevel);
         int nivel = 1;
 
 
