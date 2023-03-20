@@ -291,22 +291,22 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 break;
             case 4:
 
-
-                // selecao(40, 64, ultimaPassada);
-                if (ultimaPassada > 4) {
-                    while (bolhas.get((int) (ultimaPassada - 1)).getPosition().y > -0.04f) {
-                        for (Objeto3d ob : bolhas) {
-
-                            ob.getPosition().y -= velocidade * 0.2f;
-                        }
-                    }
-
-                } else {
-                    for (Objeto3d ob : bolhas) {
-
-                        ob.getPosition().y += velocidade * 1.8f;
-                    }
-                }
+//
+//                // selecao(40, 64, ultimaPassada);
+//                if (ultimaPassada > 4) {
+//                    while (bolhas.get((int) (ultimaPassada - 1)).getPosition().y > -0.04f) {
+//                        for (Objeto3d ob : bolhas) {
+//
+//                            ob.getPosition().y -= velocidade * 0.2f;
+//                        }
+//                    }
+//
+//                } else {
+//                    for (Objeto3d ob : bolhas) {
+//
+//                        ob.getPosition().y += velocidade * 1.8f;
+//                    }
+//                }
                 carga++;
                 break;
 
@@ -334,10 +334,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             bolhas.get(p).setGiroPosition(new Vetor3(95, 0f, 0f));
             bolhas.get(p).setTransparente(true);
             bolhas.get(p).vezes(0.5f);
-            float py = (p * 0.025f) - 0.03f;
+            float py = (p * 0.010f) - 0.03f;
             float px = 0.03f;
             if (p % 2 == 0) {
-                py = (p * 0.025f) - 0.03f;
+                py = (p * 0.010f) - 0.03f;
                 px = -0.020f;
             }
             bolhas.get(p).setPosition(new Vetor3(px, py - 0.05f, 0.1f));
@@ -833,7 +833,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         bolhas.set(fase, ob);
 
         if (ultimaPassada == fase + 1) {
-
+if(fase>=9){
+    fase=0;
+}
             Objeto3d ob2 = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(fase + 2)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
             ob2.setPosition(bolhas.get(fase + 1).getPosition());
             ob2.setGiroPosition(bolhas.get(fase + 1).getGiroPosition());

@@ -49,52 +49,57 @@ public class Fase {
 //        pos.add(6);
 //        pos.add(7);
         int dificult = indice < 7 ? indice : 6;
-        int base = 25 + (fase * indiceLevel);
+        int base = 1+ (fase * indiceLevel);
         int nivel = 1;
 
 
-        for (int ii = 0; ii < base; ii++) {
+        if ((fase+1) % 10==0) {
 
-            //    for (int i = 0; i < dificult; i++) {
-            if (pos.size() > 0) {
-                int in = pos.get(new Random().nextInt(pos.size()));
-                if (in < 0) {
-                    in *= -1;
+              base = 2 ;//+ (fase * indiceLevel);
+              nivel = 1;
+        }
+            for (int ii = 0; ii < base; ii++) {
+
+                //    for (int i = 0; i < dificult; i++) {
+                if (pos.size() > 0) {
+                    int in = pos.get(new Random().nextInt(pos.size()));
+                    if (in < 0) {
+                        in *= -1;
+                    }
+                    int mod = 0;
+                    c = new Cronograma();
+                    c.setId(in);
+                    c.setPerpetuo(false);
+                    c.setTimeIN((50 + (100 * ii)) * nivel);
+                    c.setTimeOUT(Integer.MAX_VALUE);
+                    c.setTimeMode(700);
+
+                    switch (in) {
+                        case 0:
+                        case 1:
+                        case 6:
+                            mod = 0;
+                            break;
+                        case 2:
+                        case 5:
+                            mod = new Random().nextInt(3) + 2;
+                            break;
+                        case 3:
+                            mod = new Random().nextInt(3);
+                            break;
+                        case 7:
+                            mod = 1;
+                            break;
+
+                    }
+                    c.setModo(mod);
+                    if (in != 4) {
+                        cronograma.add(c);
+                    }
+
+                    //   pos.remove(pos.indexOf(in));
                 }
-                int mod = 0;
-                c = new Cronograma();
-                c.setId(in);
-                c.setPerpetuo(false);
-                c.setTimeIN((50 + (100 * ii)) * nivel);
-                c.setTimeOUT(Integer.MAX_VALUE);
-                c.setTimeMode(700);
-
-                switch (in) {
-                    case 0:
-                    case 1:
-                    case 6:
-                        mod = 0;
-                        break;
-                    case 2:
-                    case 5:
-                        mod = new Random().nextInt(3)+2;
-                        break;
-                    case 3:
-                        mod = new Random().nextInt(3);
-                        break;
-                    case 7:
-                        mod = 1;
-                        break;
-
-                }
-                c.setModo(mod);
-                if (in != 4) {
-                    cronograma.add(c);
-                }
-
-                //   pos.remove(pos.indexOf(in));
-            }
-            //  }
+                //  }
 
 //            pos = new ArrayList<>();
 //            pos.add(0);
@@ -146,20 +151,21 @@ public class Fase {
 //                    pos.remove(pos.indexOf(in));
 //                }
 //            }
-            // nivel++;
-        }
-
-        if (true) {
-            c = new Cronograma();
-            c.setId(100);
-            c.setPerpetuo(false);
-            c.setTimeIN(Integer.MAX_VALUE - 50);
-            c.setTimeOUT(Integer.MAX_VALUE - 50);
-            c.setTimeMode(100);
-            c.setModo(0);
-            c.setBoss(true);
-            cronograma.add(c);
-        }
+                // nivel++;
+            }
+        if ((fase+1) % 10==0) {
+                c = new Cronograma();
+                c.setId(100);
+                c.setPerpetuo(false);
+                c.setTimeIN(Integer.MAX_VALUE);
+                c.setTimeOUT(Integer.MAX_VALUE);
+//                c.setTimeIN(50);
+//                c.setTimeOUT(250);
+                c.setTimeMode(100);
+                c.setModo(0);
+                c.setBoss(true);
+                cronograma.add(c);
+            }
 
 
         c = new Cronograma();

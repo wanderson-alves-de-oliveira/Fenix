@@ -2198,7 +2198,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     public void boss() throws IOException {
 
 
-        float vidaBos = 500f;
+        float vidaBos = 1500f;
 
         switch (chefeDafase) {
             case 0:
@@ -2467,7 +2467,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         //     this.musica = MediaPlayer.create(context, R.raw.musicc);
 
         cronograma = new ArrayList<>();
-        cronograma = f.gerarFase(dificult);
+        cronograma = f.gerarFase(chefeDafase);
         dificult--;
         ArrayList<Integer> selecao = new ArrayList<>();
 
@@ -3449,12 +3449,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             //  Collections.sort(cronograma);
 
 
-            if (c.getTimeIN() <= timeLine /*&& c.getTimeOUT() > timeLine*/) {
+            if (c.getTimeIN() <= timeLine || cronograma.size() == 1 /*&& c.getTimeOUT() > timeLine*/) {
 
                 if (c.isFim() && cronograma.size() == 1 && dificult > 0 && !bossEliminado) {
 
                     cronograma = new ArrayList<>();
-                    cronograma = new Fase().gerarFase(dificult);
+                    cronograma = new Fase().gerarFase(chefeDafase);
                     dificult--;
                     for (Cronograma o : cronograma) {
                         o.setTimeIN(o.getTimeIN() + (timeLine + 50));
@@ -3935,6 +3935,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 String finalNome = "boss";
                 Esplosao esp = filtro(finalNome, 0);
                 esplodirNave(boss.get(chefeDafase), esp);
+                boss.get(chefeDafase).setAtivado(false);
+                boss.get(chefeDafase).setAbatido(true);
                 for (Objeto3d pp : boss.get(chefeDafase).getTiroNave()) {
                     pp.getPosition().z = -1000f;
                 }
