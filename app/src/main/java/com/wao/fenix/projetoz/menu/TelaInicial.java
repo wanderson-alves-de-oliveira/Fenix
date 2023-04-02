@@ -50,7 +50,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     private TartarugaCorrida tut;
 
-
     private TelaResultados result;
 
     private float pontoDoEixoYInicio = 0;
@@ -79,7 +78,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private Objeto3d btStart;
 
 
-    private ArrayList<Objeto3d> bolhas;
+   // private ArrayList<Objeto3d> bolhas;
     private ArrayList<Objeto3d> niveis;
 
 
@@ -125,6 +124,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     float amarelo[] = {1.0f, 1.0f, 1.0f, 1.0f}; //Fully white
     float luzDifusa[] = {0.7f, 0.7f, 0.7f, 1.0f};//luz difusa
     private FloatBuffer corBufferG;
+    private Objeto3d Fenixt;
+    private boolean liberado=false;
 
 
     public boolean isX() {
@@ -182,7 +183,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
 
     }
-
+float girar = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void carregar(String tipo) throws IOException {
@@ -200,7 +201,20 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 //
 //                t.execute(tut);
 
-                bolhas = new ArrayList<>();
+               // bolhas = new ArrayList<>();
+
+
+                Fenixt=new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                //   Fenix.loadGLTexture(true);
+
+                this.Fenixt.setEstado("NBateu");
+                Fenixt.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                Fenixt.setGiroPosition(new Vetor3(95, 0, 0f));
+                Fenixt.setRefletir(true);
+                Fenixt.setFenix(true);
+                Fenixt.setNomeRef("Fenix");
+
+
 
                 this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixintro, new Vetor3(1f, 1f, 1f), "");
                 this.telaIntro.setMudarTamanho(true);
@@ -214,7 +228,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 break;
 
             case 1:
-                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.espacodd, new Vetor3(1f, 1f, 1f), "");
+                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.asteroide, new Vetor3(1f, 1f, 1f), "");
                 this.barra.setMudarTamanho(true);
                 this.barra.setPosition(new Vetor3(0, -0.05f, -0.9f));
                 this.barra.vezes(50);
@@ -227,6 +241,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 bolhaRef.setGiroPosition(new Vetor3(95, 0f, 0f));
                 bolhaRef.setTransparente(true);
                 bolhaRef.setPosition(new Vetor3(-100, -0.08f, -0.1f));
+
                 // selecao(0, 10, ultimaPassada);
                 // bolhaRef.loadGLTexture();
 
@@ -236,7 +251,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
             case 2:
 
-                selecao(0, 10, ultimaPassada);
+                //selecao(0, 10, ultimaPassada);
                 btfundo = new Objeto3d(context, R.drawable.inimigonorm, asset, "btstart.obj", R.drawable.btfundo, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
                 btfundo.setValor(String.valueOf(0));
                 btfundo.setGiroPosition(new Vetor3(95, 0f, 0f));
@@ -309,7 +324,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 //                }
                 carga++;
                 break;
-
+            default:
+                //  selecao(25, 40, ultimaPassada);
+liberado=true;
+                carga++;
+                break;
 
         }
 
@@ -317,33 +336,33 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     }
 
 
-    public void selecao(int in, int on, long ultimaPassada) {
-        ConvertBitimap convertBitimap = new ConvertBitimap();
-        for (int p = in; p < on; p++) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                try {
-                    bolhas.add(new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(p + 1)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-            bolhas.get(p).setValor(String.valueOf(p));
-            bolhas.get(p).setGiroPosition(new Vetor3(95, 0f, 0f));
-            bolhas.get(p).setTransparente(true);
-            bolhas.get(p).vezes(0.5f);
-            float py = (p * 0.010f) - 0.03f;
-            float px = 0.03f;
-            if (p % 2 == 0) {
-                py = (p * 0.010f) - 0.03f;
-                px = -0.020f;
-            }
-            bolhas.get(p).setPosition(new Vetor3(px, py - 0.05f, 0.1f));
-        }
-
-    }
+//    public void selecao(int in, int on, long ultimaPassada) {
+//        ConvertBitimap convertBitimap = new ConvertBitimap();
+//        for (int p = in; p < on; p++) {
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                try {
+//                    bolhas.add(new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(p + 1)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//
+//            bolhas.get(p).setValor(String.valueOf(p));
+//            bolhas.get(p).setGiroPosition(new Vetor3(95, 0f, 0f));
+//            bolhas.get(p).setTransparente(true);
+//            bolhas.get(p).vezes(0.3f);
+//            float py = (p * 0.010f) - 0.03f;
+//            float px = 0.03f;
+//            if (p % 2 == 0) {
+//                py = (p * 0.010f) - 0.03f;
+//                px = -0.020f;
+//            }
+//            bolhas.get(p).setPosition(new Vetor3(px, py - 0.05f, 0.1f));
+//        }
+//
+//    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -464,12 +483,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     fasecarregada = 0;
                     musicaInicioFase = false;
                     mudarMusica(-2, false, true);
-                    try {
-                        mudarLista();
+//                    try {
+//                      //  mudarLista();
                         tut.selectFase = false;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+                 //  }
                 }
 
 
@@ -542,7 +561,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glLoadIdentity();
             gl.glRotatef(0, 0, 0, 0);
             gl.glTranslatef(0, 0.04f, -0.01f);
-
+//            girar+=0.1f;
+//            if(Fenixt!=null) {
+//                Fenixt.setGiroPosition(new Vetor3(30, girar, 0f));
+//            }
             if (!musicaInicioFase ) {
                 mudarMusica(-2, false, true);
 
@@ -553,26 +575,26 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
             if (carga > 1) {
                 this.barra.draw((GL11) gl2);
-                if (moverFundo == 0) {
-                    this.barra.getPosition().x += 0.0002f;
-                    if (this.barra.getPosition().x >= 0.5f) {
-                        moverFundo = 1;
-                    }
-                } else {
-                    this.barra.getPosition().x -= 0.0002f;
-                    if (this.barra.getPosition().x <= -0.5f) {
-                        moverFundo = 0;
-                    }
-                }
+//                if (moverFundo == 0) {
+//                    this.barra.getPosition().x += 0.0002f;
+//                    if (this.barra.getPosition().x >= 0.5f) {
+//                        moverFundo = 1;
+//                    }
+//                } else {
+//                    this.barra.getPosition().x -= 0.0002f;
+//                    if (this.barra.getPosition().x <= -0.5f) {
+//                        moverFundo = 0;
+//                    }
+//                }
             }
             if (carga > 3) {
 
 
-                controleDeTela();
-                for (int p = 0; p < bolhas.size(); p++) {
-                    bolhas.get(p).draw((GL11) gl2);
-                }
-
+                //controleDeTela();
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                   bolhas.get(p).draw((GL11) gl2);
+//                }
+                Fenixt.draw((GL11) gl2);
 
                 this.btUpgrade.draw((GL11) gl2);
                 this.btStart.draw((GL11) gl2);
@@ -816,90 +838,90 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void mudarLista() throws IOException {
-        ConvertBitimap convertBitimap = new ConvertBitimap();
-        EstatusFase e = new BDEstatusFase(context).buscarUltima();
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    private void mudarLista() throws IOException {
+//        ConvertBitimap convertBitimap = new ConvertBitimap();
+//        EstatusFase e = new BDEstatusFase(context).buscarUltima();
+//
+//        long ultimaPassada = e != null ? e.getId() : 1l;
+//
+////        Objeto3d ob = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(fase + 1)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
+////        ob.setPosition(bolhas.get(fase).getPosition());
+////        ob.setGiroPosition(bolhas.get(fase).getGiroPosition());
+////        ob.setValor(bolhas.get(fase).getValor());
+////        ob.setTransparente(true);
+////        ob.vezes(0.5f);
+////
+////        bolhas.set(fase, ob);
+//
+//        if (ultimaPassada == fase + 1) {
+//if(fase>=9){
+//    fase=0;
+//}
+//            Objeto3d ob2 = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(fase + 2)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
+//            ob2.setPosition(bolhas.get(fase + 1).getPosition());
+//            ob2.setGiroPosition(bolhas.get(fase + 1).getGiroPosition());
+//            ob2.setValor(bolhas.get(fase + 1).getValor());
+//            ob2.setTransparente(true);
+//            ob2.vezes(0.5f);
+//
+//            bolhas.set(fase + 1, ob2);
+//
+//        }
+//
+//
+//    }
 
-        long ultimaPassada = e != null ? e.getId() : 1l;
+//    private void controleDeTela() {
+//        if (iniciarTelaDeSelecao)
+//            surgirListagenDeFases(recolher);
+//
+//
+//    }
 
-        Objeto3d ob = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(fase + 1)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
-        ob.setPosition(bolhas.get(fase).getPosition());
-        ob.setGiroPosition(bolhas.get(fase).getGiroPosition());
-        ob.setValor(bolhas.get(fase).getValor());
-        ob.setTransparente(true);
-        ob.vezes(0.5f);
-
-        bolhas.set(fase, ob);
-
-        if (ultimaPassada == fase + 1) {
-if(fase>=9){
-    fase=0;
-}
-            Objeto3d ob2 = new Objeto3d(context, R.drawable.naveanorm, asset, "tiroc.obj", convertBitimap.getBitmapBolha(String.valueOf(String.valueOf(fase + 2)), 100, 0, ultimaPassada), new Vetor3(escala * 5f, escala * 5f, escala * 5f), "");
-            ob2.setPosition(bolhas.get(fase + 1).getPosition());
-            ob2.setGiroPosition(bolhas.get(fase + 1).getGiroPosition());
-            ob2.setValor(bolhas.get(fase + 1).getValor());
-            ob2.setTransparente(true);
-            ob2.vezes(0.5f);
-
-            bolhas.set(fase + 1, ob2);
-
-        }
-
-
-    }
-
-    private void controleDeTela() {
-        if (iniciarTelaDeSelecao)
-            surgirListagenDeFases(recolher);
-
-
-    }
-
-    public void surgirListagenDeFases(int recolher) {
-
-        switch (recolher) {
-            case 1:
-                for (int p = 0; p < bolhas.size(); p++) {
-                    if (bolhas.get(0).getPosition().z > -0.1f) {
-                        bolhas.get(p).getPosition().z -= 0.008f;
-                        btStart.getPosition().z = -0.092f;
-                    } else {
-                        iniciarTelaDeSelecao = false;
-                        btStart.getPosition().z = -0.089f;
-
-                    }
-                }
-                break;
-            case 2:
-                for (int p = 0; p < bolhas.size(); p++) {
-                    if (bolhas.get(0).getPosition().z < 0.1f) {
-                        bolhas.get(p).getPosition().z += 0.008f;
-                        btUpgrade.getPosition().z = -0.092f;
-
-                    } else {
-                        iniciarTelaDeSelecao = false;
-                        btUpgrade.getPosition().z = -0.089f;
-
-                    }
-                }
-                break;
-            case 3:
-                for (int p = 0; p < bolhas.size(); p++) {
-                    if (bolhas.get(0).getPosition().z < 0.1f) {
-                        bolhas.get(p).getPosition().z += 0.008f;
-                        btoptions.getPosition().z = -0.092f;
-
-                    } else {
-                        iniciarTelaDeSelecao = false;
-                        btoptions.getPosition().z = -0.089f;
-
-                    }
-                }
-                break;
-        }
-    }
+//    public void surgirListagenDeFases(int recolher) {
+//
+//        switch (recolher) {
+//            case 1:
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    if (bolhas.get(0).getPosition().z > -0.1f) {
+//                        bolhas.get(p).getPosition().z -= 0.008f;
+//                        btStart.getPosition().z = -0.092f;
+//                    } else {
+//                        iniciarTelaDeSelecao = false;
+//                        btStart.getPosition().z = -0.089f;
+//
+//                    }
+//                }
+//                break;
+//            case 2:
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    if (bolhas.get(0).getPosition().z < 0.1f) {
+//                        bolhas.get(p).getPosition().z += 0.008f;
+//                        btUpgrade.getPosition().z = -0.092f;
+//
+//                    } else {
+//                        iniciarTelaDeSelecao = false;
+//                        btUpgrade.getPosition().z = -0.089f;
+//
+//                    }
+//                }
+//                break;
+//            case 3:
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    if (bolhas.get(0).getPosition().z < 0.1f) {
+//                        bolhas.get(p).getPosition().z += 0.008f;
+//                        btoptions.getPosition().z = -0.092f;
+//
+//                    } else {
+//                        iniciarTelaDeSelecao = false;
+//                        btoptions.getPosition().z = -0.089f;
+//
+//                    }
+//                }
+//                break;
+//        }
+//    }
 
     //FAZ ATUALIZAÇÕES NA ESTRUTURA DOS OBJETOS
     @Override
@@ -941,17 +963,17 @@ if(fase>=9){
         bolhaRef.getPosition().y = (basey) * -1;
         bolhaRef.getPosition().x = basex;
         boolean sel = false;
-        for (Objeto3d obj : bolhas) {
-            double start = calculoarDistancia(obj, bolhaRef.getPosition());
-            if (start <= 0.025 || iniciaraProxima) {
+    //    for (Objeto3d obj : bolhas) {
+          //  double start = calculoarDistancia(obj, bolhaRef.getPosition());
+            if (/*start <= 0.025 || */iniciaraProxima) {
                 sel = true;
                 bolhaRef.getPosition().y = -100;
                 bolhaRef.getPosition().x = -100;
                 ConvertBitimap convertBitimap = new ConvertBitimap();
                 BDEstatusFase bdEstatusFase = new BDEstatusFase(context);
 
-                if (!iniciaraProxima)
-                    fase = Integer.valueOf(obj.getValor());
+//                if (!iniciaraProxima)
+  //                  fase = 1;
                 iniciaraProxima = false;
 
                 long i = bdEstatusFase.buscarUltima().getId();
@@ -976,6 +998,11 @@ if(fase>=9){
                             fasecarregada = 1;
                             musicaInicioFase = true;
                             iniciomenu = false;
+
+//                            fasecarregada = 0;
+//                            musicaInicioFase = false;
+//                            mudarMusica(-2, false, true);
+
                             if (tut != null) {
                                 // tut.destroy();
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1001,9 +1028,9 @@ if(fase>=9){
                         }
                     });
                 }
-                break;
+                //break;
             }
-        }
+      //  }
 
         double option = calculoarDistancia(btoptions, bolhaRef.getPosition());
 
@@ -1073,39 +1100,39 @@ if(fase>=9){
     }
 
 
-    private void moverListagemDefases(MotionEvent event) {
-
-        if (event.getY() > pontoDoEixoYInicio) {
-
-            if (bolhas.get(0).getPosition().y < -0.02f && bolhas.get(bolhas.size() - 1).getPosition().y > -0.02f) {
-
-                for (int p = 0; p < bolhas.size(); p++) {
-                    bolhas.get(p).getPosition().y -= velocidade * 0.0002f;
-                }
-            } else {
-                pontoDoEixoYInicio = event.getY();
-                for (int p = 0; p < bolhas.size(); p++) {
-                    bolhas.get(p).getPosition().y += velocidade * 0.0002f;
-                }
-            }
-
-
-        } else {
-            if (bolhas.get(0).getPosition().y < -0.02f && bolhas.get(bolhas.size() - 1).getPosition().y > -0.02f) {
-
-                for (int p = 0; p < bolhas.size(); p++) {
-                    bolhas.get(p).getPosition().y += velocidade * 0.0002f;
-                }
-            } else {
-                pontoDoEixoYInicio = event.getY();
-                for (int p = 0; p < bolhas.size(); p++) {
-                    bolhas.get(p).getPosition().y -= velocidade * 0.0002f;
-                }
-            }
-
-        }
-
-    }
+//    private void moverListagemDefases(MotionEvent event) {
+//
+//        if (event.getY() > pontoDoEixoYInicio) {
+//
+//            if (bolhas.get(0).getPosition().y < -0.02f && bolhas.get(bolhas.size() - 1).getPosition().y > -0.02f) {
+//
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    bolhas.get(p).getPosition().y -= velocidade * 0.0002f;
+//                }
+//            } else {
+//                pontoDoEixoYInicio = event.getY();
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    bolhas.get(p).getPosition().y += velocidade * 0.0002f;
+//                }
+//            }
+//
+//
+//        } else {
+//            if (bolhas.get(0).getPosition().y < -0.02f && bolhas.get(bolhas.size() - 1).getPosition().y > -0.02f) {
+//
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    bolhas.get(p).getPosition().y += velocidade * 0.0002f;
+//                }
+//            } else {
+//                pontoDoEixoYInicio = event.getY();
+//                for (int p = 0; p < bolhas.size(); p++) {
+//                    bolhas.get(p).getPosition().y -= velocidade * 0.0002f;
+//                }
+//            }
+//
+//        }
+//
+//    }
 
 
     ///GERENCIA O TOQUE NA TELA
@@ -1113,70 +1140,72 @@ if(fase>=9){
     @Override
     public boolean onTouch(View view, MotionEvent event) {
 
-        if (fasecarregada == 0) {
+        if (liberado) {
+            if (fasecarregada == 0) {
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
 
-                pontoDoEixoYInicio = event.getY();
-                pontoDoEixoXInicio = event.getX();
+                    pontoDoEixoYInicio = event.getY();
+                    pontoDoEixoXInicio = event.getX();
 
-                if (event.getY() < h * 0.75) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        validarToque(event);
+                    if (event.getY() < h * 0.75) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            validarToque(event);
+                        }
                     }
-                }
-                if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        recolher = 2;
-                        //       iniciarTelaDeSelecao = true;
+                    if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            recolher = 2;
+                            //       iniciarTelaDeSelecao = true;
+                        }
+                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.3 && event.getX() < this.wTela * 0.6) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            recolher = 1;
+                            //     iniciarTelaDeSelecao = true;
+                            fase = Integer.valueOf(new BDEstatusFase(context).buscarUltima().getId().toString());
+                            iniciaraProxima = true;
+                            validarToque(event);
+                        }
+                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.6) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            recolher = 3;
+                            validarToque(event);
+                        }
                     }
-                } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.3 && event.getX() < this.wTela * 0.6) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        recolher = 1;
-                        //     iniciarTelaDeSelecao = true;
-                        fase = Integer.valueOf(new BDEstatusFase(context).buscarUltima().getId().toString());
-                        iniciaraProxima = true;
-                        validarToque(event);
-                    }
-                } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.6) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        recolher = 3;
-                        validarToque(event);
-                    }
-                }
 
-                return true;
-
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
-
-                int index1 = Math.round(pontoDoEixoYInicio);
-                int index2 = Math.round(event.getY());
-                int res = index1 - index2;
-                res = res < 0 ? -1 * res : res;
-                res *= 4;
-
-
-                for (int p = 1; p < res; p++) {
-                    moverListagemDefases(event);
+                    return true;
 
                 }
-                return true;
+//            else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//
+//
+//                int index1 = Math.round(pontoDoEixoYInicio);
+//                int index2 = Math.round(event.getY());
+//                int res = index1 - index2;
+//                res = res < 0 ? -1 * res : res;
+//                res *= 4;
+//
+//
+//                for (int p = 1; p < res; p++) {
+//                    moverListagemDefases(event);
+//
+//                }
+//                return true;
+//
+//            }
 
+
+            } else if (tut != null && fasecarregada == 1) {
+                tut.onTouch(view, event);
+            } else if (result != null && fasecarregada == 2) {
+                result.onTouch(view, event);
             }
 
-
-        } else if (tut != null && fasecarregada == 1) {
-            tut.onTouch(view, event);
-        } else if (result != null && fasecarregada == 2) {
-            result.onTouch(view, event);
         }
+            return true;
 
-
-        return true;
     }
-
 
 }
 

@@ -42,6 +42,7 @@ public class Objeto3d implements Serializable {
     public boolean invulneravel = false;
     public boolean retorno = false;
     public boolean  timeLimpar= true;
+    private int timeBtEspecial = 0;
 
 
     private boolean Fenix = false;
@@ -140,6 +141,14 @@ public class Objeto3d implements Serializable {
 
     public void setAbatidoPelaNave(boolean abatidoPelaNave) {
         this.abatidoPelaNave = abatidoPelaNave;
+    }
+
+    public int getTimeBtEspecial() {
+        return timeBtEspecial;
+    }
+
+    public void setTimeBtEspecial(int timeBtEspecial) {
+        this.timeBtEspecial = timeBtEspecial;
     }
 
     public Bitmap getTexturaBitimap() {
@@ -1231,6 +1240,7 @@ public class Objeto3d implements Serializable {
             }
             if (impacto && refletir) {
                 if (!isFenix()) {
+
                     float[] ambientLight = {0.0f, 1.0f, 0.0f, 1.0f};//cor amarela do ambiente
                     float posicaoLuz[] = {-1f, 0, -65f, 1f};
                     gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
@@ -1260,11 +1270,30 @@ public class Objeto3d implements Serializable {
 
 
             } else {
-                float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
-                float posicaoLuz[] = {-1f, 0, -30f, 1f};
-                gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
-                gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+
+                if (getNomeRef().equals("btEspecial") && timeBtEspecial>0) {
+
+                    float[] ambientLight = {1.0f, 0.0f, 0.0f, 1.0f};//cor amarela do ambiente
+                    float posicaoLuz[] = {-1f, 0, -65f, 1f};
+                    gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+                    refletirTime++;
+                    if (refletirTime == 20) {
+                        impacto = false;
+                        refletirTime = 0;
+                    }
+                } else {
+                    float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
+                    float posicaoLuz[] = {-1f, 0, -30f, 1f};
+                    gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+
+
+                }
+
+
 
 
             }

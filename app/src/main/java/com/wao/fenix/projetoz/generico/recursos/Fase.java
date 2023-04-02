@@ -31,25 +31,9 @@ public class Fase {
         pos.add(6);
         pos.add(7);
 
-//        pos.add(2);
-//        pos.add(5);
-//        pos.add(2);
-//        pos.add(5);
-//        pos.add(2);
-//        pos.add(5);
 
-
-//
-//        pos.add(2);
-//        pos.add(5);
-//        pos.add(6);
-//        pos.add(7);
-//        pos.add(2);
-//        pos.add(5);
-//        pos.add(6);
-//        pos.add(7);
         int dificult = indice < 7 ? indice : 6;
-        int base = 1+ (fase * indiceLevel);
+        int base = indice+ (fase + indice)+5;
         int nivel = 1;
 
 
@@ -99,59 +83,7 @@ public class Fase {
 
                     //   pos.remove(pos.indexOf(in));
                 }
-                //  }
 
-//            pos = new ArrayList<>();
-//            pos.add(0);
-//            pos.add(1);
-//            pos.add(2);
-//            pos.add(3);
-//            pos.add(4);
-//            pos.add(5);
-//
-//            for (int i = 0; i < dificult; i++) {
-//                if (pos.size() > 0) {
-//                    int in = pos.get(new Random().nextInt(pos.size()));
-//                    int mod = 0;
-//                    c = new Cronograma();
-//                    c.setId(in);
-//                    c.setPerpetuo(false);
-//                    c.setTimeIN((50 + (700 * i))*nivel);
-//                    c.setTimeOUT((50 + (700 * i))*nivel);
-//                    c.setTimeMode(700);
-//
-//                    switch (in) {
-//                        case 0:
-//                        case 1:
-//                            mod = 0;
-//                            break;
-//                        case 2:
-//                        case 5:
-//                            mod = new Random().nextInt(5);
-//                            break;
-//                        case 3:
-//                            mod = new Random().nextInt(3);
-//                            break;
-//
-//
-//                    }
-//                    c.setModo(mod);
-//                    if (in != 4) {
-//
-//                        for (Cronograma cc : cronograma) {
-//                            if (cc.getId() == c.getId() && cc.getTimeIN() + 700 >= c.getTimeIN()) {
-//                                c.setTimeIN(cc.getTimeIN() + 701);
-//                                c.setTimeOUT(cc.getTimeOUT() + 751);
-//                                break;
-//                            }
-//                        }
-//                        cronograma.add(c);
-//                    }
-//
-//                    pos.remove(pos.indexOf(in));
-//                }
-//            }
-                // nivel++;
             }
         if ((fase+1) % 10==0) {
                 c = new Cronograma();
