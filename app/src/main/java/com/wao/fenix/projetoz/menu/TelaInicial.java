@@ -228,7 +228,7 @@ float girar = 0;
                 break;
 
             case 1:
-                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.asteroide, new Vetor3(1f, 1f, 1f), "");
+                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.esfera, new Vetor3(1f, 1f, 1f), "");
                 this.barra.setMudarTamanho(true);
                 this.barra.setPosition(new Vetor3(0, -0.05f, -0.9f));
                 this.barra.vezes(50);

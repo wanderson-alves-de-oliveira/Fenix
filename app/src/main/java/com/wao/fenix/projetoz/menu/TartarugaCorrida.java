@@ -48,7 +48,9 @@ import javax.microedition.khronos.opengles.GL11;
 public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView.Renderer, GLSurfaceView.OnTouchListener {
     private Objeto3d Fenix;
     private Objeto3d btEspecial;
+    private Objeto3d top;
 
+    private ArrayList<Objeto3d> life;
 
     private String alfabeto = "ABCDE";
     private Objeto3d telaIntro;
@@ -1809,6 +1811,63 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 btEspecial.vezes(0.15f);
 
                 btEspecial.setNomeRef("btEspecial");
+
+
+
+                top = new Objeto3d(context, R.drawable.naveanorm, asset, "top.obj", R.drawable.top, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                this.top.setEstado("NBateu");
+                top.setPosition(new Vetor3(0, 15.5f, -63.6f));
+                top.setRefletir(true);
+                top.setFenix(true);
+                top.vezes(0.4f);
+
+                top.setNomeRef("top");
+float ly=16.0f;
+float lz=-63.1f;
+               life = new ArrayList<>();
+                Objeto3d l = new Objeto3d(context, R.drawable.life, asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                l.setEstado("NBateu");
+                l.setPosition(new Vetor3(0, ly, lz));
+                l.setRefletir(true);
+                l.setFenix(true);
+                l.vezes(0.15f);
+                l.setNomeRef("life");
+                life.add(l);
+                Objeto3d l2 = new Objeto3d(context, R.drawable.lifee, asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                l2.setEstado("NBateu");
+                l2.setPosition(new Vetor3(0, ly, lz));
+                l2.setRefletir(true);
+                l2.setFenix(true);
+                l2.vezes(0.15f);
+                l2.setNomeRef("life");
+                life.add(l2);
+                Objeto3d l3 = new Objeto3d(context, R.drawable.lifeee, asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                l3.setEstado("NBateu");
+                l3.setPosition(new Vetor3(0, ly, lz));
+                l3.setRefletir(true);
+                l3.setFenix(true);
+                l3.vezes(0.15f);
+                l3.setNomeRef("life");
+                life.add(l3);
+                Objeto3d l4 = new Objeto3d(context, R.drawable.lifeeee, asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                l4.setEstado("NBateu");
+                l4.setPosition(new Vetor3(0, ly, lz));
+                l4.setRefletir(true);
+                l4.setFenix(true);
+                l4.vezes(0.15f);
+                l4.setNomeRef("life");
+                life.add(l4);
+
+                Objeto3d l5 = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                l5.setEstado("NBateu");
+                l5.setPosition(new Vetor3(0, ly, lz));
+                l5.setRefletir(true);
+                l5.setFenix(true);
+                l5.vezes(0.15f);
+                l5.setNomeRef("life");
+                life.add(l5);
+
                 carga++;
 
                 break;
@@ -5324,6 +5383,12 @@ if(p<3) {
             gl.glRotatef(rotationy, 0, 1, 0);
             gl.glTranslatef(localx, localy, localz);
             btEspecial.getPosition().x=(localx+0.5f)*-1;
+            top.getPosition().x=(localx)*-1;
+
+            for (Objeto3d o : life ) {
+                o.getPosition().x=(localx)*-1;
+            }
+
             if (this.pause) {
             } else if (this.pause == false || this.perdeu) {
                 gl.glTranslatef(0, -2, -3);
@@ -5331,6 +5396,31 @@ if(p<3) {
             }
 
             btEspecial.draw((GL11) gl2);
+
+            top.draw((GL11) gl2);
+
+            switch (vida){
+                case 1:
+                    life.get(0).draw((GL11) gl2);
+                    break;
+
+                case 2:
+                    life.get(1).draw((GL11) gl2);
+
+                    break;
+                case 3:
+                    life.get(2).draw((GL11) gl2);
+
+                    break;
+                case 4:
+                    life.get(3).draw((GL11) gl2);
+
+                    break;
+                case 5:
+                    life.get(4).draw((GL11) gl2);
+
+                    break;
+            }
 
 
         } else {
