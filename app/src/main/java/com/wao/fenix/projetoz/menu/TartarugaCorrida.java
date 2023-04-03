@@ -5384,7 +5384,7 @@ if(p<3) {
             gl.glTranslatef(localx, localy, localz);
             btEspecial.getPosition().x=(localx+0.5f)*-1;
             top.getPosition().x=(localx)*-1;
-
+//zzzzzzzzzzz
             for (Objeto3d o : life ) {
                 o.getPosition().x=(localx)*-1;
             }
