@@ -39,6 +39,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -152,8 +153,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> inimigosC2;
 
     private ArrayList<Objeto3d> inimigosE2;
+    private int posteste=0;
+    private int postesteTime=0;
 
-
+    private int indexF=0;
     private ArrayList<Objeto3d> ataqueEspecial;
 
     private ArrayList<Objeto3d> boss;
@@ -222,7 +225,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int timeEsplosaoNave = 0;
     private int esplosaoNaveId = 0;
     private boolean retornarQuadro = false;
-    private int vida = 5;
+    private int vida = 50000;
     private int barraDeEnergia = 100;
     //private MediaPlayer musica;
     private ArrayList<MediaPlayer> boom;
@@ -1665,7 +1668,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
             if (this.vida <= 0) {
-                this.vida = 5;
+                this.vida = 50000;
 
             }
         } else if (v == 1) {
@@ -1673,7 +1676,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             this.inicio = false;
             this.perdeu = false;
             this.venceu = false;
-            this.vida = 5;
+            this.vida = 50000;
             this.palavrasConquistadas = 0;
         } else if (v == 2) {
             if (nivel > 1) {
@@ -1699,14 +1702,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             case 0:
 
 
-//
-//                this.esfera = new Objeto3d(context, R.drawable.basenorm, asset, "esfera.obj", R.drawable.esfera, new Vetor3(1f, 1f, 1f), "");
-//                this.esfera.setMudarTamanho(true);
-//                this.esfera.setPosition(new Vetor3(0, 12f, -67.2f));
-//
-//                this.esfera.vezes(2.65f);
-                //this.esfera.setGiroPosition(new Vetor3(90, 0f, 0f));
-                //this.esfera.loadGLTexture();
+
 
 
                 this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
@@ -1759,7 +1755,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     niveis.add(null);
                     niveis.add(null);
                     niveis.add(null);
+                    niveis.add(null);
 
+                    niveis2.add(null);
                     niveis2.add(null);
                     niveis2.add(null);
                     niveis2.add(null);
@@ -1775,6 +1773,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     objetosCenario.add(null);
                     objetosCenario.add(null);
                     objetosCenario.add(null);
+                    objetosCenario.add(null);
+
 
                 }
 
@@ -1922,6 +1922,7 @@ float lz=-63.1f;
 
                 break;
             case 14:
+                colorir();
                 carga++;
                 break;
 
@@ -2014,7 +2015,109 @@ float lz=-63.1f;
 
 
     }
+public  void colorir(){
 
+    indexF=indexFase();
+
+    for (Objeto3d o :inimigosA ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+            case 1:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,1f,0));
+                break;
+
+        }
+    }
+    for (Objeto3d o :inimigosB ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+            case 1:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,1f,0));
+                break;
+
+        }
+    }
+    for (Objeto3d o :inimigosC ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(1f,0,0));
+                break;
+            case 1:
+                o.setCores(new Vetor3(1f,0,0));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+
+        }
+    }
+    for (Objeto3d o :inimigosC2 ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0,1f,0));
+                break;
+            case 1:
+                o.setCores(new Vetor3(1f,0,0));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+        }
+    }
+    for (Objeto3d o :inimigosE ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+            case 1:
+                o.setCores(new Vetor3(1f,0,0));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+
+        }
+    }
+    for (Objeto3d o :inimigosE2 ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0,1f,0));
+                break;
+            case 1:
+                o.setCores(new Vetor3(1f,0,0));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0,0,1f));
+                break;
+
+        }
+    }
+    for (Objeto3d o :inimigosX ) {
+        switch (indexF) {
+            case 0:
+                o.setCores(new Vetor3(0, 0, 1f));
+                break;
+            case 1:
+                o.setCores(new Vetor3(0, 1f, 0));
+                break;
+            case 2:
+                o.setCores(new Vetor3(0, 0, 1f));
+                break;
+
+        }
+    }
+
+}
 
     public void inimigosB() throws IOException {
         float vidaB = 20f;
@@ -2032,7 +2135,7 @@ float lz=-63.1f;
             // inimigosB.get(p).loadGLTexture();
             esplosaoArrayObj.add(new Esplosao(context, inimigosB.get(p), asset, context.getResources(), 0.8f, "inimigosB", p));
 
-        }
+             }
         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
                 DISTANCIA, -65));
         inimigosB.get(1).setPosition(new Vetor3(0.3f,
@@ -2077,7 +2180,7 @@ float lz=-63.1f;
         for (int p = 0; p < 6; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosC.add(new Objeto3d(context, R.drawable.inimigocnorm, asset, "inimigoc.obj", R.drawable.inimigoc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
+                inimigosC.add(new Objeto3d(context, R.drawable.inimigocnorm, asset, "inimigoc.obj", R.drawable.inimigoe, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
                 esplosaoArrayObj.add(new Esplosao(context, inimigosC.get(p), asset, context.getResources(), 0.8f, "inimigosC", p));
 
             }
@@ -2123,7 +2226,7 @@ float lz=-63.1f;
         for (int p = 0; p < 3; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosC2.add(new Objeto3d(context, R.drawable.inimigocnorm, asset, "inimigod.obj", R.drawable.inimigocc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC2"));
+                inimigosC2.add(new Objeto3d(context, R.drawable.inimigocnorm, asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC2"));
 
                 inimigosC2.get(p).vezes(1.5f);
 
@@ -2202,6 +2305,21 @@ float lz=-63.1f;
 
     }
 
+
+
+    public int indexFase(){
+
+        String[] fasex = String.valueOf(fase).split("");
+        int indice = 1;
+         if (fasex.length ==1) {
+            indice = 0;
+         } else {
+            indice = Integer.parseInt(fasex[0]);
+        }
+        return indice;
+    }
+
+
     public void inimigosX() throws IOException {
         float vidaX = 20f;
 
@@ -2220,8 +2338,7 @@ float lz=-63.1f;
                 //  inimigosX.get(p).loadGLTexture();
             }
             esplosaoArrayObj.add(new Esplosao(context, inimigosX.get(p), asset, context.getResources(), 0.8f, "inimigosX", p));
-
-        }
+         }
 
 
         inimigosX.get(0).setPosition(new Vetor3(0.5f,
@@ -2441,15 +2558,17 @@ float lz=-63.1f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.objetosiniciodesertobbb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
+                    cena.get(0).setPosition(new Vetor3(0.6f, 14.9f,  cena.get(0).getPosition().z));
+
                     cena.get(0).setTransparente(true);
                     cena.get(0).setRefletir(true);
 //
 //
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.objetosiniciodesertobbb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2464,6 +2583,40 @@ float lz=-63.1f;
                 if (niveis.get(2) == null) {
                     niveis.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
                     niveis2.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
+
+                }
+                break;
+            case 3:
+                if (objetosCenario.get(3) == null) {
+                    ArrayList<Objeto3d> cena;
+
+                    cena = new ArrayList<>();
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "terrenotop.obj", R.drawable.pedra, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.get(0).setValor(String.valueOf("A"));
+                    cena.get(0).setVida(150f * dificuldade);
+                    cena.get(0).setRecoverVida(150f * dificuldade);
+                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f,cena.get(0).getPosition().z));
+
+                    cena.get(0).setTransparente(true);
+                    cena.get(0).setRefletir(true);
+
+//
+//
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.get(1).setValor(String.valueOf("A"));
+                    cena.get(1).setVida(150f * dificuldade);
+                    cena.get(1).setRecoverVida(150f * dificuldade);
+                    cena.get(1).setPosition(new Vetor3(0.6f, 15.9f, -64.2f));
+                    cena.get(1).setTransparente(true);
+                    cena.get(1).setRefletir(true);
+                    //   cena.get(0).loadGLTexture();
+                    //   cena.get(1).loadGLTexture();
+                    objetosCenario.set(3, cena);
+                }
+
+                if (niveis.get(3) == null) {
+                    niveis.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -3442,7 +3595,7 @@ float lz=-63.1f;
         ceoZ = -62;
         ceoZ2 = -65;
         localz = -1000f;
-        vida = 5;
+        vida = 50000;
         barraDeEnergia = 100;
         try {
             carregarCronologia(fase);
@@ -3456,7 +3609,7 @@ float lz=-63.1f;
         parado = true;
         this.venceu = true;
         localz = -1000f;
-        vida = 5;
+        vida = 50000;
         barraDeEnergia = 100;
         try {
             timeLine = 0;
@@ -3472,7 +3625,7 @@ float lz=-63.1f;
         parado = true;
         this.venceu = true;
         localz = -1000f;
-        vida = 5;
+        vida = 50000;
         barraDeEnergia = 100;
         timeLine = 0;
 
@@ -4096,11 +4249,18 @@ float lz=-63.1f;
             v.setInimigosGerados(inimigosGerados);
             v.setSaude(barraDeEnergia);
             v.setProgresso("COMPLETA");
-            statusFase.atualizarFase(v);
+
             //    boss.get(fase).descarregar();
             //  boss.removeAll(boss);
             bossEliminado = false;
             selectFase = true;
+
+            if(fase + 1>=40){
+                indiceLevel=0;
+                statusFase.zerarFase(v);
+            }else {
+                statusFase.atualizarFase(v);
+            }
 
 
         }
@@ -4550,6 +4710,23 @@ float lz=-63.1f;
         if (timeLine > 0 && !vitoria && !perdeu) {
             ceoZ = terreno.getPosition().z + (velocidade2 / 2);
             ceoZ2 = terreno2.getPosition().z + (velocidade2 / 2);
+
+            if(posteste==0 && terreno.getPosition().x>-45f){
+                terreno.getPosition().x-=(velocidade2 / 4);
+                terreno2.getPosition().x-=(velocidade2 / 4);
+
+            }else if(posteste==1 && terreno.getPosition().x<0){
+                terreno.getPosition().x+=(velocidade2 / 4);
+                terreno2.getPosition().x+=(velocidade2 / 4);
+            }
+
+            postesteTime++;
+
+            if(postesteTime>=100){
+                posteste= new Random().nextInt(4);
+                postesteTime=0;
+            }
+
 
             terreno.setPosition(new Vetor3(terreno.getPosition().x, terreno.getPosition().y, ceoZ));
             terreno2.setPosition(new Vetor3(terreno2.getPosition().x, terreno2.getPosition().y, ceoZ2));
@@ -6222,7 +6399,7 @@ private void dispararAtaqueEspecial(){
 
                         perdeu = false;
                         venceu = false;
-                        vida = 5;
+                        vida = 50000;
                         //  gravarRecorde();
 
                         palavrasConquistadas = palavrasConquistadas - palavrasConquistadasDeReset;

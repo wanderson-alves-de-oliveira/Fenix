@@ -43,6 +43,7 @@ public class Objeto3d implements Serializable {
     public boolean retorno = false;
     public boolean  timeLimpar= true;
     private int timeBtEspecial = 0;
+    private Vetor3 cores=new Vetor3(0,0,0);
 
 
     private boolean Fenix = false;
@@ -141,6 +142,14 @@ public class Objeto3d implements Serializable {
 
     public void setAbatidoPelaNave(boolean abatidoPelaNave) {
         this.abatidoPelaNave = abatidoPelaNave;
+    }
+
+    public Vetor3 getCores() {
+        return cores;
+    }
+
+    public void setCores(Vetor3 cores) {
+        this.cores = cores;
     }
 
     public int getTimeBtEspecial() {
@@ -1241,7 +1250,7 @@ public class Objeto3d implements Serializable {
             if (impacto && refletir) {
                 if (!isFenix()) {
 
-                    float[] ambientLight = {0.0f, 1.0f, 0.0f, 1.0f};//cor amarela do ambiente
+                    float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
                     float posicaoLuz[] = {-1f, 0, -65f, 1f};
                     gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
                     gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
@@ -1284,11 +1293,35 @@ public class Objeto3d implements Serializable {
                         refletirTime = 0;
                     }
                 } else {
-                    float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
-                    float posicaoLuz[] = {-1f, 0, -30f, 1f};
-                    gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
-                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
-                    gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+
+                    switch (getNomeRef()) {
+                        case "inimigosX":
+                        case "inimigosA":
+                        case "inimigosB":
+                        case "inimigosC":
+                        case "inimigosC2":
+                        case "inimigosE":
+                        case "inimigosE2":
+                            float[] ambientLight = new float[]{cores.x, cores.y, cores.z, 1.0f};//cor amarela do ambiente
+                            float[] posicaoLuz = new float[]{-1f, -80, -65f,1};
+                            gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                            gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                            gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+                        break;
+
+
+
+
+
+                        default:
+                            ambientLight = new float[]{1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
+                            posicaoLuz = new float[]{-1f, 0, -30f, 1f};
+                            gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
+                            gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
+                            gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
+                            break;
+
+                    }
 
 
                 }

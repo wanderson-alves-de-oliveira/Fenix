@@ -14,7 +14,7 @@ import com.wao.fenix.projetoz.modelo.EstatusFase;
 
 public class BDEstatusFase {
 
-    private SQLiteDatabase db;
+    private final SQLiteDatabase db;
 
     public BDEstatusFase(Context context) {
         ConectionDB aux = new ConectionDB(context);
@@ -48,19 +48,30 @@ public class BDEstatusFase {
         db.update( "estatus_fase", valores, "_id = ?", new String[]{"" + v.getId()} );
         fechar();
     }
-
-
-    public void SalvarFase(EstatusFase v) {
+    public void zerarFase(EstatusFase v) {
 
         ContentValues valores = new ContentValues();
-        valores.put("saude", v.getSaude());
-        valores.put("inimigosEliminados", v.getInimigosEliminados());
-        valores.put("inimigosGerados", v.getInimigosGerados());
-        valores.put("progresso", v.getProgresso());
+//        valores.put("saude", v.getSaude());
+//        valores.put("inimigosEliminados", v.getInimigosEliminados());
+//        valores.put("inimigosGerados", v.getInimigosGerados());
+        valores.put("progresso", "PENDENTE");
+       // db.update( "estatus_fase", valores, null, null );
+        db.update( "estatus_fase", valores, "_id != ?", new String[]{"0"} );
 
-        db.insert("estatus_fase", null, valores);
         fechar();
     }
+
+//    public void SalvarFase(EstatusFase v) {
+//
+//        ContentValues valores = new ContentValues();
+//        valores.put("saude", v.getSaude());
+//        valores.put("inimigosEliminados", v.getInimigosEliminados());
+//        valores.put("inimigosGerados", v.getInimigosGerados());
+//        valores.put("progresso", v.getProgresso());
+//
+//        db.insert("estatus_fase", null, valores);
+//        fechar();
+//    }
 
 
     public EstatusFase buscar(final long id) {
@@ -96,7 +107,7 @@ public class BDEstatusFase {
 
         }catch (Exception e){
 
-            c.setId(0l);
+            c.setId(0L);
             c.setSaude(100);
             c.setInimigosEliminados(0);
             c.setInimigosGerados(0);

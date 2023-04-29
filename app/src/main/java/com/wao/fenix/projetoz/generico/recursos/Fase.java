@@ -33,13 +33,13 @@ public class Fase {
 
 
         int dificult = indice < 7 ? indice : 6;
-        int base = indice+ (fase + indice)+5;
+        int base =2;//indice+ (fase + indice)+1;
         int nivel = 1;
-
+        indice=1;
 
         if ((fase+1) % 10==0) {
 
-              base = 2 ;//+ (fase * indiceLevel);
+              base = 3 + (fase * indiceLevel);
               nivel = 1;
         }
             for (int ii = 0; ii < base; ii++) {
