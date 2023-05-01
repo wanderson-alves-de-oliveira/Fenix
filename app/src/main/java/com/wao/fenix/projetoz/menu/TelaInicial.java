@@ -60,6 +60,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     private GL10 gl2;
     private int fasecarregada = 0;
+    private int musicaDafase = 0;
+
 
     private int musicas = 0;
     private boolean musicaBoss = false;
@@ -166,7 +168,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         MediaPlayer m2 = MediaPlayer.create(context, R.raw.musicd);
         m2.setLooping(true);
         this.musicaFase.add(m2);
-
+        MediaPlayer m3 = MediaPlayer.create(context, R.raw.musicf);
+        m3.setLooping(true);
+        this.musicaFase.add(m3);
+        MediaPlayer m4 = MediaPlayer.create(context, R.raw.musics);
+        m4.setLooping(true);
+        this.musicaFase.add(m4);
 
         this.musicaBossFase = MediaPlayer.create(context, R.raw.musice);
         this.musicaBossFase.setLooping(true);
@@ -228,7 +235,7 @@ float girar = 0;
                 break;
 
             case 1:
-                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.esfera, new Vetor3(1f, 1f, 1f), "");
+                this.barra = new Objeto3d(context, R.drawable.basenorm, asset, "tiroc.obj", R.drawable.fundobase, new Vetor3(1f, 1f, 1f), "");
                 this.barra.setMudarTamanho(true);
                 this.barra.setPosition(new Vetor3(0, -0.05f, -0.9f));
                 this.barra.vezes(50);
@@ -689,6 +696,46 @@ liberado=true;
                 musicaAtual = 2;
 
                 break;
+            case 3:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    musicaAnterior = -2;
+
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
+                }
+
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(3), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(3), mboss, mMusica);
+
+                }
+                musicaAtual = 3;
+
+                break;
+            case 4:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    musicaAnterior = -2;
+
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
+                }
+
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(4), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(4), mboss, mMusica);
+
+                }
+                musicaAtual = 4;
+
+                break;
             case -2:
            //    regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
 
@@ -714,8 +761,7 @@ liberado=true;
 
                 break;
             case -1:
-
-                regularSontul(this.musicaFase.get(0), this.musicaBossFase, mboss, mMusica);
+                regularSontul(this.musicaFase.get(musicaDafase), this.musicaBossFase, mboss, mMusica);
                 musicaAtual = -1;
 
                 break;
@@ -773,6 +819,34 @@ liberado=true;
                     //pausar( false );
                 }
                 break;
+            case 3:
+
+
+                if (p) {
+                    this.pause = false;
+                    this.musicaFase.get(3).pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaFase.get(3).start();
+                    //pausar( false );
+                }
+                break;
+            case 4:
+
+
+                if (p) {
+                    this.pause = false;
+                    this.musicaFase.get(4).pause();
+                    // pausar( true );
+
+                } else {
+                    this.pause = true;
+                    this.musicaFase.get(4).start();
+                    //pausar( false );
+                }
+                break;
             case -2:
                 if (p) {
                     this.pause = false;
@@ -819,7 +893,8 @@ liberado=true;
             if (m1.isPlaying()) {
                 m1.pause();
             }
-            volumeSon += 0.004;
+
+            //volumeSon += 0.004;
             m1.setVolume(volumeSon, volumeSon);
             m2.setVolume(volumeSon, volumeSon);
             m2.seekTo(0);
@@ -995,7 +1070,22 @@ liberado=true;
                         public void onClick(View v) {
                             selectFase = false;
                             alerta.fechar();
+
+
+                            String[] fasex = String.valueOf(fase).split("");
+
+                            if (fasex.length > 1) {
+                                musicaDafase = Integer.parseInt(fasex[0] );
+
+                            } else {
+                                musicaDafase = 0;
+                            }
+
                             fasecarregada = 1;
+
+
+
+
                             musicaInicioFase = true;
                             iniciomenu = false;
 

@@ -1302,6 +1302,7 @@ public class Objeto3d implements Serializable {
                         case "inimigosC2":
                         case "inimigosE":
                         case "inimigosE2":
+                        case "boss":
                             float[] ambientLight = new float[]{cores.x, cores.y, cores.z, 1.0f};//cor amarela do ambiente
                             float[] posicaoLuz = new float[]{-1f, -80, -65f,1};
                             gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
