@@ -2037,7 +2037,7 @@ public  void colorir(){
                 o.setCores(new Vetor3(1f,0.2f,1f));
                 break;
             case 4:
-                o.setCores(new Vetor3(1f,1f,0.4f));
+                o.setCores(new Vetor3(0f,1f,0.1f));
                 break;
 
         }
@@ -2095,7 +2095,7 @@ public  void colorir(){
                 o.setCores(new Vetor3(1f,0.2f,1f));
                 break;
             case 4:
-                o.setCores(new Vetor3(1f,1f, 0));
+                o.setCores(new Vetor3(1f,0, 0));
                 break;
         }
 
@@ -2133,7 +2133,7 @@ public  void colorir(){
                 o.setCores(new Vetor3(1f,0.2f,1f));
                 break;
             case 4:
-                o.setCores(new Vetor3(1f,1f, 0));
+                o.setCores(new Vetor3(1f,0, 0));
                 break;
 
         }
@@ -2154,7 +2154,7 @@ public  void colorir(){
 //
 //        }
 
-        o.setCores(new Vetor3((float) Math.random(),(float) Math.random(),(float) Math.random()));
+        o.setCores(new Vetor3((float) Math.random(),1f,(float) Math.random()));
 
     }
 
