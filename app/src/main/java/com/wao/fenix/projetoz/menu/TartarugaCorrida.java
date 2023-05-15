@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -98,6 +99,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private boolean parado = false;
     public boolean selectFase = false;
     public boolean acionado = false;
+    public boolean carregamentoDireto = false;
 
     private boolean vitoria = false;
     private boolean exibirStatusVitoria = false;
@@ -1697,203 +1699,213 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         EstatusFase e = new BDEstatusFase(context).buscarUltima();
 
         long ultimaPassada = e != null ? e.getId() : 1l;
-
+        float ly = 16.0f;
+        float lz = -63.1f;
         switch (carga) {
             case 0:
 
 
 
 
+                if (!carregamentoDireto) {
+                    this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
+                    this.telaIntro.setMudarTamanho(true);
+                    this.telaIntro.setPosition(new Vetor3(0, 0.02f, -0.9f));
+                    this.telaIntro.vezes(1.3f);
+                    this.telaIntro.setGiroPosition(new Vetor3(90, 0f, 0f));
+                    //   this.telaIntro.loadGLTexture();
 
-                this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
-                this.telaIntro.setMudarTamanho(true);
-                this.telaIntro.setPosition(new Vetor3(0, 0.02f, -0.9f));
-                this.telaIntro.vezes(1.3f);
-                this.telaIntro.setGiroPosition(new Vetor3(90, 0f, 0f));
-                //   this.telaIntro.loadGLTexture();
-
-
+                }
                 //this.Fenix.setGiroCentral(true);
                 //  selecao(30, 40, ultimaPassada);
                 carga++;
                 break;
             case 1:
-                if (inimigosA == null)
-                    inimigosA = new ArrayList<>();
-                if (inimigosX == null)
-                    inimigosX = new ArrayList<>();
-                if (inimigosC == null)
-                    inimigosC = new ArrayList<>();
-                if (inimigosC2 == null)
-                    inimigosC2 = new ArrayList<>();
-                if (asteroide == null)
-                    asteroide = new ArrayList<>();
-                if (inimigosE == null)
-                    inimigosE = new ArrayList<>();
-                if (inimigosE2 == null)
-                    inimigosE2 = new ArrayList<>();
-                if (inimigosB == null)
-                    inimigosB = new ArrayList<>();
-                if (boss == null) {
-                    boss = new ArrayList<>();
-                    for (int i = 0; i < 20; i++) {
-                        boss.add(null);
+                if (!carregamentoDireto) {
+                    if (inimigosA == null)
+                        inimigosA = new ArrayList<>();
+                    if (inimigosX == null)
+                        inimigosX = new ArrayList<>();
+                    if (inimigosC == null)
+                        inimigosC = new ArrayList<>();
+                    if (inimigosC2 == null)
+                        inimigosC2 = new ArrayList<>();
+                    if (asteroide == null)
+                        asteroide = new ArrayList<>();
+                    if (inimigosE == null)
+                        inimigosE = new ArrayList<>();
+                    if (inimigosE2 == null)
+                        inimigosE2 = new ArrayList<>();
+                    if (inimigosB == null)
+                        inimigosB = new ArrayList<>();
+                    if (boss == null) {
+                        boss = new ArrayList<>();
+                        for (int i = 0; i < 20; i++) {
+                            boss.add(null);
+                        }
                     }
+                    if (esplosaoArrayObj == null)
+                        esplosaoArrayObj = new ArrayList<>();
+
                 }
-                if (esplosaoArrayObj == null)
-                    esplosaoArrayObj = new ArrayList<>();
-
-
                 carga++;
                 break;
             case 2:
+                if (!carregamentoDireto) {
+                    if (niveis == null) {
+                        niveis = new ArrayList<>();
+                        niveis2 = new ArrayList<>();
 
-                if (niveis == null) {
-                    niveis = new ArrayList<>();
-                    niveis2 = new ArrayList<>();
+                        niveis.add(null);
+                        niveis.add(null);
+                        niveis.add(null);
+                        niveis.add(null);
+                        niveis.add(null);
 
-                    niveis.add(null);
-                    niveis.add(null);
-                    niveis.add(null);
-                    niveis.add(null);
-                    niveis.add(null);
-
-                    niveis2.add(null);
-                    niveis2.add(null);
-                    niveis2.add(null);
-                    niveis2.add(null);
-                    niveis2.add(null);
+                        niveis2.add(null);
+                        niveis2.add(null);
+                        niveis2.add(null);
+                        niveis2.add(null);
+                        niveis2.add(null);
 
 
+                    }
                 }
                 carga++;
                 break;
             case 3:
-                cena = new ArrayList<>();
-                if (objetosCenario == null) {
-                    objetosCenario = new ArrayList<>();
-                    objetosCenario.add(null);
-                    objetosCenario.add(null);
-                    objetosCenario.add(null);
-                    objetosCenario.add(null);
-                    objetosCenario.add(null);
+                if (!carregamentoDireto) {
+                    cena = new ArrayList<>();
+                    if (objetosCenario == null) {
+                        objetosCenario = new ArrayList<>();
+                        objetosCenario.add(null);
+                        objetosCenario.add(null);
+                        objetosCenario.add(null);
+                        objetosCenario.add(null);
+                        objetosCenario.add(null);
 
 
+                    }
                 }
-
                 carga++;
 
                 break;
             case 4:
+                if (!carregamentoDireto) {
+                    if (Fenix == null) {
+                        setFenix(new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), ""));
+                        //   Fenix.loadGLTexture(true);
 
-                if (Fenix == null) {
-                    setFenix(new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), ""));
-                    //   Fenix.loadGLTexture(true);
-
-                    this.Fenix.setEstado("NBateu");
-                    Fenix.setPosition(new Vetor3(0, 15f, -62));
-                    Fenix.setRefletir(true);
-                    Fenix.setFenix(true);
-                    Fenix.setNomeRef("Fenix");
-                    //  Fenix.setTransparente(true);
-                    //  Fenix.loadGLTexture();
+                        this.Fenix.setEstado("NBateu");
+                        Fenix.setPosition(new Vetor3(0, 15f, -62));
+                        Fenix.setRefletir(true);
+                        Fenix.setFenix(true);
+                        Fenix.setNomeRef("Fenix");
+                        //  Fenix.setTransparente(true);
+                        //  Fenix.loadGLTexture();
 
 
-                    ataqueEspecial = new ArrayList<>();
-                    ataqueEspecial();
+                        ataqueEspecial = new ArrayList<>();
+                        ataqueEspecial();
 
-                    splosaoArrayNave = splosao(Fenix);
+                        splosaoArrayNave = splosao(Fenix);
+                    }
+
+
+
                 }
-
-                btEspecial = new Objeto3d(context, R.drawable.naveanorm, asset, "micel.obj", R.drawable.micel, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-
-                this.btEspecial.setEstado("NBateu");
-                btEspecial.setPosition(new Vetor3(0, 15.5f, -61.8f));
-                btEspecial.setRefletir(true);
-                btEspecial.setFenix(true);
-                btEspecial.vezes(0.15f);
-
-                btEspecial.setNomeRef("btEspecial");
-
-
-
-                top = new Objeto3d(context, R.drawable.naveanorm, asset, "top.obj", R.drawable.top, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-
-                this.top.setEstado("NBateu");
-                top.setPosition(new Vetor3(0, 15.5f, -63.6f));
-                top.setRefletir(true);
-                top.setFenix(true);
-                top.vezes(0.4f);
-
-                top.setNomeRef("top");
-float ly=16.0f;
-float lz=-63.1f;
-               life = new ArrayList<>();
-                Objeto3d l = new Objeto3d(context, R.drawable.life, asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                l.setEstado("NBateu");
-                l.setPosition(new Vetor3(0, ly, lz));
-                l.setRefletir(true);
-                l.setFenix(true);
-                l.vezes(0.15f);
-                l.setNomeRef("life");
-                life.add(l);
-                Objeto3d l2 = new Objeto3d(context, R.drawable.lifee, asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                l2.setEstado("NBateu");
-                l2.setPosition(new Vetor3(0, ly, lz));
-                l2.setRefletir(true);
-                l2.setFenix(true);
-                l2.vezes(0.15f);
-                l2.setNomeRef("life");
-                life.add(l2);
-                Objeto3d l3 = new Objeto3d(context, R.drawable.lifeee, asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                l3.setEstado("NBateu");
-                l3.setPosition(new Vetor3(0, ly, lz));
-                l3.setRefletir(true);
-                l3.setFenix(true);
-                l3.vezes(0.15f);
-                l3.setNomeRef("life");
-                life.add(l3);
-                Objeto3d l4 = new Objeto3d(context, R.drawable.lifeeee, asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                l4.setEstado("NBateu");
-                l4.setPosition(new Vetor3(0, ly, lz));
-                l4.setRefletir(true);
-                l4.setFenix(true);
-                l4.vezes(0.15f);
-                l4.setNomeRef("life");
-                life.add(l4);
-
-                Objeto3d l5 = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                l5.setEstado("NBateu");
-                l5.setPosition(new Vetor3(0, ly, lz));
-                l5.setRefletir(true);
-                l5.setFenix(true);
-                l5.vezes(0.15f);
-                l5.setNomeRef("life");
-                life.add(l5);
-
                 carga++;
 
                 break;
             case 5:
 
-                validarToque();
+                if (!carregamentoDireto) {
+
+                    btEspecial = new Objeto3d(context, R.drawable.naveanorm, asset, "micel.obj", R.drawable.micel, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                    this.btEspecial.setEstado("NBateu");
+                    btEspecial.setPosition(new Vetor3(0, 15.5f, -61.8f));
+                    btEspecial.setRefletir(true);
+                    btEspecial.setFenix(true);
+                    btEspecial.vezes(0.15f);
+
+                    btEspecial.setNomeRef("btEspecial");
+                }
 
                 carga++;
                 break;
             case 6:
+                if (!carregamentoDireto) {
 
+                    top = new Objeto3d(context, R.drawable.naveanorm, asset, "top.obj", R.drawable.top, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                    this.top.setEstado("NBateu");
+                    top.setPosition(new Vetor3(0, 15.5f, -63.6f));
+                    top.setRefletir(true);
+                    top.setFenix(true);
+                    top.vezes(0.4f);
+
+                    top.setNomeRef("top");
+                }
                 carga++;
                 break;
             case 7:
+                if (!carregamentoDireto) {
 
+
+                    life = new ArrayList<>();
+                    Objeto3d l = new Objeto3d(context, R.drawable.life, asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    l.setEstado("NBateu");
+                    l.setPosition(new Vetor3(0, ly, lz));
+                    l.setRefletir(true);
+                    l.setFenix(true);
+                    l.vezes(0.15f);
+                    l.setNomeRef("life");
+                    life.add(l);
+                    Objeto3d l2 = new Objeto3d(context, R.drawable.lifee, asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    l2.setEstado("NBateu");
+                    l2.setPosition(new Vetor3(0, ly, lz));
+                    l2.setRefletir(true);
+                    l2.setFenix(true);
+                    l2.vezes(0.15f);
+                    l2.setNomeRef("life");
+                    life.add(l2);
+                    Objeto3d l3 = new Objeto3d(context, R.drawable.lifeee, asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    l3.setEstado("NBateu");
+                    l3.setPosition(new Vetor3(0, ly, lz));
+                    l3.setRefletir(true);
+                    l3.setFenix(true);
+                    l3.vezes(0.15f);
+                    l3.setNomeRef("life");
+                    life.add(l3);
+
+                }
                 carga++;
                 break;
             case 8:
+                if (!carregamentoDireto) {
+                    Objeto3d l4 = new Objeto3d(context, R.drawable.lifeeee, asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    l4.setEstado("NBateu");
+                    l4.setPosition(new Vetor3(0, ly, lz));
+                    l4.setRefletir(true);
+                    l4.setFenix(true);
+                    l4.vezes(0.15f);
+                    l4.setNomeRef("life");
+                    life.add(l4);
 
+                    Objeto3d l5 = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    l5.setEstado("NBateu");
+                    l5.setPosition(new Vetor3(0, ly, lz));
+                    l5.setRefletir(true);
+                    l5.setFenix(true);
+                    l5.vezes(0.15f);
+                    l5.setNomeRef("life");
+                    life.add(l5);
+                }
                 carga++;
                 break;
             case 9:
-
+                validarToque();
                 carga++;
                 break;
             case 10:
@@ -1910,22 +1922,25 @@ float lz=-63.1f;
                 break;
             case 13:
 
+                if (!carregamentoDireto) {
+                    if (tiros.size() < QTD_DE_TIROS) {
+                        int i = tiros.size();
+                        tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros.get(i).vezes(1.8f);
+                        tiros.get(i).setOrigem("Fenix1");
 
-                if (tiros.size() < QTD_DE_TIROS) {
-                    int i = tiros.size();
-                    tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
-                    tiros.get(i).vezes(1.8f);
-                    tiros.get(i).setOrigem("Fenix1");
-
-                    tiros.get(i).setMover("nulo");
-                } else {
+                        tiros.get(i).setMover("nulo");
+                    } else {
+                        carga++;
+                    }
+                }else {
                     carga++;
                 }
 
-
                 break;
             case 14:
-                colorir();
+                    colorir();
+             
                 carga++;
                 break;
 
@@ -1971,7 +1986,8 @@ float lz=-63.1f;
             boss = new ArrayList<>();
         if (esplosaoArrayObj == null)
             esplosaoArrayObj = new ArrayList<>();
-
+        if (tiros == null)
+            tiros = new ArrayList<>();
 
         if (Fenix == null) {
             setFenix(new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), ""));
@@ -2431,20 +2447,14 @@ public  void colorir(){
         float vidaBos = 1500f;
 
         switch (chefeDafase) {
-            case 0:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "bossxa.obj", R.drawable.bossxac, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(chefeDafase).vezes(7);
-                boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
 
-                break;
-            case 1:
+            case 0:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoeea, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
                 break;
-            case 2:
+            case 1:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
@@ -2456,7 +2466,7 @@ public  void colorir(){
 
                 }
                 break;
-            case 3:
+            case 2:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigocc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(4);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
@@ -2468,14 +2478,14 @@ public  void colorir(){
 
                 }
                 break;
-            case 4:
+            case 3:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoeeb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
 
                 break;
-            case 5:
+            case 4:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
@@ -2483,7 +2493,7 @@ public  void colorir(){
                 boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
 
                 break;
-            case 6:
+            case 5:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(4);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
@@ -5712,7 +5722,8 @@ if(p<3) {
 
                 if (carga < 0)
                     carga++;
-                carregar();
+
+                    carregar();
                 ///  carga++;
 
             } catch (IOException e) {
@@ -6558,7 +6569,13 @@ private void dispararAtaqueEspecial(){
     }
 
 
-    //////////////////////////////////////////////////
+    public interface Factory {
+
+        @NonNull
+        <T extends TartarugaCorrida> T create(@NonNull Class<T> modelClass);
+    }
+
+
 }
 
 

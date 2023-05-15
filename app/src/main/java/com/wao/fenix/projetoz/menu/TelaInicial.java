@@ -2,6 +2,8 @@ package com.wao.fenix.projetoz.menu;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.opengl.GLES20;
@@ -153,7 +155,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         //////////////INICIA VARIAVEIS BASICAS
         this.context = context;
         this.asset = asset;
-
         this.displayMetrics = context.getResources().getDisplayMetrics();
         this.h = this.displayMetrics.heightPixels;
         this.w = 720;
@@ -187,9 +188,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
         /////////////////////////////////////////////////////
         faseInit = new int[]{0, 1, 2, 3, 4, 5, 2, 3, 4, 1, 5, 0, 2};
-
+        EstatusFase v = new BDEstatusFase(context).buscarUltima();
+   int  ult= Math.toIntExact(v.getId());
+        tut = new TartarugaCorrida(context, asset,ult , comSons, comMusica);
 
     }
+
+
+
 float girar = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -229,8 +235,8 @@ float girar = 0;
                 this.telaIntro.vezes(1.5f);
                 this.telaIntro.setGiroPosition(new Vetor3(90, 0f, 0f));
                 this.telaIntro.loadGLTexture();
-
-
+                tut.carga=0;
+                tut.carregar();
                 carga++;
                 break;
 
@@ -249,10 +255,9 @@ float girar = 0;
                 bolhaRef.setTransparente(true);
                 bolhaRef.setPosition(new Vetor3(-100, -0.08f, -0.1f));
 
-                // selecao(0, 10, ultimaPassada);
-                // bolhaRef.loadGLTexture();
 
-
+                tut.carga=1;
+                tut.carregar();
                 carga++;
                 break;
 
@@ -302,13 +307,15 @@ float girar = 0;
                 btStart.setPosition(new Vetor3(0.00f, -0.09f, -0.089f));
                 btStart.loadGLTexture();
 
-
+                tut.carga=2;
+                tut.carregar();
                 carga++;
 
                 break;
             case 3:
                 //  selecao(25, 40, ultimaPassada);
-
+                tut.carga=3;
+                tut.carregar();
                 carga++;
                 break;
             case 4:
@@ -329,11 +336,37 @@ float girar = 0;
 //                        ob.getPosition().y += velocidade * 1.8f;
 //                    }
 //                }
+
+                tut.carga=4;
+                tut.carregar();
                 carga++;
                 break;
             default:
                 //  selecao(25, 40, ultimaPassada);
-liberado=true;
+                if(!tut.carregamentoDireto) {
+                  //  tut.carga++;
+                    tut.carregar();
+                    if (tut.carga>=15){
+                        tut.carregamentoDireto=true;
+
+
+                        liberado = true;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (Looper.myLooper() == null) {
+                                    Looper.prepare();
+                                } else {
+                                    Looper.getMainLooper().getThread().interrupt();
+                                }
+                            }
+                            tut.onSurfaceCreated(gl2, this.eglConfig);
+
+                        }
+                    }
+                }else {
+                    liberado = true;
+                }
+
                 carga++;
                 break;
 
@@ -451,6 +484,10 @@ liberado=true;
         pauseMusica(musicaAtual, p);
 
     }
+
+
+
+
 
     float distanciaR = 0f;
 
@@ -576,11 +613,11 @@ liberado=true;
                 mudarMusica(-2, false, true);
 
             }
-            if (carga > 0 && carga <= 1) {
+            if (carga>1 && tut.carga <4 ||  tut.carga >7 && tut.carga <14) {
 
                 this.telaIntro.draw((GL11) gl2);
             }
-            if (carga > 1) {
+           else if ( tut.carga >=14 ) {
                 this.barra.draw((GL11) gl2);
 //                if (moverFundo == 0) {
 //                    this.barra.getPosition().x += 0.0002f;
@@ -594,7 +631,17 @@ liberado=true;
 //                    }
 //                }
             }
-            if (carga > 3) {
+            if (tut.carga ==4) {
+                Bitmap image = BitmapFactory.decodeResource(context.getResources(),  R.drawable.fenixload); // 1
+
+                this.telaIntro.vezes(0.8f);
+
+                this.telaIntro.LoadTexture(image);
+
+
+
+            }
+            if (tut.carga > 13) {
 
 
                 //controleDeTela();
@@ -611,7 +658,7 @@ liberado=true;
 
 
             } else {
-                if (bolhaRef != null) {
+                if (bolhaRef != null && tut.carga >3 && tut.carga <8) {
                     bolhaRef.setPosition(new Vetor3(0, -0.02f, -0.1f));
                     //   bolhaRef.setGiroPosition(new Vetor3(95, bolhaRef.getGiroPosition().y + 8, 0));
                     bolhaRef.draw((GL11) gl2);
@@ -624,7 +671,8 @@ liberado=true;
 
                 if (carga < 0)
                     carga++;
-                carregar(tipo);
+                if (tut.carga < 15)
+                    carregar(tipo);
                 ///  carga++;
 
             } catch (IOException e) {
