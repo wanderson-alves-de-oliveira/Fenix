@@ -1293,8 +1293,8 @@ public class Objeto3d implements Serializable {
                         refletirTime = 0;
                     }
                 } else {
-
-                    switch (getNomeRef()) {
+                    String reff = getNomeRef().equals("") ? getOrigem() : getNomeRef();
+                    switch (reff) {
                         case "inimigosX":
                         case "inimigosA":
                         case "inimigosB":
@@ -1302,6 +1302,7 @@ public class Objeto3d implements Serializable {
                         case "inimigosC2":
                         case "inimigosE":
                         case "inimigosE2":
+                        case "Fenix1":
                         case "boss":
                             float[] ambientLight = new float[]{cores.x, cores.y, cores.z, 1.0f};//cor amarela do ambiente
                             float[] posicaoLuz = new float[]{-1f, -80, -65f,1};

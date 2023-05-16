@@ -40,7 +40,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -1927,8 +1926,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         int i = tiros.size();
                         tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
                         tiros.get(i).vezes(1.8f);
-                        tiros.get(i).setOrigem("Fenix1");
+                        tiros.get(i).setCores(new Vetor3(1f,0f,0f));
 
+                        tiros.get(i).setOrigem("Fenix1");
                         tiros.get(i).setMover("nulo");
                     } else {
                         carga++;
@@ -4806,21 +4806,21 @@ public  void colorir(){
             ceoZ = terreno.getPosition().z + (velocidade2 / 2);
             ceoZ2 = terreno2.getPosition().z + (velocidade2 / 2);
 
-            if(posteste==0 && terreno.getPosition().x>-45f){
-                terreno.getPosition().x-=(velocidade2 / 4);
-                terreno2.getPosition().x-=(velocidade2 / 4);
-
-            }else if(posteste==1 && terreno.getPosition().x<0){
-                terreno.getPosition().x+=(velocidade2 / 4);
-                terreno2.getPosition().x+=(velocidade2 / 4);
-            }
-
-            postesteTime++;
-
-            if(postesteTime>=100){
-                posteste= new Random().nextInt(4);
-                postesteTime=0;
-            }
+//            if(posteste==0 && terreno.getPosition().x>-45f){
+//                terreno.getPosition().x-=(velocidade2 / 4);
+//                terreno2.getPosition().x-=(velocidade2 / 4);
+//
+//            }else if(posteste==1 && terreno.getPosition().x<0){
+//                terreno.getPosition().x+=(velocidade2 / 4);
+//                terreno2.getPosition().x+=(velocidade2 / 4);
+//            }
+//
+//            postesteTime++;
+//
+//            if(postesteTime>=100){
+//                posteste= new Random().nextInt(4);
+//                postesteTime=0;
+//            }
 
 
             terreno.setPosition(new Vetor3(terreno.getPosition().x, terreno.getPosition().y, ceoZ));
