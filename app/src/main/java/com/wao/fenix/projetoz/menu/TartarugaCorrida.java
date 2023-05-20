@@ -2455,35 +2455,34 @@ public  void colorir(){
                 boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
                 break;
             case 1:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 4, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(0,1f,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f,0f,0));
 
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
-                    o.vezes(5);
+                    o.vezes(4);
 
                 }
                 break;
             case 2:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigocc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(chefeDafase).vezes(4);
+                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 4, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
 
-                for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
-                    o.vezes(3);
-
-                }
                 break;
             case 3:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoeeb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigox.obj", R.drawable.inimigoxb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "inimigox.obj", R.drawable.inimigox, context.getResources()));
+                boss.get(chefeDafase).setCores(new Vetor3(0f,1f,0));
+                for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
+                    o.vezes(0.2f);
 
+                }
                 break;
             case 4:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
@@ -2508,25 +2507,7 @@ public  void colorir(){
 
 
                 break;
-            case 7:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoeec, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(chefeDafase).vezes(5);
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
 
-                break;
-            case 8:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "bossxa.obj", R.drawable.bossxaa, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(chefeDafase).vezes(7);
-                boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
-
-                break;
-            case 9:
-                boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoe, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
-                boss.get(chefeDafase).vezes(5);
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
-
-                break;
         }
 
 
@@ -2584,7 +2565,7 @@ public  void colorir(){
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.objetosiniciodeserto, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2592,7 +2573,7 @@ public  void colorir(){
                     cena.get(0).setRefletir(true);
 //
 //
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.objetosiniciodeserto, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2604,13 +2585,13 @@ public  void colorir(){
                     objetosCenario.set(1, cena);
                 }
                 if (niveis.get(1) == null) {
-                    niveis.set(1, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelz, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(1, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelz, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(1, new Objeto3d(context, R.drawable.nivelnorm, asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(1, new Objeto3d(context, R.drawable.nivelnorm, asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
-            case 2:
-                if (objetosCenario.get(2) == null) {
+            case 3:
+                if (objetosCenario.get(3) == null) {
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
@@ -2633,17 +2614,17 @@ public  void colorir(){
                     cena.get(1).setRefletir(true);
                     //   cena.get(0).loadGLTexture();
                     //   cena.get(1).loadGLTexture();
-                    objetosCenario.set(2, cena);
+                    objetosCenario.set(3, cena);
                 }
 
-                if (niveis.get(2) == null) {
-                    niveis.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
+                if (niveis.get(3) == null) {
+                    niveis.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
-            case 3:
-                if (objetosCenario.get(3) == null) {
+            case 2:
+                if (objetosCenario.get(2) == null) {
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
@@ -2667,12 +2648,12 @@ public  void colorir(){
                     cena.get(1).setRefletir(true);
                     //   cena.get(0).loadGLTexture();
                     //   cena.get(1).loadGLTexture();
-                    objetosCenario.set(3, cena);
+                    objetosCenario.set(2, cena);
                 }
 
-                if (niveis.get(3) == null) {
-                    niveis.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(3, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
+                if (niveis.get(2) == null) {
+                    niveis.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(2, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -4430,14 +4411,27 @@ public  void colorir(){
 
                 }
 
-                pp.setGiro(0);
+
                 for (Objeto3d ppp : pp.getTiroNave()) {
                     calculoarColisaoI(ppp, Fenix, false);
 
                 }
                 if (true) {
                     pp.setDisparando(true);
-                    moverObjFixoPadrao(pp, modoBoss, 'z', 1f, 90);
+                    switch (chefeDafase){
+                        case 3:
+                            girarOBJ(pp, (1000) * -1, 'y', 15f);
+                            moverObjFixoPadrao(pp, modoBoss, 'y', 15f, 1000);
+
+
+                            break;
+                        default:
+                            moverObjFixoPadrao(pp, modoBoss, 'z', 1f, 90);
+                            pp.setGiro(0);
+                            break;
+
+                    }
+
 
                 }
                 timeModoBoss++;
@@ -4447,22 +4441,28 @@ public  void colorir(){
                 //    disparandoOBJ(Fenix.getPosition(), pp, 30, true, 4);1
                 switch (chefeDafase) {
                     case 0:
-                    case 5:
-                    case 8:
-                        tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
+                      tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
                         pp.setIdTiroAux();
                         break;
                     case 1:
-                    case 4:
-                    case 7:
-                        disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
+                       disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
 
                         break;
                     case 2:
-                    case 3:
-                    case 6:
-                        disparandoOBJ(Fenix.getPosition(), pp, 35, false, 4);
+                       disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
 
+                        break;
+                    case 3:
+                        if(modoBoss==2 || modoBoss==0 || modoBoss==1 || modoBoss==-1) {
+                            tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
+                            pp.setIdTiroAux();
+                        }
+                        for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
+                            girarOBJ(o, (1000) * -1, 'y', 15f);
+                            moverObjFixoPadrao(o, 0, 'y', 15f, 1000);
+
+
+                        }
                         break;
                     default:
                         disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
