@@ -65,6 +65,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int inimigosEliminados = 0;
     private Vetor3 positiomAnteriorBoss;
     private int total;
+    private int indexOuro = 0;
+
     private int po = 0;
     private int timeLine = 0;
     // private int timeFim = 0;
@@ -150,14 +152,16 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> inimigosB;
     private ArrayList<Objeto3d> inimigosX;
     private ArrayList<Objeto3d> inimigosE;
+    private ArrayList<Objeto3d> ouro;
+
 
     private ArrayList<Objeto3d> inimigosC2;
 
     private ArrayList<Objeto3d> inimigosE2;
-    private int posteste=0;
-    private int postesteTime=0;
+    private int posteste = 0;
+    private int postesteTime = 0;
 
-    private int indexF=0;
+    private int indexF = 0;
     private ArrayList<Objeto3d> ataqueEspecial;
 
     private ArrayList<Objeto3d> boss;
@@ -196,6 +200,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private boolean bossEliminado = false;
     //private Objeto3d objeto3dxquadro;
     private int nivel = 1;
+    private int resgateOuro = 0;
+
     private int tempoDeEspera = 1;
     private int tempoDisparo = 0;
     private int tempoDisparoAtaqueEspecial = 0;
@@ -1704,8 +1710,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             case 0:
 
 
-
-
                 if (!carregamentoDireto) {
                     this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
                     this.telaIntro.setMudarTamanho(true);
@@ -1723,6 +1727,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 if (!carregamentoDireto) {
                     if (inimigosA == null)
                         inimigosA = new ArrayList<>();
+                    if (ouro == null)
+                        ouro = new ArrayList<>();
                     if (inimigosX == null)
                         inimigosX = new ArrayList<>();
                     if (inimigosC == null)
@@ -1809,7 +1815,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         splosaoArrayNave = splosao(Fenix);
                     }
-
 
 
                 }
@@ -1926,21 +1931,21 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         int i = tiros.size();
                         tiros.add(new Objeto3d(context, R.drawable.tironavenorm, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
                         tiros.get(i).vezes(1.8f);
-                        tiros.get(i).setCores(new Vetor3(1f,0f,0f));
+                        tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
 
                         tiros.get(i).setOrigem("Fenix1");
                         tiros.get(i).setMover("nulo");
                     } else {
                         carga++;
                     }
-                }else {
+                } else {
                     carga++;
                 }
 
                 break;
             case 14:
-                    colorir();
-             
+                colorir();
+
                 carga++;
                 break;
 
@@ -1965,7 +1970,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void carregarP() throws IOException {
 
-
+        if (ouro == null)
+            ouro = new ArrayList<>();
         if (inimigosA == null)
             inimigosA = new ArrayList<>();
         if (inimigosX == null)
@@ -2019,6 +2025,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         if (inimigosX.size() == 0)
             inimigosX();
 
+        if (ouro.size() == 0)
+            ouro();
 
 //        if (asteroide.size() == 0)
 //            asteroide();
@@ -2027,60 +2035,61 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosE();
         if (inimigosE2.size() == 0)
             inimigosE2();
-        int faseBoss= (fase+1)/10;
+        int faseBoss = (fase + 1) / 10;
 
         if (boss.get(faseBoss) == null)
             boss();
 
 
     }
-public  void colorir(){
 
-    indexF=indexFase();
+    public void colorir() {
 
-    for (Objeto3d o :inimigosA ) {
-        switch (indexF) {
-            case 0:
-                o.setCores(new Vetor3(1f,0.4f,0));
-                break;
-            case 1:
-                o.setCores(new Vetor3(0,0,1f));
-                break;
-            case 2:
-                o.setCores(new Vetor3(1f,1f,0));
-                break;
-            case 3:
-                o.setCores(new Vetor3(1f,0.2f,1f));
-                break;
-            case 4:
-                o.setCores(new Vetor3(0f,1f,0.1f));
-                break;
+        indexF = indexFase();
 
-        }
+        for (Objeto3d o : inimigosA) {
+            switch (indexF) {
+                case 0:
+                    o.setCores(new Vetor3(1f, 0.4f, 0));
+                    break;
+                case 1:
+                    o.setCores(new Vetor3(0, 0, 1f));
+                    break;
+                case 2:
+                    o.setCores(new Vetor3(1f, 1f, 0));
+                    break;
+                case 3:
+                    o.setCores(new Vetor3(1f, 0.2f, 1f));
+                    break;
+                case 4:
+                    o.setCores(new Vetor3(0f, 1f, 0.1f));
+                    break;
 
-    }
-    for (Objeto3d o :inimigosB ) {
-        switch (indexF) {
-            case 0:
-                o.setCores(new Vetor3(0,0,1f));
-                break;
-            case 1:
-                o.setCores(new Vetor3(0,1f,0.2f));
-                break;
-            case 2:
-                o.setCores(new Vetor3(0,1f,0));
-                break;
-            case 3:
-                o.setCores(new Vetor3(0,0.2f,1f));
-                break;
-            case 4:
-                o.setCores(new Vetor3(0,0,1f));
-                break;
+            }
 
         }
+        for (Objeto3d o : inimigosB) {
+            switch (indexF) {
+                case 0:
+                    o.setCores(new Vetor3(0, 0, 1f));
+                    break;
+                case 1:
+                    o.setCores(new Vetor3(0, 1f, 0.2f));
+                    break;
+                case 2:
+                    o.setCores(new Vetor3(0, 1f, 0));
+                    break;
+                case 3:
+                    o.setCores(new Vetor3(0, 0.2f, 1f));
+                    break;
+                case 4:
+                    o.setCores(new Vetor3(0, 0, 1f));
+                    break;
 
-    }
-    for (Objeto3d o :inimigosC ) {
+            }
+
+        }
+        for (Objeto3d o : inimigosC) {
 //        switch (indexF) {
 //            case 0:
 //                o.setCores(new Vetor3(1f,0,0));
@@ -2093,31 +2102,31 @@ public  void colorir(){
 //                break;
 //
 //        }
-        o.setCores(new Vetor3(1f,0,0));
+            o.setCores(new Vetor3(1f, 0, 0));
 
-    }
-    for (Objeto3d o :inimigosC2 ) {
-        switch (indexF) {
-            case 0:
-                o.setCores(new Vetor3(0,1f,0));
-                break;
-            case 1:
-                o.setCores(new Vetor3(1f,0,0.2f));
-                break;
-            case 2:
-                o.setCores(new Vetor3(0, 0,1f));
-                break;
-            case 3:
-                o.setCores(new Vetor3(1f,0.2f,1f));
-                break;
-            case 4:
-                o.setCores(new Vetor3(1f,0, 0));
-                break;
         }
+        for (Objeto3d o : inimigosC2) {
+            switch (indexF) {
+                case 0:
+                    o.setCores(new Vetor3(0, 1f, 0));
+                    break;
+                case 1:
+                    o.setCores(new Vetor3(1f, 0, 0.2f));
+                    break;
+                case 2:
+                    o.setCores(new Vetor3(0, 0, 1f));
+                    break;
+                case 3:
+                    o.setCores(new Vetor3(1f, 0.2f, 1f));
+                    break;
+                case 4:
+                    o.setCores(new Vetor3(1f, 0, 0));
+                    break;
+            }
 
 
-    }
-    for (Objeto3d o :inimigosE ) {
+        }
+        for (Objeto3d o : inimigosE) {
 //        switch (indexF) {
 //            case 0:
 //                o.setCores(new Vetor3(0,0,1f));
@@ -2131,32 +2140,32 @@ public  void colorir(){
 //
 //        }
 
-        o.setCores(new Vetor3(0,0,1f));
-
-    }
-    for (Objeto3d o :inimigosE2 ) {
-        switch (indexF) {
-            case 0:
-                o.setCores(new Vetor3(0,1f,0));
-                break;
-            case 1:
-                o.setCores(new Vetor3(1f,0,0.2f));
-                break;
-            case 2:
-                o.setCores(new Vetor3(0, 0,1f));
-                break;
-            case 3:
-                o.setCores(new Vetor3(1f,0.2f,1f));
-                break;
-            case 4:
-                o.setCores(new Vetor3(1f,0, 0));
-                break;
+            o.setCores(new Vetor3(0, 0, 1f));
 
         }
+        for (Objeto3d o : inimigosE2) {
+            switch (indexF) {
+                case 0:
+                    o.setCores(new Vetor3(0, 1f, 0));
+                    break;
+                case 1:
+                    o.setCores(new Vetor3(1f, 0, 0.2f));
+                    break;
+                case 2:
+                    o.setCores(new Vetor3(0, 0, 1f));
+                    break;
+                case 3:
+                    o.setCores(new Vetor3(1f, 0.2f, 1f));
+                    break;
+                case 4:
+                    o.setCores(new Vetor3(1f, 0, 0));
+                    break;
+
+            }
 
 
-    }
-    for (Objeto3d o :inimigosX ) {
+        }
+        for (Objeto3d o : inimigosX) {
 //        switch (indexF) {
 //            case 0:
 //                o.setCores(new Vetor3(0, 0, 1f));
@@ -2170,11 +2179,11 @@ public  void colorir(){
 //
 //        }
 
-        o.setCores(new Vetor3((float) Math.random(),1f,(float) Math.random()));
+            o.setCores(new Vetor3((float) Math.random(), 1f, (float) Math.random()));
+
+        }
 
     }
-
-}
 
     public void inimigosB() throws IOException {
         float vidaB = 20f;
@@ -2192,7 +2201,7 @@ public  void colorir(){
             // inimigosB.get(p).loadGLTexture();
             esplosaoArrayObj.add(new Esplosao(context, inimigosB.get(p), asset, context.getResources(), 0.8f, "inimigosB", p));
 
-             }
+        }
         inimigosB.get(0).setPosition(new Vetor3(-0.3f,
                 DISTANCIA, -65));
         inimigosB.get(1).setPosition(new Vetor3(0.3f,
@@ -2326,6 +2335,24 @@ public  void colorir(){
         }
     }
 
+    public void ouro() throws IOException {
+
+        float vidaCE = 10f;
+        for (int p = 0; p < 12; p++) {
+            // char v = alfabeto.charAt(p );
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ouro.add(new Objeto3d(context, R.drawable.inimigoxnorm, asset, "ouro.obj", R.drawable.ouro, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "ouro"));
+            }
+            ouro.get(p).setValor(String.valueOf("o"));
+            ouro.get(p).setVida(10);
+            ouro.get(p).setTipo("o");
+            ouro.get(p).setPosition(new Vetor3(-1000.5f, DISTANCIA - 0.08f, -63f));
+           // ouro.get(p).setRefletir(true);
+            ouro.get(p).setCores(new Vetor3(1f,1f,1f));
+            // inimigosE.get(p).loadGLTexture();
+        }
+    }
+
     public void ataqueEspecial() throws IOException {
         float vidaX = 20f;
 
@@ -2363,14 +2390,13 @@ public  void colorir(){
     }
 
 
-
-    public int indexFase(){
+    public int indexFase() {
 
         String[] fasex = String.valueOf(fase).split("");
         int indice = 1;
-         if (fasex.length ==1) {
+        if (fasex.length == 1) {
             indice = 0;
-         } else {
+        } else {
             indice = Integer.parseInt(fasex[0]);
         }
         return indice;
@@ -2395,7 +2421,7 @@ public  void colorir(){
                 //  inimigosX.get(p).loadGLTexture();
             }
             esplosaoArrayObj.add(new Esplosao(context, inimigosX.get(p), asset, context.getResources(), 0.8f, "inimigosX", p));
-         }
+        }
 
 
         inimigosX.get(0).setPosition(new Vetor3(0.5f,
@@ -2452,14 +2478,14 @@ public  void colorir(){
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigoc.obj", R.drawable.inimigoeea, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0, 0));
                 break;
             case 1:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 4, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0f,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0f, 0));
 
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
                     o.vezes(4);
@@ -2471,14 +2497,14 @@ public  void colorir(){
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0, 0));
 
                 break;
             case 3:
                 boss.set(chefeDafase, new Objeto3d(context, R.drawable.bossxanorm, asset, "inimigox.obj", R.drawable.inimigoxb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "inimigox.obj", R.drawable.inimigox, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(0f,1f,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0f, 0));
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
                     o.vezes(0.2f);
 
@@ -2489,7 +2515,7 @@ public  void colorir(){
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0, 0));
 
                 break;
             case 5:
@@ -2498,7 +2524,7 @@ public  void colorir(){
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
                 boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), R.drawable.tirocnorm, 5, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
 
-                boss.get(chefeDafase).setCores(new Vetor3(1f,0,0));
+                boss.get(chefeDafase).setCores(new Vetor3(1f, 0, 0));
 
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
                     o.vezes(3);
@@ -2533,7 +2559,7 @@ public  void colorir(){
                 if (objetosCenario.get(0) == null) {
                     ArrayList<Objeto3d> cena;
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "tree.obj", R.drawable.tree, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2542,7 +2568,7 @@ public  void colorir(){
 
 //
 //
-                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "tree.obj", R.drawable.tree, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, R.drawable.objetosnorm, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2555,8 +2581,8 @@ public  void colorir(){
 
                 }
                 if (niveis.get(0) == null) {
-                    niveis.set(0, new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(0, new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(0, new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.sd, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(0, new Objeto3d(context, R.drawable.predionorm, asset, "n.obj", R.drawable.sd, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2599,7 +2625,7 @@ public  void colorir(){
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
-                    cena.get(0).setPosition(new Vetor3(0.6f, 14.9f,  cena.get(0).getPosition().z));
+                    cena.get(0).setPosition(new Vetor3(0.6f, 14.9f, cena.get(0).getPosition().z));
 
                     cena.get(0).setTransparente(true);
                     cena.get(0).setRefletir(true);
@@ -2632,7 +2658,7 @@ public  void colorir(){
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
-                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f,cena.get(0).getPosition().z));
+                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f, cena.get(0).getPosition().z));
 
                     cena.get(0).setTransparente(true);
                     cena.get(0).setRefletir(true);
@@ -2666,7 +2692,7 @@ public  void colorir(){
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
-                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f,cena.get(0).getPosition().z));
+                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f, cena.get(0).getPosition().z));
 
                     cena.get(0).setTransparente(true);
                     cena.get(0).setRefletir(true);
@@ -2686,8 +2712,8 @@ public  void colorir(){
                 }
 
                 if (niveis.get(4) == null) {
-                    niveis.set(4, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(4, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(4, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.diff, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(4, new Objeto3d(context, R.drawable.nivelnorm, asset, "n.obj", R.drawable.diff, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2755,9 +2781,9 @@ public  void colorir(){
         } else {
             indice = Integer.parseInt(fasex[0]);
         }
-        int faseBoss= (fase+1)/10;
+        int faseBoss = (fase + 1) / 10;
 
-        chefeDafase = faseBoss!=0?faseBoss-1:0;
+        chefeDafase = faseBoss != 0 ? faseBoss - 1 : 0;
 
         carregarFase(indiceLevel);
         cena = objetosCenario.get(indiceLevel);
@@ -2800,6 +2826,9 @@ public  void colorir(){
         if (inimigosX.size() == 0)
             inimigosX();
 
+        if (ouro.size() == 0)
+            ouro();
+
 
 //        if (asteroide.size() == 0)
 //            asteroide();
@@ -2828,133 +2857,133 @@ public  void colorir(){
         try {
 
 
-        switch (indice) {
-            case 0:
-                nivelTiroTempo = 5;
+            switch (indice) {
+                case 0:
+                    nivelTiroTempo = 5;
 
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);  // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(0, 10, ceoZ));
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);  // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(0, 10, ceoZ));
 
-                terreno2 = niveis2.get(indiceLevel);  // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(0, 10, ceoZ2));
+                    terreno2 = niveis2.get(indiceLevel);  // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(0, 10, ceoZ2));
 
-                break;
-
-
-            case 1:
-                ceoZ = -62;
-                ceoZ2 = -103;
-
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-5, 10, ceoZ));
+                    break;
 
 
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-5, 10, ceoZ2));
+                case 1:
+                    ceoZ = -62;
+                    ceoZ2 = -103;
 
-                break;
-            case 2:
-
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-10, 10, ceoZ));
-
-                terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-10, 10, ceoZ2));
-
-                break;
-
-            case 3:
-                nivelTiroTempo = 5;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-5, 10, ceoZ));
 
 
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-15, 10, ceoZ));
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-5, 10, ceoZ2));
 
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-15, 10, ceoZ2));
+                    break;
+                case 2:
 
-                break;
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-10, 10, ceoZ));
 
+                    terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-10, 10, ceoZ2));
 
-            case 4:
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-20, 10, ceoZ));
+                    break;
 
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-20, 10, ceoZ2));
-
-                break;
-            case 5:
-                // this.musica = MediaPlayer.create(context, R.raw.musicd);
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-25, 10, ceoZ));
-                terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-25, 10, ceoZ2));
-
-                break;
+                case 3:
+                    nivelTiroTempo = 5;
 
 
-            case 6:
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-15, 10, ceoZ));
 
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-30, 10, ceoZ));
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-15, 10, ceoZ2));
 
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-30, 10, ceoZ2));
-
-                break;
-
-            case 7:
-
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-35, 10, ceoZ));
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-35, 10, ceoZ2));
-
-                break;
-            case 8:
-
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-40, 10, ceoZ));
-
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-40, 10, ceoZ2));
-
-                break;
-
-            case 9:
+                    break;
 
 
-                ceoZ = -62;
-                ceoZ2 = -103;
-                terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno.setPosition(new Vetor3(-45, 10, ceoZ));
+                case 4:
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-20, 10, ceoZ));
 
-                terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
-                terreno2.setPosition(new Vetor3(-45, 10, ceoZ2));
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-20, 10, ceoZ2));
 
-                break;
+                    break;
+                case 5:
+                    // this.musica = MediaPlayer.create(context, R.raw.musicd);
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-25, 10, ceoZ));
+                    terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-25, 10, ceoZ2));
+
+                    break;
 
 
-        }
-        }catch (Exception e){
-            carregarCronologia( nivel);
+                case 6:
+
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-30, 10, ceoZ));
+
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-30, 10, ceoZ2));
+
+                    break;
+
+                case 7:
+
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-35, 10, ceoZ));
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-35, 10, ceoZ2));
+
+                    break;
+                case 8:
+
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-40, 10, ceoZ));
+
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-40, 10, ceoZ2));
+
+                    break;
+
+                case 9:
+
+
+                    ceoZ = -62;
+                    ceoZ2 = -103;
+                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno.setPosition(new Vetor3(-45, 10, ceoZ));
+
+                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2.setPosition(new Vetor3(-45, 10, ceoZ2));
+
+                    break;
+
+
+            }
+        } catch (Exception e) {
+            carregarCronologia(nivel);
         }
         //   terreno.loadGLTexture();
         /////////////////////////////////////////////////////////////////////////////////
@@ -3110,6 +3139,29 @@ public  void colorir(){
         return vai;
     }
 
+
+    public boolean calculoarColisaoOuro(Objeto3d obj, Objeto3d obj2) {
+        boolean vai = false;
+        try {
+
+            double d = Math.sqrt(Math.pow(obj.getPosition().x - (obj2.getPosition().x), 2)
+                    + Math.pow(obj.getPosition().z - (obj2.getPosition().z), 2)
+                    + Math.pow(obj.getPosition().y - (obj2.getPosition().y), 2));
+
+
+                 if (d < 0.2f) {
+                     obj2.getPosition().setX(-1000f);
+                     resgateOuro+=100;
+                }
+
+
+        }catch (Exception e) {
+            return false;
+        }
+        return vai;
+
+    }
+
     public boolean calculoarColisaoI(Objeto3d obj, Objeto3d obj2, boolean danoTotal) {
         boolean vai = false;
         try {
@@ -3260,7 +3312,10 @@ public  void colorir(){
             } else {
 
                 obj.setEsplodirNave(false);
-
+                if (indexOuro >= ouro.size()) {
+                    indexOuro = 0;
+                }
+                ouro.get(indexOuro).setPosition(new Vetor3(obj.getPosition().x,obj.getPosition().y,obj.getPosition().z));//obj.getPosition()
                 obj.setTimeLineInidvidual(0);
                 obj.setTimeEsplosaoNave(0);
                 obj.setEsplosaoNaveId(0);
@@ -3272,7 +3327,7 @@ public  void colorir(){
 
                 obj.setGiroPosition(new Vetor3(0, 0, 0));
 
-
+                indexOuro++;
                 alterarModoN(obj);
                 for (int i = 0; i < tiros.size(); i++) {
                     tiros.get(i).setPosition(new Vetor3(-1000, obj.getPosition().y, -1000));
@@ -3319,7 +3374,7 @@ public  void colorir(){
             moverInimigoC(modo, inimigosC.get(i).getTimeLineInidvidual(), i, inimigosC.get(i), 'C');
             moverInimigoC(modoE, inimigosE.get(i).getTimeLineInidvidual(), i, inimigosE.get(i), 'E');
 
-            if(i<3) {
+            if (i < 3) {
                 moverInimigoC(0, inimigosE2.get(i).getTimeLineInidvidual(), i, inimigosE2.get(i), 'C');
                 moverInimigoC(1, inimigosC2.get(i).getTimeLineInidvidual(), i, inimigosC2.get(i), 'D');
             }
@@ -3418,11 +3473,11 @@ public  void colorir(){
             //  Fenix.setGiroPosition(new Vetor3(0, 0, giroyFenix));
 
             for (int i = 0; i < ataqueEspecial.size(); i++) {
-                if (ataqueEspecial.get(i).getTime() >= 750  ) {
+                if (ataqueEspecial.get(i).getTime() >= 750) {
                     ataqueEspecial.get(i).setMover("nulo");
                     ataqueEspecial.get(i).setTime(0);
                     btEspecial.setTimeBtEspecial(0);
-                    acionado=false;
+                    acionado = false;
 
 
                 }
@@ -4094,8 +4149,8 @@ public  void colorir(){
             }
 
 
-            impactoTiro(ataqueEspecial, inimigosE.get(p),acionado);
-            impactoTiro(tiros, inimigosE.get(p),true);
+            impactoTiro(ataqueEspecial, inimigosE.get(p), acionado);
+            impactoTiro(tiros, inimigosE.get(p), true);
         }
 
 
@@ -4108,8 +4163,8 @@ public  void colorir(){
             }
 
 
-            impactoTiro(ataqueEspecial, inimigosC2.get(p),acionado);
-            impactoTiro(tiros, inimigosC2.get(p),true);
+            impactoTiro(ataqueEspecial, inimigosC2.get(p), acionado);
+            impactoTiro(tiros, inimigosC2.get(p), true);
 
         }
         for (int p = 0; p < inimigosE2.size(); p++) {
@@ -4122,11 +4177,13 @@ public  void colorir(){
             }
 
 
-            impactoTiro(ataqueEspecial, inimigosE2.get(p),acionado);
-            impactoTiro(tiros, inimigosE2.get(p),true);
+            impactoTiro(ataqueEspecial, inimigosE2.get(p), acionado);
+            impactoTiro(tiros, inimigosE2.get(p), true);
         }
 
-
+        for (Objeto3d o : ouro) {
+            calculoarColisaoOuro(Fenix, o);
+        }
         for (int p = 0; p < inimigosA.size(); p++) {
             if (inimigosA.get(p).getVida() <= 0) {
                 String finalNome = "inimigosA";
@@ -4137,8 +4194,8 @@ public  void colorir(){
             calculoarColisaoI(inimigosA.get(p), Fenix, true);
 
 
-            impactoTiro(ataqueEspecial, inimigosA.get(p),acionado);
-            impactoTiro(tiros, inimigosA.get(p),true);
+            impactoTiro(ataqueEspecial, inimigosA.get(p), acionado);
+            impactoTiro(tiros, inimigosA.get(p), true);
 
             for (Objeto3d pp : inimigosA.get(p).getTiroNave()) {
                 calculoarColisaoI(pp, Fenix, false);
@@ -4171,7 +4228,7 @@ public  void colorir(){
             }
 
 
-            impactoTiro(ataqueEspecial, inimigosX.get(p),acionado);
+            impactoTiro(ataqueEspecial, inimigosX.get(p), acionado);
         }
 
         for (int p = 0; p < inimigosB.size(); p++) {
@@ -4184,8 +4241,8 @@ public  void colorir(){
             calculoarColisaoI(inimigosB.get(p), Fenix, true);
 
 
-            impactoTiro(ataqueEspecial, inimigosB.get(p),acionado);
-            impactoTiro(tiros, inimigosB.get(p),true);
+            impactoTiro(ataqueEspecial, inimigosB.get(p), acionado);
+            impactoTiro(tiros, inimigosB.get(p), true);
             for (Objeto3d ppp : inimigosB.get(p).getTiroNave()) {
                 calculoarColisaoI(ppp, Fenix, false);
 
@@ -4205,8 +4262,8 @@ public  void colorir(){
             calculoarColisaoI(asteroide.get(p), Fenix, true);
 
 
-            impactoTiro(ataqueEspecial, asteroide.get(p),acionado);
-            impactoTiro(tiros, asteroide.get(p),true);
+            impactoTiro(ataqueEspecial, asteroide.get(p), acionado);
+            impactoTiro(tiros, asteroide.get(p), true);
         }
 
 
@@ -4263,7 +4320,7 @@ public  void colorir(){
             for (Objeto3d pp : tiros) {
                 calculoarColisaoI(boss.get(chefeDafase), pp, false);
             }
-            impactoTiro(ataqueEspecial, boss.get(chefeDafase),acionado);
+            impactoTiro(ataqueEspecial, boss.get(chefeDafase), acionado);
 
             moverBoss(modoBoss, timeModoBoss, 0, boss.get(chefeDafase), 0);
 
@@ -4325,16 +4382,16 @@ public  void colorir(){
             bossEliminado = false;
             selectFase = true;
             for (int i = 0; i < ataqueEspecial.size(); i++) {
-                    ataqueEspecial.get(i).setMover("nulo");
-                    ataqueEspecial.get(i).setTime(0);
-                    btEspecial.setTimeBtEspecial(0);
-                    acionado = false;
+                ataqueEspecial.get(i).setMover("nulo");
+                ataqueEspecial.get(i).setTime(0);
+                btEspecial.setTimeBtEspecial(0);
+                acionado = false;
 
             }
-            if(fase + 1>=50){
-                indiceLevel=0;
+            if (fase + 1 >= 50) {
+                indiceLevel = 0;
                 statusFase.zerarFase(v);
-            }else {
+            } else {
                 statusFase.atualizarFase(v);
             }
 
@@ -4386,7 +4443,7 @@ public  void colorir(){
                 pp.getPosition().setZ(pp.getPosition().z + velocidade);
             } else {
                 carregaModoBoss = false;
-                if (pp.getPosition().z >=-57f) {
+                if (pp.getPosition().z >= -57f) {
                     pp.getPosition().setZ(-68f);
                 }
 
@@ -4418,7 +4475,7 @@ public  void colorir(){
                 }
                 if (true) {
                     pp.setDisparando(true);
-                    switch (chefeDafase){
+                    switch (chefeDafase) {
                         case 3:
                             girarOBJ(pp, (1000) * -1, 'y', 15f);
                             moverObjFixoPadrao(pp, modoBoss, 'y', 15f, 1000);
@@ -4441,19 +4498,19 @@ public  void colorir(){
                 //    disparandoOBJ(Fenix.getPosition(), pp, 30, true, 4);1
                 switch (chefeDafase) {
                     case 0:
-                      tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
+                        tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
                         pp.setIdTiroAux();
                         break;
                     case 1:
-                       disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
+                        disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
 
                         break;
                     case 2:
-                       disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
+                        disparandoOBJ(Fenix.getPosition(), pp, 15, true, 2);
 
                         break;
                     case 3:
-                        if(modoBoss==2 || modoBoss==0 || modoBoss==1 || modoBoss==-1) {
+                        if (modoBoss == 2 || modoBoss == 0 || modoBoss == 1 || modoBoss == -1) {
                             tipoDisparaBoss(pp.getTiroNave(), pp.getTiroNave().get(pp.getIdTiroAux()), 2, 2f);
                             pp.setIdTiroAux();
                         }
@@ -5035,7 +5092,7 @@ public  void colorir(){
     private void tipoDisparaBoss(ArrayList<Objeto3d> o, Objeto3d ob, int i, float vel) {
         float posx = 0;
         float pos = -2f;
-        int faseBoss=((fase+1)/10)-1;
+        int faseBoss = ((fase + 1) / 10) - 1;
         switch (i) {
             case 0:
 
@@ -5557,8 +5614,10 @@ public  void colorir(){
 
             terreno.draw((GL11) gl2);
             terreno2.draw((GL11) gl2);
-            for (int p = 0; p < cena.size(); p++) {
-                cena.get(p).draw((GL11) gl2);
+            if (chefeDafase < 4) {
+                for (int p = 0; p < cena.size(); p++) {
+                    cena.get(p).draw((GL11) gl2);
+                }
             }
             Fenix.draw((GL11) gl2);
 
@@ -5591,12 +5650,12 @@ public  void colorir(){
                         inimigosC.get(p).setImpacto(false);
                         inimigosE.get(p).setImpacto(false);
 
-if(p<3) {
-    desenhar(inimigosC2.get(p), "inimigosC2", p);
-    desenhar(inimigosE2.get(p), "inimigosE2", p);
-    inimigosC2.get(p).setImpacto(false);
-    inimigosE2.get(p).setImpacto(false);
-}
+                        if (p < 3) {
+                            desenhar(inimigosC2.get(p), "inimigosC2", p);
+                            desenhar(inimigosE2.get(p), "inimigosE2", p);
+                            inimigosC2.get(p).setImpacto(false);
+                            inimigosE2.get(p).setImpacto(false);
+                        }
 
                     }
                 }
@@ -5637,7 +5696,13 @@ if(p<3) {
                 }
 
             }
-
+            for (Objeto3d o : ouro) {
+                if (o.getPosition().z > -68f && o.getPosition().z < -60f && o.getPosition().x > -1.5f && o.getPosition().x < 1.5f) {
+                    o.draw((GL11) gl2);
+                    o.setGiro(o.getGiro() + 5f);
+                    o.setGiroPosition(new Vetor3(0, 0, o.getGiro()));
+                }
+            }
 
             gl.glPopMatrix();
             gl.glLoadIdentity();
@@ -5654,11 +5719,11 @@ if(p<3) {
             gl.glRotatef(rotation, 1, 0, 0);
             gl.glRotatef(rotationy, 0, 1, 0);
             gl.glTranslatef(localx, localy, localz);
-            btEspecial.getPosition().x=(localx+0.5f)*-1;
-            top.getPosition().x=(localx)*-1;
+            btEspecial.getPosition().x = (localx + 0.5f) * -1;
+            top.getPosition().x = (localx) * -1;
 //zzzzzzzzzzz
-            for (Objeto3d o : life ) {
-                o.getPosition().x=(localx)*-1;
+            for (Objeto3d o : life) {
+                o.getPosition().x = (localx) * -1;
             }
 
             if (this.pause) {
@@ -5671,7 +5736,7 @@ if(p<3) {
 
             top.draw((GL11) gl2);
 
-            switch (vida){
+            switch (vida) {
                 case 1:
                     life.get(0).draw((GL11) gl2);
                     break;
@@ -5723,7 +5788,7 @@ if(p<3) {
                 if (carga < 0)
                     carga++;
 
-                    carregar();
+                carregar();
                 ///  carga++;
 
             } catch (IOException e) {
@@ -6177,11 +6242,11 @@ if(p<3) {
 
     }
 
-private void dispararAtaqueEspecial(){
+    private void dispararAtaqueEspecial() {
 
 
-   // tempoDisparoAtaqueEspecial++;
- //   if (tempoDisparoAtaqueEspecial >= nivelTiroTempoAtaqueEspecial * 100) {
+        // tempoDisparoAtaqueEspecial++;
+        //   if (tempoDisparoAtaqueEspecial >= nivelTiroTempoAtaqueEspecial * 100) {
         if (ataqueEspecial.get(idDisparoAtaqueEspecial).getMover().equals("nulo")) {
             acionado = true;
             tempoDisparoAtaqueEspecial = 0;
@@ -6197,15 +6262,14 @@ private void dispararAtaqueEspecial(){
 
         }
 
- //   }
+        //   }
 
 
-}
+    }
+
     private void atirar() {
         tempoDisparo++;
         //aumentarNivelTiro(4);
-
-
 
 
         if (tempoDisparo >= nivelTiroTempo) {
@@ -6387,18 +6451,24 @@ private void dispararAtaqueEspecial(){
             int posY = (int) (this.h / 100);
 
 
+            //  if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
 
 
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                fogo = true;
 
-          //  if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
+                if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
+                    if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
+                        dispararAtaqueEspecial();
 
+                    } else {
 
+                    }
+                }
 
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    fogo = true;
-
-                    if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
-                        if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
+                if (event.getPointerCount() > 1) {
+                    if (event.getPointerId(1) == 1) {
+                        if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
                             dispararAtaqueEspecial();
 
                         } else {
@@ -6406,160 +6476,149 @@ private void dispararAtaqueEspecial(){
                         }
                     }
 
-                    if (event.getPointerCount() > 1){
-                        if( event.getPointerId(1) == 1) {
-                            if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
-                                dispararAtaqueEspecial();
+                }
 
-                            } else {
+                pontoDoEixoYInicio = event.getY();
+                pontoDoEixoXInicio = event.getX();
 
-                            }
-                        }
+                if (this.perdeu == false) {
 
-                    }
+                    if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
+                        tempo = 0;
 
-                    pontoDoEixoYInicio = event.getY();
-                    pontoDoEixoXInicio = event.getX();
-
-                    if (this.perdeu == false) {
-
-                        if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
-                            tempo = 0;
-
-                            luping = true;
-
-                        } else {
-                            luping = false;
-
-                        }
-
-
-                        if ((int) event.getX() > posX * 90 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
-
-
-                            //    quadroInserirPalavra.setPosition(new Vetor3(0f, 2f, 0f));
-
-
-                        } else if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 15 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
-
-                            if (this.pause) {
-                                this.pause = false;
-
-                            } else {
-                                this.pause = true;
-
-                            }
-
-                        } else if (this.pause == false && (int) event.getX() > this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
-
-                            this.pause = true;
-
-
-                        } else if (this.pause == false && (int) event.getX() > this.wTela * 0 && (int) event.getX() < this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
-
-                            this.parar();
-
-
-                        } else if ((int) event.getX() > posX * 85 && (int) event.getX() < posX * 100 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
-
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                retornarQuadro = true;
-                            }
-                        }
-                        if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 90) {
-                            this.inicio = true;
-                            try {
-                                this.estatusDojogo(2);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                            this.animal.setY((int) (this.h * 0.5));
-                            this.animal.setX((int) (this.w * 0.5));
-
-                        }
-                        if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 70
-                                && (int) event.getY(event.getPointerId(0)) < posY * 90) {
-                            this.inicio = true;
-                            // this.estatusDojogo( 0 );
-                            this.nivel = 1;
-                            this.animal.setY((int) (this.h * 0.5));
-                            this.animal.setX((int) (this.w * 0.5));
-                            this.mensagem = "";
-
-                        }
-
+                        luping = true;
 
                     } else {
-                        this.pause = true;
-
-                        perdeu = false;
-                        venceu = false;
-                        vida = 50000;
-                        //  gravarRecorde();
-
-                        palavrasConquistadas = palavrasConquistadas - palavrasConquistadasDeReset;
-                        palavrasConquistadasDeReset = 0;
-
-                        retornarQuadro = true;
-
+                        luping = false;
 
                     }
 
-                    if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 35 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
-                        rotatef[0] = 90;
-                    } else if ((int) event.getX() > posX * 65 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
-                        rotatef[0] = 30;
 
-                    }
-
-                    return true;
-
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause) {
-                    if (luping == false) {
-                        this.pontoDoEixoYFimm = event.getY();
-                        this.pontoDoEixoXFimm = event.getX();
-                        this.moverPersonagem(event);
-                    }
+                    if ((int) event.getX() > posX * 90 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
 
 
+                        //    quadroInserirPalavra.setPosition(new Vetor3(0f, 2f, 0f));
 
-                    if (event.getPointerCount() > 1){
-                        if( event.getPointerId(1) == 1) {
-                            if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(1)) > posY * 70 && (int) event.getY(event.getPointerId(1)) < posY * 90) {
-                                dispararAtaqueEspecial();
 
-                            } else {
+                    } else if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 15 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
 
-                            }
+                        if (this.pause) {
+                            this.pause = false;
+
+                        } else {
+                            this.pause = true;
+
                         }
 
-                    }
-                    return true;
+                    } else if (this.pause == false && (int) event.getX() > this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
+
+                        this.pause = true;
 
 
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    this.cont = 0;
-                    rotacinarFenix = 0;
-                    fogo = false;
-                    this.xr = 0;
-                    this.yr = 0;
-                    this.xx = 0;
-                    this.yy = 0;
-                    //veloy= 0;
-                    this.pontoDoEixoYFimm = 0;
-                    this.pontoDoEixoXFimm = 0;
-                    this.pontoDoEixoYInicio = 0;
-                    this.pontoDoEixoXInicio = 0;
-                    if (perdeu == false && this.pause == false && (int) event.getX() > this.w * 0 && (int) event.getX() < this.w * 0.4 && (int) event.getY(event.getPointerId(0)) > posY * 50 && (int) event.getY(event.getPointerId(0)) < posY * 60) {
+                    } else if (this.pause == false && (int) event.getX() > this.wTela * 0 && (int) event.getX() < this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
 
                         this.parar();
 
 
-                        return true;
+                    } else if ((int) event.getX() > posX * 85 && (int) event.getX() < posX * 100 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            retornarQuadro = true;
+                        }
                     }
+                    if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 90) {
+                        this.inicio = true;
+                        try {
+                            this.estatusDojogo(2);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        this.animal.setY((int) (this.h * 0.5));
+                        this.animal.setX((int) (this.w * 0.5));
+
+                    }
+                    if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 70
+                            && (int) event.getY(event.getPointerId(0)) < posY * 90) {
+                        this.inicio = true;
+                        // this.estatusDojogo( 0 );
+                        this.nivel = 1;
+                        this.animal.setY((int) (this.h * 0.5));
+                        this.animal.setX((int) (this.w * 0.5));
+                        this.mensagem = "";
+
+                    }
+
+
+                } else {
+                    this.pause = true;
+
+                    perdeu = false;
+                    venceu = false;
+                    vida = 50000;
+                    //  gravarRecorde();
+
+                    palavrasConquistadas = palavrasConquistadas - palavrasConquistadasDeReset;
+                    palavrasConquistadasDeReset = 0;
+
+                    retornarQuadro = true;
+
+
                 }
-           // }
+
+                if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 35 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
+                    rotatef[0] = 90;
+                } else if ((int) event.getX() > posX * 65 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
+                    rotatef[0] = 30;
+
+                }
+
+                return true;
+
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause) {
+                if (luping == false) {
+                    this.pontoDoEixoYFimm = event.getY();
+                    this.pontoDoEixoXFimm = event.getX();
+                    this.moverPersonagem(event);
+                }
+
+
+                if (event.getPointerCount() > 1) {
+                    if (event.getPointerId(1) == 1) {
+                        if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(1)) > posY * 70 && (int) event.getY(event.getPointerId(1)) < posY * 90) {
+                            dispararAtaqueEspecial();
+
+                        } else {
+
+                        }
+                    }
+
+                }
+                return true;
+
+
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                this.cont = 0;
+                rotacinarFenix = 0;
+                fogo = false;
+                this.xr = 0;
+                this.yr = 0;
+                this.xx = 0;
+                this.yy = 0;
+                //veloy= 0;
+                this.pontoDoEixoYFimm = 0;
+                this.pontoDoEixoXFimm = 0;
+                this.pontoDoEixoYInicio = 0;
+                this.pontoDoEixoXInicio = 0;
+                if (perdeu == false && this.pause == false && (int) event.getX() > this.w * 0 && (int) event.getX() < this.w * 0.4 && (int) event.getY(event.getPointerId(0)) > posY * 50 && (int) event.getY(event.getPointerId(0)) < posY * 60) {
+
+                    this.parar();
+
+
+                    return true;
+                }
+            }
+            // }
 
 
         }
