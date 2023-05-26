@@ -6022,6 +6022,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             recomecar = 0;
         }
 
+        for (Objeto3d o: ouro ) {
+            o.getPosition().setX(-1000f);
+        }
+
         if (recomecar == 5) {
             //parado = false;
 
