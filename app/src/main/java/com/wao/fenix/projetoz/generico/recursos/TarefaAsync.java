@@ -7,7 +7,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.wao.fenix.projetoz.dao.BDNave;
 import com.wao.fenix.projetoz.menu.TartarugaCorrida;
+import com.wao.fenix.projetoz.modelo.Nave;
 
 import java.io.IOException;
 
@@ -25,7 +27,10 @@ private Context context;
     protected TartarugaCorrida doInBackground(Object[] objects) {
         TartarugaCorrida tut = null;
         try {
-              tut = new TartarugaCorrida(context, asset, 0, true, true);
+
+            BDNave BDN= new BDNave(context);
+            Nave nivelNave = BDN.buscar(1);
+              tut = new TartarugaCorrida(context, asset, 0, true, true,nivelNave);
 
                  tut.carregarP();
 

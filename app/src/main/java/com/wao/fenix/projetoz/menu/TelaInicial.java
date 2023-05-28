@@ -14,18 +14,23 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wao.fenix.R;
 import com.wao.fenix.projetoz.dao.BDEstatusFase;
+import com.wao.fenix.projetoz.dao.BDNave;
+import com.wao.fenix.projetoz.dao.BDRecompensa;
 import com.wao.fenix.projetoz.generico.recursos.Alerta;
 import com.wao.fenix.projetoz.generico.recursos.ConvertBitimap;
 import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
 import com.wao.fenix.projetoz.generico.recursos.SelecteControll;
 import com.wao.fenix.projetoz.generico.recursos.Vetor3;
 import com.wao.fenix.projetoz.modelo.EstatusFase;
+import com.wao.fenix.projetoz.modelo.Nave;
+import com.wao.fenix.projetoz.modelo.Recompensa;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -52,7 +57,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     private TartarugaCorrida tut;
 
-    private TelaResultados result;
 
     private float pontoDoEixoYInicio = 0;
     private float pontoDoEixoXInicio = 0;
@@ -78,11 +82,29 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private Objeto3d btfundoup;
     private boolean iniciaraProxima = false;
 
+    private ArrayList<Objeto3d> nivelAtaque;
+    private ArrayList<Objeto3d> nivelEscudo;
+    private ArrayList<Objeto3d> nivelIma;
+
+    private Objeto3d nivelAtaqueT;
+    private Objeto3d nivelEscudoT;
+    private Objeto3d nivelImaT;
+
+    private ArrayList<Objeto3d> nivelAtaqueP;
+    private ArrayList<Objeto3d> nivelEscudoP;
+    private ArrayList<Objeto3d> nivelImaP;
+
+    private int nivelAtaqueR=4;
+    private int nivelEscudoR=2;
+    private int nivelImaR=0;
+
+
     private Objeto3d btoptions;
     private Objeto3d btStart;
+    private Objeto3d btback;
 
 
-   // private ArrayList<Objeto3d> bolhas;
+    // private ArrayList<Objeto3d> bolhas;
     private ArrayList<Objeto3d> niveis;
 
 
@@ -93,6 +115,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     private MediaPlayer musica;
     private MediaPlayer musicaBossFase;
+    private Nave nivelNave;
+    private Recompensa recompensa;
+
 
     private ArrayList<MediaPlayer> musicaFase;
     private boolean regularSon = true;
@@ -129,7 +154,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     float luzDifusa[] = {0.7f, 0.7f, 0.7f, 1.0f};//luz difusa
     private FloatBuffer corBufferG;
     private Objeto3d Fenixt;
-    private boolean liberado=false;
+    private boolean liberado = false;
 
 
     public boolean isX() {
@@ -189,14 +214,21 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         /////////////////////////////////////////////////////
         faseInit = new int[]{0, 1, 2, 3, 4, 5, 2, 3, 4, 1, 5, 0, 2};
         EstatusFase v = new BDEstatusFase(context).buscarUltima();
-   int  ult= Math.toIntExact(v.getId());
-        tut = new TartarugaCorrida(context, asset,ult , comSons, comMusica);
+        int ult = Math.toIntExact(v.getId());
+        BDNave BDN= new BDNave(context);
+         nivelNave = BDN.buscar(1);
+         nivelImaR= nivelNave.getPuchar();
+         nivelEscudoR=nivelNave.getEscudo();
+         nivelAtaqueR=nivelNave.getAtaque();
+
+        BDRecompensa BDR= new BDRecompensa(context);
+        recompensa = BDR.buscar(1);
+        tut = new TartarugaCorrida(context, asset, ult, comSons, comMusica,nivelNave);
 
     }
 
 
-
-float girar = 0;
+    float girar = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void carregar(String tipo) throws IOException {
@@ -214,10 +246,10 @@ float girar = 0;
 //
 //                t.execute(tut);
 
-               // bolhas = new ArrayList<>();
+                // bolhas = new ArrayList<>();
 
 
-                Fenixt=new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                Fenixt = new Objeto3d(context, R.drawable.naveanorm, asset, "navez.obj", R.drawable.navea, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 //   Fenix.loadGLTexture(true);
 
                 this.Fenixt.setEstado("NBateu");
@@ -228,14 +260,13 @@ float girar = 0;
                 Fenixt.setNomeRef("Fenix");
 
 
-
                 this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixintro, new Vetor3(1f, 1f, 1f), "");
                 this.telaIntro.setMudarTamanho(true);
                 this.telaIntro.setPosition(new Vetor3(0, 0.02f, -0.9f));
                 this.telaIntro.vezes(1.5f);
                 this.telaIntro.setGiroPosition(new Vetor3(90, 0f, 0f));
                 this.telaIntro.loadGLTexture();
-                tut.carga=0;
+                tut.carga = 0;
                 tut.carregar();
                 carga++;
                 break;
@@ -256,7 +287,7 @@ float girar = 0;
                 bolhaRef.setPosition(new Vetor3(-100, -0.08f, -0.1f));
 
 
-                tut.carga=1;
+                tut.carga = 1;
                 tut.carregar();
                 carga++;
                 break;
@@ -285,7 +316,7 @@ float girar = 0;
 
                 btUpgrade = new Objeto3d(context, R.drawable.inimigonorm, asset, "button.obj", R.drawable.buttonup, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
                 btUpgrade.setValor(String.valueOf(0));
-                btUpgrade.setGiroPosition(new Vetor3(95, 0f, 0f));
+                btUpgrade.setGiroPosition(new Vetor3(70, 0f, 0f));
                 btUpgrade.setTransparente(true);
                 btUpgrade.vezes(0.091f);
                 btUpgrade.setPosition(new Vetor3(-0.025f, -0.086f, -0.089f));
@@ -293,28 +324,192 @@ float girar = 0;
 
                 btoptions = new Objeto3d(context, R.drawable.inimigonorm, asset, "btoption.obj", R.drawable.btoption, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
                 btoptions.setValor(String.valueOf(0));
-                btoptions.setGiroPosition(new Vetor3(95, 0f, 0f));
+                btoptions.setGiroPosition(new Vetor3(70, 0f, 0f));
                 btoptions.setTransparente(true);
                 btoptions.vezes(0.091f);
                 btoptions.setPosition(new Vetor3(0.025f, -0.086f, -0.089f));
                 btoptions.loadGLTexture();
 
+
+                btback = new Objeto3d(context, R.drawable.inimigonorm, asset, "btoption.obj", R.drawable.btback, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
+                btback.setValor(String.valueOf(0));
+                btback.setGiroPosition(new Vetor3(70, 0f, 0f));
+                btback.setTransparente(true);
+                btback.vezes(0.091f);
+                btback.setPosition(new Vetor3(4.975f, -0.092f, -0.089f));
+                btback.loadGLTexture();
+
                 btStart = new Objeto3d(context, R.drawable.inimigonorm, asset, "btstart.obj", R.drawable.btstart, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "upgrade");
                 btStart.setValor(String.valueOf(0));
-                btStart.setGiroPosition(new Vetor3(95, 0f, 0f));
+                btStart.setGiroPosition(new Vetor3(70, 0f, 0f));
                 btStart.setTransparente(true);
                 btStart.vezes(0.1f);
                 btStart.setPosition(new Vetor3(0.00f, -0.09f, -0.089f));
                 btStart.loadGLTexture();
 
-                tut.carga=2;
+                tut.carga = 2;
                 tut.carregar();
                 carga++;
 
                 break;
             case 3:
                 //  selecao(25, 40, ultimaPassada);
-                tut.carga=3;
+
+                nivelAtaque = new ArrayList<>();
+                nivelEscudo = new ArrayList<>();
+                nivelIma = new ArrayList<>();
+
+                nivelAtaqueP = new ArrayList<>();
+                nivelEscudoP = new ArrayList<>();
+                nivelImaP = new ArrayList<>();
+
+
+                for(int i = 0 ; i<5;i++) {
+
+                    int reff = 0;
+
+                    switch (i) {
+                        case 0:
+                            reff = R.drawable.p150;
+                            break;
+                        case 1:
+                            reff = R.drawable.p300;
+                            break;
+                        case 2:
+                            reff = R.drawable.p450;
+                            break;
+                        case 3:
+                            reff = R.drawable.p600;
+                            break;
+                        case 4:
+                            reff = R.drawable.max;
+                            break;
+                    }
+
+
+                    Objeto3d c = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    c.setValor(String.valueOf(0));
+                    c.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    c.setTransparente(true);
+                    c.vezes(0.07f);
+                    c.setPosition(new Vetor3(5.017f, -0.023f, -0.089f));
+                    c.setNomeRef("nivelT");
+                    c.loadGLTexture();
+                    nivelAtaqueP.add(c);
+
+
+
+
+                    Objeto3d cc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    cc.setValor(String.valueOf(0));
+                    cc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    cc.setTransparente(true);
+                    cc.vezes(0.07f);
+                    cc.setPosition(new Vetor3(5.017f, -0.043f, -0.089f));
+                    cc.setNomeRef("nivelT");
+                    cc.loadGLTexture();
+                    nivelEscudoP.add(cc);
+
+
+
+
+                    Objeto3d ccc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    ccc.setValor(String.valueOf(0));
+                    ccc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    ccc.setTransparente(true);
+                    ccc.vezes(0.07f);
+                    ccc.setPosition(new Vetor3(5.017f, -0.063f, -0.089f));
+                    ccc.setNomeRef("nivelT");
+                    ccc.loadGLTexture();
+                    nivelImaP.add(ccc);
+
+
+                }
+
+
+
+
+
+
+                nivelAtaqueT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelataquet, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                nivelAtaqueT.setValor(String.valueOf(0));
+                nivelAtaqueT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelAtaqueT.setTransparente(true);
+                nivelAtaqueT.vezes(0.1f);
+                nivelAtaqueT.setPosition(new Vetor3(4.985f, -0.023f, -0.089f));
+                nivelAtaqueT.setNomeRef("nivelT");
+                nivelAtaqueT.loadGLTexture();
+
+                nivelEscudoT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelescudot, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                nivelEscudoT.setValor(String.valueOf(0));
+                nivelEscudoT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelEscudoT.setTransparente(true);
+                nivelEscudoT.vezes(0.1f);
+                nivelEscudoT.setPosition(new Vetor3(4.985f, -0.043f, -0.089f));
+                nivelEscudoT.setNomeRef("nivelT");
+                nivelEscudoT.loadGLTexture();
+
+                nivelImaT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelpullt, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                nivelImaT.setValor(String.valueOf(0));
+                nivelImaT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelImaT.setTransparente(true);
+                nivelImaT.vezes(0.1f);
+                nivelImaT.setPosition(new Vetor3(4.985f, -0.063f, -0.089f));
+                nivelImaT.setNomeRef("nivelT");
+                nivelImaT.loadGLTexture();
+
+                 for(int i = 0 ; i<5;i++){
+
+                    int reff = 0;
+
+                    switch (i) {
+                        case 0:reff=R.drawable.life;
+                            break;
+                        case 1:reff=R.drawable.lifee;
+                            break;
+                        case 2:reff=R.drawable.lifeee;
+                            break;
+                        case 3:reff=R.drawable.lifeeee;
+                            break;
+                        case 4:reff=R.drawable.lifeeeee;
+                            break;
+                    }
+
+                    Objeto3d c = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    c.setValor(String.valueOf(0));
+                    c.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    c.setTransparente(true);
+                    c.vezes(0.01f);
+                    c.setPosition(new Vetor3(4.99f, -0.03f, -0.089f));
+                    c.setNomeRef("nivel");
+                    c.loadGLTexture();
+                    nivelAtaque.add(c);
+
+                    Objeto3d cc = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    cc.setValor(String.valueOf(0));
+                    cc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    cc.setTransparente(true);
+                    cc.vezes(0.01f);
+                    cc.setPosition(new Vetor3(4.99f, -0.05f, -0.089f));
+                    cc.setNomeRef("nivel");
+                    cc.loadGLTexture();
+                    nivelEscudo .add(cc);
+
+                    Objeto3d ccc = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    ccc.setValor(String.valueOf(0));
+                    ccc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    ccc.setTransparente(true);
+                    ccc.vezes(0.01f);
+                    ccc.setPosition(new Vetor3(4.99f, -0.07f, -0.089f));
+                    ccc.setNomeRef("nivel");
+                    ccc.loadGLTexture();
+                    nivelIma.add(ccc);
+                }
+
+
+
+
+                tut.carga = 3;
                 tut.carregar();
                 carga++;
                 break;
@@ -337,17 +532,17 @@ float girar = 0;
 //                    }
 //                }
 
-                tut.carga=4;
+                tut.carga = 4;
                 tut.carregar();
                 carga++;
                 break;
             default:
                 //  selecao(25, 40, ultimaPassada);
-                if(!tut.carregamentoDireto) {
-                  //  tut.carga++;
+                if (!tut.carregamentoDireto) {
+                    //  tut.carga++;
                     tut.carregar();
-                    if (tut.carga>=15){
-                        tut.carregamentoDireto=true;
+                    if (tut.carga >= 15) {
+                        tut.carregamentoDireto = true;
 
 
                         liberado = true;
@@ -363,7 +558,7 @@ float girar = 0;
 
                         }
                     }
-                }else {
+                } else {
                     liberado = true;
                 }
 
@@ -467,13 +662,8 @@ float girar = 0;
 
             }
             //  fasecarregada = false;
-        } else if (fasecarregada == 2) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (fasecarregada == 2000) {
 
-                result.onSurfaceCreated(gl, this.eglConfig);
-
-            }
-            //  fasecarregada = false;
         }
         this.gl2 = gl;
 
@@ -486,10 +676,7 @@ float girar = 0;
     }
 
 
-
-
-
-    float distanciaR = 0f;
+    float distanciaX = 0f;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -507,7 +694,7 @@ float girar = 0;
                 try {
                     //     musica.pause();
 
-                    tut = new TartarugaCorrida(context, asset, fase, comSons, comMusica);
+                    tut = new TartarugaCorrida(context, asset, fase, comSons, comMusica,nivelNave);
 
                     tut.onSurfaceCreated(gl, this.eglConfig);
 
@@ -524,15 +711,15 @@ float girar = 0;
                 tut.onDrawFrame((GL11) gl);
 
                 if (tut.selectFase) {
-                    fasecarregada = 0;
+                    fasecarregada = 2;
                     musicaInicioFase = false;
                     mudarMusica(-2, false, true);
 //                    try {
 //                      //  mudarLista();
-                        tut.selectFase = false;
+                    tut.selectFase = false;
 //                    } catch (IOException e) {
 //                        e.printStackTrace();
-                 //  }
+                    //  }
                 }
 
 
@@ -554,46 +741,8 @@ float girar = 0;
             }
 
 
-        } else if (fasecarregada == 2) {
+        } else if (fasecarregada == 2000) {
 
-            if (result == null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (Looper.myLooper() == null) {
-                        Looper.prepare();
-                    } else {
-                        Looper.getMainLooper().getThread().interrupt();
-                    }
-                }
-                try {
-                    // musica.pause();
-
-                    result = new TelaResultados(context, asset);
-
-                    result.onSurfaceCreated(gl, this.eglConfig);
-
-                } catch (Exception ioException) {
-                    ioException.printStackTrace();
-                }
-
-                result.onDrawFrame((GL11) gl);
-
-            } else {
-
-
-                result.onDrawFrame((GL11) gl);
-
-//                if (result.selectFase) {
-//                    fasecarregada = 0;
-//                    try {
-//                        mudarLista();
-//                        tut.selectFase = false;
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
-
-            }
 
 
         } else {
@@ -604,20 +753,21 @@ float girar = 0;
             float totaly = ((this.displayMetrics.heightPixels / 2) / this.displayMetrics.scaledDensity) * 0.0001f;
             gl.glLoadIdentity();
             gl.glRotatef(0, 0, 0, 0);
-            gl.glTranslatef(0, 0.04f, -0.01f);
+            gl.glTranslatef(distanciaX, 0.04f, -0.01f);
+
+        moverTela();
 //            girar+=0.1f;
 //            if(Fenixt!=null) {
 //                Fenixt.setGiroPosition(new Vetor3(30, girar, 0f));
 //            }
-            if (!musicaInicioFase ) {
+            if (!musicaInicioFase) {
                 mudarMusica(-2, false, true);
 
             }
-            if (carga>1 && tut.carga <4 ||  tut.carga >7 && tut.carga <14) {
+            if (carga > 1 && tut.carga < 4 || tut.carga > 7 && tut.carga < 14) {
 
                 this.telaIntro.draw((GL11) gl2);
-            }
-           else if ( tut.carga >=14 ) {
+            } else if (tut.carga >= 14) {
                 this.barra.draw((GL11) gl2);
 //                if (moverFundo == 0) {
 //                    this.barra.getPosition().x += 0.0002f;
@@ -631,13 +781,12 @@ float girar = 0;
 //                    }
 //                }
             }
-            if (tut.carga ==4) {
-                Bitmap image = BitmapFactory.decodeResource(context.getResources(),  R.drawable.fenixload); // 1
+            if (tut.carga == 4) {
+                Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.fenixload); // 1
 
                 this.telaIntro.vezes(0.8f);
 
                 this.telaIntro.LoadTexture(image);
-
 
 
             }
@@ -653,12 +802,27 @@ float girar = 0;
                 this.btUpgrade.draw((GL11) gl2);
                 this.btStart.draw((GL11) gl2);
                 this.btoptions.draw((GL11) gl2);
+                this.btback.draw((GL11) gl2);
                 this.btfundo.draw((GL11) gl2);
                 this.btfundoup.draw((GL11) gl2);
 
+                nivelAtaqueT.draw((GL11) gl2);
+                nivelEscudoT.draw((GL11) gl2);
+                nivelImaT.draw((GL11) gl2);
+
+                nivelAtaqueP.get(nivelAtaqueR).draw((GL11) gl2);
+                nivelEscudoP.get(nivelEscudoR).draw((GL11) gl2);
+                nivelImaP.get(nivelImaR).draw((GL11) gl2);
+
+                nivelAtaque.get(nivelAtaqueR).draw((GL11) gl2);
+                    nivelEscudo.get(nivelEscudoR).draw((GL11) gl2);
+                    nivelIma.get(nivelImaR).draw((GL11) gl2);
+
+
+
 
             } else {
-                if (bolhaRef != null && tut.carga >3 && tut.carga <8) {
+                if (bolhaRef != null && tut.carga > 3 && tut.carga < 8) {
                     bolhaRef.setPosition(new Vetor3(0, -0.02f, -0.1f));
                     //   bolhaRef.setGiroPosition(new Vetor3(95, bolhaRef.getGiroPosition().y + 8, 0));
                     bolhaRef.draw((GL11) gl2);
@@ -678,6 +842,19 @@ float girar = 0;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void moverTela() {
+        if (fasecarregada == 2) {
+            distanciaX = -5;
+            if (barra != null)
+                barra.getPosition().setX(distanciaX * -1);
+        }else {
+            distanciaX = 0;
+            if (barra != null)
+                barra.getPosition().setX(distanciaX * -1);
+
         }
     }
 
@@ -785,24 +962,21 @@ float girar = 0;
 
                 break;
             case -2:
-           //    regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
+                //    regularSontul(this.musicaBossFase, this.musica, mboss, mMusica);
 
-                     if (musicaBossFase.isPlaying()) {
-                        musicaBossFase.pause();
-                    }
-              //  musica.setVolume(0.40f, 0.40f);
+                if (musicaBossFase.isPlaying()) {
+                    musicaBossFase.pause();
+                }
+                //  musica.setVolume(0.40f, 0.40f);
                 musica.seekTo(0);
                 musica.start();
 
-                    musicaBoss = false;
-                    musicaInicioFase = true;
-                    regularSon = true;
+                musicaBoss = false;
+                musicaInicioFase = true;
+                regularSon = true;
 
 
-
-
-              //  mudarMusica(-2, false, true);
-
+                //  mudarMusica(-2, false, true);
 
 
                 musicaAtual = -2;
@@ -1080,95 +1254,93 @@ float girar = 0;
         float x = event.getX();
         float y = event.getY();
         float basey = ((y / this.displayMetrics.scaledDensity) * 0.000177f) - 0.0309f;
-        float basex = ((x / this.displayMetrics.scaledDensity) * 0.000177f) - 0.0309f;
+        float basex = (-1*distanciaX)+((x / this.displayMetrics.scaledDensity) * 0.000177f) - 0.0309f;
 
 
         bolhaRef.getPosition().y = (basey) * -1;
         bolhaRef.getPosition().x = basex;
         boolean sel = false;
-    //    for (Objeto3d obj : bolhas) {
-          //  double start = calculoarDistancia(obj, bolhaRef.getPosition());
-            if (/*start <= 0.025 || */iniciaraProxima) {
-                sel = true;
-                bolhaRef.getPosition().y = -100;
-                bolhaRef.getPosition().x = -100;
-                ConvertBitimap convertBitimap = new ConvertBitimap();
-                BDEstatusFase bdEstatusFase = new BDEstatusFase(context);
+        //    for (Objeto3d obj : bolhas) {
+        //  double start = calculoarDistancia(obj, bolhaRef.getPosition());
+        if (/*start <= 0.025 || */iniciaraProxima && distanciaX==0) {
+            sel = true;
+            bolhaRef.getPosition().y = -100;
+            bolhaRef.getPosition().x = -100;
+            ConvertBitimap convertBitimap = new ConvertBitimap();
+            BDEstatusFase bdEstatusFase = new BDEstatusFase(context);
 
 //                if (!iniciaraProxima)
-  //                  fase = 1;
-                iniciaraProxima = false;
+            //                  fase = 1;
+            iniciaraProxima = false;
 
-                long i = bdEstatusFase.buscarUltima().getId();
-                bdEstatusFase.fechar();
-                if (fase <= i) {
+            long i = bdEstatusFase.buscarUltima().getId();
+            bdEstatusFase.fechar();
+            if (fase <= i) {
 
-                    EstatusFase v = new BDEstatusFase(context).buscar(fase + 1);
-
-
-                    boolean completa = v.getProgresso().equals("COMPLETA");
-                    boolean killAll = v.getInimigosEliminados() >= v.getInimigosGerados() && v.getInimigosGerados() > 0;
-                    boolean life80 = v.getSaude() >= 80;
-                    Alerta alerta = new Alerta(context);
-                    alerta.enviarAlerta("STAGE - " + (fase + 1), true, completa, killAll, life80).show();
+                EstatusFase v = new BDEstatusFase(context).buscar(fase + 1);
 
 
-                    alerta.getBtSim().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            selectFase = false;
-                            alerta.fechar();
+                boolean completa = v.getProgresso().equals("COMPLETA");
+                boolean killAll = v.getInimigosEliminados() >= v.getInimigosGerados() && v.getInimigosGerados() > 0;
+                boolean life80 = v.getSaude() >= 80;
+                Alerta alerta = new Alerta(context);
+                alerta.enviarAlerta("STAGE - " + (fase + 1), true, completa, killAll, life80).show();
 
 
-                            String[] fasex = String.valueOf(fase).split("");
-
-                            if (fasex.length > 1) {
-                                musicaDafase = Integer.parseInt(fasex[0] );
-
-                            } else {
-                                musicaDafase = 0;
-                            }
-
-                            fasecarregada = 1;
+                alerta.getBtSim().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectFase = false;
+                        alerta.fechar();
 
 
+                        String[] fasex = String.valueOf(fase).split("");
+
+                        if (fasex.length > 1) {
+                            musicaDafase = Integer.parseInt(fasex[0]);
+
+                        } else {
+                            musicaDafase = 0;
+                        }
+
+                        fasecarregada = 1;
 
 
-                            musicaInicioFase = true;
-                            iniciomenu = false;
+                        musicaInicioFase = true;
+                        iniciomenu = false;
 
 //                            fasecarregada = 0;
 //                            musicaInicioFase = false;
 //                            mudarMusica(-2, false, true);
 
-                            if (tut != null) {
-                                // tut.destroy();
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    if (Looper.myLooper() == null) {
-                                        Looper.prepare();
-                                    } else {
-                                        Looper.getMainLooper().getThread().interrupt();
-                                    }
+                        if (tut != null) {
+                            // tut.destroy();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (Looper.myLooper() == null) {
+                                    Looper.prepare();
+                                } else {
+                                    Looper.getMainLooper().getThread().interrupt();
                                 }
-                                tut.tartarugaF(fase, comSons, comMusica);
                             }
-
-
+                            tut.tartarugaF(fase, comSons, comMusica,nivelNave);
                         }
-                    });
 
 
-                    alerta.getBtNao().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            selectFase = true;
-                            alerta.fechar();
-                        }
-                    });
-                }
-                //break;
+                    }
+                });
+
+
+                alerta.getBtNao().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectFase = true;
+                        alerta.fechar();
+                    }
+                });
             }
-      //  }
+            //break;
+        }
+        //  }
 
         double option = calculoarDistancia(btoptions, bolhaRef.getPosition());
 
@@ -1235,6 +1407,84 @@ float girar = 0;
 
 
         }
+        double upgrade = calculoarDistancia(btUpgrade, bolhaRef.getPosition());
+
+
+        if (upgrade <= 0.015f) {
+
+
+
+                fasecarregada = 2;
+//            }
+
+        }
+
+        double back = calculoarDistancia(btback, bolhaRef.getPosition());
+        if (back <= 0.02f) {
+
+            fasecarregada = 0;
+        }
+
+         BDNave BDN= new BDNave(context);
+        BDRecompensa BDR= new BDRecompensa(context);
+        recompensa = BDR.buscar(1);
+        double plusAt = calculoarDistancia(nivelAtaqueP.get(nivelAtaqueR), bolhaRef.getPosition());
+        if (plusAt <= 0.015f) {
+            if (nivelAtaqueR < 4) {
+                int preco = buscarPreco(nivelAtaqueR);
+                if(preco!=-1 && preco< recompensa.getValor()) {
+                    recompensa.setValor(recompensa.getValor()-preco);
+                    new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                    nivelAtaqueR++;
+                    nivelNave.setAtaque(nivelAtaqueR);
+                    BDN.atualizarNave(nivelNave);
+                }else {
+                    Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        double plusEc = calculoarDistancia(nivelEscudoP.get(nivelEscudoR), bolhaRef.getPosition());
+        if (plusEc <= 0.015f) {
+            if (nivelEscudoR < 4) {
+                int preco = buscarPreco(nivelEscudoR);
+                if(preco!=-1 && preco< recompensa.getValor()) {
+
+                    recompensa.setValor(recompensa.getValor()-preco);
+                    new BDRecompensa(context).atualizarRecompensa(recompensa);
+                    nivelEscudoR++;
+                    nivelNave.setEscudo(nivelEscudoR);
+                    BDN.atualizarNave(nivelNave);
+                }else {
+                    Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                }
+
+            }else {
+                Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        double plusPull = calculoarDistancia(nivelImaP.get(nivelImaR), bolhaRef.getPosition());
+        if (plusPull <= 0.015f) {
+            if (nivelImaR < 4) {
+                int preco = buscarPreco(nivelImaR);
+                if(preco!=-1 && preco< recompensa.getValor()) {
+                    recompensa.setValor(recompensa.getValor()-preco);
+                    new BDRecompensa(context).atualizarRecompensa(recompensa);
+                    nivelImaR++;
+                    nivelNave.setPuchar(nivelImaR);
+                    BDN.atualizarNave(nivelNave);
+                }else {
+                    Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
 
@@ -1272,6 +1522,22 @@ float girar = 0;
 //
 //    }
 
+    private int buscarPreco(int n){
+        int preco=0;
+        switch (n+1){
+            case 1:preco=150;
+                break;
+            case 2:preco=300;
+                break;
+            case 3:preco=450;
+                break;
+            case 4:preco=600;
+                break;
+            default:preco=-1;
+                break;
+        }
+        return preco;
+    }
 
     ///GERENCIA O TOQUE NA TELA
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -1279,7 +1545,7 @@ float girar = 0;
     public boolean onTouch(View view, MotionEvent event) {
 
         if (liberado) {
-            if (fasecarregada == 0) {
+            if (fasecarregada == 0 || fasecarregada == 2) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -1295,6 +1561,7 @@ float girar = 0;
                     if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             recolher = 2;
+                            validarToque(event);
                             //       iniciarTelaDeSelecao = true;
                         }
                     } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.3 && event.getX() < this.wTela * 0.6) {
@@ -1336,12 +1603,10 @@ float girar = 0;
 
             } else if (tut != null && fasecarregada == 1) {
                 tut.onTouch(view, event);
-            } else if (result != null && fasecarregada == 2) {
-                result.onTouch(view, event);
             }
 
         }
-            return true;
+        return true;
 
     }
 

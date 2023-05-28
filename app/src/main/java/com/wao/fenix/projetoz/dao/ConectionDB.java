@@ -31,11 +31,22 @@ public class ConectionDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 
-        db.execSQL("create table estatus_fase(_id integer primary key autoincrement," +
+        db.execSQL("create table  if not exists estatus_fase(_id integer primary key autoincrement," +
                 "saude integer," +
                 "inimigosEliminados integer," +
                 "inimigosGerados integer," +
                 "progresso text); ");
+
+        db.execSQL("create table  if not exists upgade_nave(_id integer primary key autoincrement," +
+                "nome text," +
+                "habilitado text," +
+                "ataque integer," +
+                "escudo integer," +
+                "puchar integer); ");
+
+        db.execSQL("create table  if not exists recompensa(_id integer primary key autoincrement," +
+                "nome text," +
+                "valor integer); ");
 
 
         Calendar calendar = Calendar.getInstance();
@@ -46,6 +57,7 @@ public class ConectionDB extends SQLiteOpenHelper {
             er.printStackTrace();
         }
 
+        //      if (new BDEstatusFase(context).getbase() == 0) {
         for (int i = 0; i < 100; i++) {
             ContentValues valores = new ContentValues();
             valores.put("saude", 0);
@@ -54,6 +66,21 @@ public class ConectionDB extends SQLiteOpenHelper {
             valores.put("progresso", "PENDENTE");
             db.insert("estatus_fase", null, valores);
         }
+
+
+        ContentValues valores = new ContentValues();
+        valores.put("nome", "F001");
+        valores.put("habilitado", "S");
+        valores.put("ataque", 0);
+        valores.put("escudo", 0);
+        valores.put("puchar", 0);
+        db.insert("upgade_nave", null, valores);
+
+
+        valores = new ContentValues();
+        valores.put("nome", "estrelas");
+        valores.put("valor", 0);
+        db.insert("recompensa", null, valores);
 
 
     }
@@ -84,7 +111,6 @@ public class ConectionDB extends SQLiteOpenHelper {
         // onCreate( db );
 
     }
-
 
 
 }

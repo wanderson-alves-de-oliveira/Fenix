@@ -27,7 +27,14 @@ public class BDEstatusFase {
         db.close();
 
     }
+    public Long getbase() {
 
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM estatus_fase ;", null);
+        cursor.moveToNext();
+        cursor.close();
+        fechar();
+        return cursor.getLong(0);
+    }
 
     public Long getId() {
 

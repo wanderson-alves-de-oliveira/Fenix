@@ -3,8 +3,8 @@ package com.wao.fenix.projetoz.generico.recursos
 import android.content.Context
 import android.content.res.AssetManager
 import android.os.Build
-import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.wao.fenix.projetoz.dao.BDNave
 import com.wao.fenix.projetoz.menu.TartarugaCorrida
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +19,9 @@ class LaodInicial {
             return  withContext(Dispatchers.Main)
               {
 
-                      TartarugaCorrida(context, asset, 1, true, true)
+                  val BDN = BDNave(context)
+                   val nivelNave = BDN.buscar(1)
+                      TartarugaCorrida(context, asset, 1, true, true,nivelNave)
 
              }
 

@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wao.fenix.R;
 import com.wao.fenix.projetoz.dao.BDEstatusFase;
+import com.wao.fenix.projetoz.dao.BDRecompensa;
 import com.wao.fenix.projetoz.generico.memoria.CapituraEventosObj;
 import com.wao.fenix.projetoz.generico.recursos.ConvertBitimap;
 import com.wao.fenix.projetoz.generico.recursos.Cronograma;
@@ -31,6 +32,8 @@ import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
 import com.wao.fenix.projetoz.generico.recursos.Vetor3;
 import com.wao.fenix.projetoz.index.Tartaruga;
 import com.wao.fenix.projetoz.modelo.EstatusFase;
+import com.wao.fenix.projetoz.modelo.Nave;
+import com.wao.fenix.projetoz.modelo.Recompensa;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -296,7 +299,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //8
 
     private int dr = 0;
-
+    Recompensa recompensa;
 
     private final float velocidade = 0.012f;
     private final float velocidade2 = 0.024f;
@@ -311,7 +314,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private float modulox = 0;
     private float moduloz = -35;
     private float acelerarando = 0;
-
+    private Nave nivelNave;
     public Objeto3d getFenix() {
         return this.Fenix;
     }
@@ -1589,7 +1592,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public TartarugaCorrida(Context context, AssetManager asset, int fase, boolean comSons, boolean comMusica) throws IOException {
+    public TartarugaCorrida(Context context, AssetManager asset, int fase, boolean comSons, boolean comMusica, Nave nivelNave) throws IOException {
 
         //////////////INICIA VARIAVEIS BASICAS
         this.context = context;
@@ -1601,6 +1604,23 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.wTela = this.displayMetrics.widthPixels;
         this.comSons = comSons;
         this.comMusica = comMusica;
+        this.nivelNave = nivelNave;
+
+        recompensa = new BDRecompensa(context).buscar(1);
+
+
+        switch (nivelNave.getAtaque()){
+    case 0:nivelTiro=12;
+    break;
+    case 1:nivelTiro=24;
+        break;
+    case 2:nivelTiro=36;
+        break;
+    case 3:nivelTiro=48;
+        break;
+    case 4:nivelTiro=60;
+        break;
+}
 
         rastreio = new ArrayList<>();
 
@@ -1611,13 +1631,25 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     }
 
-    public void tartarugaF(int fase, boolean comSons, boolean comMusica) {
+    public void tartarugaF(int fase, boolean comSons, boolean comMusica,Nave nivelNave) {
         tempoDeEspera = 1;
         this.fase = fase;
         this.comSons = comSons;
         this.comMusica = comMusica;
+        this.nivelNave = nivelNave;
 
-
+        switch (nivelNave.getAtaque()){
+            case 0:nivelTiro=12;
+                break;
+            case 1:nivelTiro=24;
+                break;
+            case 2:nivelTiro=36;
+                break;
+            case 3:nivelTiro=48;
+                break;
+            case 4:nivelTiro=60;
+                break;
+        }
         rastreio = new ArrayList<>();
         this.carregado = false;
         this.carga = -1;
@@ -2766,7 +2798,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         Cronograma c;
         Fase f = new Fase();
         nivelTiroTempo = 3;
-        nivelTiro = 60;
+    //    nivelTiro = 60;
         String[] fasex = String.valueOf(nivel).split("");
         int indice = 1;
 
@@ -3151,7 +3183,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                  if (d < 0.2f) {
                      obj2.getPosition().setX(-1000f);
-                     resgateOuro+=100;
+                     resgateOuro++;
                 }
 
 
@@ -3801,7 +3833,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void timeLine() {
         timeLine++;
-        alterarNivelDeTiro(60);
+    //    alterarNivelDeTiro(60);
 
         for (int i = 0; i < cronograma.size(); i++) {
             Cronograma c = cronograma.get(i);
@@ -4380,7 +4412,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             //    boss.get(fase).descarregar();
             //  boss.removeAll(boss);
             bossEliminado = false;
-            selectFase = true;
+             selectFase = true;
             for (int i = 0; i < ataqueEspecial.size(); i++) {
                 ataqueEspecial.get(i).setMover("nulo");
                 ataqueEspecial.get(i).setTime(0);
@@ -4395,7 +4427,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 statusFase.atualizarFase(v);
             }
 
-
+            recompensa.setValor(recompensa.getValor()+resgateOuro);
+            new BDRecompensa(context).atualizarRecompensa(recompensa);
+            resgateOuro=0;
         }
 
 
@@ -5701,6 +5735,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     o.draw((GL11) gl2);
                     o.setGiro(o.getGiro() + 5f);
                     o.setGiroPosition(new Vetor3(0, 0, o.getGiro()));
+                    o.getPosition().setZ( o.getPosition().z+(velocidade2 / 4));
+
                 }
             }
 
@@ -6047,7 +6083,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             timeModoC = 0;
             timeModoE = 0;
             timeModoX = 0;
-            alterarNivelDeTiro(12);
+          //  alterarNivelDeTiro(12);
             horaDoBoss = false;
             this.animal.setX(0);
             velox = 0;
