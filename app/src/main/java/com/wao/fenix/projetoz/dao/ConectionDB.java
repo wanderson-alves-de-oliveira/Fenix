@@ -15,7 +15,7 @@ import java.util.Date;
  */
 
 public class ConectionDB extends SQLiteOpenHelper {
-    private static final String nomeDB = "Fenix2";
+    private static final String nomeDB = "Fenix3";
     private static final int vers = 1;
     private Context context;
 

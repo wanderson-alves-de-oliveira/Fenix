@@ -67,13 +67,13 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private GL10 gl2;
     private int fasecarregada = 0;
     private int musicaDafase = 0;
-
+private Bitmap texturaValores;
 
     private int musicas = 0;
     private boolean musicaBoss = false;
     private boolean musicaInicioFase = false;
     private boolean iniciomenu = true;
-
+    private boolean carregouValores = false;
 
     //private Objeto3d quadroInserirPalavra;
     private Objeto3d bolhaRef;
@@ -85,6 +85,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private ArrayList<Objeto3d> nivelAtaque;
     private ArrayList<Objeto3d> nivelEscudo;
     private ArrayList<Objeto3d> nivelIma;
+
+    private Objeto3d valorAdiquiridoObj;
+    private Objeto3d vedeorecompensa;
 
     private Objeto3d nivelAtaqueT;
     private Objeto3d nivelEscudoT;
@@ -223,6 +226,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
         BDRecompensa BDR= new BDRecompensa(context);
         recompensa = BDR.buscar(1);
+        texturaValores= ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()) );
         tut = new TartarugaCorrida(context, asset, ult, comSons, comMusica,nivelNave);
 
     }
@@ -389,7 +393,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d c = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     c.setValor(String.valueOf(0));
-                    c.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    c.setGiroPosition(new Vetor3(90, 0f, 0f));
                     c.setTransparente(true);
                     c.vezes(0.07f);
                     c.setPosition(new Vetor3(5.017f, -0.023f, -0.089f));
@@ -402,7 +406,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d cc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     cc.setValor(String.valueOf(0));
-                    cc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    cc.setGiroPosition(new Vetor3(90, 0f, 0f));
                     cc.setTransparente(true);
                     cc.vezes(0.07f);
                     cc.setPosition(new Vetor3(5.017f, -0.043f, -0.089f));
@@ -415,7 +419,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d ccc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     ccc.setValor(String.valueOf(0));
-                    ccc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    ccc.setGiroPosition(new Vetor3(90, 0f, 0f));
                     ccc.setTransparente(true);
                     ccc.vezes(0.07f);
                     ccc.setPosition(new Vetor3(5.017f, -0.063f, -0.089f));
@@ -433,7 +437,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 nivelAtaqueT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelataquet, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 nivelAtaqueT.setValor(String.valueOf(0));
-                nivelAtaqueT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelAtaqueT.setGiroPosition(new Vetor3(90, 0f, 0f));
                 nivelAtaqueT.setTransparente(true);
                 nivelAtaqueT.vezes(0.1f);
                 nivelAtaqueT.setPosition(new Vetor3(4.985f, -0.023f, -0.089f));
@@ -442,7 +446,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 nivelEscudoT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelescudot, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 nivelEscudoT.setValor(String.valueOf(0));
-                nivelEscudoT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelEscudoT.setGiroPosition(new Vetor3(90, 0f, 0f));
                 nivelEscudoT.setTransparente(true);
                 nivelEscudoT.vezes(0.1f);
                 nivelEscudoT.setPosition(new Vetor3(4.985f, -0.043f, -0.089f));
@@ -451,12 +455,35 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 nivelImaT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelpullt, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 nivelImaT.setValor(String.valueOf(0));
-                nivelImaT.setGiroPosition(new Vetor3(70, 0f, 0f));
+                nivelImaT.setGiroPosition(new Vetor3(90, 0f, 0f));
                 nivelImaT.setTransparente(true);
                 nivelImaT.vezes(0.1f);
                 nivelImaT.setPosition(new Vetor3(4.985f, -0.063f, -0.089f));
                 nivelImaT.setNomeRef("nivelT");
                 nivelImaT.loadGLTexture();
+
+
+                valorAdiquiridoObj =  new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelpullt, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                valorAdiquiridoObj.setValor(String.valueOf(0));
+                valorAdiquiridoObj.setGiroPosition(new Vetor3(90, 0f, 0f));
+                valorAdiquiridoObj.setTransparente(true);
+                valorAdiquiridoObj.vezes(0.1f);
+                valorAdiquiridoObj.setPosition(new Vetor3(4.985f, -0.01f, -0.089f));
+                valorAdiquiridoObj.setNomeRef("nivelT");
+
+                 valorAdiquiridoObj.LoadTexture(texturaValores);
+               // valorAdiquiridoObj.loadGLTexture();
+
+
+                vedeorecompensa =  new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.vedeorecompensa, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                vedeorecompensa.setValor(String.valueOf(0));
+                vedeorecompensa.setGiroPosition(new Vetor3(90, 0f, 0f));
+                vedeorecompensa.setTransparente(true);
+                vedeorecompensa.vezes(0.1f);
+                vedeorecompensa.setPosition(new Vetor3(5.017f, -0.092f, -0.089f));
+                vedeorecompensa.setNomeRef("nivelT");
+
 
                  for(int i = 0 ; i<5;i++){
 
@@ -477,7 +504,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d c = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     c.setValor(String.valueOf(0));
-                    c.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    c.setGiroPosition(new Vetor3(90, 0f, 0f));
                     c.setTransparente(true);
                     c.vezes(0.01f);
                     c.setPosition(new Vetor3(4.99f, -0.03f, -0.089f));
@@ -487,7 +514,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d cc = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     cc.setValor(String.valueOf(0));
-                    cc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    cc.setGiroPosition(new Vetor3(90, 0f, 0f));
                     cc.setTransparente(true);
                     cc.vezes(0.01f);
                     cc.setPosition(new Vetor3(4.99f, -0.05f, -0.089f));
@@ -497,7 +524,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     Objeto3d ccc = new Objeto3d(context, R.drawable.lifeeeee, asset, "top.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     ccc.setValor(String.valueOf(0));
-                    ccc.setGiroPosition(new Vetor3(70, 0f, 0f));
+                    ccc.setGiroPosition(new Vetor3(90, 0f, 0f));
                     ccc.setTransparente(true);
                     ccc.vezes(0.01f);
                     ccc.setPosition(new Vetor3(4.99f, -0.07f, -0.089f));
@@ -712,6 +739,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 if (tut.selectFase) {
                     fasecarregada = 2;
+                    BDRecompensa BDR= new BDRecompensa(context);
+                    recompensa = BDR.buscar(1);
+                    carregouValores=false;
                     musicaInicioFase = false;
                     mudarMusica(-2, false, true);
 //                    try {
@@ -809,7 +839,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 nivelAtaqueT.draw((GL11) gl2);
                 nivelEscudoT.draw((GL11) gl2);
                 nivelImaT.draw((GL11) gl2);
-
+                valorAdiquiridoObj.draw((GL11) gl2);
+                vedeorecompensa.draw((GL11) gl2);
                 nivelAtaqueP.get(nivelAtaqueR).draw((GL11) gl2);
                 nivelEscudoP.get(nivelEscudoR).draw((GL11) gl2);
                 nivelImaP.get(nivelImaR).draw((GL11) gl2);
@@ -845,9 +876,16 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void moverTela() {
         if (fasecarregada == 2) {
             distanciaX = -5;
+
+            if (!carregouValores) {
+                texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
+                valorAdiquiridoObj.LoadTexture(texturaValores);
+                carregouValores=true;
+            }
             if (barra != null)
                 barra.getPosition().setX(distanciaX * -1);
         }else {
@@ -1323,6 +1361,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                                 }
                             }
                             tut.tartarugaF(fase, comSons, comMusica,nivelNave);
+                            carregouValores=false;
+
                         }
 
 
@@ -1432,9 +1472,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (plusAt <= 0.015f) {
             if (nivelAtaqueR < 4) {
                 int preco = buscarPreco(nivelAtaqueR);
-                if(preco!=-1 && preco< recompensa.getValor()) {
+                if(preco!=-1 && preco<= recompensa.getValor()) {
                     recompensa.setValor(recompensa.getValor()-preco);
                     new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+
+                    carregouValores=false;
 
                     nivelAtaqueR++;
                     nivelNave.setAtaque(nivelAtaqueR);
@@ -1451,10 +1494,13 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (plusEc <= 0.015f) {
             if (nivelEscudoR < 4) {
                 int preco = buscarPreco(nivelEscudoR);
-                if(preco!=-1 && preco< recompensa.getValor()) {
+                if(preco!=-1 && preco<= recompensa.getValor()) {
 
                     recompensa.setValor(recompensa.getValor()-preco);
                     new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                    carregouValores=false;
+
                     nivelEscudoR++;
                     nivelNave.setEscudo(nivelEscudoR);
                     BDN.atualizarNave(nivelNave);
@@ -1471,9 +1517,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (plusPull <= 0.015f) {
             if (nivelImaR < 4) {
                 int preco = buscarPreco(nivelImaR);
-                if(preco!=-1 && preco< recompensa.getValor()) {
+                if(preco!=-1 && preco<= recompensa.getValor()) {
                     recompensa.setValor(recompensa.getValor()-preco);
                     new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                    carregouValores=false;
                     nivelImaR++;
                     nivelNave.setPuchar(nivelImaR);
                     BDN.atualizarNave(nivelNave);
@@ -1484,6 +1532,25 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
             }
         }
+
+
+        double plusestrelas = calculoarDistancia(vedeorecompensa, bolhaRef.getPosition());
+        if (plusestrelas <= 0.015f) {
+            if (nivelImaR < 400000) {
+                 if(true) {
+                    recompensa.setValor(recompensa.getValor()+150);
+                    new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                    carregouValores=false;
+
+                }else {
+                    Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 

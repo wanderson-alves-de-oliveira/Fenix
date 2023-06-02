@@ -1416,7 +1416,7 @@ public class Objeto3d implements Serializable {
         GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
-        image.recycle(); //6
+     //   image.recycle(); //6
         return resource;
 
     }
@@ -1427,7 +1427,7 @@ public class Objeto3d implements Serializable {
         GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
-        image.recycle(); //6
+       // image.recycle(); //6
 
     }
 
@@ -1439,35 +1439,70 @@ public class Objeto3d implements Serializable {
         GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, 0, image, 0); // 4
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
         GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
-     //   image.recycle(); //6
+
+
+//        if (texturaBuffer  != null) {
+//            textures[0] = 0;
+//            texturaBuffer .clear();
+//            texturaBuffer .put( texture );
+//            texturaBuffer .position( 0 );
+//            GLES20.glGenTextures( 1, textures, 0 );
+//            GLES20.glBindTexture( GLES20.GL_TEXTURE_2D, textures[0] );
+//            GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR );
+//            GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR );
+//            GLUtils.texImage2D( GLES20.GL_TEXTURE_2D, 0, image, 0 );
+//
+//
+//        }
 
     }
 
     public void loadGLTexture() {
 
-
         if (texturaBuffer  != null) {
-
             Bitmap image = BitmapFactory.decodeResource(context.getResources(), textura); // 1
-
             textures[0] = 0;
             texturaBuffer .clear();
             texturaBuffer .put( texture );
             texturaBuffer .position( 0 );
             GLES20.glGenTextures( 1, textures, 0 );
-
             GLES20.glBindTexture( GLES20.GL_TEXTURE_2D, textures[0] );
-
-
             GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR );
             GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR );
-
             GLUtils.texImage2D( GLES20.GL_TEXTURE_2D, 0, image, 0 );
 
 
         }
     }
+    public void loadGLTextureB() {
+        if (texturaBuffer != null) {
+            textures[0] = 0;
+            texturaBuffer.clear();
+            texturaBuffer.put(texture);
+            texturaBuffer.position(0);
+            // loading texture
+            //bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.casco);
 
+            // generate one texture pointer
+            GLES20.glGenTextures(1, textures, 0);
+            // ...and bind it to our array
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+            // Create Nearest Filtered Texture
+
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+
+            // Use the Android GLUtils to specify a two-dimensional texture image from our bitmap
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, texturaBitimap, 0);
+            //Different possible texture parameters, e.positionY. GL10.GL_CLAMP_TO_EDGE
+            // gl2.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_REPEAT);
+
+            // Use Android GLUtils to specify a two-dimensional texture image from our bitmap
+
+
+        }
+    }
 
     public double grauDeGiro(Objeto3d alvo) {
         float distanciaX=alvo.getPosition().x-getPosition().x;

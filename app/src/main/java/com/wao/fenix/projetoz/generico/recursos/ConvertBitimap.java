@@ -340,41 +340,28 @@ public class ConvertBitimap {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public  Bitmap getBitmap(String palavra) {
-        int largura=0;
-        switch (palavra.length()){
-            case 1:
-                largura=200;
-                break;
+    public static Bitmap getBitmap(String palavra) {
 
-            case 2:
-                largura=410;
-                break;
-
-            default:
-                largura=600;
-                break;
-
-        }
 
         Paint pincel = new Paint(  );
 
-        int r =(int) (175 * Math.random()) + 20;
-        int g=(int) (105 * Math.random()) + 80;
-        int b = (int) (175 * Math.random()) + 80;
-        pincel.setColor( Color.rgb( r,g,b));
+//        int r =(int) (175 * Math.random()) + 20;
+//        int g=(int) (105 * Math.random()) + 80;
+//        int b = (int) (175 * Math.random()) + 80;
+//        pincel.setColor( Color.rgb( r,g,b));
 
+        pincel.setColor( Color.argb( 255,0,0,0));
 
-        Bitmap bitmap = Bitmap.createBitmap(largura,300,Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(191,171,Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
         canvas.drawRoundRect( 0 ,0 ,
-                largura,300,
-                70,70,pincel );
+                191,171,
+                0,0,pincel );
 
         pincel.setColor( Color.argb( 255,255,255,255));
-        pincel.setTextSize( (float) (250) );
-        canvas.drawText( palavra,10,270,pincel);
+        pincel.setTextSize( (float) (50) );
+        canvas.drawText( palavra,10,90,pincel);
 
         return bitmap;
     }
