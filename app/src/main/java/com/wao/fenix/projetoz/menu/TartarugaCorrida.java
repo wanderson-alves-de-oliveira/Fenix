@@ -166,8 +166,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> inimigosE2;
     private int posteste = 0;
     private int postesteTime = 0;
+    private int limitVelocidade = 0;
+    private int limitVelocidadeAtual = 0;
+
+
+    private boolean limitVelocidadeBoo = false;
 
     private int indexF = 0;
+    private int tipoDeCard=0;
     private ArrayList<Objeto3d> ataqueEspecial;
 
     private ArrayList<Objeto3d> boss;
@@ -304,8 +310,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int dr = 0;
     Recompensa recompensa;
 
-    private final float velocidade = 0.012f;
-    private final float velocidade2 = 0.024f;
+    private   float velocidade = 0.012f;
+    private   float velocidade2 = 0.024f;
 
     private final float velocidadeinimigo1 = 0.2f;
     private final float velocidadeTiro = 0.6f;
@@ -318,6 +324,15 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private float moduloz = -35;
     private float acelerarando = 0;
     private Nave nivelNave;
+
+    public boolean isLimitVelocidadeBoo() {
+        return limitVelocidadeBoo;
+    }
+
+    public void setLimitVelocidadeBoo(boolean limitVelocidadeBoo) {
+        this.limitVelocidadeBoo = limitVelocidadeBoo;
+    }
+
     public Objeto3d getFenix() {
         return this.Fenix;
     }
@@ -352,6 +367,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     public void setBossEliminado(boolean bossEliminado) {
         this.bossEliminado = bossEliminado;
+    }
+
+    public int getTipoDeCard() {
+        return tipoDeCard;
+    }
+
+    public void setTipoDeCard(int tipoDeCard) {
+        this.tipoDeCard = tipoDeCard;
     }
 
     int faseInit[] = {}; //Fully white
@@ -2285,7 +2308,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosB.get(p).setValor(String.valueOf(v));
             inimigosB.get(p).setVida(vidaB * dificuldade);
             inimigosB.get(p).setRecoverVida(vidaB * dificuldade);
-            inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), R.drawable.tirobnorm, 5, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
+            inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), R.drawable.tirobnorm, 3, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
             inimigosB.get(p).setRefletir(true);
             // inimigosB.get(p).loadGLTexture();
             esplosaoArrayObj.add(new Esplosao(context, inimigosB.get(p), asset, context.getResources(), 0.8f, "inimigosB", p));
@@ -2344,7 +2367,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosC.get(p).setValor(String.valueOf("v"));
             inimigosC.get(p).setVida(vidaCE * dificuldade);
             inimigosC.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), R.drawable.tirocnorm, 5, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+            inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), R.drawable.tirocnorm, 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
             inimigosC.get(p).setTipo("C");
             inimigosC.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
             inimigosC.get(p).setRefletir(true);
@@ -2366,7 +2389,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosE.get(p).setValor(String.valueOf("v"));
             inimigosE.get(p).setVida(vidaCE * dificuldade);
             inimigosE.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), R.drawable.tiroenorm, 5, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
+            inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), R.drawable.tiroenorm, 1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
             inimigosE.get(p).setTipo("E");
             inimigosE.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
             inimigosE.get(p).setRefletir(true);
@@ -2393,7 +2416,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosC2.get(p).setValor(String.valueOf("v"));
             inimigosC2.get(p).setVida(vidaCE * dificuldade);
             inimigosC2.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosC2.get(p).setTiroNave(inimigosC2.get(p).criarTiros(inimigosC2.get(p), R.drawable.tirocnorm, 5, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+            inimigosC2.get(p).setTiroNave(inimigosC2.get(p).criarTiros(inimigosC2.get(p), R.drawable.tirocnorm, 3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
             inimigosC2.get(p).setTipo("C");
             inimigosC2.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
             inimigosC2.get(p).setRefletir(true);
@@ -2416,7 +2439,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             inimigosE2.get(p).setValor(String.valueOf("v"));
             inimigosE2.get(p).setVida(vidaCE * dificuldade);
             inimigosE2.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosE2.get(p).setTiroNave(inimigosE2.get(p).criarTiros(inimigosE2.get(p), R.drawable.tiroenorm, 5, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+            inimigosE2.get(p).setTiroNave(inimigosE2.get(p).criarTiros(inimigosE2.get(p), R.drawable.tiroenorm, 3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
             inimigosE2.get(p).setTipo("E");
             inimigosE2.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
             inimigosE2.get(p).setRefletir(true);
@@ -2504,7 +2527,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 inimigosX.get(p).setVida(vidaX * dificuldade);
                 inimigosX.get(p).setRecoverVida(vidaX * dificuldade);
                 inimigosX.get(p).setId(p);
-                inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), R.drawable.tiroxxnorm, 5, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
+                inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), R.drawable.tiroxxnorm, 3, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
                 inimigosX.get(p).setRefletir(true);
                 inimigosX.get(p).setAtivado(false);
                 //  inimigosX.get(p).loadGLTexture();
@@ -3243,7 +3266,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                      resgateOuro++;
                 }
 
-            if (d < nivelNave.getPuchar()*0.25) {
+            if (d < nivelNave.getPuchar()*0.3) {
 
                 if (obj2.getPosition().z > Fenix.getPosition().z) {
                     obj2.getPosition().setZ(obj2.getPosition().z - (velocidade2 ));
@@ -3271,7 +3294,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 private void escudosEvida(){
         if(nivelNave.getEscudo()>-1){
-            nivelNave.setEscudo(nivelNave.getEscudo()-1);
+            nivelNave.setEscudo(nivelNave.getEscudo() - 1);
+
+            if(nivelNave.getEscudo()>=0) {
+                BDNave BDN = new BDNave(context);
+                BDN.atualizarNave(nivelNave);
+            }
+
         }else {
             vida--;
         }
@@ -3494,40 +3523,49 @@ private void escudosEvida(){
     public void controle() {
 
 
+        for (Objeto3d o : ouro) {
+            if (o.getPosition().z > -68f && o.getPosition().z < -60f && o.getPosition().x > -1.5f && o.getPosition().x < 1.5f) {
+                o.setGiro(o.getGiro() + 5f);
+                o.setGiroPosition(new Vetor3(0, 0, o.getGiro()));
+
+
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            timeLine();
-        }
-        for (int i = 0; i < inimigosC.size(); i++) {
-            inidiceEsquadCE(inimigosC.get(i), modo, i);
-            inidiceEsquadCE(inimigosE.get(i), modoE, i);
-            moverInimigoC(modo, inimigosC.get(i).getTimeLineInidvidual(), i, inimigosC.get(i), 'C');
-            moverInimigoC(modoE, inimigosE.get(i).getTimeLineInidvidual(), i, inimigosE.get(i), 'E');
+              timeLine();
+          }
+          for (int i = 0; i < inimigosC.size(); i++) {
+              inidiceEsquadCE(inimigosC.get(i), modo, i);
+              inidiceEsquadCE(inimigosE.get(i), modoE, i);
+              moverInimigoC(modo, inimigosC.get(i).getTimeLineInidvidual(), i, inimigosC.get(i), 'C');
+              moverInimigoC(modoE, inimigosE.get(i).getTimeLineInidvidual(), i, inimigosE.get(i), 'E');
 
-            if (i < 3) {
-                moverInimigoC(0, inimigosE2.get(i).getTimeLineInidvidual(), i, inimigosE2.get(i), 'C');
-                moverInimigoC(1, inimigosC2.get(i).getTimeLineInidvidual(), i, inimigosC2.get(i), 'D');
-            }
+              if (i < 3) {
+                  moverInimigoC(0, inimigosE2.get(i).getTimeLineInidvidual(), i, inimigosE2.get(i), 'C');
+                  moverInimigoC(1, inimigosC2.get(i).getTimeLineInidvidual(), i, inimigosC2.get(i), 'D');
+              }
 
-        }
+          }
 ////////////MONITORA O JOGO REFERENTE A COLISÃO ,VITÓRIA E DERROTA
-        if (esplodirNave) {
-            if (timeEsplosaoNave < 26) {
+          if (esplodirNave) {
+              if (timeEsplosaoNave < 26) {
 
-                splosaoArrayNave.get(0).setPosition(new Vetor3(Fenix.getPosition().x, 15, Fenix.getPosition().z));
+                  splosaoArrayNave.get(0).setPosition(new Vetor3(Fenix.getPosition().x, 15, Fenix.getPosition().z));
 
-                timeEsplosaoNave++;
-            } else {
-                esplodirNave = false;
-                timeEsplosaoNave = 0;
-                esplosaoNaveId = 0;
+                  timeEsplosaoNave++;
+              } else {
+                  esplodirNave = false;
+                  timeEsplosaoNave = 0;
+                  esplosaoNaveId = 0;
 
-                splosaoArrayNave.get(0).setPosition(new Vetor3(-100, -100, -100));
+                  splosaoArrayNave.get(0).setPosition(new Vetor3(-100, -100, -100));
 
-                if (vida <= 0) {
-                    gameOuver();
-                }
-            }
-        }
+                  if (vida <= 0) {
+                      gameOuver();
+                  }
+              }
+          }
 //        switch (nivelTiro) {
 //            case 48:
 //                danoNoInimigo = 4;
@@ -3542,239 +3580,239 @@ private void escudosEvida(){
 //        }
 
 
-        if (true) {
+          if (true) {
 
-            if (colidiu) {
-                if (time > 50) {
-                    veloy = (veloy) * -1;
-                    velox = (velox) * -1;
-                    veloz = (veloz) * -1;
-                    time = 0;
-                    colidiu = false;
-                } else {
-                    time++;
-                }
-            }
+              if (colidiu) {
+                  if (time > 50) {
+                      veloy = (veloy) * -1;
+                      velox = (velox) * -1;
+                      veloz = (veloz) * -1;
+                      time = 0;
+                      colidiu = false;
+                  } else {
+                      time++;
+                  }
+              }
 
 
-            //}
+              //}
 /// ALTERAR POSIÇÃO DA Fenix
 
 
-            switch (rotacinarFenix) {
-                case 1:
-                    if (giroyFenix < 25) {
-                        giroyFenix += 3.6f;
+              switch (rotacinarFenix) {
+                  case 1:
+                      if (giroyFenix < 25) {
+                          giroyFenix += 3.6f;
 
-                    }
-                    break;
-                case 2:
-                    if (giroyFenix > -25) {
-                        giroyFenix -= 3.6f;
+                      }
+                      break;
+                  case 2:
+                      if (giroyFenix > -25) {
+                          giroyFenix -= 3.6f;
 
-                    }
-                    break;
-                case 0:
-                    if (giroyFenix > 1) {
-                        giroyFenix -= 3.6f;
-                    } else if (giroyFenix < -1) {
-                        giroyFenix += 3.6f;
+                      }
+                      break;
+                  case 0:
+                      if (giroyFenix > 1) {
+                          giroyFenix -= 3.6f;
+                      } else if (giroyFenix < -1) {
+                          giroyFenix += 3.6f;
 
-                    } else {
-                        giroyFenix = 0f;
+                      } else {
+                          giroyFenix = 0f;
 
-                    }
-                    break;
-            }
+                      }
+                      break;
+              }
 
 //
 //            ceu.setGiro(ceu.getGiro() - 0.06f);
 //            ceu.setGiroPosition(new Vetor3(ceu.getGiro(), 0, 0));
 
-            moduloY -= veloy;
-            modulox -= velox;
-            moduloz += veloz;
-            //  Fenix.giroTotal((GL11) gl2,girox,1,0,0);
-            // Fenix.giroTotal((GL11) gl2,giroy,0,1,0);
-            //  ceu.setPosition(new Vetor3(0 , 16, -62));
+              moduloY -= veloy;
+              modulox -= velox;
+              moduloz += veloz;
+              //  Fenix.giroTotal((GL11) gl2,girox,1,0,0);
+              // Fenix.giroTotal((GL11) gl2,giroy,0,1,0);
+              //  ceu.setPosition(new Vetor3(0 , 16, -62));
 
 
-            //  Fenix.setGiroPosition(new Vetor3(0, 0, giroyFenix));
+              //  Fenix.setGiroPosition(new Vetor3(0, 0, giroyFenix));
 
-            for (int i = 0; i < ataqueEspecial.size(); i++) {
-                if (ataqueEspecial.get(i).getTime() >= 750) {
-                    ataqueEspecial.get(i).setMover("nulo");
-                    ataqueEspecial.get(i).setTime(0);
-                    btEspecial.setTimeBtEspecial(0);
-                    acionado = false;
-
-
-                }
-
-                switch (ataqueEspecial.get(i).getMover()) {
-                    case "nulo":
-                        ataqueEspecial.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                        break;
-                    case "disparar":
-
-                        ataqueEspecial.get(i).setPosition(new Vetor3(ataqueEspecial.get(i).getPosition().getX(),
-                                ataqueEspecial.get(i).getPosition().getY(),
-                                ataqueEspecial.get(i).getPosition().getZ() - (0.08f)));
-
-                        ataqueEspecial.get(i).setTime(ataqueEspecial.get(i).getTime() + 1);
-                        break;
-                }
-            }
+              for (int i = 0; i < ataqueEspecial.size(); i++) {
+                  if (ataqueEspecial.get(i).getTime() >= 750) {
+                      ataqueEspecial.get(i).setMover("nulo");
+                      ataqueEspecial.get(i).setTime(0);
+                      btEspecial.setTimeBtEspecial(0);
+                      acionado = false;
 
 
-            Fenix.getGiroPosition().z = giroyFenix;
-            for (int i = nivelTiroIndex; i < nivelTiro; i++) {
-                if (tiros.get(i).getTime() >= 50 || tiros.get(i).getPosition().z < -64) {
-                    tiros.get(i).setMover("nulo");
-                    tiros.get(i).setTime(0);
+                  }
 
-                }
-                if (tiros.get(i).getTime() == 1)
-                    son(1);
+                  switch (ataqueEspecial.get(i).getMover()) {
+                      case "nulo":
+                          ataqueEspecial.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                          break;
+                      case "disparar":
 
-                switch (tiros.get(i).getMover()) {
-                    case "nulo":
-                        //tiros.get(i).setGiroPosition(new Vetor3(0, 0,0));
+                          ataqueEspecial.get(i).setPosition(new Vetor3(ataqueEspecial.get(i).getPosition().getX(),
+                                  ataqueEspecial.get(i).getPosition().getY(),
+                                  ataqueEspecial.get(i).getPosition().getZ() - (0.08f)));
 
-                        switch (nivelTiro) {
-                            case 12:
-                                tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                tiros.get(i).setCores(new Vetor3(0f, 0f, 1f));
-
-                                break;
-                            case 24:
-                                if (i < 12) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else {
-                                    tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.05f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                }
-                                tiros.get(i).setCores(new Vetor3(0f, 1f, 0f));
-
-                                break;
-                            case 36:
-                                if (i < 12) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else if (i > 11 && i < 24) {
-                                    tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                }
-                                tiros.get(i).setCores(new Vetor3(1f, 0f, 1f));
-
-                                break;
-
-                            case 48:
-                                if (i < 12) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else if (i > 11 && i < 24) {
-                                    tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else if (i > 23 && i < 36) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                } else {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                }
-                                tiros.get(i).setCores(new Vetor3(1f, 1f, 0f));
-
-                                break;
-                            case 60:
-                                if (i < 12) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else if (i > 11 && i < 24) {
-                                    tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
-                                } else if (i > 23 && i < 36) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                } else if (i > 35 && i < 48) {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.0f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                } else {
-                                    tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
-
-                                }
-                                tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
-
-                                break;
-
-                        }
-                        break;
-                    case "disparar":
-                        // tiros.get(i).setGiroPosition(new Vetor3(0, 0,tiros.get(i).getPosition().z+0.2f));
-
-                        float xxtiro = 0.0f;
-                        if (nivelTiro == 36) {
-                            if (i < 12) {
-                                xxtiro = -0.005f;
-                            }
-                            if (i > 11 && i < 24) {
-                                xxtiro = 0.005f;
-                            }
+                          ataqueEspecial.get(i).setTime(ataqueEspecial.get(i).getTime() + 1);
+                          break;
+                  }
+              }
 
 
-                            if (i > 23 && i < 36) {
-                                xxtiro = 0.0f;
-                            }
-                        }
-                        if (nivelTiro > 36) {
-                            if (i < 12) {
-                                xxtiro = -0.01f;
-                            }
-                            if (i > 11 && i < 24) {
-                                xxtiro = 0.01f;
-                            }
+              Fenix.getGiroPosition().z = giroyFenix;
+              for (int i = nivelTiroIndex; i < nivelTiro; i++) {
+                  if (tiros.get(i).getTime() >= 50 || tiros.get(i).getPosition().z < -64) {
+                      tiros.get(i).setMover("nulo");
+                      tiros.get(i).setTime(0);
+
+                  }
+                  if (tiros.get(i).getTime() == 1)
+                      son(1);
+
+                  switch (tiros.get(i).getMover()) {
+                      case "nulo":
+                          //tiros.get(i).setGiroPosition(new Vetor3(0, 0,0));
+
+                          switch (nivelTiro) {
+                              case 12:
+                                  tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  tiros.get(i).setCores(new Vetor3(0f, 0f, 1f));
+
+                                  break;
+                              case 24:
+                                  if (i < 12) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else {
+                                      tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.05f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  }
+                                  tiros.get(i).setCores(new Vetor3(0f, 1f, 0f));
+
+                                  break;
+                              case 36:
+                                  if (i < 12) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else if (i > 11 && i < 24) {
+                                      tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX(), Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  }
+                                  tiros.get(i).setCores(new Vetor3(1f, 0f, 1f));
+
+                                  break;
+
+                              case 48:
+                                  if (i < 12) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else if (i > 11 && i < 24) {
+                                      tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else if (i > 23 && i < 36) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  } else {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  }
+                                  tiros.get(i).setCores(new Vetor3(1f, 1f, 0f));
+
+                                  break;
+                              case 60:
+                                  if (i < 12) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.1f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else if (i > 11 && i < 24) {
+                                      tiros.get(i).setPosition(new Vetor3((Fenix.getPosition().getX() + 0.1f), Fenix.getPosition().getY(), (Fenix.getPosition().getZ())));
+                                  } else if (i > 23 && i < 36) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() - 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  } else if (i > 35 && i < 48) {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.0f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  } else {
+                                      tiros.get(i).setPosition(new Vetor3(Fenix.getPosition().getX() + 0.05f, Fenix.getPosition().getY(), (Fenix.getPosition().getZ()) - 0.1f));
+
+                                  }
+                                  tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
+
+                                  break;
+
+                          }
+                          break;
+                      case "disparar":
+                          // tiros.get(i).setGiroPosition(new Vetor3(0, 0,tiros.get(i).getPosition().z+0.2f));
+
+                          float xxtiro = 0.0f;
+                          if (nivelTiro == 36) {
+                              if (i < 12) {
+                                  xxtiro = -0.005f;
+                              }
+                              if (i > 11 && i < 24) {
+                                  xxtiro = 0.005f;
+                              }
 
 
-                            if (i > 23 && i < 36) {
-                                xxtiro = 0.0f;
-                            }
-                            if (i > 23 && i < 36) {
-                                xxtiro = -0.005f;
-                            }
-                            if (i > 47) {
-                                xxtiro = 0.005f;
-                            }
-                        }
-                        tiros.get(i).setPosition(new Vetor3(tiros.get(i).getPosition().getX() + xxtiro,
-                                tiros.get(i).getPosition().getY(),
-                                tiros.get(i).getPosition().getZ() - (0.08f)));
-
-                        tiros.get(i).setTime(tiros.get(i).getTime() + 1);
-
-                        break;
-                }
+                              if (i > 23 && i < 36) {
+                                  xxtiro = 0.0f;
+                              }
+                          }
+                          if (nivelTiro > 36) {
+                              if (i < 12) {
+                                  xxtiro = -0.01f;
+                              }
+                              if (i > 11 && i < 24) {
+                                  xxtiro = 0.01f;
+                              }
 
 
-            }
+                              if (i > 23 && i < 36) {
+                                  xxtiro = 0.0f;
+                              }
+                              if (i > 23 && i < 36) {
+                                  xxtiro = -0.005f;
+                              }
+                              if (i > 47) {
+                                  xxtiro = 0.005f;
+                              }
+                          }
+                          tiros.get(i).setPosition(new Vetor3(tiros.get(i).getPosition().getX() + xxtiro,
+                                  tiros.get(i).getPosition().getY(),
+                                  tiros.get(i).getPosition().getZ() - (0.08f)));
+
+                          tiros.get(i).setTime(tiros.get(i).getTime() + 1);
+
+                          break;
+                  }
 
 
-            //mmmmm
+              }
+
+
+              //mmmmm
 ///////////////////////////////////////////////////////////////////////////////
 
-            if (fogo) {
-                atirar();
-            }
+              if (fogo) {
+                  atirar();
+              }
 
 
-        } else {
-            //  this.pause = false;
-            this.perdeu = true;
+          } else {
+              //  this.pause = false;
+              this.perdeu = true;
 
 
-        }
+          }
 //////////////////////////////////////////
-        if (retornarQuadro) {
+          if (retornarQuadro) {
 
 
-            retornarQuadro = false;
+              retornarQuadro = false;
 
-        }
+          }
 
 
     }
@@ -3863,6 +3901,7 @@ private void escudosEvida(){
             Fenix.getPosition().z = -62f;
             bossEliminado = false;
             selectFase = true;
+            tipoDeCard=-1;
             for (int i = 0; i < ataqueEspecial.size(); i++) {
                 ataqueEspecial.get(i).setMover("nulo");
                 ataqueEspecial.get(i).setTime(0);
@@ -4506,7 +4545,7 @@ private void escudosEvida(){
 
         vitoria = true;
         invulneravel = true;
-
+         tipoDeCard=2;
 
         BDEstatusFase statusFase = new BDEstatusFase(context);
 
@@ -5862,9 +5901,6 @@ private void escudosEvida(){
             for (Objeto3d o : ouro) {
                 if (o.getPosition().z > -68f && o.getPosition().z < -60f && o.getPosition().x > -1.5f && o.getPosition().x < 1.5f) {
                     o.draw((GL11) gl2);
-                    o.setGiro(o.getGiro() + 5f);
-                    o.setGiroPosition(new Vetor3(0, 0, o.getGiro()));
-
 
                 }
             }
@@ -5872,7 +5908,22 @@ private void escudosEvida(){
             gl.glPopMatrix();
             gl.glLoadIdentity();
             if (!parado) {
-                controle();
+
+                if(limitVelocidadeAtual>=limitVelocidade) {
+                    controle();
+                    if (limitVelocidadeBoo){
+                        limitVelocidade+=2;
+                        limitVelocidadeAtual=0;
+                    }else {
+                        limitVelocidadeAtual=0;
+                    }
+
+                    if(limitVelocidade>20){
+                        limitVelocidade=2000000;
+                    }
+                }else {
+                    limitVelocidadeAtual++;
+                }
                 if (timeLine == 1) {
                     localz = 62f;
                     localy = -17.00f;
@@ -6203,7 +6254,8 @@ private void escudosEvida(){
         recomecar++;
         vitoria = false;
         dificult = indiceLevel;
-
+        limitVelocidadeBoo=false;
+        limitVelocidade=0;
         if (recomecar == 100) {
             parado = false;
             this.perdeu = false;
@@ -6649,7 +6701,8 @@ private void escudosEvida(){
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 fogo = true;
-
+                limitVelocidade=0;
+                limitVelocidadeBoo=false;
                 if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
                     if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
                         dispararAtaqueEspecial();
@@ -6792,6 +6845,12 @@ private void escudosEvida(){
 
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 this.cont = 0;
+                if (!vitoria && !perdeu) {
+                    limitVelocidadeBoo = true;
+                }else {
+                    limitVelocidade=0;
+                }
+
                 rotacinarFenix = 0;
                 fogo = false;
                 this.xr = 0;

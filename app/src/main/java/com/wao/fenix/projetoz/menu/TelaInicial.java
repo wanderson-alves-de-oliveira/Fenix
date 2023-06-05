@@ -50,7 +50,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private int moverFundo = 0;
     private int fase = 0;
     private float volumeSon = 0.40f;
-
+  private Vetor3 posinicialF;
     private boolean selectFase = true;
     private boolean comMusica = true;
     private boolean comSons = true;
@@ -77,6 +77,14 @@ private Bitmap texturaValores;
 
     //private Objeto3d quadroInserirPalavra;
     private Objeto3d bolhaRef;
+    private Objeto3d painel_a;
+    private Objeto3d painel_b;
+    private Objeto3d painel_c;
+
+    private int tipoDeCard=0;
+
+    private ArrayList<Objeto3d> painelMode;
+
     private Objeto3d btUpgrade;
     private Objeto3d btfundo;
     private Objeto3d btfundoup;
@@ -262,7 +270,7 @@ private Bitmap texturaValores;
                 Fenixt.setRefletir(true);
                 Fenixt.setFenix(true);
                 Fenixt.setNomeRef("Fenix");
-
+                posinicialF= new Vetor3(Fenixt.getPosition());
 
                 this.telaIntro = new Objeto3d(context, R.drawable.basenorm, asset, "intro.obj", R.drawable.fenixintro, new Vetor3(1f, 1f, 1f), "");
                 this.telaIntro.setMudarTamanho(true);
@@ -293,6 +301,47 @@ private Bitmap texturaValores;
 
                 tut.carga = 1;
                 tut.carregar();
+
+                painel_a = new Objeto3d(context, R.drawable.lifeeeee, asset, "painel_a.obj",  R.drawable.nota, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                painel_a.setValor(String.valueOf(0));
+                painel_a.setGiroPosition(new Vetor3(90, 0f, 0f));
+                painel_a.setTransparente(true);
+                painel_a.vezes(0.60f);
+                painel_a.setPosition(new Vetor3(5f, 0.040f, -0.79f));
+                painel_a.setNomeRef("nivelT");
+                painel_a.setCores(new Vetor3(1f,1f,1f));
+                painel_a.loadGLTexture();
+
+
+
+                painel_b = new Objeto3d(context, R.drawable.lifeeeee, asset, "painel_a.obj",  R.drawable.notago, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                painel_b.setValor(String.valueOf(0));
+                painel_b.setGiroPosition(new Vetor3(90, 0f, 0f));
+                painel_b.setTransparente(true);
+                painel_b.vezes(0.02f);
+                painel_b.setPosition(new Vetor3(5.017f, 0.00f, -0.089f));
+                painel_b.setNomeRef("nivelT");
+                painel_b.setCores(new Vetor3(1f,1f,1f));
+                painel_b.loadGLTexture();
+
+                painel_c = new Objeto3d(context, R.drawable.lifeeeee, asset, "painel_a.obj",  R.drawable.notavc, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                painel_c.setValor(String.valueOf(0));
+                painel_c.setGiroPosition(new Vetor3(90, 0f, 0f));
+                painel_c.setTransparente(true);
+                painel_c.vezes(0.02f);
+                painel_c.setPosition(new Vetor3(5.017f, 0.00f, -0.089f));
+                painel_c.setNomeRef("nivelT");
+                painel_c.setCores(new Vetor3(1f,1f,1f));
+                painel_c.loadGLTexture();
+
+
+
+                painelMode = new ArrayList<>();
+
+                painelMode.add(painel_a);
+                painelMode.add(painel_b);
+                painelMode.add(painel_c);
+
                 carga++;
                 break;
 
@@ -367,6 +416,26 @@ private Bitmap texturaValores;
                 nivelEscudoP = new ArrayList<>();
                 nivelImaP = new ArrayList<>();
 
+                Objeto3d es = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj",  R.drawable.p150, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                es.setValor(String.valueOf(0));
+                es.setGiroPosition(new Vetor3(90, 0f, 0f));
+                es.setTransparente(true);
+                es.vezes(0.07f);
+                es.setPosition(new Vetor3(5.017f, -0.043f, -0.089f));
+                es.setNomeRef("nivelT");
+                es.loadGLTexture();
+                nivelEscudoP.add(es);
+
+
+                Objeto3d ess = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj",R.drawable.max, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                ess.setValor(String.valueOf(0));
+                ess.setGiroPosition(new Vetor3(90, 0f, 0f));
+                ess.setTransparente(true);
+                ess.vezes(0.07f);
+                ess.setPosition(new Vetor3(5.017f, -0.043f, -0.089f));
+                ess.setNomeRef("nivelT");
+                ess.loadGLTexture();
+                nivelEscudoP.add(ess);
 
                 for(int i = 0 ; i<5;i++) {
 
@@ -403,20 +472,6 @@ private Bitmap texturaValores;
 
 
 
-
-                    Objeto3d cc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                    cc.setValor(String.valueOf(0));
-                    cc.setGiroPosition(new Vetor3(90, 0f, 0f));
-                    cc.setTransparente(true);
-                    cc.vezes(0.07f);
-                    cc.setPosition(new Vetor3(5.017f, -0.043f, -0.089f));
-                    cc.setNomeRef("nivelT");
-                    cc.loadGLTexture();
-                    nivelEscudoP.add(cc);
-
-
-
-
                     Objeto3d ccc = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     ccc.setValor(String.valueOf(0));
                     ccc.setGiroPosition(new Vetor3(90, 0f, 0f));
@@ -443,6 +498,7 @@ private Bitmap texturaValores;
                 nivelAtaqueT.setPosition(new Vetor3(4.985f, -0.023f, -0.089f));
                 nivelAtaqueT.setNomeRef("nivelT");
                 nivelAtaqueT.loadGLTexture();
+
 
                 nivelEscudoT = new Objeto3d(context, R.drawable.lifeeeee, asset, "texto.obj", R.drawable.nivelescudot, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 nivelEscudoT.setValor(String.valueOf(0));
@@ -741,6 +797,13 @@ private Bitmap texturaValores;
                     fasecarregada = 2;
                     BDRecompensa BDR= new BDRecompensa(context);
                     recompensa = BDR.buscar(1);
+                    tipoDeCard=tut.getTipoDeCard();
+                    BDNave BDN= new BDNave(context);
+                    nivelNave = BDN.buscar(1);
+                    nivelImaR= nivelNave.getPuchar();
+                    nivelEscudoR=nivelNave.getEscudo();
+                    nivelAtaqueR=nivelNave.getAtaque();
+
                     carregouValores=false;
                     musicaInicioFase = false;
                     mudarMusica(-2, false, true);
@@ -770,6 +833,12 @@ private Bitmap texturaValores;
 
             }
 
+            if(tut.isLimitVelocidadeBoo()){
+                pausar(true);
+            }else {
+                pausar(false);
+
+            }
 
         } else if (fasecarregada == 2000) {
 
@@ -832,23 +901,28 @@ private Bitmap texturaValores;
                 this.btUpgrade.draw((GL11) gl2);
                 this.btStart.draw((GL11) gl2);
                 this.btoptions.draw((GL11) gl2);
-                this.btback.draw((GL11) gl2);
                 this.btfundo.draw((GL11) gl2);
                 this.btfundoup.draw((GL11) gl2);
 
-                nivelAtaqueT.draw((GL11) gl2);
-                nivelEscudoT.draw((GL11) gl2);
-                nivelImaT.draw((GL11) gl2);
-                valorAdiquiridoObj.draw((GL11) gl2);
-                vedeorecompensa.draw((GL11) gl2);
-                nivelAtaqueP.get(nivelAtaqueR).draw((GL11) gl2);
-                nivelEscudoP.get(nivelEscudoR).draw((GL11) gl2);
-                nivelImaP.get(nivelImaR).draw((GL11) gl2);
+                if(distanciaX*-1>0) {
+                    painelMode.get(0).draw((GL11) gl2);
+                    if (tipoDeCard != 0)
+                        painelMode.get(tipoDeCard == -1 ? 1 : 2).draw((GL11) gl2);
 
-                nivelAtaque.get(nivelAtaqueR).draw((GL11) gl2);
+                    this.btback.draw((GL11) gl2);
+                    nivelAtaqueT.draw((GL11) gl2);
+                    nivelEscudoT.draw((GL11) gl2);
+                    nivelImaT.draw((GL11) gl2);
+                    valorAdiquiridoObj.draw((GL11) gl2);
+                    vedeorecompensa.draw((GL11) gl2);
+                    nivelAtaqueP.get(nivelAtaqueR).draw((GL11) gl2);
+                    nivelEscudoP.get(nivelEscudoR == 4 ? 1 : 0).draw((GL11) gl2);
+                    nivelImaP.get(nivelImaR).draw((GL11) gl2);
+                    nivelAtaque.get(nivelAtaqueR).draw((GL11) gl2);
                     nivelEscudo.get(nivelEscudoR).draw((GL11) gl2);
                     nivelIma.get(nivelImaR).draw((GL11) gl2);
 
+                }
 
 
 
@@ -880,7 +954,7 @@ private Bitmap texturaValores;
     private void moverTela() {
         if (fasecarregada == 2) {
             distanciaX = -5;
-
+            Fenixt.setPosition(new Vetor3(4.84f,0.34f,- 0.78f));
             if (!carregouValores) {
                 texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
                 valorAdiquiridoObj.LoadTexture(texturaValores);
@@ -890,6 +964,8 @@ private Bitmap texturaValores;
                 barra.getPosition().setX(distanciaX * -1);
         }else {
             distanciaX = 0;
+            if (posinicialF != null)
+                Fenixt.setPosition(posinicialF);
             if (barra != null)
                 barra.getPosition().setX(distanciaX * -1);
 
@@ -1038,12 +1114,14 @@ private Bitmap texturaValores;
             case 0:
                 if (p) {
                     this.pause = false;
-                    this.musicaFase.get(0).pause();
+                    if (this.musicaFase.get(0).isPlaying())
+                        this.musicaFase.get(0).pause();
                     // pausar( true );
 
                 } else {
                     this.pause = true;
-                    this.musicaFase.get(0).start();
+                    if (!this.musicaFase.get(0).isPlaying())
+                        this.musicaFase.get(0).start();
                     //pausar( false );
                 }
 
@@ -1455,6 +1533,7 @@ private Bitmap texturaValores;
 
 
                 fasecarregada = 2;
+                tipoDeCard=0;
 //            }
 
         }
@@ -1490,10 +1569,10 @@ private Bitmap texturaValores;
             }
         }
 
-        double plusEc = calculoarDistancia(nivelEscudoP.get(nivelEscudoR), bolhaRef.getPosition());
+        double plusEc = calculoarDistancia(nivelEscudoP.get(0), bolhaRef.getPosition());
         if (plusEc <= 0.015f) {
             if (nivelEscudoR < 4) {
-                int preco = buscarPreco(nivelEscudoR);
+                int preco = 150;
                 if(preco!=-1 && preco<= recompensa.getValor()) {
 
                     recompensa.setValor(recompensa.getValor()-preco);
