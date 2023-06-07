@@ -44,7 +44,7 @@ public class BDNave {
         valores.put("nome", v.getNome());
         valores.put("habilitado", v.getHabilitado());
         valores.put("ataque", v.getAtaque());
-        valores.put("escudo", v.getEscudo());
+        valores.put("escudo", v.getEscudo()==-1?0:v.getEscudo());
         valores.put("puchar", v.getPuchar());
         db.update( "upgade_nave", valores, "_id = ?", new String[]{"" + v.get_id()} );
         fechar();

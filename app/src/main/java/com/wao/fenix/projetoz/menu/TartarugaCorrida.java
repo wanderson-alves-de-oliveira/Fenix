@@ -3302,6 +3302,25 @@ private void escudosEvida(){
             }
 
         }else {
+            nivelNave.setAtaque(nivelNave.getAtaque() - 1);
+
+            if(nivelNave.getAtaque()>=0) {
+                BDNave BDN = new BDNave(context);
+                BDN.atualizarNave(nivelNave);
+            }
+
+            switch (nivelNave.getAtaque()){
+                case 0:nivelTiro=12;
+                    break;
+                case 1:nivelTiro=24;
+                    break;
+                case 2:nivelTiro=36;
+                    break;
+                case 3:nivelTiro=48;
+                    break;
+                case 4:nivelTiro=60;
+                    break;
+            }
             vida--;
         }
 
@@ -4597,6 +4616,7 @@ private void escudosEvida(){
             recompensa = BDR.buscar(1);
             recompensa.setValor(recompensa.getValor()+resgateOuro);
             new BDRecompensa(context).atualizarRecompensa(recompensa);
+
             resgateOuro=0;
         }
 
@@ -4607,7 +4627,7 @@ private void escudosEvida(){
 
         nivelTiro = nivel;
         for (Objeto3d o : tiros) {
-            o.setGiroPosition(new Vetor3(0, 0, 0));
+            o.setPosition(new Vetor3(-1000, 0, 0));
 
         }
 
