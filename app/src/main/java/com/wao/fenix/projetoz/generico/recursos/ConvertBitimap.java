@@ -367,6 +367,32 @@ public class ConvertBitimap {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static Bitmap getBitmapRedondo(String palavra) {
+
+
+        Paint pincel = new Paint(  );
+
+//        int r =(int) (175 * Math.random()) + 20;
+//        int g=(int) (105 * Math.random()) + 80;
+//        int b = (int) (175 * Math.random()) + 80;
+//        pincel.setColor( Color.rgb( r,g,b));
+
+        pincel.setColor( Color.argb( 255,255,255,255));
+
+        Bitmap bitmap = Bitmap.createBitmap(191,171,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        canvas.drawRoundRect( 0 ,0 ,
+                189,169,
+                100,100,pincel );
+
+        pincel.setColor( Color.argb( 255,0,0,0));
+        pincel.setTextSize( (float) (120) );
+        canvas.drawText( palavra,50,110,pincel);
+
+        return bitmap;
+    }
 
 
 

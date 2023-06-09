@@ -54,7 +54,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private Objeto3d Fenix;
     private Objeto3d btEspecial;
     private Objeto3d top;
-
+    private  Bitmap texturaValoresBombas;
     private ArrayList<Objeto3d> life;
     private ArrayList<Objeto3d> escudo;
 
@@ -1908,9 +1908,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     btEspecial.setFenix(true);
                     btEspecial.vezes(0.15f);
 
+
                     btEspecial.setNomeRef("btEspecial");
                 }
-
+                texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelNave.getBomba()+1));
+                btEspecial.LoadTexture(texturaValoresBombas);
                 carga++;
                 break;
             case 6:
@@ -3683,6 +3685,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     nivelNave.setBomba(nivelBomba>=0?nivelBomba:0);
                     BDNave BDN = new BDNave(context);
                     BDN.atualizarNave(nivelNave);
+                    texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelBomba+1));
+                    btEspecial.LoadTexture(texturaValoresBombas);
                     if (nivelBomba >= 0)
                         btEspecial.setTimeBtEspecial(0);
                     else
