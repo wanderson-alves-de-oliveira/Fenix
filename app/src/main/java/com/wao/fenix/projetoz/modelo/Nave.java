@@ -9,6 +9,7 @@ public class Nave {
     private int ataque;
     private int escudo;
     private int puchar;
+    private int bomba;
 
     public Nave() {
     }
@@ -59,6 +60,14 @@ public class Nave {
 
     public void setPuchar(int puchar) {
         this.puchar = puchar;
+    }
+
+    public int getBomba() {
+        return bomba;
+    }
+
+    public void setBomba(int bomba) {
+        this.bomba = bomba;
     }
 
     @Override

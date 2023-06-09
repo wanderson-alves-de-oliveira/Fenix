@@ -45,6 +45,7 @@ public class BDNave {
         valores.put("habilitado", v.getHabilitado());
         valores.put("ataque", v.getAtaque());
         valores.put("escudo", v.getEscudo()==-1?0:v.getEscudo());
+        valores.put("bomba", v.getBomba());
         valores.put("puchar", v.getPuchar());
         db.update( "upgade_nave", valores, "_id = ?", new String[]{"" + v.get_id()} );
         fechar();
@@ -57,6 +58,7 @@ public class BDNave {
         valores.put("habilitado", v.getHabilitado());
         valores.put("ataque", v.getAtaque());
         valores.put("escudo", v.getEscudo());
+        valores.put("bomba", v.getBomba());
         valores.put("puchar", v.getPuchar());
         db.insert( "upgade_nave", null, valores );
         fechar();
@@ -64,7 +66,7 @@ public class BDNave {
 
     public Nave buscar(final long id) {
 
-        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado FROM upgade_nave WHERE _id = " + id, null);
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba FROM upgade_nave WHERE _id = " + id, null);
         cursor.moveToNext();
         Nave c = new Nave();
         c.set_id(cursor.getLong(0));
@@ -73,6 +75,7 @@ public class BDNave {
         c.setEscudo(cursor.getInt(3));
         c.setPuchar(cursor.getInt(4));
         c.setHabilitado(cursor.getString(5));
+        c.setBomba(cursor.getInt(6));
 
         cursor.close();
         fechar();

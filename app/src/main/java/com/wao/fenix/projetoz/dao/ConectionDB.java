@@ -42,6 +42,7 @@ public class ConectionDB extends SQLiteOpenHelper {
                 "habilitado text," +
                 "ataque integer," +
                 "escudo integer," +
+                "bomba integer," +
                 "puchar integer); ");
 
         db.execSQL("create table  if not exists recompensa(_id integer primary key autoincrement," +
