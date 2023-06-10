@@ -35,11 +35,11 @@ https://blog.jayway.com/2010/12/30/opengl-es-tutorial-for-android-part-vi-textur
 
  */
 public class Objeto3d implements Serializable {
-    private static String LOGTAG = "NormalMapping";
-    private static String assetDirectory = null;
+ //   private static String LOGTAG = "NormalMapping";
+  //  private static String assetDirectory = null;
     private boolean atirando = false;
     private boolean abatidoPelaNave = false;
-    public boolean invulneravel = false;
+   // public boolean invulneravel = false;
     public boolean retorno = false;
     public boolean  timeLimpar= true;
     private int timeBtEspecial = 0;
@@ -52,7 +52,7 @@ public class Objeto3d implements Serializable {
     private boolean esplodirNave = false;
     private int timeEsplosaoNave = 0;
     private int timeLineInidvidual = 0;
-    private int  normalMap=0;
+ //   private int  normalMap=0;
     private Context context;
     private int esplosaoNaveId = 0;
     private boolean refletir = false;
@@ -77,7 +77,7 @@ public class Objeto3d implements Serializable {
     private int textura;
     private int qtdtextura=1;
     float texture[];
-    private float[] verticesNormais;
+   // private float[] verticesNormais;
     private int[] textures = new int[2];
     public FloatBuffer[] verticeBuffer;
 
@@ -96,10 +96,10 @@ public class Objeto3d implements Serializable {
     private String tipo = "";
     private String nome = "";
     private String nomeRef = "";
-    private   int m_BumpmapID;
-    private   int m_MainTexture;
+   // private   int m_BumpmapID;
+   // private   int m_MainTexture;
 
-    static int level = 0;
+   // static int level = 0;
 
     public boolean m_UseMipmapping = true;
     private int dr = 0;
@@ -136,41 +136,41 @@ public class Objeto3d implements Serializable {
     private boolean mudarTamanho = false;
     private float estoraBolha = 100;
 
-    public boolean isAbatidoPelaNave() {
-        return abatidoPelaNave;
-    }
+//    public boolean isAbatidoPelaNave() {
+//        return abatidoPelaNave;
+//    }
 
     public void setAbatidoPelaNave(boolean abatidoPelaNave) {
         this.abatidoPelaNave = abatidoPelaNave;
     }
 
-    public Vetor3 getCores() {
-        return cores;
-    }
+//    public Vetor3 getCores() {
+//        return cores;
+//    }
 
     public void setCores(Vetor3 cores) {
         this.cores = cores;
     }
 
-    public int getTimeBtEspecial() {
-        return timeBtEspecial;
-    }
+//    public int getTimeBtEspecial() {
+//        return timeBtEspecial;
+//    }
 
     public void setTimeBtEspecial(int timeBtEspecial) {
         this.timeBtEspecial = timeBtEspecial;
     }
 
-    public Bitmap getTexturaBitimap() {
-        return texturaBitimap;
-    }
-
-    public void setTexturaBitimap(Bitmap texturaBitimap) {
-        this.texturaBitimap = texturaBitimap;
-    }
-
-    public boolean isReset() {
-        return reset;
-    }
+//    public Bitmap getTexturaBitimap() {
+//        return texturaBitimap;
+//    }
+//
+//    public void setTexturaBitimap(Bitmap texturaBitimap) {
+//        this.texturaBitimap = texturaBitimap;
+//    }
+//
+//    public boolean isReset() {
+//        return reset;
+//    }
 
     public boolean isAtivado() {
         return ativado;
@@ -246,25 +246,25 @@ public class Objeto3d implements Serializable {
         this.tipo = tipo;
     }
 
-    public boolean isVai() {
-        return vai;
-    }
-
-    public void setVai(boolean vai) {
-        this.vai = vai;
-    }
-
-    public boolean isAtirando() {
-        return atirando;
-    }
+//    public boolean isVai() {
+//        return vai;
+//    }
+//
+//    public void setVai(boolean vai) {
+//        this.vai = vai;
+//    }
+//
+//    public boolean isAtirando() {
+//        return atirando;
+//    }
 
     public void setAtirando(boolean atirando) {
         this.atirando = atirando;
     }
 
-    public boolean isImpacto() {
-        return impacto;
-    }
+//    public boolean isImpacto() {
+//        return impacto;
+//    }
 
     public boolean isEsplodiu() {
         return esplodiu;
@@ -285,18 +285,18 @@ public class Objeto3d implements Serializable {
     public void setImpacto(boolean impacto) {
         this.impacto = impacto;
     }
-
-    public boolean isRefletir() {
-        return refletir;
-    }
+//
+//    public boolean isRefletir() {
+//        return refletir;
+//    }
 
     public void setRefletir(boolean refletir) {
         this.refletir = refletir;
     }
 
-    public int getIndice() {
-        return indice;
-    }
+//    public int getIndice() {
+//        return indice;
+//    }
 
     public boolean isFenix() {
         return Fenix;
@@ -305,35 +305,35 @@ public class Objeto3d implements Serializable {
     public void setFenix(boolean fenix) {
         Fenix = fenix;
     }
+//
+//    public void setIndice(int indice) {
+//        this.indice = indice;
+//    }
 
-    public void setIndice(int indice) {
-        this.indice = indice;
-    }
+//    public void setCalculosDeImpacto() {
+//        calculosDeImpacto = new ArrayList<>();
+//        for (int i = 0; i < verticeBuffer[0].capacity() - 3; i += 3) {
+//
+//            float d1 = verticeBuffer[0].get(i + 2);
+//            float d2 = verticeBuffer[0].get(i + 1);
+//            float d3 = verticeBuffer[0].get(i);
+//
+//            float d = (float) ((d1 + d2 + d3));
+//
+//            calculosDeImpacto.add(d);
+//            Log.i("W", "d" + i + " =" + d);
+//
+//        }
+//
+//    }
 
-    public void setCalculosDeImpacto() {
-        calculosDeImpacto = new ArrayList<>();
-        for (int i = 0; i < verticeBuffer[0].capacity() - 3; i += 3) {
-
-            float d1 = verticeBuffer[0].get(i + 2);
-            float d2 = verticeBuffer[0].get(i + 1);
-            float d3 = verticeBuffer[0].get(i);
-
-            float d = (float) ((d1 + d2 + d3));
-
-            calculosDeImpacto.add(d);
-            Log.i("W", "d" + i + " =" + d);
-
-        }
-
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+//    public String getNome() {
+//        return nome;
+//    }
+//
+//    public void setNome(String nome) {
+//        this.nome = nome;
+//    }
 
     public int getId() {
         return id;
@@ -351,9 +351,9 @@ public class Objeto3d implements Serializable {
         this.dr = dr;
     }
 
-    public ArrayList<Boolean> isAtirar() {
-        return atirar;
-    }
+//    public ArrayList<Boolean> isAtirar() {
+//        return atirar;
+//    }
 
     public void setAtirar(int pos, boolean b) {
         this.atirar.set(pos, b);
@@ -432,41 +432,41 @@ public class Objeto3d implements Serializable {
         this.velocidadeHorizontal = velocidadeHorizontal;
     }
 
-    public float getEscudo() {
-        return escudo;
-    }
-
-    public void setEscudo(float escudo) {
-        this.escudo = escudo;
-    }
+//    public float getEscudo() {
+//        return escudo;
+//    }
+//
+//    public void setEscudo(float escudo) {
+//        this.escudo = escudo;
+//    }
 
     public boolean isTroca() {
         return this.troca;
     }
-
-    public void setTroca(boolean troca) {
-        this.troca = troca;
-    }
-
-    public float getEstoraBolha() {
-        return this.estoraBolha;
-    }
-
-    public void setEstoraBolha(float estoraBolha) {
-        this.estoraBolha = estoraBolha;
-    }
-
-    public int getVisita() {
-        return this.visita;
-    }
-
-    public void setVisita(int visita) {
-        this.visita = visita;
-    }
-
-    public float getPositionXCorrent() {
-        return this.positionXCorrent;
-    }
+//
+//    public void setTroca(boolean troca) {
+//        this.troca = troca;
+//    }
+//
+//    public float getEstoraBolha() {
+//        return this.estoraBolha;
+//    }
+//
+//    public void setEstoraBolha(float estoraBolha) {
+//        this.estoraBolha = estoraBolha;
+//    }
+//
+//    public int getVisita() {
+//        return this.visita;
+//    }
+//
+//    public void setVisita(int visita) {
+//        this.visita = visita;
+//    }
+//
+//    public float getPositionXCorrent() {
+//        return this.positionXCorrent;
+//    }
 
     public void setPositionXCorrent(float positionXCorrent) {
         this.positionXCorrent = positionXCorrent;
@@ -502,47 +502,47 @@ public class Objeto3d implements Serializable {
         this.time = time;
     }
 
-    public LeitorDeObj getLeitorDeObj() {
-        return this.leitorDeObj;
-    }
+//    public LeitorDeObj getLeitorDeObj() {
+//        return this.leitorDeObj;
+//    }
+//
+//    public void setLeitorDeObj(LeitorDeObj leitorDeObj) {
+//        this.leitorDeObj = leitorDeObj;
+//    }
+//
+//    public float getPositionAnteriorZCorrent() {
+//        return this.positionAnteriorZCorrent;
+//    }
+//
+//    public void setPositionAnteriorZCorrent(float positionAnteriorZCorrent) {
+//        this.positionAnteriorZCorrent = positionAnteriorZCorrent;
+//    }
+//
+//    public int getPositionAnteriorZ() {
+//        return this.positionAnteriorZ;
+//    }
+//
+//    public void setPositionAnteriorZ(int positionAnteriorZ) {
+//        this.positionAnteriorZ = positionAnteriorZ;
+//    }
+//
+//
+//    public boolean isPause() {
+//        return this.pause;
+//    }
 
-    public void setLeitorDeObj(LeitorDeObj leitorDeObj) {
-        this.leitorDeObj = leitorDeObj;
-    }
-
-    public float getPositionAnteriorZCorrent() {
-        return this.positionAnteriorZCorrent;
-    }
-
-    public void setPositionAnteriorZCorrent(float positionAnteriorZCorrent) {
-        this.positionAnteriorZCorrent = positionAnteriorZCorrent;
-    }
-
-    public int getPositionAnteriorZ() {
-        return this.positionAnteriorZ;
-    }
-
-    public void setPositionAnteriorZ(int positionAnteriorZ) {
-        this.positionAnteriorZ = positionAnteriorZ;
-    }
-
-
-    public boolean isPause() {
-        return this.pause;
-    }
-
-    public void setPause(boolean pause) {
-        this.pause = pause;
-    }
-
-    public float getPositionYdoObj() {
-        return this.positionYdoObj;
-    }
-
-    public void setPositionYdoObj(float positionYdoObj) {
-        this.positionYdoObj = positionYdoObj;
-    }
-
+//    public void setPause(boolean pause) {
+//        this.pause = pause;
+//    }
+//
+//    public float getPositionYdoObj() {
+//        return this.positionYdoObj;
+//    }
+//
+//    public void setPositionYdoObj(float positionYdoObj) {
+//        this.positionYdoObj = positionYdoObj;
+//    }
+//
 
     public void setMover(String mover) {
         this.mover = mover;
@@ -556,18 +556,18 @@ public class Objeto3d implements Serializable {
     public String getPassou() {
         return this.passou;
     }
-
-    public int getToque() {
-        return this.toque;
-    }
-
-    public void setToque(int toque) {
-        this.toque = toque;
-    }
-
-    public void setPassou(String passou) {
-        this.passou = passou;
-    }
+//
+//    public int getToque() {
+//        return this.toque;
+//    }
+//
+//    public void setToque(int toque) {
+//        this.toque = toque;
+//    }
+//
+//    public void setPassou(String passou) {
+//        this.passou = passou;
+//    }
 
 
     public String getValor() {
@@ -578,21 +578,21 @@ public class Objeto3d implements Serializable {
         this.valor = valor;
     }
 
-    public void setTextura(int textura) {
-        this.textura = textura;
-    }
-
-    public int getTextura() {
-        return textura;
-    }
+//    public void setTextura(int textura) {
+//        this.textura = textura;
+//    }
+//
+//    public int getTextura() {
+//        return textura;
+//    }
 
     public Vetor3 getTamanho() {
         return this.tamanho;
     }
 
-    public void setTamanho(Vetor3 tamanho) {
-        this.tamanho = tamanho;
-    }
+//    public void setTamanho(Vetor3 tamanho) {
+//        this.tamanho = tamanho;
+//    }
 
 
     public Vetor3 getGiroPosition() {
@@ -608,19 +608,19 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public double distanciaP(Objeto3d v1, Objeto3d v2) {
-
-        double d = Math.sqrt(Math.pow(v1.getPosition().x - (v2.getPosition().x), 2)
-                + Math.pow(v1.getPosition().y - (v2.getPosition().z), 2)
-                + Math.pow(v1.getPosition().z - (v2.getPosition().y), 2));
-        if (d < 10) {
-            d = 1;
-        } else {
-            d = 0;
-        }
-        return d;
-
-    }
+//    public double distanciaP(Objeto3d v1, Objeto3d v2) {
+//
+//        double d = Math.sqrt(Math.pow(v1.getPosition().x - (v2.getPosition().x), 2)
+//                + Math.pow(v1.getPosition().y - (v2.getPosition().z), 2)
+//                + Math.pow(v1.getPosition().z - (v2.getPosition().y), 2));
+//        if (d < 10) {
+//            d = 1;
+//        } else {
+//            d = 0;
+//        }
+//        return d;
+//
+//    }
 
     public void vezes(float x) {
         for (FloatBuffer vrt : verticeBuffer)
@@ -634,79 +634,79 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public void divide(float x) {
-        for (FloatBuffer vrt : verticeBuffer)
-            for (int i = 0; i < vrt.capacity(); i++) {
-                //  if (distanciaP(new Vetor3(dx, dy, dz), new Vetor3(verticeBuffer[0].get(i), verticeBuffer[0].get(i + 4), verticeBuffer[0].get(i + 8))) < 10) {
-                vrt.put(i, vrt.get(i) / x);
+//    public void divide(float x) {
+//        for (FloatBuffer vrt : verticeBuffer)
+//            for (int i = 0; i < vrt.capacity(); i++) {
+//                //  if (distanciaP(new Vetor3(dx, dy, dz), new Vetor3(verticeBuffer[0].get(i), verticeBuffer[0].get(i + 4), verticeBuffer[0].get(i + 8))) < 10) {
+//                vrt.put(i, vrt.get(i) / x);
+//
+//
+//            }
+//
+//    }
 
 
-            }
+//    public ArrayList<Float> maiorValor(ArrayList<Float> lista) {
+//        float aux = 0;
+//        int inicio = 1;
+//        for (int i = 0; i < lista.size() - 1; i++) {
+//
+//            for (int j = inicio; j < lista.size(); j++) {
+//                if (lista.get(i) > lista.get(j)) {
+//                    aux = lista.get(i);
+//                    lista.set(i, lista.get(j));
+//                    lista.set(j, aux);
+//
+//                }
+//
+//            }
+//            inicio++;
+//
+//        }
+//        return lista;
+//    }
 
-    }
-
-
-    public ArrayList<Float> maiorValor(ArrayList<Float> lista) {
-        float aux = 0;
-        int inicio = 1;
-        for (int i = 0; i < lista.size() - 1; i++) {
-
-            for (int j = inicio; j < lista.size(); j++) {
-                if (lista.get(i) > lista.get(j)) {
-                    aux = lista.get(i);
-                    lista.set(i, lista.get(j));
-                    lista.set(j, aux);
-
-                }
-
-            }
-            inicio++;
-
-        }
-        return lista;
-    }
-
-    public float testImpactorrrr(Objeto3d obj2) {
-        float dz = obj2.getPosition().z;
-        float dy = obj2.getPosition().y;
-        float dx = obj2.getPosition().x;
-        float mudar = 10000;
-
-        for (int i = 0; i < verticeBuffer[0].capacity() - 9; i += 9) {
-
-            ArrayList<Float> pz = new ArrayList<>();
-            pz.add(verticeBuffer[0].get(i));
-            pz.add(verticeBuffer[0].get(i + 1));
-            pz.add(verticeBuffer[0].get(i + 2));
-
-            pz = maiorValor(pz);
-            ArrayList<Float> py = new ArrayList<>();
-            py.add(verticeBuffer[0].get(i + 3));
-            py.add(verticeBuffer[0].get(i + 4));
-            py.add(verticeBuffer[0].get(i + 5));
-            py = maiorValor(py);
-
-            ArrayList<Float> px = new ArrayList<>();
-            px.add(verticeBuffer[0].get(i + 6));
-            px.add(verticeBuffer[0].get(i + 7));
-            px.add(verticeBuffer[0].get(i + 8));
-            px = maiorValor(px);
-
-            boolean vz, vy, vx;
-            vx = dx < px.get(2) && dx > px.get(0) ? true : false;
-            vy = dy < py.get(2) && dy > py.get(0) ? true : false;
-            vz = dz < pz.get(2) && dz > pz.get(0) ? true : false;
-
-            if (vz && vx && vy) {
-                mudar = 0;
-                break;
-            } else {
-                mudar = 10000;
-            }
-        }
-
-        return mudar;
-    }
+//    public float testImpactorrrr(Objeto3d obj2) {
+//        float dz = obj2.getPosition().z;
+//        float dy = obj2.getPosition().y;
+//        float dx = obj2.getPosition().x;
+//        float mudar = 10000;
+//
+//        for (int i = 0; i < verticeBuffer[0].capacity() - 9; i += 9) {
+//
+//            ArrayList<Float> pz = new ArrayList<>();
+//            pz.add(verticeBuffer[0].get(i));
+//            pz.add(verticeBuffer[0].get(i + 1));
+//            pz.add(verticeBuffer[0].get(i + 2));
+//
+//            pz = maiorValor(pz);
+//            ArrayList<Float> py = new ArrayList<>();
+//            py.add(verticeBuffer[0].get(i + 3));
+//            py.add(verticeBuffer[0].get(i + 4));
+//            py.add(verticeBuffer[0].get(i + 5));
+//            py = maiorValor(py);
+//
+//            ArrayList<Float> px = new ArrayList<>();
+//            px.add(verticeBuffer[0].get(i + 6));
+//            px.add(verticeBuffer[0].get(i + 7));
+//            px.add(verticeBuffer[0].get(i + 8));
+//            px = maiorValor(px);
+//
+//            boolean vz, vy, vx;
+//            vx = dx < px.get(2) && dx > px.get(0) ? true : false;
+//            vy = dy < py.get(2) && dy > py.get(0) ? true : false;
+//            vz = dz < pz.get(2) && dz > pz.get(0) ? true : false;
+//
+//            if (vz && vx && vy) {
+//                mudar = 0;
+//                break;
+//            } else {
+//                mudar = 10000;
+//            }
+//        }
+//
+//        return mudar;
+//    }
 
     public float testImpacto(Objeto3d obj2) {
         float dz = obj2.getPosition().z;
@@ -748,7 +748,7 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public ArrayList<Objeto3d> criarTiros(Objeto3d obj,int norm, int qtd, AssetManager asset, String objFile, int texturaObj, Resources res) throws IOException {
+    public ArrayList<Objeto3d> criarTiros(Objeto3d obj, int qtd, AssetManager asset, String objFile, int texturaObj, Resources res) throws IOException {
         ///CARREGA OS ARQUIS 3D DO ALFABETO
         ArrayList<Objeto3d> tiroArray;
          tiroArray = new ArrayList<>();
@@ -759,7 +759,7 @@ public class Objeto3d implements Serializable {
         float z = obj.getTamanho().getZ();
         for (int t = 0; t < qtd; t++) {
 
-            tiroArray.add(new Objeto3d(context, norm,asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
+            tiroArray.add(new Objeto3d(context,  asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
              tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
             tiroArray.get(t).setOrigem(obj.getValor());
@@ -896,62 +896,62 @@ public class Objeto3d implements Serializable {
     }
 
 
-    public void atirandoC(Objeto3d alvo, float velocidade) {
-        if (!reset) {
-            for (int i = 0; i < getTiroNave().size(); i++) {
-                if (this.atirando) {
-                    setAtirar(i, true);
-                }
-
-                if (atirar.get(i) == false) {
-                    getTiroNave().get(i).setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
-                    float distanciaZFI = (alvo.getPosition().z - getTiroNave().get(i).getPosition().z) / velocidade;
-                    float distanciaXFI = alvo.getPosition().x - getTiroNave().get(i).getPosition().x;
-                    getTiroNave().get(i).setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
-                    if (alvo.getPosition().x >= getTiroNave().get(i).getPosition().x) {
-                        getTiroNave().get(i).setPositionXCorrent(1);
-                    } else {
-                        getTiroNave().get(i).setPositionXCorrent(0);
-                    }
-                    pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
-                    getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
-
-
-                } else {
-
-                    setTiroTime(i, tiroTime[i] + 1);
-                    getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
-                    if (getTiroNave().get(i).getVelocidadeHorizontal() < velocidade) {
-                        getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
-                    }
-                    if (tiroTime[i] >= 700) {
-                        setAtirar(i, false);
-                        setTiroTime(i, 0);
-                    }
-
-
-                }
-
-                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
-                    getTiroNave().get(i).setDisparando(false);
-                }
-            }
-
-        } else {
-            for (int i = 0; i < getTiroNave().size(); i++) {
-                getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
-                getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
-                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
-                    getTiroNave().get(i).setDisparando(false);
-                }
-            }
-            reset = false;
-        }
-
-    }
-
-
-
+//    public void atirandoC(Objeto3d alvo, float velocidade) {
+//        if (!reset) {
+//            for (int i = 0; i < getTiroNave().size(); i++) {
+//                if (this.atirando) {
+//                    setAtirar(i, true);
+//                }
+//
+//                if (atirar.get(i) == false) {
+//                    getTiroNave().get(i).setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+//                    float distanciaZFI = (alvo.getPosition().z - getTiroNave().get(i).getPosition().z) / velocidade;
+//                    float distanciaXFI = alvo.getPosition().x - getTiroNave().get(i).getPosition().x;
+//                    getTiroNave().get(i).setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
+//                    if (alvo.getPosition().x >= getTiroNave().get(i).getPosition().x) {
+//                        getTiroNave().get(i).setPositionXCorrent(1);
+//                    } else {
+//                        getTiroNave().get(i).setPositionXCorrent(0);
+//                    }
+//                    pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+//                    getTiroNave().get(i).setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+//
+//
+//                } else {
+//
+//                    setTiroTime(i, tiroTime[i] + 1);
+//                    getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
+//                    if (getTiroNave().get(i).getVelocidadeHorizontal() < velocidade) {
+//                        getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x + getTiroNave().get(i).getVelocidadeHorizontal());
+//                    }
+//                    if (tiroTime[i] >= 700) {
+//                        setAtirar(i, false);
+//                        setTiroTime(i, 0);
+//                    }
+//
+//
+//                }
+//
+//                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+//                    getTiroNave().get(i).setDisparando(false);
+//                }
+//            }
+//
+//        } else {
+//            for (int i = 0; i < getTiroNave().size(); i++) {
+//                getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + 1000f);
+//                getTiroNave().get(i).setGiroPosition(new Vetor3(0f, 0f, 0f));
+//                if (getTiroNave().get(i).getPosition().z < -68f ||getTiroNave().get(i).getPosition().z > -58f || getTiroNave().get(i).getPosition().x > 2f || getTiroNave().get(i).getPosition().x < -2f) {
+//                    getTiroNave().get(i).setDisparando(false);
+//                }
+//            }
+//            reset = false;
+//        }
+//
+//    }
+//
+//
+//
 
 
     public void atirandoUm(Vetor3 alvo,Vetor3 origem, float velocidade) {
@@ -987,36 +987,36 @@ public class Objeto3d implements Serializable {
 
 
 
-    public void atirandoUmGiro(Vetor3 alvo,Vetor3 origem, float velocidade, boolean retorno) {
-
-        setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
-        float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
-        float distanciaXFI = alvo.getPosition().x - getPosition().x;
-        setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
-        if (alvo.getPosition().x >= getPosition().x) {
-            setPositionXCorrent(1);
-        } else {
-            setPositionXCorrent(0);
-        }
-        pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
-        setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
-
-
-        getPosition().setZ(getPosition().z + velocidade);
-        if (getVelocidadeHorizontal() < velocidade) {
-            getPosition().setX(getPosition().x + getVelocidadeHorizontal());
-        }
-
-
-        if (getPosition().z >= alvo.z ||getPosition().z < -70f || retorno)  {
-
-            setPosition(origem);
-            setGiroPosition(new Vetor3(0f, 0f, 0f));
-           this.retorno=true;
-
-        }
-
-    }
+//    public void atirandoUmGiro(Vetor3 alvo,Vetor3 origem, float velocidade, boolean retorno) {
+//
+//        setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+//        float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
+//        float distanciaXFI = alvo.getPosition().x - getPosition().x;
+//        setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
+//        if (alvo.getPosition().x >= getPosition().x) {
+//            setPositionXCorrent(1);
+//        } else {
+//            setPositionXCorrent(0);
+//        }
+//        pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+//        setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
+//
+//
+//        getPosition().setZ(getPosition().z + velocidade);
+//        if (getVelocidadeHorizontal() < velocidade) {
+//            getPosition().setX(getPosition().x + getVelocidadeHorizontal());
+//        }
+//
+//
+//        if (getPosition().z >= alvo.z ||getPosition().z < -70f || retorno)  {
+//
+//            setPosition(origem);
+//            setGiroPosition(new Vetor3(0f, 0f, 0f));
+//           this.retorno=true;
+//
+//        }
+//
+//    }
 
 
     public void setPosition(Vetor3 position) {
@@ -1131,33 +1131,33 @@ public class Objeto3d implements Serializable {
                    (asset="local do arquivo.obj",obj="nome do arquivo.obj",textura="imagem de pintura do objeto"
                     */
 
-    public Objeto3d() {
+//    public Objeto3d() {
+//
+//    }
+//
+//    public void descarregar() {
+//
+//
+//        verticeBuffer = null;
+//        NormaisBuffer = null;
+//        indiceBuffer = null;
+//        indiceNormaisBuffer = null;
+//
+//
+//    }
 
-    }
-
-    public void descarregar() {
-
-
-        verticeBuffer = null;
-        NormaisBuffer = null;
-        indiceBuffer = null;
-        indiceNormaisBuffer = null;
-
-
-    }
-
-    public Objeto3d( Context context,int res,AssetManager asset, String obj, int textura, Vetor3 tamanho, String nomeRef) throws IOException {
+    public Objeto3d( Context context, AssetManager asset, String obj, int textura, Vetor3 tamanho, String nomeRef) throws IOException {
         leitorDeObj = new LeitorDeObj(asset, obj);
         this.m_UseMipmapping=true;
-        this.normalMap=res;
+        //this.normalMap=res;
         quadrosDeanimacao = leitorDeObj.quadrosDeanimacao;
         this.nomeRef = nomeRef;
       this.textura = textura;
         this.tamanho = tamanho;
         this.context=context;
         m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
-        this.m_BumpmapID = createTexture(context, this.normalMap, 1);
-       this.m_MainTexture = createTexture( context, this.textura,0);
+      //  this.m_BumpmapID = createTexture(context, this.normalMap, 1);
+      // this.m_MainTexture = createTexture( context, this.textura,0);
         if (leitorDeObj.texturaT != null) {
             qtdtextura=leitorDeObj.getTesturas();
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
@@ -1174,17 +1174,17 @@ public class Objeto3d implements Serializable {
 
 
 
-    public Objeto3d( Context context,int res,AssetManager asset, String obj, Bitmap texturaBitimap, Vetor3 tamanho, String nomeRef) throws IOException {
+    public Objeto3d( Context context, AssetManager asset, String obj, Bitmap texturaBitimap, Vetor3 tamanho, String nomeRef) throws IOException {
         leitorDeObj = new LeitorDeObj(asset, obj);
         this.m_UseMipmapping=true;
-        this.normalMap=res;
+        //this.normalMap=res;
         quadrosDeanimacao = leitorDeObj.quadrosDeanimacao;
         this.nomeRef = nomeRef;
         this.texturaBitimap = texturaBitimap;
         this.tamanho = tamanho;
         this.context=context;
         m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
-         createTexture(context, this.normalMap, 1);
+       //  createTexture(context, this.normalMap, 1);
          createTexture2(texturaBitimap,0);
         if (leitorDeObj.texturaT != null) {
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
@@ -1212,16 +1212,16 @@ public class Objeto3d implements Serializable {
     boolean inicio = true;
     GL11 gl2;
 
-    public void giroTotal(GL11 gl, float valor, int x, int y, int z) {
-        gl.glPushMatrix();
-
-        gl.glRotatef(valor, x, 0, 0);
-        gl.glRotatef(valor, 0, y, 0);
-        gl.glRotatef(valor, 0, 0, z);
-
-        gl.glPopMatrix();
-
-    }
+//    public void giroTotal(GL11 gl, float valor, int x, int y, int z) {
+//        gl.glPushMatrix();
+//
+//        gl.glRotatef(valor, x, 0, 0);
+//        gl.glRotatef(valor, 0, y, 0);
+//        gl.glRotatef(valor, 0, 0, z);
+//
+//        gl.glPopMatrix();
+//
+//    }
 
     public void draw(GL11 gl) {
         try{
@@ -1474,49 +1474,49 @@ public class Objeto3d implements Serializable {
 
         }
     }
-    public void loadGLTextureB() {
-        if (texturaBuffer != null) {
-            textures[0] = 0;
-            texturaBuffer.clear();
-            texturaBuffer.put(texture);
-            texturaBuffer.position(0);
-            // loading texture
-            //bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.casco);
+//    public void loadGLTextureB() {
+//        if (texturaBuffer != null) {
+//            textures[0] = 0;
+//            texturaBuffer.clear();
+//            texturaBuffer.put(texture);
+//            texturaBuffer.position(0);
+//            // loading texture
+//            //bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.casco);
+//
+//            // generate one texture pointer
+//            GLES20.glGenTextures(1, textures, 0);
+//            // ...and bind it to our array
+//
+//            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+//            // Create Nearest Filtered Texture
+//
+//            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+//            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+//
+//            // Use the Android GLUtils to specify a two-dimensional texture image from our bitmap
+//            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, texturaBitimap, 0);
+//            //Different possible texture parameters, e.positionY. GL10.GL_CLAMP_TO_EDGE
+//            // gl2.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_REPEAT);
+//
+//            // Use Android GLUtils to specify a two-dimensional texture image from our bitmap
+//
+//
+//        }
+//    }
+//
+//    public double grauDeGiro(Objeto3d alvo) {
+//        float distanciaX=alvo.getPosition().x-getPosition().x;
+//        float distanciaZ=alvo.getPosition().z-getPosition().z;
+//        float hipotenuza = (float)Math.sqrt (Math.pow(distanciaX,2)+Math.pow(distanciaZ,2));
+//        float seno=distanciaX/hipotenuza;
+//        double angulo =(seno*180)/ Math.PI;
+//        return angulo;
+//    }
 
-            // generate one texture pointer
-            GLES20.glGenTextures(1, textures, 0);
-            // ...and bind it to our array
 
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
-            // Create Nearest Filtered Texture
-
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-
-            // Use the Android GLUtils to specify a two-dimensional texture image from our bitmap
-            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, texturaBitimap, 0);
-            //Different possible texture parameters, e.positionY. GL10.GL_CLAMP_TO_EDGE
-            // gl2.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_REPEAT);
-
-            // Use Android GLUtils to specify a two-dimensional texture image from our bitmap
-
-
-        }
-    }
-
-    public double grauDeGiro(Objeto3d alvo) {
-        float distanciaX=alvo.getPosition().x-getPosition().x;
-        float distanciaZ=alvo.getPosition().z-getPosition().z;
-        float hipotenuza = (float)Math.sqrt (Math.pow(distanciaX,2)+Math.pow(distanciaZ,2));
-        float seno=distanciaX/hipotenuza;
-        double angulo =(seno*180)/ Math.PI;
-        return angulo;
-    }
-
-
-    public void  limpar(){
-        verticeBuffer = null;
-        NormaisBuffer = null;
-        texturaBuffer = null;
-    }
+//    public void  limpar(){
+//        verticeBuffer = null;
+//        NormaisBuffer = null;
+//        texturaBuffer = null;
+//    }
 }

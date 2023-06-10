@@ -4,4 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wao.jogodetabuleiro1.com.wao.fenix.MainActivity"/>
+    tools:context="com.wao.jogodetabuleiro1.com.wao.fenix.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frameF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

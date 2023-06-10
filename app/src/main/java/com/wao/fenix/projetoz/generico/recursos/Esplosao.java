@@ -20,20 +20,20 @@ public class Esplosao {
         return splosaoArrayNave;
     }
 
-    public int getEsplosaoNaveId() {
-        return esplosaoNaveId;
-    }
-
-    public void setEsplosaoNaveId(int esplosaoNaveId) {
-        this.esplosaoNaveId = esplosaoNaveId;
-    }
+//    public int getEsplosaoNaveId() {
+//        return esplosaoNaveId;
+//    }
+//
+//    public void setEsplosaoNaveId(int esplosaoNaveId) {
+//        this.esplosaoNaveId = esplosaoNaveId;
+//    }
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+//    public void setNome(String nome) {
+//        this.nome = nome;
+//    }
 
     public int getId() {
         return id;
@@ -51,11 +51,11 @@ public class Esplosao {
         float x=obj.getTamanho().getX();
         float y=obj.getTamanho().getY();
         float z=obj.getTamanho().getZ();
-        splosaoArrayNave.add(new Objeto3d(context, R.drawable.esplosaonorm,asset, "sp.obj",R.drawable.espp, new Vetor3(x,y,z),"esp"));
+        splosaoArrayNave.add(new Objeto3d(context,  asset, "v.obj",R.drawable.espp, new Vetor3(x,y,z),"esp"));
 
         for (int p = 0; p < splosaoArrayNave.size(); p++) {
             splosaoArrayNave.get(p).setMudarTamanho(true);
-         splosaoArrayNave.get(p).vezes(xx);
+         splosaoArrayNave.get(p).vezes(xx/2);
             splosaoArrayNave.get(p).setTransparente(true);
             splosaoArrayNave.get(p).setRefletir(true);
             splosaoArrayNave.get(p).loadGLTexture();

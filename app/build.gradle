@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.wao.fenix"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 31
         versionCode 3
         versionName "1.0.0.1"

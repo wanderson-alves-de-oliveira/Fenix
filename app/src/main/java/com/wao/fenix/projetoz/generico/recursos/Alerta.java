@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,9 +24,7 @@ public class Alerta extends AppCompatDialog {
     private AlertDialog alerta;
      private Button btSim;
     private ImageButton btNao;
-    private ImageView lifee;
-    private ImageView killall;
-    private ImageView complit;
+
     private  final TextView mensagem ;
     Context context;
     private LayoutInflater li;
@@ -39,9 +36,6 @@ public class Alerta extends AppCompatDialog {
          view = li.inflate( R.layout.caixa_nova, null );
         btSim = view.findViewById( R.id.btPositivo );
         btNao = view.findViewById( R.id.btPararAlarme);
-        lifee = view.findViewById( R.id.imfullLive);
-        killall = view.findViewById( R.id.imkillall);
-        complit = view.findViewById( R.id.imcompletlevel);
 
         mensagem = view.findViewById( R.id.tvMensagem );
 
@@ -65,13 +59,6 @@ public class Alerta extends AppCompatDialog {
         }
         Drawable drawable = ContextCompat.getDrawable(context,R.drawable.starfull);
 
-        if(completo)
-              complit.setBackground(drawable);
-
-        if(killAll)
-            killall.setBackground(drawable);
-        if(life)
-            lifee.setBackground(drawable);
 
         AlertDialog.Builder builder = new AlertDialog.Builder( view.getContext() );
 
