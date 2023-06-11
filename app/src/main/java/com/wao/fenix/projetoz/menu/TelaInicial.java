@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.opengl.GLES20;
@@ -30,7 +29,6 @@ import com.wao.fenix.projetoz.dao.BDRecompensa;
 import com.wao.fenix.projetoz.generico.recursos.Alerta;
 import com.wao.fenix.projetoz.generico.recursos.ConvertBitimap;
 import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
-import com.wao.fenix.projetoz.generico.recursos.SelecteControll;
 import com.wao.fenix.projetoz.generico.recursos.Vetor3;
 import com.wao.fenix.projetoz.modelo.EstatusFase;
 import com.wao.fenix.projetoz.modelo.Nave;
@@ -989,7 +987,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 float z = nivelEscudoP.get(0).getPosition().z;
 
                 //   nivelEscudoP.get(0).setPosition(new Vetor3(x,y,z-velocidade));
-                if (distanciaX * -1 > 0) {
+                if (fasecarregada==2) {
                     painelMode.get(0).draw((GL11) gl2);
                     if (tipoDeCard != 0)
                         painelMode.get(tipoDeCard == -1 ? 1 : 2).draw((GL11) gl2);
@@ -1015,6 +1013,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     nivelIma.get(nivelImaR).draw((GL11) gl2);
 
+                }else if (fasecarregada==3) {
+                    this.btback.draw((GL11) gl2);
+                    bolhaRef.draw((GL11) gl2);
                 }
 
             } else {
@@ -1048,9 +1049,13 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void moverTela() {
+
+
         if (fasecarregada == 2) {
             distanciaX = -5;
             Fenixt.setPosition(new Vetor3(4.84f, 0.34f, -0.78f));
+            btback.setPosition(new Vetor3(4.975f, -0.092f, -0.089f));
+
             if (!carregouValores) {
                 texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
                 valorAdiquiridoObj.LoadTexture(texturaValores);
@@ -1058,7 +1063,23 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
             if (barra != null)
                 barra.getPosition().setX(distanciaX * -1);
-        } else {
+        }else if (fasecarregada == 3) {
+
+            distanciaX = 5f;
+            Fenixt.setPosition(new Vetor3(-5.01f, -0.034f, -0.78f));
+            btback.setPosition(new Vetor3(-5.023f, -0.092f, -0.089f));
+
+
+            if (!carregouValores) {
+                texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
+                valorAdiquiridoObj.LoadTexture(texturaValores);
+                carregouValores = true;
+            }
+            if (barra != null)
+                barra.getPosition().setX(distanciaX * -1);
+
+               }
+        else {
             distanciaX = 0;
             if (posinicialF != null)
                 Fenixt.setPosition(posinicialF);
@@ -1500,7 +1521,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         boolean sel = false;
         //    for (Objeto3d obj : bolhas) {
         //  double start = calculoarDistancia(obj, bolhaRef.getPosition());
-        if (/*start <= 0.025 || */iniciaraProxima && distanciaX == 0) {
+        if (/*start <= 0.025 || */iniciaraProxima && fasecarregada == 0) {
             sel = true;
             bolhaRef.getPosition().y = -100;
             bolhaRef.getPosition().x = -100;
@@ -1585,65 +1606,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         double option = calculoarDistancia(btoptions, bolhaRef.getPosition());
 
         if (option <= 0.015 && !sel) {
-            SelecteControll selecteControll = new SelecteControll(context);
-            selecteControll.enviarAlerta().show();
-
-            if (comMusica) {
-                selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#127127"));
-
-            } else {
-                selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#999999"));
-
-            }
-            if (comSons) {
-                selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#127127"));
-
-            } else {
-                selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#999999"));
-
-            }
-
-            selecteControll.getBtMusic().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
 
-                    if (comMusica) {
-                        selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#999999"));
-                        comMusica = false;
-                        if (musica.isPlaying())
-                            musica.pause();
-                    } else {
-                        selecteControll.getBtMusic().getBackground().setTint(Color.parseColor("#127127"));
-                        comMusica = true;
-                        if (!musica.isPlaying())
-                            musica.start();
-                    }
-
-                }
-            });
-
-            selecteControll.getBtSon().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (comSons) {
-                        selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#999999"));
-                        comSons = false;
-                    } else {
-                        selecteControll.getBtSon().getBackground().setTint(Color.parseColor("#127127"));
-                        comSons = true;
-                    }
-
-                }
-            });
-
-            selecteControll.getBtfechar().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    selecteControll.fechar();
-                }
-            });
+            fasecarregada = 3;
+            tipoDeCard = 0;
 
 
         }
@@ -1652,11 +1618,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
         if (upgrade <= 0.02f) {
 
-
             fasecarregada = 2;
             tipoDeCard = 0;
-//            }
-
         }
 
         double back = calculoarDistancia(btback, bolhaRef.getPosition());
@@ -1835,7 +1798,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     public boolean onTouch(View view, MotionEvent event) {
 
         if (liberado) {
-            if (fasecarregada == 0 || fasecarregada == 2) {
+            if (fasecarregada == 0 || fasecarregada == 2 || fasecarregada == 3) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -1854,7 +1817,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             validarToque(event);
                             //       iniciarTelaDeSelecao = true;
                         }
-                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.3 && event.getX() < this.wTela * 0.6) {
+                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.34 && event.getX() < this.wTela * 0.54) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             recolher = 1;
                             //     iniciarTelaDeSelecao = true;
@@ -1862,12 +1825,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             iniciaraProxima = true;
                             validarToque(event);
                         }
-                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.6) {
+                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.54) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             recolher = 3;
                             validarToque(event);
                         }
-                    } else if ((distanciaX * -1) > 0 && event.getX() > this.wTela * 0.4) {
+                    } else if (fasecarregada==2 && event.getX() > this.wTela * 0.4) {
                         if (event.getY() > h * 0.3 && event.getY() < h * 0.4) {
                           //  Toast.makeText(context, "40", Toast.LENGTH_SHORT).show();
                             loja(1);

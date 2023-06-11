@@ -6970,12 +6970,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         return true;
     }
 
-//
-//    public interface Factory {
-//
-//        @NonNull
-//        <T extends TartarugaCorrida> T create(@NonNull Class<T> modelClass);
-//    }
+
 
 
 }

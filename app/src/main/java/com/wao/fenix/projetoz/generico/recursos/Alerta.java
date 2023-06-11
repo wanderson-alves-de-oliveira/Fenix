@@ -65,7 +65,7 @@ public class Alerta extends AppCompatDialog {
         builder.setView( view );
      //   builder.setCustomTitle( texto );
         alerta = builder.create();
-
+        alerta.setCanceledOnTouchOutside(false);
         return alerta;
     }
 
