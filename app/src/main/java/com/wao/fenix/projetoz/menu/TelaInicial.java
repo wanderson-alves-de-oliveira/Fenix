@@ -84,7 +84,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private Objeto3d painel_a;
     private Objeto3d painel_b;
     private Objeto3d painel_c;
-    private Objeto3d bolhaRef2;
 
     private int tipoDeCard = 0;
 
@@ -222,6 +221,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         MediaPlayer m4 = MediaPlayer.create(context, R.raw.musics);
         m4.setLooping(true);
         this.musicaFase.add(m4);
+        this.musicaFase.add(m3);
 
         this.musicaBossFase = MediaPlayer.create(context, R.raw.musice);
         this.musicaBossFase.setLooping(true);
@@ -324,14 +324,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 bolhaRef.setPosition(new Vetor3(-100, -0.08f, -0.1f));
 
 
-                bolhaRef2 = new Objeto3d(context, asset, "texto.obj", R.drawable.p100, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                bolhaRef2.setValor(String.valueOf(0));
-                bolhaRef2.setGiroPosition(new Vetor3(90, 0f, 0f));
-                bolhaRef2.setTransparente(true);
-                bolhaRef2.vezes(0.06f);
-                bolhaRef2.setPosition(new Vetor3(5.017f, -0.032f, -0.089f));
-                bolhaRef2.setNomeRef("nivelT");
-                bolhaRef2.loadGLTexture();
+
 
                 tut.carga = 1;
                 tut.carregar();
@@ -1021,7 +1014,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nivelEscudoP.get(nivelEscudoR == 4 ? 1 : 0).draw((GL11) gl2);
 
                     nivelIma.get(nivelImaR).draw((GL11) gl2);
-                    bolhaRef2.draw((GL11) gl2);
 
                 }
 
@@ -1030,6 +1022,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     bolhaRef.setPosition(new Vetor3(0, -0.02f, -0.1f));
                     //   bolhaRef.setGiroPosition(new Vetor3(95, bolhaRef.getGiroPosition().y + 8, 0));
                     bolhaRef.draw((GL11) gl2);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
@@ -1135,6 +1132,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 break;
             case 3:
+
                 if (this.musica.isPlaying()) {
                     this.musica.pause();
                     musicaAnterior = -2;
@@ -1172,6 +1170,27 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 }
                 musicaAtual = 4;
+
+                break;
+
+            case 5:
+                if (this.musica.isPlaying()) {
+                    this.musica.pause();
+                    musicaAnterior = -2;
+
+                } else if (this.musicaBossFase.isPlaying()) {
+                    this.musicaBossFase.pause();
+                    musicaAnterior = -1;
+
+                }
+
+                if (musicaAnterior == -1) {
+                    regularSontul(this.musicaBossFase, this.musicaFase.get(5), mboss, mMusica);
+                } else {
+                    regularSontul(this.musica, this.musicaFase.get(5), mboss, mMusica);
+
+                }
+                musicaAtual = 5;
 
                 break;
             case -2:
@@ -1476,10 +1495,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
         bolhaRef.getPosition().y = (basey) * -1;
         bolhaRef.getPosition().x = basex;
-
-
-        bolhaRef2.getPosition().y = (basey2) * -1;
-        bolhaRef2.getPosition().x = basex2;
 
 
         boolean sel = false;
