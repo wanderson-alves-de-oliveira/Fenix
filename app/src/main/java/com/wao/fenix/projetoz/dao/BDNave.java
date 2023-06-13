@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.wao.fenix.projetoz.modelo.Nave;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by wanderson on 16/08/19.
@@ -47,6 +49,9 @@ public class BDNave {
         valores.put("escudo", v.getEscudo()==-1?0:v.getEscudo());
         valores.put("bomba", v.getBomba());
         valores.put("puchar", v.getPuchar());
+        valores.put("escudo_nivel",  v.getEscudoNivel());
+        valores.put("dano",  v.getDano());
+        valores.put("defesa",  v.getDefesa());
         db.update( "upgade_nave", valores, "_id = ?", new String[]{"" + v.get_id()} );
         fechar();
     }
@@ -60,13 +65,16 @@ public class BDNave {
         valores.put("escudo", v.getEscudo());
         valores.put("bomba", v.getBomba());
         valores.put("puchar", v.getPuchar());
+        valores.put("escudo_nivel",  v.getEscudoNivel());
+        valores.put("dano",  v.getDano());
+        valores.put("defesa",  v.getDefesa());
         db.insert( "upgade_nave", null, valores );
         fechar();
     }
 
     public Nave buscar(final long id) {
 
-        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba FROM upgade_nave WHERE _id = " + id, null);
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa FROM upgade_nave WHERE _id = " + id, null);
         cursor.moveToNext();
         Nave c = new Nave();
         c.set_id(cursor.getLong(0));
@@ -76,6 +84,9 @@ public class BDNave {
         c.setPuchar(cursor.getInt(4));
         c.setHabilitado(cursor.getString(5));
         c.setBomba(cursor.getInt(6));
+        c.setEscudoNivel(cursor.getInt(7));
+        c.setDano(cursor.getInt(8));
+        c.setDefesa(cursor.getInt(9));
 
         cursor.close();
         fechar();
@@ -83,7 +94,41 @@ public class BDNave {
     }
 
 
+    public ArrayList<Nave> buscarLista() {
+        ArrayList<Nave> lista= new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa FROM upgade_nave ", null);
+        cursor.moveToNext();
 
+
+        if (cursor.getCount() > 0) {
+
+            cursor.moveToFirst();
+
+            do {
+                Nave c = new Nave();
+                c.set_id(cursor.getLong(0));
+                c.setNome(cursor.getString(1));
+                c.setAtaque(cursor.getInt(2));
+                c.setEscudo(cursor.getInt(3));
+                c.setPuchar(cursor.getInt(4));
+                c.setHabilitado(cursor.getString(5));
+                c.setBomba(cursor.getInt(6));
+                c.setEscudoNivel(cursor.getInt(7));
+                c.setDano(cursor.getInt(8));
+                c.setDefesa(cursor.getInt(9));
+                lista.add(c);
+            } while (cursor.moveToNext());
+            cursor.close();
+
+        }
+
+
+
+        cursor.close();
+        fechar();
+
+        return lista;
+    }
 
 
 }

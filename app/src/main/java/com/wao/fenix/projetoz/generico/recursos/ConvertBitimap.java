@@ -360,6 +360,32 @@ public class ConvertBitimap {
         return bitmap;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static Bitmap getBitmapP(String palavra) {
+
+
+        Paint pincel = new Paint(  );
+
+//        int r =(int) (175 * Math.random()) + 20;
+//        int g=(int) (105 * Math.random()) + 80;
+//        int b = (int) (175 * Math.random()) + 80;
+//        pincel.setColor( Color.rgb( r,g,b));
+
+        pincel.setColor( Color.argb( 255,0,0,0));
+
+        Bitmap bitmap = Bitmap.createBitmap(191,171,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        canvas.drawRoundRect( 0 ,0 ,
+                191,171,
+                0,0,pincel );
+
+        pincel.setColor( Color.argb( 255,255,255,255));
+        pincel.setTextSize( (float) (30) );
+        canvas.drawText( palavra,10,90,pincel);
+
+        return bitmap;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static Bitmap getBitmapRedondo(String palavra) {

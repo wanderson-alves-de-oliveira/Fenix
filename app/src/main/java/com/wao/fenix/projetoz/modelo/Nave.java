@@ -10,8 +10,37 @@ public class Nave {
     private int escudo;
     private int puchar;
     private int bomba;
+    private int escudoNivel;
+    private int dano;
+    private int defesa;
+
+
 
     public Nave() {
+    }
+
+    public int getEscudoNivel() {
+        return escudoNivel;
+    }
+
+    public void setEscudoNivel(int escudoNivel) {
+        this.escudoNivel = escudoNivel;
+    }
+
+    public int getDano() {
+        return dano;
+    }
+
+    public void setDano(int dano) {
+        this.dano = dano;
+    }
+
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(int defesa) {
+        this.defesa = defesa;
     }
 
     public String getNome() {
