@@ -86,7 +86,7 @@ public class BDEstatusFase {
         Cursor cursor = db.rawQuery("SELECT _id,saude,inimigosEliminados,inimigosGerados,progresso FROM estatus_fase WHERE _id = " + id, null);
         cursor.moveToNext();
         EstatusFase c = new EstatusFase();
-        c.setId(cursor.getLong(0));
+        c.setId(cursor.getInt(0));
         c.setSaude(cursor.getInt(1));
         c.setInimigosEliminados(cursor.getInt(2));
         c.setInimigosGerados(cursor.getInt(3));
@@ -104,7 +104,7 @@ public class BDEstatusFase {
         Cursor cursor = db.rawQuery("SELECT _id,saude,inimigosEliminados,inimigosGerados,progresso FROM estatus_fase where progresso='COMPLETA' ORDER  by _id DESC limit 1", null);
         cursor.moveToNext();
 
-        c.setId(cursor.getLong(0));
+        c.setId(cursor.getInt(0));
         c.setSaude(cursor.getInt(1));
         c.setInimigosEliminados(cursor.getInt(2));
         c.setInimigosGerados(cursor.getInt(3));
@@ -114,7 +114,7 @@ public class BDEstatusFase {
 
         }catch (Exception e){
 
-            c.setId(0L);
+            c.setId(0);
             c.setSaude(100);
             c.setInimigosEliminados(0);
             c.setInimigosGerados(0);

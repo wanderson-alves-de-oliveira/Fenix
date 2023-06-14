@@ -4640,7 +4640,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             Fenix.get(indexNave).getPosition().z = -62f;
 
             EstatusFase v = new EstatusFase();
-            v.setId((long) fase + 1);
+            v.setId( fase + 1);
             v.setInimigosEliminados(inimigosEliminados);
             v.setInimigosGerados(inimigosGerados);
             v.setSaude(barraDeEnergia);

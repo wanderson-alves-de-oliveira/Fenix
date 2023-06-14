@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Nave {
 
     private String nome,habilitado;
-    private long _id;
+    private int _id;
     private int ataque;
     private int escudo;
     private int puchar;
@@ -59,11 +59,11 @@ public class Nave {
         this.nome = nome;
     }
 
-    public long get_id() {
+    public int get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(int _id) {
         this._id = _id;
     }
 

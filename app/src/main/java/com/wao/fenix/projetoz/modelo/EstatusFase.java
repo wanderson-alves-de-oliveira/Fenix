@@ -2,7 +2,7 @@ package com.wao.fenix.projetoz.modelo;
 
 public class EstatusFase {
 
-    private Long id;
+    private int id;
     private int saude;
     private int inimigosEliminados;
     private int inimigosGerados;
@@ -20,11 +20,11 @@ public class EstatusFase {
     }
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
