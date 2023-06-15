@@ -28,6 +28,7 @@ import com.wao.fenix.projetoz.generico.recursos.ConvertBitimap;
 import com.wao.fenix.projetoz.generico.recursos.Cronograma;
 import com.wao.fenix.projetoz.generico.recursos.Esplosao;
 import com.wao.fenix.projetoz.generico.recursos.Fase;
+import com.wao.fenix.projetoz.generico.recursos.MudaTextura;
 import com.wao.fenix.projetoz.generico.recursos.Objeto3d;
 import com.wao.fenix.projetoz.generico.recursos.Vetor3;
 import com.wao.fenix.projetoz.index.Tartaruga;
@@ -41,6 +42,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -1839,7 +1841,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         niveis.add(null);
                         niveis.add(null);
                         niveis.add(null);
+                        niveis.add(null);
 
+                        niveis2.add(null);
                         niveis2.add(null);
                         niveis2.add(null);
                         niveis2.add(null);
@@ -1857,6 +1861,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     cena = new ArrayList<>();
                     if (objetosCenario == null) {
                         objetosCenario = new ArrayList<>();
+                        objetosCenario.add(null);
                         objetosCenario.add(null);
                         objetosCenario.add(null);
                         objetosCenario.add(null);
@@ -2869,6 +2874,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 break;
 
             case 5:
+
                 if (objetosCenario.get(5) == null) {
                     ArrayList<Objeto3d> cena;
 
@@ -2902,7 +2908,61 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 }
                 break;
+            default:
 
+                if (objetosCenario.get(6) == null) {
+                    ArrayList<Objeto3d> cena;
+
+                    cena = new ArrayList<>();
+                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.get(0).setValor(String.valueOf("A"));
+                    cena.get(0).setVida(150f * dificuldade);
+                    cena.get(0).setRecoverVida(150f * dificuldade);
+                    cena.get(0).setPosition(new Vetor3(0.6f, 15.9f, cena.get(0).getPosition().z));
+
+                    cena.get(0).setTransparente(true);
+                    cena.get(0).setRefletir(true);
+
+//
+//
+                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.get(1).setValor(String.valueOf("A"));
+                    cena.get(1).setVida(150f * dificuldade);
+                    cena.get(1).setRecoverVida(150f * dificuldade);
+                    cena.get(1).setPosition(new Vetor3(0.6f, 15.9f, -64.2f));
+                    cena.get(1).setTransparente(true);
+                    cena.get(1).setRefletir(true);
+                    //   cena.get(0).loadGLTexture();
+                    //   cena.get(1).loadGLTexture();
+                    objetosCenario.set(6, cena);
+
+                }
+
+                if (niveis.get(6) == null) {
+                    niveis.set(6, new Objeto3d(context,   asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(6, new Objeto3d(context,  asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+
+                }
+
+                Bitmap textc = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    Bitmap bi = BitmapFactory.decodeResource(context.getResources(), R.drawable.nivela);
+                    textc = new MudaTextura(context).mudarCorCarimbo( R.drawable.spf,0,200,0);
+                }
+
+                niveis.get(6).LoadTexture(textc);
+                niveis2.get(6).LoadTexture(textc);
+
+                  textc = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    Bitmap bi = BitmapFactory.decodeResource(context.getResources(), R.drawable.nivela);
+                    textc = new MudaTextura(context).mudarCorCarimbo( R.drawable.spf,0,200,0);
+                }
+
+                objetosCenario.get(6).get(0).LoadTexture(textc);
+                objetosCenario.get(6).get(1).LoadTexture(textc);
+
+                break;
         }
     }
 
@@ -2939,12 +2999,27 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         } else {
             indice = Integer.parseInt(fasex[0]);
         }
+
+
         int faseBoss = (fase + 1) / 10;
 
         chefeDafase = faseBoss != 0 ? faseBoss - 1 : 0;
 
-        carregarFase(indiceLevel);
-        cena = objetosCenario.get(indiceLevel);
+
+        if(indiceLevel>=6){
+
+            Random r = new Random();
+            int hf = r.nextInt(6 - 0);
+            chefeDafase = hf;
+            carregarFase(6);
+            cena = objetosCenario.get(6);
+
+        }else {
+            carregarFase(indiceLevel);
+
+            cena = objetosCenario.get(indiceLevel);
+
+        }
         //     this.musica = MediaPlayer.create(context, R.raw.musicc);
 
         cronograma = new ArrayList<>();
@@ -3021,10 +3096,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);  // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);  // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(0, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);  // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);  // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(0, 10, ceoZ2));
 
                     break;
@@ -3034,11 +3109,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     ceoZ = -62;
                     ceoZ2 = -103;
 
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-5, 10, ceoZ));
 
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-5, 10, ceoZ2));
 
                     break;
@@ -3046,10 +3121,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-10, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-10, 10, ceoZ2));
 
                     break;
@@ -3060,10 +3135,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-15, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-15, 10, ceoZ2));
 
                     break;
@@ -3072,10 +3147,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 case 4:
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-20, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-20, 10, ceoZ2));
 
                     break;
@@ -3083,9 +3158,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     // this.musica = MediaPlayer.create(context, R.raw.musicd);
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-25, 10, ceoZ));
-                    terreno2 = niveis2.get(indiceLevel);                //  ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-25, 10, ceoZ2));
 
                     break;
@@ -3095,10 +3170,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-30, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-30, 10, ceoZ2));
 
                     break;
@@ -3107,9 +3182,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-35, 10, ceoZ));
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-35, 10, ceoZ2));
 
                     break;
@@ -3117,10 +3192,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-40, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-40, 10, ceoZ2));
 
                     break;
@@ -3130,10 +3205,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-45, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-45, 10, ceoZ2));
 
                     break;
@@ -4639,6 +4714,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             timeLine = 0;
             Fenix.get(indexNave).getPosition().z = -62f;
 
+
             EstatusFase v = new EstatusFase();
             v.setId( fase + 1);
             v.setInimigosEliminados(inimigosEliminados);
@@ -4657,12 +4733,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 acionado = false;
 
             }
-            if (fase + 1 >= 60) {
-                indiceLevel = 0;
-                statusFase.zerarFase(v);
-            } else {
-                statusFase.atualizarFase(v);
-            }
+//            if (fase + 1 >= 61) {
+//                indiceLevel = 0;
+//               // statusFase.zerarFase(v);
+//            } else {
+           //     if ((fase + 1) <= 60)
+                    statusFase.atualizarFase(v);
+        //    }
             BDRecompensa BDR = new BDRecompensa(context);
             recompensa = BDR.buscar(1);
             recompensa.setValor(recompensa.getValor() + resgateOuro);
@@ -5365,7 +5442,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private void tipoDisparaBoss(ArrayList<Objeto3d> o, Objeto3d ob, int i, float vel) {
         float posx = 0;
         float pos = -2f;
-        int faseBoss = ((fase + 1) / 10) - 1;
+        int faseBoss=0;
+        if((fase+1)>60){
+             faseBoss =chefeDafase;
+        }else {
+             faseBoss = ((fase + 1) / 10) - 1;
+        }
+
+
         switch (i) {
             case 0:
 

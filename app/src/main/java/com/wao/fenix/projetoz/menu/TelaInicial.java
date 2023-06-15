@@ -1042,7 +1042,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     tipoDeCard = tut.getTipoDeCard();
 
 
-                    if((fase+1)%10==0 && tipoDeCard==2) {
+                    if((fase+1)%10==0 && tipoDeCard==2 && fase+1<60) {
                         fasecarregada = 5;
                         carregouValores=false;
                     }
@@ -1793,7 +1793,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         String[] fasex = String.valueOf(fase).split("");
 
                         if (fasex.length > 1) {
-                            musicaDafase = Integer.parseInt(fasex[0]);
+                            musicaDafase = Integer.parseInt(fasex[0])<6?Integer.parseInt(fasex[0]):3;
 
                         } else {
                             musicaDafase = 0;

@@ -540,6 +540,22 @@ public class ConvertBitimap {
 //        return bitmap;
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static Bitmap getBitmap(Context context, int drawableId, int alp, int cor1, int cor2, int cor3, boolean muda) {
+        Drawable drawable = ContextCompat.getDrawable(context,drawableId);
+
+        if (drawable instanceof BitmapDrawable) {
+            return BitmapFactory.decodeResource(context.getResources(),drawableId);
+        } else if (drawable instanceof VectorDrawable) {
+            drawable.mutate().clearColorFilter();
+            if(muda){
+                PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(Color.argb( alp, cor1,cor2,cor3 ), PorterDuff.Mode.MULTIPLY);
+                drawable.mutate().setColorFilter(colorFilter);}
+            return getBitmap(String.valueOf((VectorDrawable) drawable));
+        } else {
+            throw new IllegalArgumentException("erro");
+        }
+    }
 
 
 }
