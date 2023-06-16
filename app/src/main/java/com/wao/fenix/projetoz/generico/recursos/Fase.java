@@ -33,7 +33,7 @@ public class Fase {
 
 
         int dificult = indice < 7 ? indice : 6;
-        int base =2+(indice+ (fase )+ indice)+1;
+        int base =2+(indice+ (10 )+ indice)+1;
         int nivel = 1;
         indice=1;
 

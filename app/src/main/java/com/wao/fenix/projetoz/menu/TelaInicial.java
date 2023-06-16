@@ -323,15 +323,44 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             nav = R.drawable.navef;
                             break;
                     }
-                    Objeto3d f = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                    f.setEstado("NBateu");
-                    f.setPosition(new Vetor3(0, -0.05f, -0.5f));
-                    f.setGiroPosition(new Vetor3(95, 0, 0f));
-                    f.setRefletir(true);
-                    f.setFenix(true);
-                    f.setNomeRef("Fenix");
-                    posinicialF = new Vetor3(f.getPosition());
-                    Fenixt.add(f);
+                    if(i==1){
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                    //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                       // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
+                        Fenixaux.getGiroPosition().x= 270f;
+                        Fenixaux.getGiroPosition().y = 180;
+
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+                        Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
+                      //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
+                       // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
+                        Fenixaux.getPeca().getGiroPosition().x = 270f;
+                        Fenixaux.getPeca().getGiroPosition().y = 180;
+
+                        Fenixt.add(Fenixaux);
+                    }else {
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+                        Fenixt.add(Fenixaux);
+
+
+
+                    }
                 }
 
 
@@ -1154,10 +1183,20 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 if (fasecarregada == 3) {
                     for (int i = 0; i < 6; i++) {
-                        Fenixt.get(i).draw((GL11) gl2);
+                        if ( Fenixt.get(i).getPeca() != null) {
+                            Fenixt.get(i).getPeca().draw((GL11) gl2);
+                            Fenixt.get(i).draw((GL11) gl2);
+
+                        }else {
+                            Fenixt.get(i).draw((GL11) gl2);
+                        }
+
                     }
                 } else {
                     Fenixt.get(indexNave).draw((GL11) gl2);
+                    if ( Fenixt.get(indexNave).getPeca() != null)
+                        Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
+
 
                 }
                 this.btUpgrade.draw((GL11) gl2);
@@ -1202,6 +1241,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     painelMode.get(0).draw((GL11) gl2);
                     this.btback.draw((GL11) gl2);
                     Fenixt.get(naveSelecionada).draw((GL11) gl2);
+                    if ( Fenixt.get(naveSelecionada).getPeca() != null)
+                        Fenixt.get(naveSelecionada).getPeca().draw((GL11) gl2);
+
                     if (fase < Integer.valueOf(nivelNaveX.getHabilitado())) {
                         painelModeHabiliar.get(naveSelecionada).draw((GL11) gl2);
                     } else {
@@ -1228,6 +1270,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 }else if (fasecarregada == 5) {
                     painelMode.get(0).draw((GL11) gl2);
                     Fenixt.get(naveSelecionada).draw((GL11) gl2);
+                    if ( Fenixt.get(naveSelecionada).getPeca() != null)
+                        Fenixt.get(naveSelecionada).getPeca().draw((GL11) gl2);
 
                             select.draw((GL11) gl2);
 
@@ -1275,6 +1319,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (fasecarregada == 2) {
             distanciaX = -5;
             Fenixt.get(indexNave).setPosition(new Vetor3(4.84f, 0.34f, -0.78f));
+            if ( Fenixt.get(indexNave).getPeca() != null) {
+                Fenixt.get(indexNave).getPeca().setPosition(Fenixt.get(indexNave).getPosition());
+            }
             btback.setPosition(new Vetor3(4.975f, -0.092f, -0.089f));
             painel_a.setPosition(new Vetor3(5f, 0.040f, -0.79f));
             nivelIma.get(nivelImaR).getPosition().x = 4.99f;
@@ -1302,6 +1349,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
             for (int i = 0; i < 6; i++) {
                 Fenixt.get(i).setPosition(new Vetor3(xd, yd, -0.92f));
+                if ( Fenixt.get(i).getPeca() != null) {
+                     Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
+                }
                 xd = xd + 0.27f;
                 if (i == 1 || i == 3 || i == 5) {
                     xd = -5.15f;
@@ -1346,6 +1396,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             nomeNave.setPosition(new Vetor3(-9.99f, -0.002f, -0.08f));
 
             Fenixt.get((int) naveaux.get_id() - 1).setPosition(new Vetor3(xd, yd, -0.92f));
+            if ( Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
+                Fenixt.get((int) naveaux.get_id() - 1).getPeca().setPosition(Fenixt.get((int) naveaux.get_id() - 1).getPosition());
+            }
             nivelIma.get(naveaux.getDefesa()).getPosition().x = -10.0f;
             select.setPosition(new Vetor3(-10, -0.25f, -0.8f));
 
@@ -1388,7 +1441,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 unlocked.setPosition(new Vetor3(-14.98f, 0.15f, -0.8f));
                 nivelNaveX=naveaux;
                 Fenixt.get((int) naveaux.get_id() - 1).setPosition(new Vetor3(xd, yd, -0.92f));
-
+                if ( Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
+                    Fenixt.get((int) naveaux.get_id() - 1).getPeca().setPosition(Fenixt.get((int) naveaux.get_id() - 1).getPosition());
+                }
                 naveSelecionada = (int) naveaux.get_id() - 1;
 
              //   btback.setPosition(new Vetor3(-15.023f, -0.092f, -0.089f));
@@ -1406,9 +1461,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         } else {
             distanciaX = 0;
             if (posinicialF != null)
-                if (Fenixt != null && !Fenixt.isEmpty())
+                if (Fenixt != null && !Fenixt.isEmpty()) {
                     Fenixt.get(indexNave).setPosition(posinicialF);
-
+                    if (Fenixt.get(indexNave).getPeca() != null) {
+                        Fenixt.get(indexNave).getPeca().setPosition(Fenixt.get(indexNave).getPosition());
+                    }
+                }
             if (barra != null) {
                 barra.getPosition().setX(distanciaX * -1);
                 barra.getPosition().setZ(-0.9f);

@@ -35,15 +35,15 @@ https://blog.jayway.com/2010/12/30/opengl-es-tutorial-for-android-part-vi-textur
 
  */
 public class Objeto3d implements Serializable {
- //   private static String LOGTAG = "NormalMapping";
-  //  private static String assetDirectory = null;
+    //   private static String LOGTAG = "NormalMapping";
+    //  private static String assetDirectory = null;
     private boolean atirando = false;
     private boolean abatidoPelaNave = false;
-   // public boolean invulneravel = false;
+    // public boolean invulneravel = false;
     public boolean retorno = false;
-    public boolean  timeLimpar= true;
+    public boolean timeLimpar = true;
     private int timeBtEspecial = 0;
-    private Vetor3 cores=new Vetor3(0,0,0);
+    private Vetor3 cores = new Vetor3(0, 0, 0);
 
 
     private boolean Fenix = false;
@@ -52,7 +52,10 @@ public class Objeto3d implements Serializable {
     private boolean esplodirNave = false;
     private int timeEsplosaoNave = 0;
     private int timeLineInidvidual = 0;
- //   private int  normalMap=0;
+
+    private Objeto3d peca;
+
+    //   private int  normalMap=0;
     private Context context;
     private int esplosaoNaveId = 0;
     private boolean refletir = false;
@@ -65,26 +68,26 @@ public class Objeto3d implements Serializable {
     FloatBuffer m_ColorData;
     private ArrayList<Objeto3d> tiroNave;
     private int[] tiroTime;
-    private int tiroTimex=0;
+    private int tiroTimex = 0;
     private ArrayList<Boolean> atirar;
-    private Boolean atirarx =true;
-    private String origem="";
+    private Boolean atirarx = true;
+    private String origem = "";
     private boolean boss = false;
     private int idTiro = 0;
     private boolean impacto = false;
     public short[] indicesDeVertices;
     private short[] indicesNormais;
     private int textura;
-    private int qtdtextura=1;
+    private int qtdtextura = 1;
     float texture[];
-   // private float[] verticesNormais;
+    // private float[] verticesNormais;
     private int[] textures = new int[2];
     public FloatBuffer[] verticeBuffer;
 
     private float positionYdoObj = 0;
     public int time = 0;
     private boolean esplodiu = false;
-    private boolean  imageID = true;
+    private boolean imageID = true;
     private FloatBuffer[] NormaisBuffer;
     private ShortBuffer indiceBuffer;
     private ShortBuffer indiceNormaisBuffer;
@@ -96,10 +99,10 @@ public class Objeto3d implements Serializable {
     private String tipo = "";
     private String nome = "";
     private String nomeRef = "";
-   // private   int m_BumpmapID;
-   // private   int m_MainTexture;
+    // private   int m_BumpmapID;
+    // private   int m_MainTexture;
 
-   // static int level = 0;
+    // static int level = 0;
 
     public boolean m_UseMipmapping = true;
     private int dr = 0;
@@ -116,6 +119,8 @@ public class Objeto3d implements Serializable {
     private float velocidadeHorizontal = 0f;
 
     private int toque = 0;
+    private int modo = 0;
+
     private int visita = 0;
     private int positionAnteriorZ = 0;
     private float positionAnteriorZCorrent = 0;
@@ -136,9 +141,32 @@ public class Objeto3d implements Serializable {
     private boolean mudarTamanho = false;
     private float estoraBolha = 100;
 
+    public int getModo() {
+        return modo;
+    }
+
+    public void setModo(int modo) {
+        this.modo = modo;
+    }
+
+    public int getTiroTimex() {
+        return tiroTimex;
+    }
+
+    public void setTiroTimex(int tiroTimex) {
+        this.tiroTimex = tiroTimex;
+    }
 //    public boolean isAbatidoPelaNave() {
 //        return abatidoPelaNave;
 //    }
+
+    public Objeto3d getPeca() {
+        return peca;
+    }
+
+    public void setPeca(Objeto3d peca) {
+        this.peca = peca;
+    }
 
     public void setAbatidoPelaNave(boolean abatidoPelaNave) {
         this.abatidoPelaNave = abatidoPelaNave;
@@ -482,7 +510,7 @@ public class Objeto3d implements Serializable {
             for (Objeto3d o : tiroNave) {
                 o.setDisparandoSub(true);
             }
-        }else {
+        } else {
 
             this.disparando = disparandoax;
 
@@ -751,7 +779,7 @@ public class Objeto3d implements Serializable {
     public ArrayList<Objeto3d> criarTiros(Objeto3d obj, int qtd, AssetManager asset, String objFile, int texturaObj, Resources res) throws IOException {
         ///CARREGA OS ARQUIS 3D DO ALFABETO
         ArrayList<Objeto3d> tiroArray;
-         tiroArray = new ArrayList<>();
+        tiroArray = new ArrayList<>();
         tiroTime = new int[qtd];
         atirar = new ArrayList<>();
         float x = obj.getTamanho().getX();
@@ -759,13 +787,13 @@ public class Objeto3d implements Serializable {
         float z = obj.getTamanho().getZ();
         for (int t = 0; t < qtd; t++) {
 
-            tiroArray.add(new Objeto3d(context,  asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
-             tiroArray.get(t).setMudarTamanho(true);
+            tiroArray.add(new Objeto3d(context, asset, objFile, texturaObj, new Vetor3(x, y, z), ""));
+            tiroArray.get(t).setMudarTamanho(true);
             tiroArray.get(t).setTransparente(true);
             tiroArray.get(t).setOrigem(obj.getValor());
             tiroArray.get(t).vezes(3);
             tiroArray.get(t).loadGLTexture();
-           //  tiroArray.get(t).loadGLTexture(false);
+            //  tiroArray.get(t).loadGLTexture(false);
             tiroTime[t] = 0;
             atirar.add(false);
         }
@@ -849,7 +877,7 @@ public class Objeto3d implements Serializable {
                                 getTiroNave().get(i).getPosition().setX(getTiroNave().get(i).getPosition().x - getTiroNave().get(i).getVelocidadeHorizontal());
 
                             } else if (getTiroNave().get(i).getDirecaoZdoTiro() == 0) {
-                                if(getTiroNave().get(i).getPosition().z<=-900){
+                                if (getTiroNave().get(i).getPosition().z <= -900) {
                                     getTiroNave().get(i).getPosition().setZ(posit.z);
                                 }
                                 getTiroNave().get(i).getPosition().setZ(getTiroNave().get(i).getPosition().z + velocidade);
@@ -867,7 +895,7 @@ public class Objeto3d implements Serializable {
 
                         }
 
-                        if (tiroTime[i] == 1000|| getTiroNave().get(i).getPosition().z>-59f) {
+                        if (tiroTime[i] == 1000 || getTiroNave().get(i).getPosition().z > -59f) {
                             setAtirar(i, false);
                             setTiroTime(i, 0);
                         }
@@ -954,37 +982,36 @@ public class Objeto3d implements Serializable {
 //
 
 
-    public void atirandoUm(Vetor3 alvo,Vetor3 origem, float velocidade) {
+    public void atirandoUm(Vetor3 alvo, Vetor3 origem, float velocidade) {
 
-                     setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
-                    float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
-                    float distanciaXFI = alvo.getPosition().x - getPosition().x;
-                     setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
-                    if (alvo.getPosition().x >= getPosition().x) {
-                         setPositionXCorrent(1);
-                    } else {
-                         setPositionXCorrent(0);
-                    }
-                    pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
-                    setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
-
-
-                    getPosition().setZ(getPosition().z + velocidade);
-                    if (getVelocidadeHorizontal() < velocidade) {
-                        getPosition().setX(getPosition().x + getVelocidadeHorizontal());
-                    }
+        setPosition(new Vetor3(getPosition().x, getPosition().getY(), getPosition().z));
+        float distanciaZFI = (alvo.getPosition().z - getPosition().z) / velocidade;
+        float distanciaXFI = alvo.getPosition().x - getPosition().x;
+        setVelocidadeHorizontal(distanciaXFI / distanciaZFI);
+        if (alvo.getPosition().x >= getPosition().x) {
+            setPositionXCorrent(1);
+        } else {
+            setPositionXCorrent(0);
+        }
+        pegarGrauDeLocalizacao pg = new pegarGrauDeLocalizacao();
+        setGiroPosition(new Vetor3(0f, (float) pg.grauDeGiro(getPosition(), alvo.getPosition()), 0f));
 
 
-                if (getPosition().z >= alvo.z ||getPosition().z < -70f)  {
+        getPosition().setZ(getPosition().z + velocidade);
+        if (getVelocidadeHorizontal() < velocidade) {
+            getPosition().setX(getPosition().x + getVelocidadeHorizontal());
+        }
 
-                setPosition(origem);
-                setGiroPosition(new Vetor3(0f, 0f, 0f));
+
+        if (getPosition().z >= alvo.z || getPosition().z < -70f) {
+
+            setPosition(origem);
+            setGiroPosition(new Vetor3(0f, 0f, 0f));
 
 
         }
 
     }
-
 
 
 //    public void atirandoUmGiro(Vetor3 alvo,Vetor3 origem, float velocidade, boolean retorno) {
@@ -1118,11 +1145,11 @@ public class Objeto3d implements Serializable {
 
 
         //ARMAZENA texture EM BUFFER
-        ByteBuffer byteBuffer = ByteBuffer.allocateDirect( texture.length * 4 );
-        byteBuffer.order( ByteOrder.nativeOrder() );
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(texture.length * 4);
+        byteBuffer.order(ByteOrder.nativeOrder());
         texturaBuffer = byteBuffer.asFloatBuffer();
-        texturaBuffer.put( texture );
-        texturaBuffer.position( 0 );
+        texturaBuffer.put(texture);
+        texturaBuffer.position(0);
 
     }
 
@@ -1146,20 +1173,20 @@ public class Objeto3d implements Serializable {
 //
 //    }
 
-    public Objeto3d( Context context, AssetManager asset, String obj, int textura, Vetor3 tamanho, String nomeRef) throws IOException {
+    public Objeto3d(Context context, AssetManager asset, String obj, int textura, Vetor3 tamanho, String nomeRef) throws IOException {
         leitorDeObj = new LeitorDeObj(asset, obj);
-        this.m_UseMipmapping=true;
+        this.m_UseMipmapping = true;
         //this.normalMap=res;
         quadrosDeanimacao = leitorDeObj.quadrosDeanimacao;
         this.nomeRef = nomeRef;
-      this.textura = textura;
+        this.textura = textura;
         this.tamanho = tamanho;
-        this.context=context;
-        m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
-      //  this.m_BumpmapID = createTexture(context, this.normalMap, 1);
-      // this.m_MainTexture = createTexture( context, this.textura,0);
+        this.context = context;
+        m_ColorData = makeFloatBuffer(new float[]{0, 0, 0, 0});
+        //  this.m_BumpmapID = createTexture(context, this.normalMap, 1);
+        // this.m_MainTexture = createTexture( context, this.textura,0);
         if (leitorDeObj.texturaT != null) {
-            qtdtextura=leitorDeObj.getTesturas();
+            qtdtextura = leitorDeObj.getTesturas();
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
         }
         setVertices();//PEGA OS VERTICES DO arquivo.obj
@@ -1173,19 +1200,18 @@ public class Objeto3d implements Serializable {
     }
 
 
-
-    public Objeto3d( Context context, AssetManager asset, String obj, Bitmap texturaBitimap, Vetor3 tamanho, String nomeRef) throws IOException {
+    public Objeto3d(Context context, AssetManager asset, String obj, Bitmap texturaBitimap, Vetor3 tamanho, String nomeRef) throws IOException {
         leitorDeObj = new LeitorDeObj(asset, obj);
-        this.m_UseMipmapping=true;
+        this.m_UseMipmapping = true;
         //this.normalMap=res;
         quadrosDeanimacao = leitorDeObj.quadrosDeanimacao;
         this.nomeRef = nomeRef;
         this.texturaBitimap = texturaBitimap;
         this.tamanho = tamanho;
-        this.context=context;
-        m_ColorData = makeFloatBuffer(new float[]{0,0,0,0});
-       //  createTexture(context, this.normalMap, 1);
-         createTexture2(texturaBitimap,0);
+        this.context = context;
+        m_ColorData = makeFloatBuffer(new float[]{0, 0, 0, 0});
+        //  createTexture(context, this.normalMap, 1);
+        createTexture2(texturaBitimap, 0);
         if (leitorDeObj.texturaT != null) {
             setTexture(leitorDeObj.texturaT);//PEGA O MAPA DA TEXTURA DO arquivo.obj
         }
@@ -1199,15 +1225,15 @@ public class Objeto3d implements Serializable {
         leitorDeObj = null;
     }
 
-    protected static FloatBuffer makeFloatBuffer(float[] arr)
-    {
-        ByteBuffer bb = ByteBuffer.allocateDirect(arr.length*4);
+    protected static FloatBuffer makeFloatBuffer(float[] arr) {
+        ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer fb = bb.asFloatBuffer();
         fb.put(arr);
         fb.position(0);
         return fb;
     }
+
     float[] matrix;
     boolean inicio = true;
     GL11 gl2;
@@ -1224,7 +1250,7 @@ public class Objeto3d implements Serializable {
 //    }
 
     public void draw(GL11 gl) {
-        try{
+        try {
             gl2 = gl;
             gl.glPushMatrix();
             if (quadrosDeanimacao > 1) {
@@ -1250,7 +1276,7 @@ public class Objeto3d implements Serializable {
             if (impacto && refletir) {
                 if (!isFenix()) {
 
-                    float[] ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};//cor amarela do ambiente
+                    float[] ambientLight = {1.0f, 0.0f,0.0f, 1.0f};//cor amarela do ambiente
                     float posicaoLuz[] = {-1f, 0, -65f, 1f};
                     gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
                     gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
@@ -1280,7 +1306,7 @@ public class Objeto3d implements Serializable {
 
             } else {
 
-                if (getNomeRef().equals("btEspecial") && timeBtEspecial>0) {
+                if (getNomeRef().equals("btEspecial") && timeBtEspecial > 0) {
 
                     float[] ambientLight = {1.0f, 0.0f, 0.0f, 1.0f};//cor amarela do ambiente
                     float posicaoLuz[] = {-1f, 0, -65f, 1f};
@@ -1305,14 +1331,11 @@ public class Objeto3d implements Serializable {
                         case "Fenix1":
                         case "boss":
                             float[] ambientLight = new float[]{cores.x, cores.y, cores.z, 1.0f};//cor amarela do ambiente
-                            float[] posicaoLuz = new float[]{-1f, -80, -65f,1};
+                            float[] posicaoLuz = new float[]{-1f, -80, -65f, 1};
                             gl.glLightModelfv(GL11.GL_LIGHT_MODEL_AMBIENT, ambientLight, 0);
                             gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, ambientLight, 0);
                             gl.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, posicaoLuz, 0);
-                        break;
-
-
-
+                            break;
 
 
                         default:
@@ -1327,8 +1350,6 @@ public class Objeto3d implements Serializable {
 
 
                 }
-
-
 
 
             }
@@ -1399,46 +1420,44 @@ public class Objeto3d implements Serializable {
 
             }
             gl.glPopMatrix();
-        }catch (Exception e){
+        } catch (Exception e) {
 
-            Log.e("GL",e.getMessage());
+            Log.e("GL", e.getMessage());
         }
 
     }
 
-    public int createTexture( Context contextRegf, int resource,int i)
-    {
+    public int createTexture(Context contextRegf, int resource, int i) {
 
         Bitmap image = BitmapFactory.decodeResource(contextRegf.getResources(), resource); // 1
 
-        GLES30.glGenTextures( 1, textures,0 );
-        GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[i] );
-        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
-     //   image.recycle(); //6
+        GLES30.glGenTextures(1, textures, 0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures[i]);
+        GLUtils.texImage2D(GL11.GL_TEXTURE_2D, i, image, 0); // 4
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR); // 5b
+        //   image.recycle(); //6
         return resource;
 
     }
-    public void   createTexture2( Bitmap image,int i)
-    {
-        GLES30.glGenTextures( 1, textures,0 );
-        GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[i] );
-        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, i, image, 0); // 4
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
-       // image.recycle(); //6
+
+    public void createTexture2(Bitmap image, int i) {
+        GLES30.glGenTextures(1, textures, 0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures[i]);
+        GLUtils.texImage2D(GL11.GL_TEXTURE_2D, i, image, 0); // 4
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR); // 5b
+        // image.recycle(); //6
 
     }
 
-    public void LoadTexture(Bitmap image)
-    {
+    public void LoadTexture(Bitmap image) {
 
-        GLES30.glGenTextures( 1, textures,0 );
-        GLES30.glBindTexture( GLES30.GL_TEXTURE_2D, textures[0] );
-        GLUtils.texImage2D(GL11 .GL_TEXTURE_2D, 0, image, 0); // 4
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MIN_FILTER,GL11 .GL_LINEAR); // 5a
-        GLES30.glTexParameterf(GL11 .GL_TEXTURE_2D, GL11 .GL_TEXTURE_MAG_FILTER,GL11 .GL_LINEAR); // 5b
+        GLES30.glGenTextures(1, textures, 0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures[0]);
+        GLUtils.texImage2D(GL11.GL_TEXTURE_2D, 0, image, 0); // 4
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR); // 5a
+        GLES30.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR); // 5b
 
 
 //        if (texturaBuffer  != null) {
@@ -1459,64 +1478,31 @@ public class Objeto3d implements Serializable {
 
     public void loadGLTexture() {
 
-        if (texturaBuffer  != null) {
+        if (texturaBuffer != null) {
             Bitmap image = BitmapFactory.decodeResource(context.getResources(), textura); // 1
             textures[0] = 0;
-            texturaBuffer .clear();
-            texturaBuffer .put( texture );
-            texturaBuffer .position( 0 );
-            GLES20.glGenTextures( 1, textures, 0 );
-            GLES20.glBindTexture( GLES20.GL_TEXTURE_2D, textures[0] );
-            GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR );
-            GLES20.glTexParameterf( GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR );
-            GLUtils.texImage2D( GLES20.GL_TEXTURE_2D, 0, image, 0 );
+            texturaBuffer.clear();
+            texturaBuffer.put(texture);
+            texturaBuffer.position(0);
+            GLES20.glGenTextures(1, textures, 0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, image, 0);
 
 
         }
     }
-//    public void loadGLTextureB() {
-//        if (texturaBuffer != null) {
-//            textures[0] = 0;
-//            texturaBuffer.clear();
-//            texturaBuffer.put(texture);
-//            texturaBuffer.position(0);
-//            // loading texture
-//            //bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.casco);
-//
-//            // generate one texture pointer
-//            GLES20.glGenTextures(1, textures, 0);
-//            // ...and bind it to our array
-//
-//            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
-//            // Create Nearest Filtered Texture
-//
-//            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-//            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-//
-//            // Use the Android GLUtils to specify a two-dimensional texture image from our bitmap
-//            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, texturaBitimap, 0);
-//            //Different possible texture parameters, e.positionY. GL10.GL_CLAMP_TO_EDGE
-//            // gl2.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_REPEAT);
-//
-//            // Use Android GLUtils to specify a two-dimensional texture image from our bitmap
-//
-//
-//        }
-//    }
-//
-//    public double grauDeGiro(Objeto3d alvo) {
-//        float distanciaX=alvo.getPosition().x-getPosition().x;
-//        float distanciaZ=alvo.getPosition().z-getPosition().z;
-//        float hipotenuza = (float)Math.sqrt (Math.pow(distanciaX,2)+Math.pow(distanciaZ,2));
-//        float seno=distanciaX/hipotenuza;
-//        double angulo =(seno*180)/ Math.PI;
-//        return angulo;
-//    }
 
+    public void gerarPeca(AssetManager asset, String obj,int txt,float vezes) throws IOException {
 
-//    public void  limpar(){
-//        verticeBuffer = null;
-//        NormaisBuffer = null;
-//        texturaBuffer = null;
-//    }
+        peca = new Objeto3d(context, asset, obj, txt, new Vetor3(0.2f * 0.6f, 0.2f * 0.6f, 0.2f * 0.6f), "peca");
+
+        peca.setEstado("NBateu");
+        peca.setPosition(new Vetor3(getPosition().x, getPosition().y, getPosition().z));
+        peca.setRefletir(true);
+        //  peca.setFenix(true);
+        peca.vezes(vezes);
+        peca.setNomeRef("peca");
+    }
 }
