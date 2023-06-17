@@ -311,7 +311,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             nav = R.drawable.naveb;
                             break;
                         case 2:
-                            nav = R.drawable.navec;
+                            nav =  R.drawable.grifon;
                             break;
                         case 3:
                             nav = R.drawable.naved;
@@ -345,12 +345,34 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Fenixaux.getPeca().getGiroPosition().y = 180;
 
                         Fenixt.add(Fenixaux);
+                    } else   if(i==2){
+                        Objeto3d Fenixaux = new Objeto3d(context, asset,  "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
+//                        Fenixaux.getGiroPosition().x= 270f;
+//                        Fenixaux.getGiroPosition().y = 180;
+
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+//                        Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
+//                        //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
+//                        // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
+//                        Fenixaux.getPeca().getGiroPosition().x = 270f;
+//                        Fenixaux.getPeca().getGiroPosition().y = 180;
+
+                        Fenixt.add(Fenixaux);
                     } else   if(i==4){
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
                         Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
-                        //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
                         // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
                         Fenixaux.getGiroPosition().x= 270f;
                         Fenixaux.getGiroPosition().y = 180;

@@ -70,7 +70,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private Vetor3 positiomAnteriorBoss;
    // private int total;
     private int indexOuro = 0;
-    private final int VIDASMAX = 5;
+    private final int VIDASMAX = 500000;
 
     private int po = 0;
     private int timeLine = 0;
@@ -100,7 +100,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private int rotacinarFenix = 0;
     private float pontoDoEixoX = 0;
-    private float pontoDoEixoY = 0;
+//    private float pontoDoEixoY = 0;
     private float turbo = 0.1f;
     private boolean parado = false;
     public boolean selectFase = false;
@@ -119,10 +119,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private int nivelTiroIndex = 0;
     private int danoNoInimigo = 10;
-    private float pontoDoEixoYInicio = 0;
-    private float pontoDoEixoYFimm = 0;
-    private float pontoDoEixoXInicio = 0;
-    private float pontoDoEixoXFimm = 0;
+//    private float pontoDoEixoYInicio = 0;
+//    private float pontoDoEixoYFimm = 0;
+//    private float pontoDoEixoXInicio = 0;
+//    private float pontoDoEixoXFimm = 0;
     private boolean[] vaiPraCena = {false, false, false, false, false, false, false, false};
     private boolean[] ativarBoss = {false, false, false, false, false, false, false, false, false, false, false};
 
@@ -1264,7 +1264,7 @@ private final float VELOCIDADEH = 20f;
                                     nav = R.drawable.naveb;
                                     break;
                                 case 2:
-                                    nav = R.drawable.navec;
+                                    nav = R.drawable.grifon;
                                     break;
                                 case 3:
                                     nav = R.drawable.naved;
@@ -1305,7 +1305,19 @@ private final float VELOCIDADEH = 20f;
                                 Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
 
                                 Fenix.add(Fenixaux);
-                            }else {
+                            }else   if(i==2){
+                                Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                                Fenixaux.setEstado("NBateu");
+                                Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                            //    Fenixaux.vezes(1.5f);
+
+                                Fenixaux.setRefletir(true);
+                                Fenixaux.setFenix(true);
+                                Fenixaux.setNomeRef("Fenix");
+
+                                Fenix.add(Fenixaux);
+                            } else{
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
@@ -1566,7 +1578,7 @@ private final float VELOCIDADEH = 20f;
                         nav = R.drawable.naveb;
                         break;
                     case 2:
-                        nav = R.drawable.navec;
+                        nav = R.drawable.grifon;
                         break;
                     case 3:
                         nav = R.drawable.naved;
@@ -1604,6 +1616,17 @@ private final float VELOCIDADEH = 20f;
                     Fenixaux.setFenix(true);
                     Fenixaux.setNomeRef("Fenix");
                     Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+
+                    Fenix.add(Fenixaux);
+                }else   if(i==2){
+                    Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                    Fenixaux.setEstado("NBateu");
+                    Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                 //   Fenixaux.vezes(1.5f);
+                    Fenixaux.setRefletir(true);
+                    Fenixaux.setFenix(true);
+                    Fenixaux.setNomeRef("Fenix");
 
                     Fenix.add(Fenixaux);
                 }else {
@@ -6104,7 +6127,8 @@ private final float VELOCIDADEH = 20f;
 
     public void moverPersonagem(MotionEvent event) {
 
-        if (vitoria || this.perdeu) return;
+        if ((vitoria || this.perdeu)   ) return;
+
 
         if (event.getX() > pontoDoEixoX) {
             rotacinarFenix = 2;
@@ -6112,7 +6136,8 @@ private final float VELOCIDADEH = 20f;
             if (giroy < 0) {
                 giroy = 360;
             }
-        } else {
+        }
+        else {
             rotacinarFenix = 1;
             giroy += 1.2;
             if (giroy > 360) {
@@ -6121,10 +6146,10 @@ private final float VELOCIDADEH = 20f;
         }
 
 
-        if (event.getY() > pontoDoEixoY) girox -= 1.2;
+        if (event.getY() > 0) girox -= 1.2;
         else girox += 1.2;
-        this.yy = (int) event.getY();
-        this.xx = (int) event.getX();
+        this.yy = (int) event.getY(0);
+        this.xx = (int) event.getX(0);
         if (this.yy < this.animal.getY() && this.cont == 0) {
             this.yr = (int) this.animal.getY() - this.yy;
             this.xr = (int) this.animal.getX() - this.xx;
@@ -6145,7 +6170,21 @@ private final float VELOCIDADEH = 20f;
         } else {
             this.xr = (int) this.animal.getX() - this.xx;
         }
-        this.animal.setY(this.yy + this.yr);
+
+
+        if (this.yy + this.yr < this.h * 0.38 && this.yy + this.yr > (this.h * 0.16) * -1) {
+            this.animal.setY(this.yy + this.yr);
+        } else {
+            this.yr = (int) this.animal.getY() - this.yy;
+        }
+
+
+
+
+      //  this.animal.setY(this.yy + this.yr);
+
+
+
         if (girox <= 45 || girox >= 315) {
             veloy = (girox / 45 > 1) ?
                     (-2 * (((girox / 180) - 2f) * 2))
@@ -6162,9 +6201,16 @@ private final float VELOCIDADEH = 20f;
         velox = ((this.animal.getX() * 0.2f) * (0.2f * turbo));
         veloy = veloy * (0.2f * turbo);
 
+        if(velox>1.5f){
+            velox=1.5f;
+        }else if(velox<-1.5f){
+            velox=-1.5f;
+        }
 
+
+//
         pontoDoEixoX = event.getX();
-        pontoDoEixoY = event.getY();
+//        pontoDoEixoY = 0;//event.getY();
         Fenix.get(indexNave).setPosition(new Vetor3(
                 velox,
                 15f,
@@ -6409,7 +6455,7 @@ private final float VELOCIDADEH = 20f;
     public boolean onTouch(View view, MotionEvent event) {
 
 
-        if (!this.venceu && carregado && !this.perdeu) {
+        if (!this.venceu && carregado && !this.perdeu ) {
 
 
             int posX = (int) (this.wTela / 100);
@@ -6419,7 +6465,7 @@ private final float VELOCIDADEH = 20f;
             //  if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
 
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN && event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
                 fogo = true;
                 limitVelocidade = 0;
                 limitVelocidadeBoo = false;
@@ -6443,9 +6489,9 @@ private final float VELOCIDADEH = 20f;
                     }
 
                 }
-
-                pontoDoEixoYInicio = event.getY();
-                pontoDoEixoXInicio = event.getX();
+//
+//                pontoDoEixoYInicio = event.getY();
+//                pontoDoEixoXInicio = event.getX();
 
                 if (this.perdeu == false) {
 
@@ -6500,8 +6546,8 @@ private final float VELOCIDADEH = 20f;
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
-                        this.animal.setY((int) (this.h * 0.5));
-                        this.animal.setX((int) (this.w * 0.5));
+//                        this.animal.setY((int) (this.h * 0.5));
+//                        this.animal.setX((int) (this.w * 0.5));
 
                     }
                     if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 70
@@ -6509,8 +6555,8 @@ private final float VELOCIDADEH = 20f;
                         this.inicio = true;
                         // this.estatusDojogo( 0 );
                         this.nivel = 1;
-                        this.animal.setY((int) (this.h * 0.5));
-                        this.animal.setX((int) (this.w * 0.5));
+//                        this.animal.setY((int) (this.h * 0.5));
+//                        this.animal.setX((int) (this.w * 0.5));
                         this.mensagem = "";
 
                     }
@@ -6541,12 +6587,12 @@ private final float VELOCIDADEH = 20f;
 
                 return true;
 
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause) {
-                if (luping == false) {
-                    this.pontoDoEixoYFimm = event.getY();
-                    this.pontoDoEixoXFimm = event.getX();
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause ) {
+                if (luping == false && event.getPointerCount() == 1 && event.getPointerId(0) == 0 ) {
+//                    this.pontoDoEixoYFimm = event.getY();
+//                    this.pontoDoEixoXFimm = event.getX();
                     this.moverPersonagem(event);
-                }
+                 }
 
 
                 if (event.getPointerCount() > 1) {
@@ -6578,10 +6624,10 @@ private final float VELOCIDADEH = 20f;
                 this.xx = 0;
                 this.yy = 0;
                 //veloy= 0;
-                this.pontoDoEixoYFimm = 0;
-                this.pontoDoEixoXFimm = 0;
-                this.pontoDoEixoYInicio = 0;
-                this.pontoDoEixoXInicio = 0;
+//                this.pontoDoEixoYFimm = 0;
+//                this.pontoDoEixoXFimm = 0;
+//                this.pontoDoEixoYInicio = 0;
+//                this.pontoDoEixoXInicio = 0;
                 if (perdeu == false && this.pause == false && (int) event.getX() > this.w * 0 && (int) event.getX() < this.w * 0.4 && (int) event.getY(event.getPointerId(0)) > posY * 50 && (int) event.getY(event.getPointerId(0)) < posY * 60) {
 
                     this.parar();
