@@ -317,7 +317,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             nav = R.drawable.naved;
                             break;
                         case 4:
-                            nav = R.drawable.navee;
+                            nav = R.drawable.heli;
                             break;
                         case 5:
                             nav = R.drawable.navef;
@@ -341,6 +341,28 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
                       //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
                        // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
+                        Fenixaux.getPeca().getGiroPosition().x = 270f;
+                        Fenixaux.getPeca().getGiroPosition().y = 180;
+
+                        Fenixt.add(Fenixaux);
+                    } else   if(i==4){
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
+                        Fenixaux.getGiroPosition().x= 270f;
+                        Fenixaux.getGiroPosition().y = 180;
+
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+                        Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
+                        //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
+                        // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
                         Fenixaux.getPeca().getGiroPosition().x = 270f;
                         Fenixaux.getPeca().getGiroPosition().y = 180;
 
@@ -1181,24 +1203,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 //                   bolhas.get(p).draw((GL11) gl2);
 //                }
 
-                if (fasecarregada == 3) {
-                    for (int i = 0; i < 6; i++) {
-                        if ( Fenixt.get(i).getPeca() != null) {
-                            Fenixt.get(i).getPeca().draw((GL11) gl2);
-                            Fenixt.get(i).draw((GL11) gl2);
 
-                        }else {
-                            Fenixt.get(i).draw((GL11) gl2);
-                        }
-
-                    }
-                } else {
-                    Fenixt.get(indexNave).draw((GL11) gl2);
-                    if ( Fenixt.get(indexNave).getPeca() != null)
-                        Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
-
-
-                }
                 this.btUpgrade.draw((GL11) gl2);
                 this.btStart.draw((GL11) gl2);
                 this.btoptions.draw((GL11) gl2);
@@ -1209,7 +1214,16 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 float z = nivelEscudoP.get(0).getPosition().z;
 
                 //   nivelEscudoP.get(0).setPosition(new Vetor3(x,y,z-velocidade));
-                if (fasecarregada == 2) {
+
+
+
+                if(fasecarregada==0){
+
+                        Fenixt.get(indexNave).draw((GL11) gl2);
+                        if ( Fenixt.get(indexNave).getPeca() != null)
+                            Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
+
+                } else if (fasecarregada == 2) {
                     painelMode.get(0).draw((GL11) gl2);
                     if (tipoDeCard != 0)
                         painelMode.get(tipoDeCard == -1 ? 1 : 2).draw((GL11) gl2);
@@ -1226,6 +1240,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nivelAtaqueP.get(nivelAtaqueR == 4 ? 1 : 0).draw((GL11) gl2);
                     nivelBombaP.get(nivelBombaR == 4 ? 1 : 0).draw((GL11) gl2);
 
+                    Fenixt.get(indexNave).draw((GL11) gl2);
+                    if ( Fenixt.get(indexNave).getPeca() != null)
+                        Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
 
                     nivelImaP.get(nivelImaR).draw((GL11) gl2);
                     nivelAtaque.get(nivelAtaqueR).draw((GL11) gl2);
@@ -1237,6 +1254,20 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 } else if (fasecarregada == 3) {
                     this.btback.draw((GL11) gl2);
+
+
+                        for (int i = 0; i < 6; i++) {
+                            if ( Fenixt.get(i).getPeca() != null) {
+                                Fenixt.get(i).getPeca().draw((GL11) gl2);
+                                Fenixt.get(i).draw((GL11) gl2);
+
+                            }else {
+                                Fenixt.get(i).draw((GL11) gl2);
+                            }
+
+                        }
+
+
                 } else if (fasecarregada == 4) {
                     painelMode.get(0).draw((GL11) gl2);
                     this.btback.draw((GL11) gl2);
@@ -2162,6 +2193,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                                 nivelEscudoR = nivelNaveX.getEscudo();
                                 nivelBombaR = nivelNaveX.getBomba();
                                 nivelAtaqueR = nivelNaveX.getAtaque();
+                                fasecarregada=0;
                             }
                         }
                     } else if (fasecarregada == 5) {

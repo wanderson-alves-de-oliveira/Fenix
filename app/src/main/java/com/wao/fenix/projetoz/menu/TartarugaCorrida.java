@@ -131,7 +131,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int recolher = 1;
     private boolean iniciarTelaDeSelecao = true;
     private int indexNave = 0;
-
+private final float VELOCIDADEH = 20f;
     private boolean fogo = false;
     float veloz = 0f;
     float velox = 0f;
@@ -1270,7 +1270,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     nav = R.drawable.naved;
                                     break;
                                 case 4:
-                                    nav = R.drawable.navee;
+                                    nav = R.drawable.heli;
                                     break;
                                 case 5:
                                     nav = R.drawable.navef;
@@ -1279,6 +1279,20 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                             if(i==1){
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                                Fenixaux.setEstado("NBateu");
+                                Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                                Fenixaux.setGiroPosition(new Vetor3(0, 180, 0f));
+                                Fenixaux.vezes(1.5f);
+
+                                Fenixaux.setRefletir(true);
+                                Fenixaux.setFenix(true);
+                                Fenixaux.setNomeRef("Fenix");
+                                Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+
+                                Fenix.add(Fenixaux);
+                            }else   if(i==4){
+                                Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
                                 Fenixaux.setPosition(new Vetor3(0, 15f, -62));
@@ -1572,6 +1586,20 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     Fenixaux.setPosition(new Vetor3(0, 15f, -62));
                     Fenixaux.setGiroPosition(new Vetor3(0, 180, 0f));
                     Fenixaux.vezes(1.5f);
+                    Fenixaux.setRefletir(true);
+                    Fenixaux.setFenix(true);
+                    Fenixaux.setNomeRef("Fenix");
+                    Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+
+                    Fenix.add(Fenixaux);
+                }else   if(i==4){
+                    Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                    Fenixaux.setEstado("NBateu");
+                    Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                    Fenixaux.setGiroPosition(new Vetor3(0, 180, 0f));
+                    Fenixaux.vezes(1.5f);
+
                     Fenixaux.setRefletir(true);
                     Fenixaux.setFenix(true);
                     Fenixaux.setNomeRef("Fenix");
@@ -3003,7 +3031,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     public void controle() {
 
         if ( Fenix.get(indexNave).getPeca() != null) {
-            girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', 30f);
+            girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
             Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
         }
         for (Objeto3d o : ouro) {
@@ -3030,8 +3058,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 inimigosE2.get(i).getPeca().setPosition(inimigosE2.get(i).getPosition());
                 inimigosC2.get(i).getPeca().setPosition(inimigosC2.get(i).getPosition());
 
-                girarOBJ(inimigosE2.get(i).getPeca(), (1000) * -1, 'y', 30f);
-                girarOBJ(inimigosC2.get(i).getPeca(), (1000) * -1, 'y', 30f);
+                girarOBJ(inimigosE2.get(i).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
+                girarOBJ(inimigosC2.get(i).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
 
 
             }
@@ -4196,7 +4224,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                     }
                     if (pp.getPeca() != null) {
-                        girarOBJ( pp.getPeca(), (1000) * -1, 'y', 30f);
+                        girarOBJ( pp.getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                         pp.getPeca().setPosition(pp.getPosition());
 
                     }
@@ -5979,7 +6007,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             Fenix.get(indexNave).getPosition().x = 0;
             Fenix.get(indexNave).getPosition().z = -62f;
             if(Fenix.get(indexNave).getPeca()!=null) {
-                girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', 30f);
+                girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                 Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
             }
             invulneravel = false;
@@ -6060,7 +6088,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             timeLine = 0;
             Fenix.get(indexNave).getPosition().z = -62f;
             if(Fenix.get(indexNave).getPeca()!=null) {
-                girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', 30f);
+                girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                 Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
             }
             restart();
