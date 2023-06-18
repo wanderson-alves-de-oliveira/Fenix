@@ -5126,7 +5126,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             terreno.draw((GL11) gl2);
             terreno2.draw((GL11) gl2);
 
-           if(!(fase>10 && fase<20) ) {
+           if(!(fase>=10 && fase<20) ) {
                for (int p = 0; p < 6; p++) {
                    if (nuvens != null)
                        nuvens.get(p).draw((GL11) gl2);
