@@ -53,9 +53,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> Fenix;
     private Objeto3d btEspecial;
     private Objeto3d top;
-    private  Bitmap texturaValoresBombas;
+    private Bitmap texturaValoresBombas;
     private ArrayList<Objeto3d> life;
     private ArrayList<Objeto3d> escudo;
+    private ArrayList<Objeto3d> nuvens;
 
     private String alfabeto = "ABCDE";
     private Objeto3d telaIntro;
@@ -68,14 +69,14 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int inimigosGerados = 0;
     private int inimigosEliminados = 0;
     private Vetor3 positiomAnteriorBoss;
-   // private int total;
+    // private int total;
     private int indexOuro = 0;
-    private final int VIDASMAX = 500000;
+    private final int VIDASMAX = 5;
 
     private int po = 0;
     private int timeLine = 0;
     // private int timeFim = 0;
-    private int dificult = 1;
+    private int dificult = 0;
     private int fase = 0;
     private int proximoIni = 0;
     private int recomecar = 0;
@@ -100,7 +101,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private int rotacinarFenix = 0;
     private float pontoDoEixoX = 0;
-//    private float pontoDoEixoY = 0;
+    //    private float pontoDoEixoY = 0;
     private float turbo = 0.1f;
     private boolean parado = false;
     public boolean selectFase = false;
@@ -119,7 +120,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private int nivelTiroIndex = 0;
     private int danoNoInimigo = 10;
-//    private float pontoDoEixoYInicio = 0;
+    //    private float pontoDoEixoYInicio = 0;
 //    private float pontoDoEixoYFimm = 0;
 //    private float pontoDoEixoXInicio = 0;
 //    private float pontoDoEixoXFimm = 0;
@@ -131,7 +132,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int recolher = 1;
     private boolean iniciarTelaDeSelecao = true;
     private int indexNave = 0;
-private final float VELOCIDADEH = 20f;
+    private final float VELOCIDADEH = 20f;
     private boolean fogo = false;
     float veloz = 0f;
     float velox = 0f;
@@ -164,8 +165,8 @@ private final float VELOCIDADEH = 20f;
     private ArrayList<Objeto3d> inimigosC2;
 
     private ArrayList<Objeto3d> inimigosE2;
-  //  private int posteste = 0;
- //   private int postesteTime = 0;
+    //  private int posteste = 0;
+    //   private int postesteTime = 0;
     private float limitVelocidade = 0;
     private float limitVelocidadeAtual = 0;
 
@@ -216,7 +217,7 @@ private final float VELOCIDADEH = 20f;
 
     private int tempoDeEspera = 1;
     private int tempoDisparo = 0;
-   // private int tempoDisparoAtaqueEspecial = 0;
+    // private int tempoDisparoAtaqueEspecial = 0;
     private int idDisparoAtaqueEspecial = 0;
     private int idDisparoQTDAtaqueEspecial = 0;
 
@@ -339,8 +340,6 @@ private final float VELOCIDADEH = 20f;
 //    }
 
 
-
-
     public boolean isBossEliminado() {
         return bossEliminado;
     }
@@ -411,7 +410,6 @@ private final float VELOCIDADEH = 20f;
 
     public TartarugaCorrida() {
     }
-
 
 
     public AssetManager getAsset() {
@@ -502,146 +500,6 @@ private final float VELOCIDADEH = 20f;
         return horaDoBoss;
     }
 
-//    public void setHoraDoBoss(boolean horaDoBoss) {
-//        this.horaDoBoss = horaDoBoss;
-//    }
-//
-//    public boolean isEsplodirNave() {
-//        return esplodirNave;
-//    }
-//
-//    public void setEsplodirNave(boolean esplodirNave) {
-//        this.esplodirNave = esplodirNave;
-//    }
-//
-//    public int getTimeEsplosaoNave() {
-//        return timeEsplosaoNave;
-//    }
-//
-//    public void setTimeEsplosaoNave(int timeEsplosaoNave) {
-//        this.timeEsplosaoNave = timeEsplosaoNave;
-//    }
-//
-//    public int getEsplosaoNaveId() {
-//        return esplosaoNaveId;
-//    }
-//
-//    public void setEsplosaoNaveId(int esplosaoNaveId) {
-//        this.esplosaoNaveId = esplosaoNaveId;
-//    }
-//
-//    public boolean isRetornarQuadro() {
-//        return retornarQuadro;
-//    }
-//
-//    public void setRetornarQuadro(boolean retornarQuadro) {
-//        this.retornarQuadro = retornarQuadro;
-//    }
-//
-//    public int getVida() {
-//        return vida;
-//    }
-//
-//    public void setVida(int vida) {
-//        this.vida = vida;
-//    }
-
-//    public int getBarraDeEnergia() {
-//        return barraDeEnergia;
-//    }
-//
-//    public void setBarraDeEnergia(int barraDeEnergia) {
-//        this.barraDeEnergia = barraDeEnergia;
-//    }
-
-//    public ArrayList<MediaPlayer> getBoom() {
-//        return boom;
-//    }
-//
-//    public void setBoom(ArrayList<MediaPlayer> boom) {
-//        this.boom = boom;
-//    }
-//
-//    public MediaPlayer getDisparo() {
-//        return disparo;
-//    }
-//
-//    public void setDisparo(MediaPlayer disparo) {
-//        this.disparo = disparo;
-//    }
-//
-//    public MediaPlayer getVictory() {
-//        return victory;
-//    }
-//
-//    public void setVictory(MediaPlayer victory) {
-//        this.victory = victory;
-//    }
-//
-//    public boolean isInicio() {
-//        return inicio;
-//    }
-//
-//    public void setInicio(boolean inicio) {
-//        this.inicio = inicio;
-//    }
-//
-//    public int getModo() {
-//        return modo;
-//    }
-//
-//    public void setModo(int modo) {
-//        this.modo = modo;
-//    }
-
-//    public int getModoE() {
-//        return modoE;
-//    }
-//
-//    public void setModoE(int modoE) {
-//        this.modoE = modoE;
-//    }
-//
-//    public int getModoB() {
-//        return modoB;
-//    }
-//
-//    public void setModoB(int modoB) {
-//        this.modoB = modoB;
-//    }
-//
-//    public int getModoX() {
-//        return modoX;
-//    }
-//
-//    public void setModoX(int modoX) {
-//        this.modoX = modoX;
-//    }
-//
-//    public int getModoBoss() {
-//        return modoBoss;
-//    }
-//
-//    public void setModoBoss(int modoBoss) {
-//        this.modoBoss = modoBoss;
-//    }
-//
-//    public CapituraEventosObj getAnimal() {
-//        return animal;
-//    }
-//
-//    public void setAnimal(CapituraEventosObj animal) {
-//        this.animal = animal;
-//    }
-//
-//    public MediaPlayer getLeaoxm() {
-//        return leaoxm;
-//    }
-
-//    public void setLeaoxm(MediaPlayer leaoxm) {
-//        this.leaoxm = leaoxm;
-//    }
-
     public Context getContext() {
         return context;
     }
@@ -649,342 +507,6 @@ private final float VELOCIDADEH = 20f;
     public void setContext(Context context) {
         this.context = context;
     }
-
-//    public void setBitmap(Bitmap bitmap) {
-//        this.bitmap = bitmap;
-//    }
-//
-//    public int getModuloR() {
-//        return moduloR;
-//    }
-//
-//    public void setModuloR(int moduloR) {
-//        this.moduloR = moduloR;
-//    }
-//
-//    public int getCont() {
-//        return cont;
-//    }
-//
-//    public void setCont(int cont) {
-//        this.cont = cont;
-//    }
-//
-//    public int getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(int time) {
-//        this.time = time;
-//    }
-//
-//    public int getTimeModoC() {
-//        return timeModoC;
-//    }
-//
-//    public void setTimeModoC(int timeModoC) {
-//        this.timeModoC = timeModoC;
-//    }
-//
-//    public int getTimeModoE() {
-//        return timeModoE;
-//    }
-//
-//    public void setTimeModoE(int timeModoE) {
-//        this.timeModoE = timeModoE;
-//    }
-//
-//    public int getTimeModoB() {
-//        return timeModoB;
-//    }
-//
-//    public void setTimeModoB(int timeModoB) {
-//        this.timeModoB = timeModoB;
-//    }
-//
-//    public int getTimeModoX() {
-//        return timeModoX;
-//    }
-//
-//    public void setTimeModoX(int timeModoX) {
-//        this.timeModoX = timeModoX;
-//    }
-//
-//    public boolean isCarregaModoX() {
-//        return carregaModoX;
-//    }
-//
-//    public void setCarregaModoX(boolean carregaModoX) {
-//        this.carregaModoX = carregaModoX;
-//    }
-//
-//    public boolean isCarregaModoBoss() {
-//        return carregaModoBoss;
-//    }
-//
-//    public void setCarregaModoBoss(boolean carregaModoBoss) {
-//        this.carregaModoBoss = carregaModoBoss;
-//    }
-//
-//    public int getTimeModoBoss() {
-//        return timeModoBoss;
-//    }
-//
-//    public void setTimeModoBoss(int timeModoBoss) {
-//        this.timeModoBoss = timeModoBoss;
-//    }
-//
-//    public int getQuantidadeDeElementos() {
-//        return quantidadeDeElementos;
-//    }
-//
-//    public void setQuantidadeDeElementos(int quantidadeDeElementos) {
-//        this.quantidadeDeElementos = quantidadeDeElementos;
-//    }
-//
-//    public DisplayMetrics getDisplayMetrics() {
-//        return displayMetrics;
-//    }
-//
-//    public void setDisplayMetrics(DisplayMetrics displayMetrics) {
-//        this.displayMetrics = displayMetrics;
-//    }
-//
-//    public float getH() {
-//        return h;
-//    }
-//
-//    public void setH(float h) {
-//        this.h = h;
-//    }
-//
-//    public float getW() {
-//        return w;
-//    }
-//
-//    public void setW(float w) {
-//        this.w = w;
-//    }
-//
-//    public float[] getRotatef() {
-//        return rotatef;
-//    }
-//
-//    public void setRotatef(float[] rotatef) {
-//        this.rotatef = rotatef;
-//    }
-//
-//    public float getwTela() {
-//        return wTela;
-//    }
-//
-//    public void setwTela(float wTela) {
-//        this.wTela = wTela;
-//    }
-//
-//    public float getDificuldade() {
-//        return dificuldade;
-//    }
-//
-//    public void setDificuldade(float dificuldade) {
-//        this.dificuldade = dificuldade;
-//    }
-//
-//    public boolean isCarregado() {
-//        return carregado;
-//    }
-//
-//    public void setCarregado(boolean carregado) {
-//        this.carregado = carregado;
-//    }
-//
-//    public boolean isColidiu() {
-//        return colidiu;
-//    }
-//
-//    public void setColidiu(boolean colidiu) {
-//        this.colidiu = colidiu;
-//    }
-//
-//    public GL10 getGl() {
-//        return gl;
-//    }
-//
-//    public void setGl(GL10 gl) {
-//        this.gl = gl;
-//    }
-//
-//    public EGLConfig getEglConfig() {
-//        return eglConfig;
-//    }
-//
-//    public void setEglConfig(EGLConfig eglConfig) {
-//        this.eglConfig = eglConfig;
-//    }
-//
-//    public int[] getDirecaoX() {
-//        return direcaoX;
-//    }
-//
-//    public void setDirecaoX(int[] direcaoX) {
-//        this.direcaoX = direcaoX;
-//    }
-//
-//    public int[] getDirecaoX2() {
-//        return direcaoX2;
-//    }
-//
-//    public void setDirecaoX2(int[] direcaoX2) {
-//        this.direcaoX2 = direcaoX2;
-//    }
-//
-//    public int getDr() {
-//        return dr;
-//    }
-//
-//    public void setDr(int dr) {
-//        this.dr = dr;
-//    }
-//
-//    public float getVelocidade() {
-//        return velocidade;
-//    }
-//
-//    public float getVelocidadeinimigo1() {
-//        return velocidadeinimigo1;
-//    }
-//
-//    public float getVelocidadeTiro() {
-//        return velocidadeTiro;
-//    }
-//
-//    public float getVelocit() {
-//        return velocit;
-//    }
-//
-//    public boolean isLuping() {
-//        return luping;
-//    }
-//
-//    public void setLuping(boolean luping) {
-//        this.luping = luping;
-//    }
-//
-//    public float getEscala() {
-//        return escala;
-//    }
-//
-//    public void setEscala(float escala) {
-//        this.escala = escala;
-//    }
-//
-//    public float getDISTANCIA() {
-//        return DISTANCIA;
-//    }
-//
-//    public float getModuloY() {
-//        return moduloY;
-//    }
-//
-//    public void setModuloY(float moduloY) {
-//        this.moduloY = moduloY;
-//    }
-//
-//    public float getModulox() {
-//        return modulox;
-//    }
-//
-//    public void setModulox(float modulox) {
-//        this.modulox = modulox;
-//    }
-//
-//    public float getModuloz() {
-//        return moduloz;
-//    }
-
-//    public void setModuloz(float moduloz) {
-//        this.moduloz = moduloz;
-//    }
-//
-//    public float getAcelerarando() {
-//        return acelerarando;
-//    }
-//
-//    public void setAcelerarando(float acelerarando) {
-//        this.acelerarando = acelerarando;
-//    }
-//
-//    public int[] getFaseInit() {
-//        return faseInit;
-//    }
-//
-//    public void setFaseInit(int[] faseInit) {
-//        this.faseInit = faseInit;
-//    }
-//
-//    public float[] getWhite() {
-//        return white;
-//    }
-//
-//    public void setWhite(float[] white) {
-//        this.white = white;
-//    }
-//
-//    public float[] getGreen() {
-//        return green;
-//    }
-//
-//    public void setGreen(float[] green) {
-//        this.green = green;
-//    }
-//
-//    public float[] getBlue() {
-//        return blue;
-//    }
-//
-//    public void setBlue(float[] blue) {
-//        this.blue = blue;
-//    }
-//
-//    public float[] getAmarelo() {
-//        return amarelo;
-//    }
-//
-//    public void setAmarelo(float[] amarelo) {
-//        this.amarelo = amarelo;
-//    }
-//
-//    public float[] getLuzDifusa() {
-//        return luzDifusa;
-//    }
-//
-//    public void setLuzDifusa(float[] luzDifusa) {
-//        this.luzDifusa = luzDifusa;
-//    }
-//
-//    public FloatBuffer getCorBufferG() {
-//        return corBufferG;
-//    }
-//
-//    public void setCorBufferG(FloatBuffer corBufferG) {
-//        this.corBufferG = corBufferG;
-//    }
-//
-//    public float getDistanciaR() {
-//        return distanciaR;
-//    }
-//
-//    public void setDistanciaR(float distanciaR) {
-//        this.distanciaR = distanciaR;
-//    }
-//
-//    public int getTempo() {
-//        return tempo;
-//    }
-//
-//    public void setTempo(int tempo) {
-//        this.tempo = tempo;
-//    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TartarugaCorrida(Context context, AssetManager asset, int fase, boolean comSons, boolean comMusica, Nave nivelNave) throws IOException {
@@ -1040,7 +562,7 @@ private final float VELOCIDADEH = 20f;
         this.comMusica = comMusica;
         this.nivelNave = nivelNave;
         nivelBomba = nivelNave.getBomba();
-        indexNave = (int) (nivelNave.get_id()-1);
+        indexNave = (int) (nivelNave.get_id() - 1);
         danoNoInimigo = this.nivelNave.getDano();
         barraDeEnergiaDefesa = 75 * this.nivelNave.getDefesa();
         switch (nivelNave.getAtaque()) {
@@ -1063,7 +585,7 @@ private final float VELOCIDADEH = 20f;
         rastreio = new ArrayList<>();
         this.carregado = false;
         this.carga = -1;
-       // animal = new CapituraEventosObj(0, 0, 0, 350, 320, 420, "leao", Fenix.get(indexNave));
+        // animal = new CapituraEventosObj(0, 0, 0, 350, 320, 420, "leao", Fenix.get(indexNave));
         /////////////////////////////////////////////////////
         faseInit = new int[]{0, 1, 2, 3, 4, 5, 2, 3, 4, 1, 5, 0, 2};
         this.limpar = false;
@@ -1158,7 +680,7 @@ private final float VELOCIDADEH = 20f;
 
 
                 if (!carregamentoDireto) {
-                    this.telaIntro = new Objeto3d(context,  asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
+                    this.telaIntro = new Objeto3d(context, asset, "intro.obj", R.drawable.fenixload, new Vetor3(1f, 1f, 1f), "");
                     this.telaIntro.setMudarTamanho(true);
                     this.telaIntro.setPosition(new Vetor3(0, 0.02f, -0.9f));
                     this.telaIntro.vezes(1.3f);
@@ -1172,6 +694,8 @@ private final float VELOCIDADEH = 20f;
                 break;
             case 1:
                 if (!carregamentoDireto) {
+                    if (nuvens == null)
+                        nuvens = new ArrayList<>();
                     if (inimigosA == null)
                         inimigosA = new ArrayList<>();
                     if (ouro == null)
@@ -1277,7 +801,7 @@ private final float VELOCIDADEH = 20f;
                                     break;
                             }
 
-                            if(i==1){
+                            if (i == 1) {
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
@@ -1288,10 +812,10 @@ private final float VELOCIDADEH = 20f;
                                 Fenixaux.setRefletir(true);
                                 Fenixaux.setFenix(true);
                                 Fenixaux.setNomeRef("Fenix");
-                                Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                                Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
 
                                 Fenix.add(Fenixaux);
-                            }else   if(i==4){
+                            } else if (i == 4) {
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
@@ -1302,22 +826,34 @@ private final float VELOCIDADEH = 20f;
                                 Fenixaux.setRefletir(true);
                                 Fenixaux.setFenix(true);
                                 Fenixaux.setNomeRef("Fenix");
-                                Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                                Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
 
                                 Fenix.add(Fenixaux);
-                            }else   if(i==2){
+                            } else if (i == 2) {
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
                                 Fenixaux.setPosition(new Vetor3(0, 15f, -62));
-                            //    Fenixaux.vezes(1.5f);
+                                //    Fenixaux.vezes(1.5f);
 
                                 Fenixaux.setRefletir(true);
                                 Fenixaux.setFenix(true);
                                 Fenixaux.setNomeRef("Fenix");
 
                                 Fenix.add(Fenixaux);
-                            } else{
+                            } else if (i == 3) {
+                                Objeto3d Fenixaux = new Objeto3d(context, asset, "pegazus.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                                Fenixaux.setEstado("NBateu");
+                                Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                                //    Fenixaux.vezes(1.5f);
+
+                                Fenixaux.setRefletir(true);
+                                Fenixaux.setFenix(true);
+                                Fenixaux.setNomeRef("Fenix");
+
+                                Fenix.add(Fenixaux);
+                            } else {
                                 Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                                 Fenixaux.setEstado("NBateu");
@@ -1330,13 +866,9 @@ private final float VELOCIDADEH = 20f;
                         }
 
 
-
-
-
                     }
                     splosaoArrayNave = splosao(Fenix.get(indexNave));
                     animal = new CapituraEventosObj(0, 0, 0, 350, 320, 420, "leao", Fenix.get(indexNave));
-
 
 
                 }
@@ -1347,7 +879,7 @@ private final float VELOCIDADEH = 20f;
 
                 if (!carregamentoDireto) {
 
-                    btEspecial = new Objeto3d(context,  asset, "micel.obj", R.drawable.nota, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    btEspecial = new Objeto3d(context, asset, "micel.obj", R.drawable.nota, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                     this.btEspecial.setEstado("NBateu");
                     btEspecial.setPosition(new Vetor3(0, 15.5f, -61.8f));
@@ -1358,14 +890,14 @@ private final float VELOCIDADEH = 20f;
 
                     btEspecial.setNomeRef("btEspecial");
                 }
-                texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelNave.getBomba()+1));
+                texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelNave.getBomba() + 1));
                 btEspecial.LoadTexture(texturaValoresBombas);
                 carga++;
                 break;
             case 6:
                 if (!carregamentoDireto) {
 
-                    top = new Objeto3d(context,  asset, "top.obj", R.drawable.top, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    top = new Objeto3d(context, asset, "top.obj", R.drawable.top, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                     this.top.setEstado("NBateu");
                     top.setPosition(new Vetor3(0, 15.5f, -63.6f));
@@ -1384,7 +916,7 @@ private final float VELOCIDADEH = 20f;
                     life = new ArrayList<>();
                     escudo = new ArrayList<>();
 
-                    Objeto3d l = new Objeto3d(context,   asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d l = new Objeto3d(context, asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     l.setEstado("NBateu");
                     l.setPosition(new Vetor3(0, ly, lz));
                     l.setRefletir(true);
@@ -1392,7 +924,7 @@ private final float VELOCIDADEH = 20f;
                     l.vezes(0.15f);
                     l.setNomeRef("life");
                     life.add(l);
-                    Objeto3d l2 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d l2 = new Objeto3d(context, asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     l2.setEstado("NBateu");
                     l2.setPosition(new Vetor3(0, ly, lz));
                     l2.setRefletir(true);
@@ -1400,7 +932,7 @@ private final float VELOCIDADEH = 20f;
                     l2.vezes(0.15f);
                     l2.setNomeRef("life");
                     life.add(l2);
-                    Objeto3d l3 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d l3 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     l3.setEstado("NBateu");
                     l3.setPosition(new Vetor3(0, ly, lz));
                     l3.setRefletir(true);
@@ -1410,7 +942,7 @@ private final float VELOCIDADEH = 20f;
                     life.add(l3);
 
 
-                    Objeto3d le = new Objeto3d(context,   asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d le = new Objeto3d(context, asset, "top.obj", R.drawable.life, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     le.setEstado("NBateu");
                     le.setPosition(new Vetor3(lxe, lye, lze));
                     le.setRefletir(true);
@@ -1418,7 +950,7 @@ private final float VELOCIDADEH = 20f;
                     le.vezes(0.1f);
                     le.setNomeRef("life");
                     escudo.add(le);
-                    Objeto3d le2 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d le2 = new Objeto3d(context, asset, "top.obj", R.drawable.lifee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     le2.setEstado("NBateu");
                     le2.setPosition(new Vetor3(lxe, lye, lze));
                     le2.setRefletir(true);
@@ -1426,7 +958,7 @@ private final float VELOCIDADEH = 20f;
                     le2.vezes(0.1f);
                     le2.setNomeRef("life");
                     escudo.add(le2);
-                    Objeto3d le3 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d le3 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     le3.setEstado("NBateu");
                     le3.setPosition(new Vetor3(lxe, lye, lze));
                     le3.setRefletir(true);
@@ -1441,7 +973,7 @@ private final float VELOCIDADEH = 20f;
                 break;
             case 8:
                 if (!carregamentoDireto) {
-                    Objeto3d l4 = new Objeto3d(context,  asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d l4 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     l4.setEstado("NBateu");
                     l4.setPosition(new Vetor3(0, ly, lz));
                     l4.setRefletir(true);
@@ -1450,7 +982,7 @@ private final float VELOCIDADEH = 20f;
                     l4.setNomeRef("life");
                     life.add(l4);
 
-                    Objeto3d l5 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d l5 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     l5.setEstado("NBateu");
                     l5.setPosition(new Vetor3(0, ly, lz));
                     l5.setRefletir(true);
@@ -1459,7 +991,7 @@ private final float VELOCIDADEH = 20f;
                     l5.setNomeRef("life");
                     life.add(l5);
 
-                    Objeto3d le4 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d le4 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     le4.setEstado("NBateu");
                     le4.setPosition(new Vetor3(lxe, lye, lze));
                     le4.setRefletir(true);
@@ -1468,7 +1000,7 @@ private final float VELOCIDADEH = 20f;
                     le4.setNomeRef("life");
                     escudo.add(le4);
 
-                    Objeto3d le5 = new Objeto3d(context,   asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    Objeto3d le5 = new Objeto3d(context, asset, "top.obj", R.drawable.lifeeeee, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     le5.setEstado("NBateu");
                     le5.setPosition(new Vetor3(lxe, lye, lze));
                     le5.setRefletir(true);
@@ -1500,7 +1032,7 @@ private final float VELOCIDADEH = 20f;
                 if (!carregamentoDireto) {
                     if (tiros.size() < QTD_DE_TIROS) {
                         int i = tiros.size();
-                        tiros.add(new Objeto3d(context,  asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros.add(new Objeto3d(context, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
                         tiros.get(i).vezes(1.8f);
                         tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
 
@@ -1565,6 +1097,11 @@ private final float VELOCIDADEH = 20f;
             esplosaoArrayObj = new ArrayList<>();
         if (tiros == null)
             tiros = new ArrayList<>();
+        if (nuvens == null)
+            nuvens = new ArrayList<>();
+
+
+
 
         if (Fenix == null) {
             Fenix = new ArrayList<>();
@@ -1591,7 +1128,7 @@ private final float VELOCIDADEH = 20f;
                         break;
                 }
 
-                if(i==1){
+                if (i == 1) {
                     Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                     Fenixaux.setEstado("NBateu");
@@ -1601,10 +1138,10 @@ private final float VELOCIDADEH = 20f;
                     Fenixaux.setRefletir(true);
                     Fenixaux.setFenix(true);
                     Fenixaux.setNomeRef("Fenix");
-                    Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                    Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
 
                     Fenix.add(Fenixaux);
-                }else   if(i==4){
+                } else if (i == 4) {
                     Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                     Fenixaux.setEstado("NBateu");
@@ -1615,21 +1152,33 @@ private final float VELOCIDADEH = 20f;
                     Fenixaux.setRefletir(true);
                     Fenixaux.setFenix(true);
                     Fenixaux.setNomeRef("Fenix");
-                    Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                    Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
 
                     Fenix.add(Fenixaux);
-                }else   if(i==2){
+                } else if (i == 2) {
                     Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                     Fenixaux.setEstado("NBateu");
                     Fenixaux.setPosition(new Vetor3(0, 15f, -62));
-                 //   Fenixaux.vezes(1.5f);
+                    //   Fenixaux.vezes(1.5f);
                     Fenixaux.setRefletir(true);
                     Fenixaux.setFenix(true);
                     Fenixaux.setNomeRef("Fenix");
 
                     Fenix.add(Fenixaux);
-                }else {
+                } else if (i == 3) {
+                    Objeto3d Fenixaux = new Objeto3d(context, asset, "pegazus.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                    Fenixaux.setEstado("NBateu");
+                    Fenixaux.setPosition(new Vetor3(0, 15f, -62));
+                    //    Fenixaux.vezes(1.5f);
+
+                    Fenixaux.setRefletir(true);
+                    Fenixaux.setFenix(true);
+                    Fenixaux.setNomeRef("Fenix");
+
+                    Fenix.add(Fenixaux);
+                } else {
 
                     Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
@@ -1652,6 +1201,9 @@ private final float VELOCIDADEH = 20f;
 
         }
 
+
+        if (nuvens.size() == 0)
+            nuvens();
 
         if (inimigosA.size() == 0)
             inimigosA();
@@ -1718,7 +1270,6 @@ private final float VELOCIDADEH = 20f;
             o.setCores(new Vetor3(1, 1, 1f));
 
 
-
         }
         for (Objeto3d o : inimigosE) {
 //        switch (indexF) {
@@ -1767,13 +1318,13 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < this.quantidadeDeElementos; p++) {
             char v = alfabeto.charAt(p);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosB.add(new Objeto3d(context,   asset, "inimigo.obj", R.drawable.inimigo, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosB"));
+                inimigosB.add(new Objeto3d(context, asset, "inimigo.obj", R.drawable.inimigo, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosB"));
             }
             //    inimigosB.get(p).loadGLTexture(false);
             inimigosB.get(p).setValor(String.valueOf(v));
             inimigosB.get(p).setVida(vidaB * dificuldade);
             inimigosB.get(p).setRecoverVida(vidaB * dificuldade);
-            inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p),   3, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
+            inimigosB.get(p).setTiroNave(inimigosB.get(p).criarTiros(inimigosB.get(p), 3, asset, "tiroc.obj", R.drawable.tirob, context.getResources()));
             inimigosB.get(p).setRefletir(true);
             // inimigosB.get(p).loadGLTexture();
             esplosaoArrayObj.add(new Esplosao(context, inimigosB.get(p), asset, context.getResources(), 0.8f, "inimigosB", p));
@@ -1788,15 +1339,52 @@ private final float VELOCIDADEH = 20f;
 
     }
 
+
+
+    public void nuvens() throws IOException {
+
+        for (int p = 0; p < 6; p++) {
+            // char v = alfabeto.charAt(p );
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                switch (p){
+                    case 0:
+                        nuvens.add(new Objeto3d(context, asset, "nuvema.obj", R.drawable.nuvem_mara, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                    case 1:
+                        nuvens.add(new Objeto3d(context, asset, "nuvemb.obj", R.drawable.nuvem_mara, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                    case 2:
+                        nuvens.add(new Objeto3d(context, asset, "nuvemc.obj", R.drawable.nuvem_marb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                    case 3:
+                        nuvens.add(new Objeto3d(context, asset, "nuvemd.obj", R.drawable.nuvem_marb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                    case 4:
+                        nuvens.add(new Objeto3d(context, asset, "nuveme.obj", R.drawable.nuvem_marc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                    case 5:
+                        nuvens.add(new Objeto3d(context, asset, "nuvemf.obj", R.drawable.nuvem_marc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
+                        break;
+                }
+            }
+
+            nuvens.get(p).vezes(0.8f);
+            nuvens.get(p).setCores(new Vetor3(1f,1f,1f));
+            nuvens.get(p).setPosition(new Vetor3((float) (-1 + (Math.random() * 2)), (DISTANCIA-2)-p*0.01f, ((p*10f)*-1)-60f));
+            nuvens.get(p).setRefletir(true);
+        }
+
+    }
+
     public void inimigosA() throws IOException {
         float vidaA = 90f;
         for (int p = 0; p < 2; p++) {
             char v = alfabeto.charAt(p);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosA.add(new Objeto3d(context,   asset, "based.obj", R.drawable.based, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosA"));
+                inimigosA.add(new Objeto3d(context, asset, "based.obj", R.drawable.based, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosA"));
             }
             inimigosA.get(p).setValor(String.valueOf(v));
-            inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p),   5, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
+            inimigosA.get(p).setTiroNave(inimigosA.get(p).criarTiros(inimigosA.get(p), 5, asset, "tiroc.obj", R.drawable.tiroa, context.getResources()));
             inimigosA.get(p).setVida(vidaA * dificuldade);
             inimigosA.get(p).setRecoverVida(vidaA * dificuldade);
             inimigosA.get(p).setRefletir(true);
@@ -1823,7 +1411,7 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 6; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosC.add(new Objeto3d(context,  asset, "inimigoc.obj", R.drawable.inimigoc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
+                inimigosC.add(new Objeto3d(context, asset, "inimigoc.obj", R.drawable.inimigoc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC"));
                 esplosaoArrayObj.add(new Esplosao(context, inimigosC.get(p), asset, context.getResources(), 0.8f, "inimigosC", p));
 
             }
@@ -1832,7 +1420,7 @@ private final float VELOCIDADEH = 20f;
             inimigosC.get(p).setValor(String.valueOf("v"));
             inimigosC.get(p).setVida(vidaCE * dificuldade);
             inimigosC.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p),   1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+            inimigosC.get(p).setTiroNave(inimigosC.get(p).criarTiros(inimigosC.get(p), 1, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
             inimigosC.get(p).setTipo("C");
             inimigosC.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
             inimigosC.get(p).setRefletir(true);
@@ -1847,14 +1435,14 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 6; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosE.add(new Objeto3d(context,   asset, "inimigoc.obj", R.drawable.inimigoeec, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE"));
+                inimigosE.add(new Objeto3d(context, asset, "inimigoc.obj", R.drawable.inimigoeec, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE"));
                 esplosaoArrayObj.add(new Esplosao(context, inimigosE.get(p), asset, context.getResources(), 0.8f, "inimigosE", p));
 
             }
             inimigosE.get(p).setValor(String.valueOf("v"));
             inimigosE.get(p).setVida(vidaCE * dificuldade);
             inimigosE.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p),   1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
+            inimigosE.get(p).setTiroNave(inimigosE.get(p).criarTiros(inimigosE.get(p), 1, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
             inimigosE.get(p).setTipo("E");
             inimigosE.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
             inimigosE.get(p).setRefletir(true);
@@ -1869,10 +1457,10 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 3; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosC2.add(new Objeto3d(context,   asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC2"));
+                inimigosC2.add(new Objeto3d(context, asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosC2"));
 
                 inimigosC2.get(p).vezes(1.5f);
-                inimigosC2.get(p).gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                inimigosC2.get(p).gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
 
                 esplosaoArrayObj.add(new Esplosao(context, inimigosC2.get(p), asset, context.getResources(), 0.8f, "inimigosC2", p));
 
@@ -1882,7 +1470,7 @@ private final float VELOCIDADEH = 20f;
             inimigosC2.get(p).setValor(String.valueOf("v"));
             inimigosC2.get(p).setVida(vidaCE * dificuldade);
             inimigosC2.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosC2.get(p).setTiroNave(inimigosC2.get(p).criarTiros(inimigosC2.get(p),  3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+            inimigosC2.get(p).setTiroNave(inimigosC2.get(p).criarTiros(inimigosC2.get(p), 3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
             inimigosC2.get(p).setTipo("C");
             inimigosC2.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA, -63f));
             inimigosC2.get(p).setRefletir(true);
@@ -1897,15 +1485,15 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 3; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosE2.add(new Objeto3d(context,   asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE2"));
+                inimigosE2.add(new Objeto3d(context, asset, "inimigod.obj", R.drawable.inimigoee, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosE2"));
                 inimigosE2.get(p).vezes(1.5f);
                 esplosaoArrayObj.add(new Esplosao(context, inimigosE2.get(p), asset, context.getResources(), 0.8f, "inimigosE2", p));
-                inimigosE2.get(p).gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1.5f);
+                inimigosE2.get(p).gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1.5f);
             }
             inimigosE2.get(p).setValor(String.valueOf("v"));
             inimigosE2.get(p).setVida(vidaCE * dificuldade);
             inimigosE2.get(p).setRecoverVida(vidaCE * dificuldade);
-            inimigosE2.get(p).setTiroNave(inimigosE2.get(p).criarTiros(inimigosE2.get(p),   3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+            inimigosE2.get(p).setTiroNave(inimigosE2.get(p).criarTiros(inimigosE2.get(p), 3, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
             inimigosE2.get(p).setTipo("E");
             inimigosE2.get(p).setPosition(new Vetor3(-1.5f, DISTANCIA - 0.08f, -63f));
             inimigosE2.get(p).setRefletir(true);
@@ -1919,15 +1507,13 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 12; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ouro.add(new Objeto3d(context,  asset, "painel_a.obj", R.drawable.notavc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "ouro"));
+                ouro.add(new Objeto3d(context, asset, "painel_a.obj", R.drawable.notavc, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "ouro"));
             }
-        //    ouro.get(p).setValor(String.valueOf("o"));
-        //    ouro.get(p).setVida(10);
-         //   ouro.get(p).setTipo("o");
-             ouro.get(p).vezes(0.1f);
+
+            ouro.get(p).vezes(0.1f);
             ouro.get(p).setPosition(new Vetor3(-1000.5f, DISTANCIA - 0.08f, -63f));
             // ouro.get(p).setRefletir(true);
-        //    ouro.get(p).setCores(new Vetor3(1f, 1f, 1f));
+            //    ouro.get(p).setCores(new Vetor3(1f, 1f, 1f));
             // inimigosE.get(p).loadGLTexture();
         }
     }
@@ -1938,14 +1524,14 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < 1; p++) {
             char v = alfabeto.charAt(p);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ataqueEspecial.add(new Objeto3d(context,   asset, "especial.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
-             //   ataqueEspecial.get(p).vezes(1f);
+                ataqueEspecial.add(new Objeto3d(context, asset, "especial.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                //   ataqueEspecial.get(p).vezes(1f);
                 ataqueEspecial.get(p).setTransparente(true);
                 ataqueEspecial.get(p).setValor(String.valueOf(v));
                 ataqueEspecial.get(p).setVida(vidaX * dificuldade);
                 ataqueEspecial.get(p).setRecoverVida(vidaX * dificuldade);
                 ataqueEspecial.get(p).setId(p);
-               // ataqueEspecial.get(p).setTiroNave(ataqueEspecial.get(p).criarTiros(ataqueEspecial.get(p), R.drawable.tiroxxnorm, 5, asset, "tiroc.obj", R.drawable.esppx, context.getResources()));
+                // ataqueEspecial.get(p).setTiroNave(ataqueEspecial.get(p).criarTiros(ataqueEspecial.get(p), R.drawable.tiroxxnorm, 5, asset, "tiroc.obj", R.drawable.esppx, context.getResources()));
                 ataqueEspecial.get(p).setRefletir(true);
                 ataqueEspecial.get(p).setAtivado(false);
                 ataqueEspecial.get(p).setMover("nulo");
@@ -1988,13 +1574,13 @@ private final float VELOCIDADEH = 20f;
         for (int p = 0; p < this.quantidadeDeElementos; p++) {
             char v = alfabeto.charAt(p);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                inimigosX.add(new Objeto3d(context,  asset, "inimigox.obj", R.drawable.inimigox, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosX"));
+                inimigosX.add(new Objeto3d(context, asset, "inimigox.obj", R.drawable.inimigox, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "inimigosX"));
 
                 inimigosX.get(p).setValor(String.valueOf(v));
                 inimigosX.get(p).setVida(vidaX * dificuldade);
                 inimigosX.get(p).setRecoverVida(vidaX * dificuldade);
                 inimigosX.get(p).setId(p);
-                inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p),  3, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
+                inimigosX.get(p).setTiroNave(inimigosX.get(p).criarTiros(inimigosX.get(p), 3, asset, "tiroc.obj", R.drawable.tiroxx, context.getResources()));
                 inimigosX.get(p).setRefletir(true);
                 inimigosX.get(p).setAtivado(false);
                 //  inimigosX.get(p).loadGLTexture();
@@ -2015,8 +1601,6 @@ private final float VELOCIDADEH = 20f;
     }
 
 
-
-
     public void boss() throws IOException {
 
 
@@ -2025,18 +1609,18 @@ private final float VELOCIDADEH = 20f;
         switch (chefeDafase) {
 
             case 0:
-                boss.set(chefeDafase, new Objeto3d(context,   asset, "inimigoc.obj", R.drawable.inimigoeea, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "inimigoc.obj", R.drawable.inimigoeea, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),   20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 20, asset, "tiroc.obj", R.drawable.tiroe, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
                 break;
             case 1:
-                boss.set(chefeDafase, new Objeto3d(context,   asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),   4, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 4, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
-                boss.get(chefeDafase).gerarPeca(asset,"helices.obj",R.drawable.inimigoee,7f);
+                boss.get(chefeDafase).gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 7f);
 
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
                     o.vezes(4);
@@ -2044,17 +1628,17 @@ private final float VELOCIDADEH = 20f;
                 }
                 break;
             case 2:
-                boss.set(chefeDafase, new Objeto3d(context,   asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),  20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
 
                 break;
             case 3:
-                boss.set(chefeDafase, new Objeto3d(context,   asset, "inimigox.obj", R.drawable.inimigoxb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "inimigox.obj", R.drawable.inimigoxb, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(5);
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),  20, asset, "inimigox.obj", R.drawable.inimigox, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 20, asset, "inimigox.obj", R.drawable.inimigox, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
                 for (Objeto3d o : boss.get(chefeDafase).getTiroNave()) {
                     o.vezes(0.2f);
@@ -2062,18 +1646,18 @@ private final float VELOCIDADEH = 20f;
                 }
                 break;
             case 4:
-                boss.set(chefeDafase, new Objeto3d(context,   asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "bossxa.obj", R.drawable.bossxab, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(7);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),  20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 20, asset, "tiroc.obj", R.drawable.tiroc, context.getResources()));
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
 
                 break;
             case 5:
-                boss.set(chefeDafase, new Objeto3d(context,  asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
+                boss.set(chefeDafase, new Objeto3d(context, asset, "inimigod.obj", R.drawable.inimigod, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "boss"));
                 boss.get(chefeDafase).vezes(4);
                 boss.get(chefeDafase).setValor(String.valueOf("BOSS"));
-                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase),   5, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
+                boss.get(chefeDafase).setTiroNave(boss.get(chefeDafase).criarTiros(boss.get(chefeDafase), 5, asset, "tiroc.obj", R.drawable.tironaveboss, context.getResources()));
 
                 boss.get(chefeDafase).setCores(new Vetor3(1f, 1f, 1f));
 
@@ -2110,7 +1694,7 @@ private final float VELOCIDADEH = 20f;
                 if (objetosCenario.get(1) == null) {
                     ArrayList<Objeto3d> cena;
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "popredio.obj", R.drawable.plus, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "popredio.obj", R.drawable.plus, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2119,7 +1703,7 @@ private final float VELOCIDADEH = 20f;
 
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "popredio.obj", R.drawable.plus, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "popredio.obj", R.drawable.plus, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2132,8 +1716,8 @@ private final float VELOCIDADEH = 20f;
 
                 }
                 if (niveis.get(1) == null) {
-                    niveis.set(1, new Objeto3d(context,  asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(1, new Objeto3d(context,   asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(1, new Objeto3d(context, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(1, new Objeto3d(context, asset, "n.obj", R.drawable.nivel, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2142,7 +1726,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,  asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2150,7 +1734,7 @@ private final float VELOCIDADEH = 20f;
                     cena.get(0).setRefletir(true);
 //
 //
-                    cena.add(new Objeto3d(context,  asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2162,8 +1746,8 @@ private final float VELOCIDADEH = 20f;
                     objetosCenario.set(0, cena);
                 }
                 if (niveis.get(0) == null) {
-                    niveis.set(0, new Objeto3d(context,   asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(0, new Objeto3d(context,   asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(0, new Objeto3d(context, asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(0, new Objeto3d(context, asset, "nb.obj", R.drawable.bg, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2172,7 +1756,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2182,7 +1766,7 @@ private final float VELOCIDADEH = 20f;
                     cena.get(0).setRefletir(true);
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotop.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2195,8 +1779,8 @@ private final float VELOCIDADEH = 20f;
                 }
 
                 if (niveis.get(3) == null) {
-                    niveis.set(3, new Objeto3d(context,   asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(3, new Objeto3d(context,  asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(3, new Objeto3d(context, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(3, new Objeto3d(context, asset, "n.obj", R.drawable.nivelbb, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2205,7 +1789,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "terrenotop.obj", R.drawable.pedra, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotop.obj", R.drawable.pedra, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2216,7 +1800,7 @@ private final float VELOCIDADEH = 20f;
 
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "arvores.obj", R.drawable.nuvem_mar, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2229,8 +1813,8 @@ private final float VELOCIDADEH = 20f;
                 }
 
                 if (niveis.get(2) == null) {
-                    niveis.set(2, new Objeto3d(context,   asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(2, new Objeto3d(context,   asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(2, new Objeto3d(context, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(2, new Objeto3d(context, asset, "n.obj", R.drawable.mar, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2239,7 +1823,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotopf.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2250,7 +1834,7 @@ private final float VELOCIDADEH = 20f;
 
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotopf.obj", R.drawable.eruptiona, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2263,8 +1847,8 @@ private final float VELOCIDADEH = 20f;
                 }
 
                 if (niveis.get(4) == null) {
-                    niveis.set(4, new Objeto3d(context,   asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(4, new Objeto3d(context,  asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(4, new Objeto3d(context, asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(4, new Objeto3d(context, asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2275,7 +1859,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "arvores.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "arvores.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2286,7 +1870,7 @@ private final float VELOCIDADEH = 20f;
 
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "arvores.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "arvores.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2299,8 +1883,8 @@ private final float VELOCIDADEH = 20f;
                 }
 
                 if (niveis.get(5) == null) {
-                    niveis.set(5, new Objeto3d(context,   asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(5, new Objeto3d(context,  asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(5, new Objeto3d(context, asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(5, new Objeto3d(context, asset, "n.obj", R.drawable.spg, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
                 break;
@@ -2310,7 +1894,7 @@ private final float VELOCIDADEH = 20f;
                     ArrayList<Objeto3d> cena;
 
                     cena = new ArrayList<>();
-                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(0).setValor(String.valueOf("A"));
                     cena.get(0).setVida(150f * dificuldade);
                     cena.get(0).setRecoverVida(150f * dificuldade);
@@ -2321,7 +1905,7 @@ private final float VELOCIDADEH = 20f;
 
 //
 //
-                    cena.add(new Objeto3d(context,   asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
+                    cena.add(new Objeto3d(context, asset, "terrenotopf.obj", R.drawable.esppx, new Vetor3(escala * 5f, escala * 5f, escala * 5f), ""));
                     cena.get(1).setValor(String.valueOf("A"));
                     cena.get(1).setVida(150f * dificuldade);
                     cena.get(1).setRecoverVida(150f * dificuldade);
@@ -2335,24 +1919,24 @@ private final float VELOCIDADEH = 20f;
                 }
 
                 if (niveis.get(6) == null) {
-                    niveis.set(6, new Objeto3d(context,   asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
-                    niveis2.set(6, new Objeto3d(context,  asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis.set(6, new Objeto3d(context, asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
+                    niveis2.set(6, new Objeto3d(context, asset, "n.obj", R.drawable.spf, new Vetor3(escala * 2, escala, escala), ""));
 
                 }
 
                 Bitmap textc = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     Bitmap bi = BitmapFactory.decodeResource(context.getResources(), R.drawable.nivela);
-                    textc = new MudaTextura(context).mudarCorCarimbo( R.drawable.spf,0,200,0);
+                    textc = new MudaTextura(context).mudarCorCarimbo(R.drawable.spf, 0, 200, 0);
                 }
 
                 niveis.get(6).LoadTexture(textc);
                 niveis2.get(6).LoadTexture(textc);
 
-                  textc = null;
+                textc = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     Bitmap bi = BitmapFactory.decodeResource(context.getResources(), R.drawable.nivela);
-                    textc = new MudaTextura(context).mudarCorCarimbo( R.drawable.spf,0,200,0);
+                    textc = new MudaTextura(context).mudarCorCarimbo(R.drawable.spf, 0, 200, 0);
                 }
 
                 objetosCenario.get(6).get(0).LoadTexture(textc);
@@ -2361,9 +1945,6 @@ private final float VELOCIDADEH = 20f;
                 break;
         }
     }
-
-
-
 
 
     public void carregarCronologia(int nivel) throws IOException {
@@ -2402,7 +1983,7 @@ private final float VELOCIDADEH = 20f;
         chefeDafase = faseBoss != 0 ? faseBoss - 1 : 0;
 
 
-        if(indiceLevel>=6){
+        if (indiceLevel >= 6) {
 
             Random r = new Random();
             int hf = r.nextInt(6 - 0);
@@ -2410,7 +1991,7 @@ private final float VELOCIDADEH = 20f;
             carregarFase(6);
             cena = objetosCenario.get(6);
 
-        }else {
+        } else {
             carregarFase(indiceLevel);
 
             cena = objetosCenario.get(indiceLevel);
@@ -2442,7 +2023,8 @@ private final float VELOCIDADEH = 20f;
 
 
         }
-
+        if (nuvens.size() == 0)
+            nuvens();
         if (inimigosA.size() == 0)
             inimigosA();
 
@@ -2492,10 +2074,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);  // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);  // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(0, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);  // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);  // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(0, 10, ceoZ2));
 
                     break;
@@ -2505,11 +2087,11 @@ private final float VELOCIDADEH = 20f;
                     ceoZ = -62;
                     ceoZ2 = -103;
 
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-5, 10, ceoZ));
 
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-5, 10, ceoZ2));
 
                     break;
@@ -2517,10 +2099,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                //  ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-10, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                //  ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-10, 10, ceoZ2));
 
                     break;
@@ -2531,10 +2113,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-15, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-15, 10, ceoZ2));
 
                     break;
@@ -2543,10 +2125,10 @@ private final float VELOCIDADEH = 20f;
                 case 4:
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-20, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-20, 10, ceoZ2));
 
                     break;
@@ -2554,9 +2136,9 @@ private final float VELOCIDADEH = 20f;
                     // this.musica = MediaPlayer.create(context, R.raw.musicd);
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                //  ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-25, 10, ceoZ));
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                //  ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                //  ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-25, 10, ceoZ2));
 
                     break;
@@ -2566,10 +2148,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-30, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-30, 10, ceoZ2));
 
                     break;
@@ -2578,9 +2160,9 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-35, 10, ceoZ));
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-35, 10, ceoZ2));
 
                     break;
@@ -2588,10 +2170,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-40, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-40, 10, ceoZ2));
 
                     break;
@@ -2601,10 +2183,10 @@ private final float VELOCIDADEH = 20f;
 
                     ceoZ = -62;
                     ceoZ2 = -103;
-                    terreno = niveis.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno = niveis.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno.setPosition(new Vetor3(-45, 10, ceoZ));
 
-                    terreno2 = niveis2.get(indiceLevel<6?indiceLevel:6);                // ceu.loadGLTexture(true);
+                    terreno2 = niveis2.get(indiceLevel < 6 ? indiceLevel : 6);                // ceu.loadGLTexture(true);
                     terreno2.setPosition(new Vetor3(-45, 10, ceoZ2));
 
                     break;
@@ -2628,7 +2210,7 @@ private final float VELOCIDADEH = 20f;
         float x = obj.getTamanho().getX();
         float y = obj.getTamanho().getY();
         float z = obj.getTamanho().getZ();
-        splosaoArray.add(new Objeto3d(context,   asset, "sp.obj", R.drawable.espp, new Vetor3(x, y, z), ""));
+        splosaoArray.add(new Objeto3d(context, asset, "sp.obj", R.drawable.espp, new Vetor3(x, y, z), ""));
         splosaoArray.get(0).setTransparente(true);
 
         for (int p = 0; p < splosaoArray.size(); p++) {
@@ -2720,7 +2302,6 @@ private final float VELOCIDADEH = 20f;
     }
 
 
-
     public void parar() {
         // SAI DO JOGO PARA A TELA DE MENU
 
@@ -2802,7 +2383,7 @@ private final float VELOCIDADEH = 20f;
             }
 
         } else {
-            nivelNave.setAtaque(nivelNave.getAtaque()>0 ?nivelNave.getAtaque()- 1:0);
+            nivelNave.setAtaque(nivelNave.getAtaque() > 0 ? nivelNave.getAtaque() - 1 : 0);
 
             if (nivelNave.getAtaque() >= 0) {
                 BDNave BDN = new BDNave(context);
@@ -2846,8 +2427,16 @@ private final float VELOCIDADEH = 20f;
                     if (d < 0.2f) {
                         obj.setEsplodirNave(true);
                         obj2.setEsplodirNave(true);
-                        if (!obj.getOrigem().equals("BOSS"))
-                            obj.getPosition().z = -1000f;
+                        if (!obj.getOrigem().equals("BOSS")) {
+                            if("inimigosB".equals(obj.getNomeRef())){
+                                obj.setVida(-1);
+
+                            }else {
+                                obj.setVida(-1);
+
+                            }
+
+                        }
                         obj.setAtivado(false);
                         obj.setAbatido(true);
                         esplodirNave = true;
@@ -2861,10 +2450,10 @@ private final float VELOCIDADEH = 20f;
                             obj.getPosition().z = -57;
 
                         if (obj.isDisparando() || obj.getNomeRef().equals("")) {
-                            if (nivelNave.getEscudo() > -1){
+                            if (nivelNave.getEscudo() > -1) {
 
-                                barraDeEnergia -= 10-nivelNave.getEscudoNivel();
-                            }else {
+                                barraDeEnergia -= 10 - nivelNave.getEscudoNivel();
+                            } else {
                                 barraDeEnergia -= 10;
                             }
                         }
@@ -2898,7 +2487,7 @@ private final float VELOCIDADEH = 20f;
 
                         }
 
-                        obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
+                      //  obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
                         ;
                         //  }
                         // }
@@ -2907,7 +2496,15 @@ private final float VELOCIDADEH = 20f;
                     if (d < 5f && fogo && obj2.getOrigem().equals("Fenix2")) {
                         //       for (Objeto3d p : tiros) {
                         // if (obj2.getOrigem().equals("Fenix1")) {
-                        obj.setVida(obj.getVida() - (danoNoInimigo * 30));
+
+                        if("inimigosB".equals(obj.getNomeRef())){
+                            obj.setVida(obj.getVida() - (danoNoInimigo * 30));
+
+                        }else {
+                            obj.setVida(obj.getVida() - (danoNoInimigo * 30));
+
+                        }
+
                         // obj.vezes(0.1f);
                         obj.setImpacto(true);
                         if (obj.getVida() <= 0) {
@@ -2959,7 +2556,7 @@ private final float VELOCIDADEH = 20f;
 
     private void esplodirNave(Objeto3d obj, Esplosao esplosao) {
 
-        if (obj.isEsplodirNave() ) {
+        if (obj.isEsplodirNave()) {
             int limit = 10;
             if (obj.isBoss()) {
                 limit = 10;
@@ -3053,7 +2650,7 @@ private final float VELOCIDADEH = 20f;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void controle() {
 
-        if ( Fenix.get(indexNave).getPeca() != null) {
+        if (Fenix.get(indexNave).getPeca() != null) {
             girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
             Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
         }
@@ -3074,6 +2671,9 @@ private final float VELOCIDADEH = 20f;
             inidiceEsquadCE(inimigosE.get(i), modoE, i);
             moverInimigoC(modo, inimigosC.get(i).getTimeLineInidvidual(), i, inimigosC.get(i), 'C');
             moverInimigoC(modoE, inimigosE.get(i).getTimeLineInidvidual(), i, inimigosE.get(i), 'E');
+
+            moverNuvens( nuvens.get(i));
+
 
             if (i < 3) {
                 moverInimigoC(0, inimigosE2.get(i).getTimeLineInidvidual(), i, inimigosE2.get(i), 'C');
@@ -3185,10 +2785,10 @@ private final float VELOCIDADEH = 20f;
                     ataqueEspecial.get(0).setMover("nulo");
                     ataqueEspecial.get(0).setTime(0);
                     nivelBomba--;
-                    nivelNave.setBomba(nivelBomba>=0?nivelBomba:0);
+                    nivelNave.setBomba(nivelBomba >= 0 ? nivelBomba : 0);
                     BDNave BDN = new BDNave(context);
                     BDN.atualizarNave(nivelNave);
-                    texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelBomba+1));
+                    texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelBomba + 1));
                     btEspecial.LoadTexture(texturaValoresBombas);
                     if (nivelBomba >= 0)
                         btEspecial.setTimeBtEspecial(0);
@@ -3209,7 +2809,7 @@ private final float VELOCIDADEH = 20f;
 
                     ataqueEspecial.get(0).setPosition(new Vetor3(ataqueEspecial.get(0).getPosition().getX(),
                             ataqueEspecial.get(0).getPosition().getY(),
-                            ataqueEspecial.get(0).getPosition().getZ()- (0.08f)) );
+                            ataqueEspecial.get(0).getPosition().getZ() - (0.08f)));
                     limitVelocidadeAtual = 0;
                     limitVelocidadeBoo = false;
                     ataqueEspecial.get(0).setTime(ataqueEspecial.get(0).getTime() + 1);
@@ -3217,7 +2817,7 @@ private final float VELOCIDADEH = 20f;
             }
 
 
-            if(Fenix.get(indexNave).getPeca()==null) {
+            if (Fenix.get(indexNave).getPeca() == null) {
                 Fenix.get(indexNave).getGiroPosition().z = giroyFenix;
             }
             for (int i = nivelTiroIndex; i < nivelTiro; i++) {
@@ -3368,6 +2968,17 @@ private final float VELOCIDADEH = 20f;
 
         }
 
+
+    }
+
+    private void moverNuvens(Objeto3d objeto3d) {
+
+        objeto3d.getPosition().z+=velocidade;
+
+        if( objeto3d.getPosition().z>=-58){
+            objeto3d.getPosition().z=-100;
+            objeto3d.getPosition().x= (float) (-1 + (Math.random() * 2));
+        }
 
     }
 
@@ -3566,17 +3177,17 @@ private final float VELOCIDADEH = 20f;
 
             if (c.getTimeIN() <= timeLine || cronograma.size() == 1 /*&& c.getTimeOUT() > timeLine*/) {
 
-                if (c.isFim() && cronograma.size() == 1 && dificult > 0 && !bossEliminado) {
-
-                    cronograma = new ArrayList<>();
-                    cronograma = new Fase().gerarFase(chefeDafase);
-                    dificult--;
-                    for (Cronograma o : cronograma) {
-                        o.setTimeIN(o.getTimeIN() + (timeLine + 50));
-                        o.setTimeOUT(o.getTimeOUT() + (timeLine + 50));
-                    }
-
-                }
+//                if (c.isFim() && cronograma.size() == 1 && dificult > 0 && !bossEliminado) {
+//
+//                    cronograma = new ArrayList<>();
+//                    cronograma = new Fase().gerarFase(chefeDafase);
+//                    dificult--;
+//                    for (Cronograma o : cronograma) {
+//                        o.setTimeIN(o.getTimeIN() + (timeLine + 50));
+//                        o.setTimeOUT(o.getTimeOUT() + (timeLine + 50));
+//                    }
+//
+//                }
 
                 if (c.isFim() && cronograma.size() == 1) {
 
@@ -3810,7 +3421,7 @@ private final float VELOCIDADEH = 20f;
                     case 0:
                         objeto3ds = inimigosA;
                         nome = "inimigosA";
-                         break;
+                        break;
                     case 1:
                         objeto3ds = inimigosB;
                         nome = "inimigosB";
@@ -3853,16 +3464,16 @@ private final float VELOCIDADEH = 20f;
                 if (c.getId() > -1 && !c.isBoss()) {
                     vaiPraCena[c.getId()] = false;
                 }
-                for (Objeto3d o : objeto3ds) {
-                    o.setEsplodirNave(true);
-                    o.setVida(0);
-                    o.setTimeEsplosaoNave(0);
-
-                    String finalNome = nome;
-                    Esplosao esp = filtro(finalNome, objeto3ds.indexOf(o));
-                    esplodirNave(o, esp);
-
-                }
+//                for (Objeto3d o : objeto3ds) {
+//                    o.setEsplodirNave(true);
+//                    o.setVida(0);
+//                    o.setTimeEsplosaoNave(0);
+//
+//                    String finalNome = nome;
+//                    Esplosao esp = filtro(finalNome, objeto3ds.indexOf(o));
+//                    esplodirNave(o, esp);
+//
+//                }
                 c.setEmMovimento(false);
                 if (c.getId() > -1 && c.getTimeOUT() <= timeLine) {
 
@@ -4124,7 +3735,7 @@ private final float VELOCIDADEH = 20f;
 
 
             EstatusFase v = new EstatusFase();
-            v.setId( fase + 1);
+            v.setId(fase + 1);
             v.setInimigosEliminados(inimigosEliminados);
             v.setInimigosGerados(inimigosGerados);
             v.setSaude(barraDeEnergia);
@@ -4145,9 +3756,9 @@ private final float VELOCIDADEH = 20f;
 //                indiceLevel = 0;
 //               // statusFase.zerarFase(v);
 //            } else {
-           //     if ((fase + 1) <= 60)
-                    statusFase.atualizarFase(v);
-        //    }
+            //     if ((fase + 1) <= 60)
+            statusFase.atualizarFase(v);
+            //    }
             BDRecompensa BDR = new BDRecompensa(context);
             recompensa = BDR.buscar(1);
             recompensa.setValor(recompensa.getValor() + resgateOuro);
@@ -4247,7 +3858,7 @@ private final float VELOCIDADEH = 20f;
 
                     }
                     if (pp.getPeca() != null) {
-                        girarOBJ( pp.getPeca(), (1000) * -1, 'y', VELOCIDADEH);
+                        girarOBJ(pp.getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                         pp.getPeca().setPosition(pp.getPosition());
 
                     }
@@ -4367,7 +3978,7 @@ private final float VELOCIDADEH = 20f;
             inimigosA.get(p).setAbatidoPelaNave(false);
 
             inimigosA.get(p).setGiro(giroybolhas);
-          //  inimigosA.get(p).setPosition(new Vetor3(inimigosA.get(p).getPosition().x, inimigosA.get(p).getPosition().getY(), inimigosA.get(p).getPosition().z + (velocidade/2)));
+            //  inimigosA.get(p).setPosition(new Vetor3(inimigosA.get(p).getPosition().x, inimigosA.get(p).getPosition().getY(), inimigosA.get(p).getPosition().z + (velocidade/2)));
 
             if (inimigosA.get(p).getPosition().z <= -80) {
                 inimigosA.get(p).getPosition().z = (float) ((-65 - p) - (Math.random() * 2));
@@ -4399,7 +4010,7 @@ private final float VELOCIDADEH = 20f;
 
                 inimigosA.get(0).setEsplodiu(false);
                 inimigosA.get(1).setEsplodiu(false);
-            //    inimigosA.get(2).setEsplodiu(false);
+                //    inimigosA.get(2).setEsplodiu(false);
 
                 proximoInimigo(0);
             }
@@ -4414,39 +4025,39 @@ private final float VELOCIDADEH = 20f;
                 o.getPosition().z = -100;
             }
         }
- switch (inimigosA.get(p).getTiroTimex()){
-     case 0:
-         inimigosA.get(p).setModo(0);
+        switch (inimigosA.get(p).getTiroTimex()) {
+            case 0:
+                inimigosA.get(p).setModo(0);
 
-         break;
-     case 200:
-         inimigosA.get(p).setModo(1);
+                break;
+            case 200:
+                inimigosA.get(p).setModo(1);
 
-         break;
-     case 250:
-         inimigosA.get(p).setModo(2);
+                break;
+            case 250:
+                inimigosA.get(p).setModo(2);
 
-         break;
-     case 350:
-         inimigosA.get(p).setModo(3);
-
-         break;
-     case 400:
-         inimigosA.get(p).setModo(0);
-         inimigosA.get(p).setTiroTimex(-1);
-         break;
- }
-        if (inimigosA.get(p).getPosition().z > -64) {
-            inimigosA.get(p).setTiroTimex(inimigosA.get(p).getTiroTimex()+1);
-            if(inimigosA.get(p).getPosition().x>1.45f){
+                break;
+            case 350:
                 inimigosA.get(p).setModo(3);
 
-            }else  if(inimigosA.get(p).getPosition().x<-1.45f){
+                break;
+            case 400:
+                inimigosA.get(p).setModo(0);
+                inimigosA.get(p).setTiroTimex(-1);
+                break;
+        }
+        if (inimigosA.get(p).getPosition().z > -64) {
+            inimigosA.get(p).setTiroTimex(inimigosA.get(p).getTiroTimex() + 1);
+            if (inimigosA.get(p).getPosition().x > 1.45f) {
+                inimigosA.get(p).setModo(3);
+
+            } else if (inimigosA.get(p).getPosition().x < -1.45f) {
                 inimigosA.get(p).setModo(2);
 
             }
 
-        }else {
+        } else {
             inimigosA.get(p).setModo(0);
         }
 
@@ -4465,7 +4076,6 @@ private final float VELOCIDADEH = 20f;
                     inimigosA.get(p).setAbatido(true);
                     inimigosA.get(p).setAtivado(false);
                 }
-
 
 
                 break;
@@ -4495,19 +4105,17 @@ private final float VELOCIDADEH = 20f;
                         inimigosA.get(p).getPosition().z = -66;
 
                     }
-                    inimigosA.get(p).getPosition().z += velocidade  ;
+                    inimigosA.get(p).getPosition().z += velocidade;
                 } else {
-                    inimigosA.get(p).getPosition().z -= velocidade/2;
+                    inimigosA.get(p).getPosition().z -= velocidade / 2;
 
                 }
                 if (inimigosA.get(p).getPosition().x > Fenix.get(indexNave).getPosition().x) {
-                    inimigosA.get(p).getPosition().x -= velocidade/2;
+                    inimigosA.get(p).getPosition().x -= velocidade / 2;
                 } else {
-                    inimigosA.get(p).getPosition().x += velocidade/2;
+                    inimigosA.get(p).getPosition().x += velocidade / 2;
 
                 }
-
-
 
 
                 if (inimigosA.get(p).getPosition().z <= -900) {
@@ -4534,15 +4142,13 @@ private final float VELOCIDADEH = 20f;
 //        if ( modoA != 0) {
 //            moverObjFixoPadrao(inimigosA.get(p), direcaoX2[inimigosA.get(p).getDr()], 'y', 0, 1000);
 //        } else {
-            moverObjFixoPadrao(inimigosA.get(p), inimigosA.get(p).getModo(), 'y', 0, 1000);
+        moverObjFixoPadrao(inimigosA.get(p), inimigosA.get(p).getModo(), 'y', 0, 1000);
 
 
-    //    }
+        //    }
 
 
-
-
-        if (!horaDoBoss ) {
+        if (!horaDoBoss) {
             //inimigosA.get(p).setDisparando(true);
             disparandoOBJ(Fenix.get(indexNave).getPosition(), inimigosA.get(p), 30, true, 2);
 
@@ -4551,7 +4157,7 @@ private final float VELOCIDADEH = 20f;
 
                 tipoDisparaBoss(inimigosA.get(0).getTiroNave(), inimigosA.get(0).getTiroNave().get(tiroAtualDoA), 1, 0.5f);
                 tipoDisparaBoss(inimigosA.get(1).getTiroNave(), inimigosA.get(1).getTiroNave().get(tiroAtualDoA), 1, 0.5f);
-             //   tipoDisparaBoss(inimigosA.get(2).getTiroNave(), inimigosA.get(2).getTiroNave().get(tiroAtualDoA), 1, 0.5f);
+                //   tipoDisparaBoss(inimigosA.get(2).getTiroNave(), inimigosA.get(2).getTiroNave().get(tiroAtualDoA), 1, 0.5f);
 
 
             }
@@ -4668,7 +4274,7 @@ private final float VELOCIDADEH = 20f;
             switch (modo) {
                 case 0:
                     inimigosB.get(p).setGiro(giroybolhas);
-                    inimigosB.get(p).setPosition(new Vetor3(inimigosB.get(p).getPosition().x, inimigosB.get(p).getPosition().getY(), inimigosB.get(p).getPosition().z + (velocidade/1.5f)));
+                    inimigosB.get(p).setPosition(new Vetor3(inimigosB.get(p).getPosition().x, inimigosB.get(p).getPosition().getY(), inimigosB.get(p).getPosition().z + (velocidade / 1.5f)));
                     if (inimigosB.get(p).getPosition().z < -59f) {
 
                         inimigosB.get(p).setDisparando(true);
@@ -4989,11 +4595,11 @@ private final float VELOCIDADEH = 20f;
     private void tipoDisparaBoss(ArrayList<Objeto3d> o, Objeto3d ob, int i, float vel) {
         float posx = 0;
         float pos = -2f;
-        int faseBoss=0;
-        if((fase+1)>60){
-             faseBoss =chefeDafase;
-        }else {
-             faseBoss = ((fase + 1) / 10) - 1;
+        int faseBoss = 0;
+        if ((fase + 1) > 60) {
+            faseBoss = chefeDafase;
+        } else {
+            faseBoss = ((fase + 1) / 10) - 1;
         }
 
 
@@ -5052,9 +4658,9 @@ private final float VELOCIDADEH = 20f;
         if (ob.getTiroNave().get(ob.getIdTiroAux()).isDisparando() || ob.getTiroNave().get(ob.getIdTiroAux()).getPosition().z < -58 && ob.getTiroNave().get(ob.getIdTiroAux()).getPosition().z > -68) {
 
 
-                ob.atirando(alvo, velocidade * vel, pereguir, tempoDisparo, ob.getPosition());
+            ob.atirando(alvo, velocidade * vel, pereguir, tempoDisparo, ob.getPosition());
             if (ob.getTiroNave().get(ob.getIdTiroAux()).getPosition().z > -60)
-                ob.getTiroNave().get(ob.getIdTiroAux()).getPosition().z=-58;
+                ob.getTiroNave().get(ob.getIdTiroAux()).getPosition().z = -58;
         } else {
             ob.setIdTiroAux();
 
@@ -5519,13 +5125,20 @@ private final float VELOCIDADEH = 20f;
 
             terreno.draw((GL11) gl2);
             terreno2.draw((GL11) gl2);
+
+           if(!(fase>10 && fase<20) ) {
+               for (int p = 0; p < 6; p++) {
+                   if (nuvens != null)
+                       nuvens.get(p).draw((GL11) gl2);
+               }
+           }
             if (chefeDafase < 4) {
                 for (int p = 0; p < cena.size(); p++) {
                     cena.get(p).draw((GL11) gl2);
                 }
             }
             Fenix.get(indexNave).draw((GL11) gl2);
-            if ( Fenix.get(indexNave).getPeca() != null)
+            if (Fenix.get(indexNave).getPeca() != null)
                 Fenix.get(indexNave).getPeca().draw((GL11) gl2);
 
             if (horaDoBoss) {
@@ -5545,14 +5158,13 @@ private final float VELOCIDADEH = 20f;
             }
 
 
-            for (int p= 0; p < 2; p++) {
+            for (int p = 0; p < 2; p++) {
                 if (inimigosA.size() > 0) {
-                    desenhar(inimigosA.get(p), "inimigosA",  p);
+                    desenhar(inimigosA.get(p), "inimigosA", p);
                     inimigosA.get(p).setImpacto(false);
 
                 }
             }
-
 
 
             for (int i = 0; i < ataqueEspecial.size(); i++) {
@@ -5563,28 +5175,32 @@ private final float VELOCIDADEH = 20f;
 
             if (!this.perdeu && !this.venceu) {
                 for (int p = 0; p < 6; p++) {
+
                     if (inimigosC.size() > 0) {
                         desenhar(inimigosC.get(p), "inimigosC", p);
                         desenhar(inimigosE.get(p), "inimigosE", p);
+
                         inimigosC.get(p).setImpacto(false);
                         inimigosE.get(p).setImpacto(false);
 
-                        if (p < 3) {
-                            desenhar(inimigosC2.get(p), "inimigosC2", p);
-                            desenhar(inimigosE2.get(p), "inimigosE2", p);
-                            inimigosC2.get(p).setImpacto(false);
-                            inimigosE2.get(p).setImpacto(false);
-
-                            inimigosC2.get(p).getPeca().draw((GL11) gl2);
-                            inimigosE2.get(p).getPeca().draw((GL11) gl2);
-
-
-
-
-                        }
-
                     }
                 }
+
+
+                for (int p = 0; p < 3; p++) {
+                    desenhar(inimigosC2.get(p), "inimigosC2", p);
+                    desenhar(inimigosE2.get(p), "inimigosE2", p);
+                    inimigosC2.get(p).setImpacto(false);
+                    inimigosE2.get(p).setImpacto(false);
+
+                    if (!inimigosC2.get(p).isEsplodirNave()) {
+                        inimigosC2.get(p).getPeca().draw((GL11) gl2);
+                    }
+                    if (!inimigosE2.get(p).isEsplodirNave()) {
+                        inimigosE2.get(p).getPeca().draw((GL11) gl2);
+                    }
+                }
+
 
                 for (int p = 0; p < 3; p++) {
                     if (inimigosB.size() > 0) {
@@ -5618,12 +5234,14 @@ private final float VELOCIDADEH = 20f;
                 }
 
             }
+
             for (Objeto3d o : ouro) {
                 if (o.getPosition().z > -68f && o.getPosition().z < -60f && o.getPosition().x > -1.5f && o.getPosition().x < 1.5f) {
                     o.draw((GL11) gl2);
 
                 }
             }
+
 
             gl.glPopMatrix();
             gl.glLoadIdentity();
@@ -5825,27 +5443,25 @@ private final float VELOCIDADEH = 20f;
 //                    && o.getPosition().z < -59
 //                   // && o.getPassou().equals("N")
 //            ) {
-                if (o.getPosition().z > -65 ){
-                if (!o.isEsplodirNave()) {
-                    o.draw((GL11) gl2);
+            if (!o.isEsplodirNave()) {
+                o.draw((GL11) gl2);
 
 
+            } else {
+                Esplosao esp;
+                if (o.isBoss()) {
+                    esp = filtro(nome, 0);
                 } else {
-                    Esplosao esp;
-                    if (o.isBoss()) {
-                        esp = filtro(nome, 0);
-                    } else {
-                        esp = filtro(nome, p);
-
-                    }
-
-                    //  if (o.getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
-                    esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).draw((GL11) gl2);
-
-                    //        esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).setImpacto(false);
-
+                    esp = filtro(nome, p);
 
                 }
+
+                //  if (o.getEsplosaoNaveId() < esp.getSplosaoArrayNave().size()) {
+                esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).draw((GL11) gl2);
+
+                //        esp.getSplosaoArrayNave().get(o.getEsplosaoNaveId()).setImpacto(false);
+
+
             }
 
 
@@ -6029,7 +5645,7 @@ private final float VELOCIDADEH = 20f;
             veloz = -62f;
             Fenix.get(indexNave).getPosition().x = 0;
             Fenix.get(indexNave).getPosition().z = -62f;
-            if(Fenix.get(indexNave).getPeca()!=null) {
+            if (Fenix.get(indexNave).getPeca() != null) {
                 girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                 Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
             }
@@ -6110,7 +5726,7 @@ private final float VELOCIDADEH = 20f;
             acelerarando = 0;
             timeLine = 0;
             Fenix.get(indexNave).getPosition().z = -62f;
-            if(Fenix.get(indexNave).getPeca()!=null) {
+            if (Fenix.get(indexNave).getPeca() != null) {
                 girarOBJ(Fenix.get(indexNave).getPeca(), (1000) * -1, 'y', VELOCIDADEH);
                 Fenix.get(indexNave).getPeca().setPosition(Fenix.get(indexNave).getPosition());
             }
@@ -6127,7 +5743,7 @@ private final float VELOCIDADEH = 20f;
 
     public void moverPersonagem(MotionEvent event) {
 
-        if ((vitoria || this.perdeu)   ) return;
+        if ((vitoria || this.perdeu)) return;
 
 
         if (event.getX() > pontoDoEixoX) {
@@ -6136,8 +5752,7 @@ private final float VELOCIDADEH = 20f;
             if (giroy < 0) {
                 giroy = 360;
             }
-        }
-        else {
+        } else {
             rotacinarFenix = 1;
             giroy += 1.2;
             if (giroy > 360) {
@@ -6179,10 +5794,7 @@ private final float VELOCIDADEH = 20f;
         }
 
 
-
-
-      //  this.animal.setY(this.yy + this.yr);
-
+        //  this.animal.setY(this.yy + this.yr);
 
 
         if (girox <= 45 || girox >= 315) {
@@ -6201,10 +5813,10 @@ private final float VELOCIDADEH = 20f;
         velox = ((this.animal.getX() * 0.2f) * (0.2f * turbo));
         veloy = veloy * (0.2f * turbo);
 
-        if(velox>1.5f){
-            velox=1.5f;
-        }else if(velox<-1.5f){
-            velox=-1.5f;
+        if (velox > 1.5f) {
+            velox = 1.5f;
+        } else if (velox < -1.5f) {
+            velox = -1.5f;
         }
 
 
@@ -6215,7 +5827,6 @@ private final float VELOCIDADEH = 20f;
                 velox,
                 15f,
                 veloz));
-
 
 
     }
@@ -6260,7 +5871,7 @@ private final float VELOCIDADEH = 20f;
         //   if (tempoDisparoAtaqueEspecial >= nivelTiroTempoAtaqueEspecial * 100) {
         if (ataqueEspecial.get(idDisparoAtaqueEspecial).getMover().equals("nulo") && nivelBomba >= 0) {
             acionado = true;
-        //    tempoDisparoAtaqueEspecial = 0;
+            //    tempoDisparoAtaqueEspecial = 0;
             ataqueEspecial.get(idDisparoAtaqueEspecial).setMover("disparar");
             btEspecial.setTimeBtEspecial(100);
             if (idDisparoQTDAtaqueEspecial < ataqueEspecial.size() - 1) {
@@ -6455,7 +6066,7 @@ private final float VELOCIDADEH = 20f;
     public boolean onTouch(View view, MotionEvent event) {
 
 
-        if (!this.venceu && carregado && !this.perdeu ) {
+        if (!this.venceu && carregado && !this.perdeu) {
 
 
             int posX = (int) (this.wTela / 100);
@@ -6587,12 +6198,12 @@ private final float VELOCIDADEH = 20f;
 
                 return true;
 
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause ) {
-                if (luping == false && event.getPointerCount() == 1 && event.getPointerId(0) == 0 ) {
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause) {
+                if (luping == false && event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
 //                    this.pontoDoEixoYFimm = event.getY();
 //                    this.pontoDoEixoXFimm = event.getX();
                     this.moverPersonagem(event);
-                 }
+                }
 
 
                 if (event.getPointerCount() > 1) {
@@ -6644,8 +6255,6 @@ private final float VELOCIDADEH = 20f;
 
         return true;
     }
-
-
 
 
 }
