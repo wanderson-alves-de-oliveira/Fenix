@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Nave {
 
-    private String nome,habilitado;
+    private String nome,habilitado,liberado;
     private int _id;
     private int ataque;
     private int escudo;
@@ -49,6 +49,14 @@ public class Nave {
 
     public String getHabilitado() {
         return habilitado;
+    }
+
+    public String getLiberado() {
+        return liberado;
+    }
+
+    public void setLiberado(String liberado) {
+        this.liberado = liberado;
     }
 
     public void setHabilitado(String habilitado) {

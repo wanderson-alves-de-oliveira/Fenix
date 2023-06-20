@@ -56,6 +56,16 @@ public class BDNave {
         fechar();
     }
 
+    public void atualizarNaveHabilitado(int id) {
+
+        ContentValues valores = new ContentValues();
+        valores.put("liberado", "S");
+        db.update( "upgade_nave", valores, "_id = ?", new String[]{"" + id} );
+        fechar();
+    }
+
+
+
     public void inserirNave(Nave v) {
 
         ContentValues valores = new ContentValues();
@@ -74,7 +84,7 @@ public class BDNave {
 
     public Nave buscar(final long id) {
 
-        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa FROM upgade_nave WHERE _id = " + id, null);
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa,liberado FROM upgade_nave WHERE _id = " + id, null);
         cursor.moveToNext();
         Nave c = new Nave();
         c.set_id(cursor.getInt(0));
@@ -87,6 +97,7 @@ public class BDNave {
         c.setEscudoNivel(cursor.getInt(7));
         c.setDano(cursor.getInt(8));
         c.setDefesa(cursor.getInt(9));
+        c.setLiberado(cursor.getString(10));
 
         cursor.close();
         fechar();
@@ -95,7 +106,7 @@ public class BDNave {
 
     public Nave buscarHabilitado(final int habilitado) {
 
-        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa FROM upgade_nave WHERE habilitado = '" + habilitado+"'", null);
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa,liberado FROM upgade_nave WHERE habilitado = '" + habilitado+"'", null);
         cursor.moveToNext();
         Nave c = new Nave();
         c.set_id(cursor.getInt(0));
@@ -108,6 +119,7 @@ public class BDNave {
         c.setEscudoNivel(cursor.getInt(7));
         c.setDano(cursor.getInt(8));
         c.setDefesa(cursor.getInt(9));
+        c.setLiberado(cursor.getString(10));
 
         cursor.close();
         fechar();
@@ -115,7 +127,7 @@ public class BDNave {
     }
     public ArrayList<Nave> buscarLista() {
         ArrayList<Nave> lista= new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa FROM upgade_nave ", null);
+        Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa,liberado FROM upgade_nave ", null);
         cursor.moveToNext();
 
 
@@ -135,6 +147,8 @@ public class BDNave {
                 c.setEscudoNivel(cursor.getInt(7));
                 c.setDano(cursor.getInt(8));
                 c.setDefesa(cursor.getInt(9));
+                c.setLiberado(cursor.getString(10));
+
                 lista.add(c);
             } while (cursor.moveToNext());
             cursor.close();

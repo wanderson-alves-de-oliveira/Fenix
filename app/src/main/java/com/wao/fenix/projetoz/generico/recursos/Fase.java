@@ -36,7 +36,7 @@ public class Fase {
         int base = 2 + (indice + (indiceLevel) + indice) + 1;
         int nivel = 1;
         indice = 1;
-        if (base > 28) base = 28;
+        if (base > 150) base = 150;
         if ((fase + 1) % 10 == 0) {
 
             base = 2;//+ (fase * indiceLevel);
@@ -44,7 +44,7 @@ public class Fase {
         }
 
 
-      //  base = 28;
+       base = 6;
 
         for (int ii = 0; ii < base; ii++) {
 

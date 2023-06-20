@@ -56,6 +56,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     // private boolean selectFase = true;
     private boolean comMusica = true;
     private boolean comSons = true;
+    private boolean jogar = false;
 
     private TartarugaCorrida tut;
     private int indexNave = 0;
@@ -84,6 +85,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private Objeto3d painel_a;
     private Objeto3d painel_b;
     private Objeto3d painel_c;
+    private Objeto3d painel_d;
 
     private int tipoDeCard = 0;
 
@@ -116,11 +118,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private Objeto3d nivelBombT;
     private Objeto3d nivelDano;
     private Objeto3d nivelDefesa;
+    private Objeto3d nivelXPescudo;
+
 
     private ArrayList<Objeto3d> nivelAtaqueP;
     private ArrayList<Objeto3d> nivelEscudoP;
     private ArrayList<Objeto3d> nivelImaP;
     private ArrayList<Objeto3d> nivelBombaP;
+    private ArrayList<Objeto3d> menuTela2;
 
     private int nivelAtaqueR = 4;
     private int nivelEscudoR = 2;
@@ -311,7 +316,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             nav = R.drawable.naveb;
                             break;
                         case 2:
-                            nav =  R.drawable.grifon;
+                            nav = R.drawable.grifon;
                             break;
                         case 3:
                             nav = R.drawable.naved;
@@ -323,46 +328,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             nav = R.drawable.navef;
                             break;
                     }
-                    if(i==1){
+                    if (i == 1) {
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
                         Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
-                    //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
-                       // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
-                        Fenixaux.getGiroPosition().x= 270f;
-                        Fenixaux.getGiroPosition().y = 180;
-
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
-
-                        Fenixaux.setRefletir(true);
-                        Fenixaux.setFenix(true);
-                        Fenixaux.setNomeRef("Fenix");
-                        Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
-                      //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
-                       // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
-                        Fenixaux.getPeca().getGiroPosition().x = 270f;
-                        Fenixaux.getPeca().getGiroPosition().y = 180;
-
-                        Fenixt.add(Fenixaux);
-                    } else   if(i==2){
-                        Objeto3d Fenixaux = new Objeto3d(context, asset,  "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                        Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
-                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
-                        Fenixaux.setRefletir(true);
-                        Fenixaux.setFenix(true);
-                        Fenixaux.setNomeRef("Fenix");
-                        Fenixt.add(Fenixaux);
-                    } else   if(i==4){
-                        Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-
-                        Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
-                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
                         // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
-                        Fenixaux.getGiroPosition().x= 270f;
+                        Fenixaux.getGiroPosition().x = 270f;
                         Fenixaux.getGiroPosition().y = 180;
 
                         posinicialF = new Vetor3(Fenixaux.getPosition());
@@ -370,15 +343,15 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
                         Fenixaux.setNomeRef("Fenix");
-                        Fenixaux.gerarPeca(asset,"helices.obj",R.drawable.inimigoee,1f);
+                        Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1f);
                         //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
                         // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
                         Fenixaux.getPeca().getGiroPosition().x = 270f;
                         Fenixaux.getPeca().getGiroPosition().y = 180;
 
                         Fenixt.add(Fenixaux);
-                    }else   if(i==3){
-                        Objeto3d Fenixaux = new Objeto3d(context, asset,  "pegazus.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    } else if (i == 2) {
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                         Fenixaux.setEstado("NBateu");
                         Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
                         Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
@@ -387,7 +360,39 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Fenixaux.setFenix(true);
                         Fenixaux.setNomeRef("Fenix");
                         Fenixt.add(Fenixaux);
-                    }else {
+                    } else if (i == 4) {
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
+                        Fenixaux.getGiroPosition().x = 270f;
+                        Fenixaux.getGiroPosition().y = 180;
+
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+                        Fenixaux.gerarPeca(asset, "helices.obj", R.drawable.inimigoee, 1f);
+                        //  Fenixaux.getPeca().setGiroPosition(new Vetor3(95, 0, 0f));
+                        // Fenixaux.getPeca().setGiroPosition(new Vetor3(0, 0, 50f));
+                        Fenixaux.getPeca().getGiroPosition().x = 270f;
+                        Fenixaux.getPeca().getGiroPosition().y = 180;
+
+                        Fenixt.add(Fenixaux);
+                    } else if (i == 3) {
+                        Objeto3d Fenixaux = new Objeto3d(context, asset, "pegazus.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                        Fenixaux.setEstado("NBateu");
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
+                        posinicialF = new Vetor3(Fenixaux.getPosition());
+                        Fenixaux.setRefletir(true);
+                        Fenixaux.setFenix(true);
+                        Fenixaux.setNomeRef("Fenix");
+                        Fenixt.add(Fenixaux);
+                    } else {
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
@@ -399,7 +404,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Fenixaux.setFenix(true);
                         Fenixaux.setNomeRef("Fenix");
                         Fenixt.add(Fenixaux);
-
 
 
                     }
@@ -468,10 +472,22 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 painel_c.loadGLTexture();
 
 
+                painel_d = new Objeto3d(context, asset, "painel_d.obj", R.drawable.titulo, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                painel_d.setValor(String.valueOf(0));
+                painel_d.setGiroPosition(new Vetor3(90, 0f, 0f));
+                painel_d.setTransparente(true);
+                painel_d.vezes(0.12f);
+                painel_d.setPosition(new Vetor3(0f, 0.18f, -0.53f));
+                painel_d.setNomeRef("nivelT");
+                painel_d.setCores(new Vetor3(1f, 1f, 1f));
+                painel_d.loadGLTexture();
+
+
                 painelMode = new ArrayList<>();
                 painelMode.add(painel_a);
                 painelMode.add(painel_b);
                 painelMode.add(painel_c);
+                painelMode.add(painel_d);
 
                 carga++;
                 break;
@@ -548,47 +564,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 nivelEscudoP = new ArrayList<>();
                 nivelImaP = new ArrayList<>();
                 nivelBombaP = new ArrayList<>();
-                Objeto3d es = new Objeto3d(context, asset, "texto.obj", R.drawable.p100, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                es.setValor(String.valueOf(0));
-                es.setGiroPosition(new Vetor3(90, 0f, 0f));
-                es.setTransparente(true);
-                es.vezes(0.06f);
-                es.setPosition(new Vetor3(5.017f, -0.032f, -0.089f));
-                es.setNomeRef("nivelT");
-                es.loadGLTexture();
-                nivelEscudoP.add(es);
-
-
-                Objeto3d ess = new Objeto3d(context, asset, "texto.obj", R.drawable.max, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                ess.setValor(String.valueOf(0));
-                ess.setGiroPosition(new Vetor3(90, 0f, 0f));
-                ess.setTransparente(true);
-                ess.vezes(0.06f);
-                ess.setPosition(new Vetor3(5.017f, -0.032f, -0.089f));
-                ess.setNomeRef("nivelT");
-                ess.loadGLTexture();
-                nivelEscudoP.add(ess);
-
-                Objeto3d esa = new Objeto3d(context, asset, "texto.obj", R.drawable.p100, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                esa.setValor(String.valueOf(0));
-                esa.setGiroPosition(new Vetor3(90, 0f, 0f));
-                esa.setTransparente(true);
-                esa.vezes(0.06f);
-                esa.setPosition(new Vetor3(5.017f, -0.018f, -0.089f));
-                esa.setNomeRef("nivelT");
-                esa.loadGLTexture();
-                nivelAtaqueP.add(esa);
-
-
-                Objeto3d essa = new Objeto3d(context, asset, "texto.obj", R.drawable.max, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
-                essa.setValor(String.valueOf(0));
-                essa.setGiroPosition(new Vetor3(90, 0f, 0f));
-                essa.setTransparente(true);
-                essa.vezes(0.06f);
-                essa.setPosition(new Vetor3(5.017f, -0.018f, -0.089f));
-                essa.setNomeRef("nivelT");
-                essa.loadGLTexture();
-                nivelAtaqueP.add(essa);
+                menuTela2 = new ArrayList<>();
 
 
                 Objeto3d esb = new Objeto3d(context, asset, "texto.obj", R.drawable.p100, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
@@ -612,7 +588,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 essb.loadGLTexture();
                 nivelBombaP.add(essb);
 
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 6; i++) {
 
                     int reff = 0;
 
@@ -632,8 +608,30 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         case 4:
                             reff = R.drawable.max;
                             break;
+                        case 5:
+                            reff = R.drawable.p100;
+                            break;
                     }
 
+                    Objeto3d essa = new Objeto3d(context, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    essa.setValor(String.valueOf(0));
+                    essa.setGiroPosition(new Vetor3(90, 0f, 0f));
+                    essa.setTransparente(true);
+                    essa.vezes(0.06f);
+                    essa.setPosition(new Vetor3(5.017f, -0.018f, -0.089f));
+                    essa.setNomeRef("nivelT");
+                    essa.loadGLTexture();
+                    nivelAtaqueP.add(essa);
+
+                    Objeto3d es = new Objeto3d(context, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                    es.setValor(String.valueOf(0));
+                    es.setGiroPosition(new Vetor3(90, 0f, 0f));
+                    es.setTransparente(true);
+                    es.vezes(0.06f);
+                    es.setPosition(new Vetor3(5.017f, -0.032f, -0.089f));
+                    es.setNomeRef("nivelT");
+                    es.loadGLTexture();
+                    nivelEscudoP.add(es);
 
                     Objeto3d ccc = new Objeto3d(context, asset, "texto.obj", reff, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                     ccc.setValor(String.valueOf(0));
@@ -677,6 +675,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 nivelBombT.setNomeRef("nivelT");
                 nivelBombT.loadGLTexture();
 
+
                 nivelDano = new Objeto3d(context, asset, "texto.obj", R.drawable.dano, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                 nivelDano.setValor(String.valueOf(0));
                 nivelDano.setGiroPosition(new Vetor3(90, 0f, 0f));
@@ -694,6 +693,15 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 nivelDefesa.setPosition(new Vetor3(-10.005f, -0.042f, -0.089f));
                 nivelDefesa.setNomeRef("nivelT");
                 nivelDefesa.loadGLTexture();
+
+                nivelXPescudo = new Objeto3d(context, asset, "texto.obj", R.drawable.nivelescudotxp, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                nivelXPescudo.setValor(String.valueOf(0));
+                nivelXPescudo.setGiroPosition(new Vetor3(90, 0f, 0f));
+                nivelXPescudo.setTransparente(true);
+                nivelXPescudo.vezes(0.07f);
+                nivelXPescudo.setPosition(new Vetor3(-10.005f, -0.018f, -0.089f));
+                nivelXPescudo.setNomeRef("nivelT");
+                nivelXPescudo.loadGLTexture();
 
 
                 nivelImaT = new Objeto3d(context, asset, "texto.obj", R.drawable.nivelpullt, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
@@ -805,6 +813,27 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 }
 
 
+                Objeto3d m = new Objeto3d(context, asset, "texto.obj", R.drawable.weapons, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                m.setValor(String.valueOf(0));
+                m.setGiroPosition(new Vetor3(90, 0f, 0f));
+                m.setTransparente(true);
+                m.vezes(0.1f);
+                m.setPosition(new Vetor3(4.98f, 0.025f, -0.089f));
+                m.setNomeRef("nivelT");
+                m.loadGLTexture();
+                menuTela2.add(m);
+
+                Objeto3d n = new Objeto3d(context, asset, "texto.obj", R.drawable.levelup, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
+                n.setValor(String.valueOf(0));
+                n.setGiroPosition(new Vetor3(90, 0f, 0f));
+                n.setTransparente(true);
+                n.vezes(0.1f);
+                n.setPosition(new Vetor3(5.017f, 0.025f, -0.089f));
+                n.setNomeRef("nivelT");
+                n.loadGLTexture();
+                menuTela2.add(n);
+
+
                 tut.carga = 3;
                 tut.carregar();
                 carga++;
@@ -839,7 +868,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 unlocked.setPosition(new Vetor3(-15, -0.25f, -0.8f));
                 unlocked.setNomeRef("nivelT");
                 unlocked.loadGLTexture();
-
 
 
                 visto = new Objeto3d(context, asset, "painel_a.obj", R.drawable.visto, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
@@ -1109,17 +1137,23 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 if (tut.selectFase) {
                     fasecarregada = 2;
+                    carregouValores = false;
 
                     tipoDeCard = tut.getTipoDeCard();
 
 
-                    if((fase+1)%10==0 && tipoDeCard==2 && fase+1<60) {
-                        fasecarregada = 5;
-                        carregouValores=false;
-                    }
+
                     BDRecompensa BDR = new BDRecompensa(context);
                     recompensa = BDR.buscar(1);
 
+
+
+                    if ((fase + 1) % 10 == 0 && tipoDeCard == 2 && fase + 1 < 60) {
+                        fasecarregada = 5;
+
+
+                        carregouValores = false;
+                    }
                     BDNave BDN = new BDNave(context);
                     nivelNave = BDN.buscar(indexNave + 1);
                     nivelImaR = nivelNave.getPuchar();
@@ -1180,7 +1214,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glRotatef(0, 0, 0, 0);
             gl.glTranslatef(distanciaX, 0.04f, -0.01f);
 
+
             moverTela();
+
+
 //            girar+=0.1f;
 //            if(Fenixt!=null) {
 //                Fenixt.setGiroPosition(new Vetor3(30, girar, 0f));
@@ -1236,12 +1273,14 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 //   nivelEscudoP.get(0).setPosition(new Vetor3(x,y,z-velocidade));
 
 
+                if (fasecarregada == 0) {
 
-                if(fasecarregada==0){
+                    Fenixt.get(indexNave).draw((GL11) gl2);
+                    painelMode.get(3).draw((GL11) gl2);
 
-                        Fenixt.get(indexNave).draw((GL11) gl2);
-                        if ( Fenixt.get(indexNave).getPeca() != null)
-                            Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
+                    if (Fenixt.get(indexNave).getPeca() != null)
+                        Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
+
 
                 } else if (fasecarregada == 2) {
                     painelMode.get(0).draw((GL11) gl2);
@@ -1257,45 +1296,81 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nivelImaT.draw((GL11) gl2);
                     valorAdiquiridoObj.draw((GL11) gl2);
                     vedeorecompensa.draw((GL11) gl2);
-                    nivelAtaqueP.get(nivelAtaqueR == 4 ? 1 : 0).draw((GL11) gl2);
+                    nivelAtaqueP.get(nivelAtaqueR < 4 ? 5 : 4).draw((GL11) gl2);
                     nivelBombaP.get(nivelBombaR == 4 ? 1 : 0).draw((GL11) gl2);
 
                     Fenixt.get(indexNave).draw((GL11) gl2);
-                    if ( Fenixt.get(indexNave).getPeca() != null)
+                    if (Fenixt.get(indexNave).getPeca() != null)
                         Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
 
                     nivelImaP.get(nivelImaR).draw((GL11) gl2);
                     nivelAtaque.get(nivelAtaqueR).draw((GL11) gl2);
                     nivelEscudo.get(nivelEscudoR).draw((GL11) gl2);
                     nivelBomb.get(nivelBombaR).draw((GL11) gl2);
-                    nivelEscudoP.get(nivelEscudoR == 4 ? 1 : 0).draw((GL11) gl2);
+                    menuTela2.get(0).draw((GL11) gl2);
+                    menuTela2.get(1).draw((GL11) gl2);
+
+                    nivelEscudoP.get(nivelEscudoR < 4 ? 5 : 4).draw((GL11) gl2);
 
                     nivelIma.get(nivelImaR).draw((GL11) gl2);
+
+                } else if (fasecarregada == 6) {
+                    painelMode.get(0).draw((GL11) gl2);
+                    if (tipoDeCard != 0)
+                        painelMode.get(tipoDeCard == -1 ? 1 : 2).draw((GL11) gl2);
+
+                    this.btback.draw((GL11) gl2);
+                    nivelDano.draw((GL11) gl2);
+                    nivelXPescudo.draw((GL11) gl2);
+                    nivelDefesa.draw((GL11) gl2);
+                    Nave naveaux = new BDNave(context).buscar(naveSelecionada + 1);
+
+
+                    valorAdiquiridoObj.draw((GL11) gl2);
+                    vedeorecompensa.draw((GL11) gl2);
+                    nivelAtaqueP.get(naveaux.getDano() - 1).draw((GL11) gl2);
+
+                    Fenixt.get(indexNave).draw((GL11) gl2);
+                    if (Fenixt.get(indexNave).getPeca() != null)
+                        Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
+
+                    nivelImaP.get(naveaux.getDefesa() - 1).draw((GL11) gl2);
+
+
+                    nivelIma.get(naveaux.getDefesa() - 1).draw((GL11) gl2);
+                    nivelAtaque.get(naveaux.getDano() - 1).draw((GL11) gl2);
+                    nivelEscudo.get(naveaux.getEscudoNivel() - 1).draw((GL11) gl2);
+
+                    menuTela2.get(0).draw((GL11) gl2);
+                    menuTela2.get(1).draw((GL11) gl2);
+
+                    nivelEscudoP.get(naveaux.getEscudoNivel() - 1).draw((GL11) gl2);
+
 
                 } else if (fasecarregada == 3) {
                     this.btback.draw((GL11) gl2);
 
 
-                        for (int i = 0; i < 6; i++) {
-                            if ( Fenixt.get(i).getPeca() != null) {
-                                Fenixt.get(i).getPeca().draw((GL11) gl2);
-                                Fenixt.get(i).draw((GL11) gl2);
+                    for (int i = 0; i < 6; i++) {
+                        if (Fenixt.get(i).getPeca() != null) {
+                            Fenixt.get(i).getPeca().draw((GL11) gl2);
+                            Fenixt.get(i).draw((GL11) gl2);
 
-                            }else {
-                                Fenixt.get(i).draw((GL11) gl2);
-                            }
-
+                        } else {
+                            Fenixt.get(i).draw((GL11) gl2);
                         }
+
+                    }
 
 
                 } else if (fasecarregada == 4) {
                     painelMode.get(0).draw((GL11) gl2);
                     this.btback.draw((GL11) gl2);
                     Fenixt.get(naveSelecionada).draw((GL11) gl2);
-                    if ( Fenixt.get(naveSelecionada).getPeca() != null)
+                    if (Fenixt.get(naveSelecionada).getPeca() != null)
                         Fenixt.get(naveSelecionada).getPeca().draw((GL11) gl2);
 
-                    if (fase < Integer.valueOf(nivelNaveX.getHabilitado())) {
+                    if ( !"S".equals(nivelNaveX.getLiberado())) {
                         painelModeHabiliar.get(naveSelecionada).draw((GL11) gl2);
                     } else {
                         if (indexNave == naveSelecionada) {
@@ -1310,21 +1385,21 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nomeNave.draw((GL11) gl2);
                     nivelDano.draw((GL11) gl2);
                     nivelDefesa.draw((GL11) gl2);
-                    nivelEscudoT.draw((GL11) gl2);
+                    nivelXPescudo.draw((GL11) gl2);
 
 //nivel de cada nave
                     Nave naveaux = new BDNave(context).buscar(naveSelecionada + 1);
 
-                    nivelIma.get(naveaux.getDefesa()).draw((GL11) gl2);
-                    nivelAtaque.get(naveaux.getDano()).draw((GL11) gl2);
-                    nivelEscudo.get(naveaux.getEscudoNivel()).draw((GL11) gl2);
-                }else if (fasecarregada == 5) {
+                    nivelIma.get(naveaux.getDefesa() - 1).draw((GL11) gl2);
+                    nivelAtaque.get(naveaux.getDano() - 1).draw((GL11) gl2);
+                    nivelEscudo.get(naveaux.getEscudoNivel() - 1).draw((GL11) gl2);
+                } else if (fasecarregada == 5) {
                     painelMode.get(0).draw((GL11) gl2);
                     Fenixt.get(naveSelecionada).draw((GL11) gl2);
-                    if ( Fenixt.get(naveSelecionada).getPeca() != null)
+                    if (Fenixt.get(naveSelecionada).getPeca() != null)
                         Fenixt.get(naveSelecionada).getPeca().draw((GL11) gl2);
 
-                            select.draw((GL11) gl2);
+                    select.draw((GL11) gl2);
 
                     nothanks.draw((GL11) gl2);
                     unlocked.draw((GL11) gl2);
@@ -1370,7 +1445,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (fasecarregada == 2) {
             distanciaX = -5;
             Fenixt.get(indexNave).setPosition(new Vetor3(4.84f, 0.34f, -0.78f));
-            if ( Fenixt.get(indexNave).getPeca() != null) {
+            if (Fenixt.get(indexNave).getPeca() != null) {
                 Fenixt.get(indexNave).getPeca().setPosition(Fenixt.get(indexNave).getPosition());
             }
             btback.setPosition(new Vetor3(4.975f, -0.092f, -0.089f));
@@ -1383,8 +1458,47 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             valorAdiquiridoObj.setPosition(new Vetor3(4.985f, -0.01f, -0.089f));
 
             if (!carregouValores) {
+                for (int i=0;i<5;i++) {
+                    nivelIma.get(i).getPosition().x = 4.99f;
+                    nivelAtaque.get(i).getPosition().x = 4.99f;
+                    nivelEscudo.get(i).getPosition().x = 4.99f;
+                }
                 texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
                 valorAdiquiridoObj.LoadTexture(texturaValores);
+                Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.nota);
+
+                painel_a.LoadTexture(bitmap2);
+                carregouValores = true;
+            }
+            if (barra != null) {
+                barra.getPosition().setX(distanciaX * -1);
+                barra.getPosition().setZ(-0.9f);
+            }
+        } else if (fasecarregada == 6) {
+            distanciaX = -5;
+            Fenixt.get(indexNave).setPosition(new Vetor3(4.84f, 0.34f, -0.78f));
+            if (Fenixt.get(indexNave).getPeca() != null) {
+                Fenixt.get(indexNave).getPeca().setPosition(Fenixt.get(indexNave).getPosition());
+            }
+            btback.setPosition(new Vetor3(4.975f, -0.092f, -0.089f));
+            painel_a.setPosition(new Vetor3(5f, 0.040f, -0.79f));
+
+
+            nivelDano.setPosition(new Vetor3(4.985f, -0.018f, -0.089f));
+            nivelDefesa.setPosition(new Vetor3(4.985f, -0.042f, -0.089f));
+            nivelXPescudo.setPosition(new Vetor3(4.985f, -0.030f, -0.089f));
+
+
+            valorAdiquiridoObj.setPosition(new Vetor3(4.985f, -0.01f, -0.089f));
+
+            if (!carregouValores) {
+                texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
+                valorAdiquiridoObj.LoadTexture(texturaValores);
+
+                Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.notab);
+
+                painel_a.LoadTexture(bitmap2);
+
                 carregouValores = true;
             }
             if (barra != null) {
@@ -1400,8 +1514,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
             for (int i = 0; i < 6; i++) {
                 Fenixt.get(i).setPosition(new Vetor3(xd, yd, -0.92f));
-                if ( Fenixt.get(i).getPeca() != null) {
-                     Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
+                if (Fenixt.get(i).getPeca() != null) {
+                    Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
                 }
                 xd = xd + 0.27f;
                 if (i == 1 || i == 3 || i == 5) {
@@ -1447,22 +1561,29 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             nomeNave.setPosition(new Vetor3(-9.99f, -0.002f, -0.08f));
 
             Fenixt.get((int) naveaux.get_id() - 1).setPosition(new Vetor3(xd, yd, -0.92f));
-            if ( Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
+            if (Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
                 Fenixt.get((int) naveaux.get_id() - 1).getPeca().setPosition(Fenixt.get((int) naveaux.get_id() - 1).getPosition());
             }
-            nivelIma.get(naveaux.getDefesa()).getPosition().x = -10.0f;
             select.setPosition(new Vetor3(-10, -0.25f, -0.8f));
 
-            nivelAtaque.get(naveaux.getDano()).getPosition().x = -10.0f;
-            nivelEscudo.get(naveaux.getEscudoNivel()).getPosition().x = -10.0f;
-            nivelEscudoT.getPosition().x = -10.005f;
-            nivelEscudoT.getPosition().y = -0.030f;
+            nivelIma.get(naveaux.getDefesa() - 1).getPosition().x = -10.0f;
+            nivelAtaque.get(naveaux.getDano() - 1).getPosition().x = -10.0f;
+            nivelEscudo.get(naveaux.getEscudoNivel() - 1).getPosition().x = -10.0f;
+
+
+            nivelDano.setPosition(new Vetor3(-10.005f, -0.018f, -0.089f));
+            nivelDefesa.setPosition(new Vetor3(-10.005f, -0.042f, -0.089f));
+            nivelXPescudo.setPosition(new Vetor3(-10.005f, -0.030f, -0.089f));
 
 
             btback.setPosition(new Vetor3(-10.023f, -0.092f, -0.089f));
 
 
             if (!carregouValores) {
+
+                Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.notab);
+
+                painel_a.LoadTexture(bitmap2);
                 nomeNave.LoadTexture(ConvertBitimap.getBitmapP(String.valueOf(nivelNaveX.getNome())));
 
                 EstatusFase v = new BDEstatusFase(context).buscarUltima();
@@ -1483,21 +1604,22 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             painel_a.setPosition(new Vetor3(-15f, 0.040f, -0.94f));
 
 
-
             if (!carregouValores) {
-                Nave naveaux =  new BDNave(context).buscarHabilitado(fase+1);
+                Nave naveaux = new BDNave(context).buscarHabilitado(fase + 1);
                 nomeNave.setPosition(new Vetor3(-14.99f, -0.002f, -0.08f));
                 select.setPosition(new Vetor3(-15, -0.08f, -0.8f));
                 nothanks.setPosition(new Vetor3(-15, -0.25f, -0.8f));
                 unlocked.setPosition(new Vetor3(-14.98f, 0.15f, -0.8f));
-                nivelNaveX=naveaux;
+                nivelNaveX = naveaux;
+                BDNave BDN2 = new BDNave(context);
+                BDN2.atualizarNaveHabilitado(naveaux.get_id());
                 Fenixt.get((int) naveaux.get_id() - 1).setPosition(new Vetor3(xd, yd, -0.92f));
-                if ( Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
+                if (Fenixt.get((int) naveaux.get_id() - 1).getPeca() != null) {
                     Fenixt.get((int) naveaux.get_id() - 1).getPeca().setPosition(Fenixt.get((int) naveaux.get_id() - 1).getPosition());
                 }
                 naveSelecionada = (int) naveaux.get_id() - 1;
 
-             //   btback.setPosition(new Vetor3(-15.023f, -0.092f, -0.089f));
+                //   btback.setPosition(new Vetor3(-15.023f, -0.092f, -0.089f));
 
                 nomeNave.LoadTexture(ConvertBitimap.getBitmapP(String.valueOf(nivelNaveX.getNome())));
 
@@ -1895,29 +2017,17 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 alerta.getBtSim().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //    selectFase = false;
                         alerta.fechar();
 
-
                         String[] fasex = String.valueOf(fase).split("");
-
                         if (fasex.length > 1) {
-                            musicaDafase = Integer.parseInt(fasex[0])<6?Integer.parseInt(fasex[0]):3;
-
+                            musicaDafase = Integer.parseInt(fasex[0]) < 6 ? Integer.parseInt(fasex[0]) : 3;
                         } else {
                             musicaDafase = 0;
                         }
-
                         fasecarregada = 1;
-
-
                         musicaInicioFase = true;
                         iniciomenu = false;
-
-//                            fasecarregada = 0;
-//                            musicaInicioFase = false;
-//                            mudarMusica(-2, false, true);
-
                         if (tut != null) {
                             // tut.destroy();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1929,7 +2039,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             }
                             tut.tartarugaF(fase, comSons, comMusica, nivelNave);
                             carregouValores = false;
-
                         }
 
 
@@ -1965,6 +2074,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         if (upgrade <= 0.02f) {
 
             fasecarregada = 2;
+            carregouValores = false;
+
             tipoDeCard = 0;
         }
 
@@ -2011,12 +2122,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         BDNave BDN = new BDNave(context);
         BDRecompensa BDR = new BDRecompensa(context);
         recompensa = BDR.buscar(1);
-
-
-//        double plusPull = calculoarDistancia(nivelImaP.get(nivelImaR), bolhaRef2.getPosition());
-//        double plusEc = calculoarDistancia(nivelEscudoP.get(0), bolhaRef2.getPosition());
-//        double plusAt = calculoarDistancia(nivelAtaqueP.get(0), bolhaRef2.getPosition());
-//        double plusBb = calculoarDistancia(nivelBombaP.get(0), bolhaRef2.getPosition());
 
         switch (num) {
             case 1:
@@ -2093,9 +2198,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 }
                 break;
             case 0:
-                    recompensa.setValor(recompensa.getValor() + 450);
-                    new BDRecompensa(context).atualizarRecompensa(recompensa);
-                    carregouValores = false;
+                recompensa.setValor(recompensa.getValor() + 450);
+                new BDRecompensa(context).atualizarRecompensa(recompensa);
+                carregouValores = false;
 
                 break;
 
@@ -2104,6 +2209,77 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         BDN.atualizarNave(nivelNave);
     }
 
+    private void loja2(int num) {
+        BDNave BDN = new BDNave(context);
+        Nave naveaux = new BDNave(context).buscar(naveSelecionada + 1);
+        BDRecompensa BDR = new BDRecompensa(context);
+        recompensa = BDR.buscar(1);
+
+        switch (num) {
+            case 1:
+                if (naveaux.getDano() < 5) {
+                    int preco = buscarPreco(naveaux.getDano() - 1);;
+                    if (preco != -1 && preco <= recompensa.getValor()) {
+                        recompensa.setValor(recompensa.getValor() - preco);
+                        new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+
+                        carregouValores = false;
+                        nivelNave.setDano(nivelNave.getDano() + 1);
+                    } else {
+                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 2:
+                if (naveaux.getEscudoNivel() < 5) {
+                    int preco = buscarPreco(naveaux.getEscudoNivel() - 1);;
+                    if (preco != -1 && preco <= recompensa.getValor()) {
+
+                        recompensa.setValor(recompensa.getValor() - preco);
+                        new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                        carregouValores = false;
+
+                        nivelNave.setEscudoNivel(naveaux.getEscudoNivel() + 1);
+                    } else {
+                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 3:
+                if (naveaux.getDefesa() < 5) {
+                    int preco = buscarPreco(naveaux.getDefesa() - 1);
+                    if (preco != -1 && preco <= recompensa.getValor()) {
+                        recompensa.setValor(recompensa.getValor() - preco);
+                        new BDRecompensa(context).atualizarRecompensa(recompensa);
+
+                        carregouValores = false;
+
+                        nivelNave.setDefesa(naveaux.getDefesa() + 1);
+                    } else {
+                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 0:
+                recompensa.setValor(recompensa.getValor() + 450);
+                new BDRecompensa(context).atualizarRecompensa(recompensa);
+                carregouValores = false;
+
+                break;
+
+
+        }
+        BDN.atualizarNave(nivelNave);
+    }
 
     private int buscarPreco(int n) {
         int preco = 0;
@@ -2133,54 +2309,102 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     public boolean onTouch(View view, MotionEvent event) {
 
         if (liberado) {
-            if (fasecarregada == 0 || fasecarregada == 2 || fasecarregada == 3 || fasecarregada == 4  || fasecarregada == 5) {
+            if (fasecarregada == 0 || fasecarregada == 2 || fasecarregada == 3 || fasecarregada == 4 || fasecarregada == 5 || fasecarregada == 6) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
 
                     pontoDoEixoYInicio = event.getY();
                     pontoDoEixoXInicio = event.getX();
+                    if (fasecarregada == 0) {
+                        if (event.getY() < h * 0.75) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                validarToque(event);
+                            }
+                        } else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                recolher = 2;
+                                validarToque(event);
+                                //       iniciarTelaDeSelecao = true;
+                            }
+                        } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.34 && event.getX() < this.wTela * 0.54) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                recolher = 1;
+                                //     iniciarTelaDeSelecao = true;
+                                fase = new BDEstatusFase(context).buscarUltima().getId();
+                                iniciaraProxima = true;
+                                validarToque(event);
+                            }
+                        } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.6 && fasecarregada == 0) {
 
-                    if (event.getY() < h * 0.75) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            validarToque(event);
+                            fasecarregada = 3;
+                            tipoDeCard = 0;
+                            naveSelecionada = indexNave;
                         }
-                    }
-                    if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            recolher = 2;
-                            validarToque(event);
-                            //       iniciarTelaDeSelecao = true;
-                        }
-                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.34 && event.getX() < this.wTela * 0.54) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            recolher = 1;
-                            //     iniciarTelaDeSelecao = true;
-                            fase = new BDEstatusFase(context).buscarUltima().getId();
-                            iniciaraProxima = true;
-                            validarToque(event);
-                        }
-                    } else if (event.getY() > h * 0.75 && event.getX() > this.wTela * 0.6 && fasecarregada == 0) {
 
-                        fasecarregada = 3;
-                        tipoDeCard = 0;
+                    }else  if (fasecarregada == 2) {
+                        if (event.getX() > this.wTela * 0.4 && event.getY() > this.h * 0.3) {
+                            if (event.getY() > h * 0.3 && event.getY() < h * 0.4) {
+                                //  Toast.makeText(context, "40", Toast.LENGTH_SHORT).show();
+                                loja(1);
+                            } else if (event.getY() > h * 0.4 && event.getY() < h * 0.5) {
+                                // Toast.makeText(context, "50", Toast.LENGTH_SHORT).show();
+                                loja(2);
+                            } else if (event.getY() > h * 0.5 && event.getY() < h * 0.6) {
+                                // Toast.makeText(context, "60", Toast.LENGTH_SHORT).show();
+                                loja(3);
+                            } else if (event.getY() > h * 0.6 && event.getY() < h * 0.7) {
+                                //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
+                                loja(4);
+                            } else if (event.getY() > h * 0.80 && event.getY() < h * 0.93) {
+                                //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
+                                loja(0);
+                            }
+                        } else {
+                            if (event.getX() > this.wTela * 0.4 && event.getY() < h * 0.3) {
+                                fasecarregada = 6;
+                                carregouValores = false;
 
-                    } else if (fasecarregada == 2 && event.getX() > this.wTela * 0.4) {
-                        if (event.getY() > h * 0.3 && event.getY() < h * 0.4) {
-                            //  Toast.makeText(context, "40", Toast.LENGTH_SHORT).show();
-                            loja(1);
-                        } else if (event.getY() > h * 0.4 && event.getY() < h * 0.5) {
-                            // Toast.makeText(context, "50", Toast.LENGTH_SHORT).show();
-                            loja(2);
-                        } else if (event.getY() > h * 0.5 && event.getY() < h * 0.6) {
-                            // Toast.makeText(context, "60", Toast.LENGTH_SHORT).show();
-                            loja(3);
-                        } else if (event.getY() > h * 0.6 && event.getY() < h * 0.7) {
-                            //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
-                            loja(4);
-                        } else if (event.getY() > h * 0.80 && event.getY() < h * 0.93) {
-                            //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
-                            loja(0);
+                            }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    recolher = 2;
+                                    naveSelecionada = indexNave;
+                                    validarToque(event);
+                                }
+                            }
+
+
+                        }
+
+                    } else if (fasecarregada == 6) {
+                        if (event.getX() > this.wTela * 0.4 && event.getY() > this.h * 0.3) {
+                            if (event.getY() > h * 0.3 && event.getY() < h * 0.4) {
+                                //  Toast.makeText(context, "40", Toast.LENGTH_SHORT).show();
+                                loja2(1);
+                            } else if (event.getY() > h * 0.4 && event.getY() < h * 0.5) {
+                                // Toast.makeText(context, "50", Toast.LENGTH_SHORT).show();
+                                loja2(2);
+                            } else if (event.getY() > h * 0.5 && event.getY() < h * 0.6) {
+                                // Toast.makeText(context, "60", Toast.LENGTH_SHORT).show();
+                                loja2(3);
+                            } else if (event.getY() > h * 0.80 && event.getY() < h * 0.93) {
+                                //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
+                                loja(0);
+                            }
+                        } else {
+                            if (event.getX() < this.wTela * 0.4 && event.getY() < h * 0.3 ) {
+                                fasecarregada = 2;
+                                carregouValores = false;
+
+                            }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    recolher = 2;
+                                    naveSelecionada = indexNave;
+                                    validarToque(event);
+                                }
+                            }
+
+
                         }
 
                     } else if (fasecarregada == 3) {
@@ -2202,18 +2426,29 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         } else if (event.getY() > h * 0.6 && event.getY() < h * 0.8 && event.getX() > this.wTela * 0.4) {
                             //  Toast.makeText(context, "70", Toast.LENGTH_SHORT).show();
                             angar(5);
+                        }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                recolher = 2;
+                                validarToque(event);
+                            }
                         }
                     } else if (fasecarregada == 4) {
                         if (event.getY() > h * 0.6 && event.getY() < h * 0.8 && event.getX() > this.wTela * 0.2 && event.getX() < this.wTela * 0.9) {
 
-                            if (fase >= Integer.valueOf(nivelNaveX.getHabilitado())) {
+                            if (fase >= Integer.valueOf(nivelNaveX.getHabilitado())  || "S".equals(nivelNaveX.getLiberado())) {
                                 indexNave = naveSelecionada;
-                                nivelNave=nivelNaveX;
+                                nivelNave = nivelNaveX;
                                 nivelImaR = nivelNaveX.getPuchar();
                                 nivelEscudoR = nivelNaveX.getEscudo();
                                 nivelBombaR = nivelNaveX.getBomba();
                                 nivelAtaqueR = nivelNaveX.getAtaque();
-                                fasecarregada=0;
+                                fasecarregada = 0;
+                            }
+                        }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                recolher = 2;
+                                naveSelecionada = indexNave;
+                                validarToque(event);
                             }
                         }
                     } else if (fasecarregada == 5) {
@@ -2221,18 +2456,22 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                             Nave navex = new BDNave(context).buscarHabilitado(fase);
 
-                                indexNave = navex.get_id()-1;
-                                nivelNave=navex;
-                                nivelImaR = navex.getPuchar();
-                                nivelEscudoR = navex.getEscudo();
-                                nivelBombaR = navex.getBomba();
-                                nivelAtaqueR = navex.getAtaque();
-                                fasecarregada=2;
+                            indexNave = navex.get_id() - 1;
+                            nivelNave = navex;
+                            nivelImaR = navex.getPuchar();
+                            nivelEscudoR = navex.getEscudo();
+                            nivelBombaR = navex.getBomba();
+                            nivelAtaqueR = navex.getAtaque();
+                            fasecarregada = 2;
+                            carregouValores = false;
+                            naveSelecionada = indexNave;
 
-                        }else  if (event.getY() > h * 0.65 && event.getY() < h * 0.75 && event.getX() > this.wTela * 0.2 && event.getX() < this.wTela * 0.9) {
+                        } else if (event.getY() > h * 0.65 && event.getY() < h * 0.75 && event.getX() > this.wTela * 0.2 && event.getX() < this.wTela * 0.9) {
 
-                            fasecarregada=2;
-                            naveSelecionada = indexNave  ;
+                            fasecarregada = 2;
+                            carregouValores = false;
+
+                            naveSelecionada = indexNave;
 
 
                         }

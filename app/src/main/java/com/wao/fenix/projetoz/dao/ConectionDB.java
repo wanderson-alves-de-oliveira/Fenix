@@ -40,6 +40,7 @@ public class ConectionDB extends SQLiteOpenHelper {
         db.execSQL("create table  if not exists upgade_nave(_id integer primary key autoincrement," +
                 "nome text," +
                 "habilitado text," +
+                "liberado text," +
                 "ataque integer," +
                 "escudo integer," +
                 "bomba integer," +
@@ -75,6 +76,7 @@ public class ConectionDB extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put("nome", "FENIX");
         valores.put("habilitado", "0");
+        valores.put("liberado", "S");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
@@ -86,56 +88,61 @@ public class ConectionDB extends SQLiteOpenHelper {
         valores = new ContentValues();
         valores.put("nome", "DRAGON");
         valores.put("habilitado", "10");
+        valores.put("liberado", "N");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
         valores.put("escudo_nivel", 1);
-        valores.put("dano", 2);
+        valores.put("dano", 1);
         valores.put("defesa", 1);
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
         valores.put("nome", "GRIFON");
         valores.put("habilitado", "20");
+        valores.put("liberado", "N");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
         valores.put("escudo_nivel", 1);
-        valores.put("dano", 2);
-        valores.put("defesa", 2);
+        valores.put("dano", 1);
+        valores.put("defesa", 1);
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
         valores.put("nome", "PEGAZUS");
         valores.put("habilitado", "30");
+        valores.put("liberado", "N");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
-        valores.put("escudo_nivel", 2);
-        valores.put("dano", 3);
+        valores.put("escudo_nivel", 1);
+        valores.put("dano", 1);
         valores.put("defesa", 1);
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
         valores.put("nome", "MERMAID");
         valores.put("habilitado", "40");
+        valores.put("liberado", "N");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
-        valores.put("escudo_nivel",0);
-        valores.put("dano", 3);
-        valores.put("defesa", 3);
+        valores.put("escudo_nivel",1);
+        valores.put("dano", 1);
+        valores.put("defesa", 1);
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
         valores.put("nome", "KRAKEN");
+        valores.put("liberado", "N");
         valores.put("habilitado", "50");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
         valores.put("puchar", 0);
-        valores.put("escudo_nivel", 2);
-        valores.put("dano", 4);
-        valores.put("defesa", 3);
+        valores.put("escudo_nivel", 1);
+        valores.put("dano", 1);
+        valores.put("defesa", 1);
         db.insert("upgade_nave", null, valores);
 
 
