@@ -57,7 +57,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private boolean comMusica = true;
     private boolean comSons = true;
     private boolean jogar = false;
-
+    Bitmap btmTiro = null;
     private TartarugaCorrida tut;
     private int indexNave = 0;
     private int indexNaveDeOrigem = 0;
@@ -278,6 +278,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         frame.setVisibility(View.VISIBLE);
 
         frame.addView(btamostra);
+        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
 
 //
 //        EstatusFase vb = new BDEstatusFase(context).buscarUltima();
@@ -2037,7 +2038,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                                     Looper.getMainLooper().getThread().interrupt();
                                 }
                             }
-                            tut.tartarugaF(fase, comSons, comMusica, nivelNave);
+                            tut.tartarugaF(fase, comSons, comMusica, nivelNave,true,btmTiro);
                             carregouValores = false;
                         }
 
@@ -2443,6 +2444,27 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                                 nivelBombaR = nivelNaveX.getBomba();
                                 nivelAtaqueR = nivelNaveX.getAtaque();
                                 fasecarregada = 0;
+                                switch (indexNave){
+                                    case 0:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
+                                        break;
+                                    case 1:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroa);
+                                        break;
+                                    case 2:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroc);
+                                        break;
+                                    case 3:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroe);
+                                        break;
+                                    case 4:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tironave);
+                                        break;
+                                    case 5:
+                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tirox);
+                                        break;
+                                }
+
                             }
                         }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

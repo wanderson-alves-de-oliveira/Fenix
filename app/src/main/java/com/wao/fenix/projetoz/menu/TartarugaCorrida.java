@@ -108,6 +108,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     public boolean selectFase = false;
     public boolean acionado = false;
     public boolean carregamentoDireto = false;
+    public boolean carregamentoDireto2 = false;
 
     private boolean vitoria = false;
     private boolean exibirStatusVitoria = false;
@@ -204,6 +205,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> inimigosA;
     private ArrayList<Objeto3d> splosaoArrayNave;
     private ArrayList<Objeto3d> tiros;
+    private ArrayList<Objeto3d> tiros0;
+    private ArrayList<Objeto3d> tiros1;
+    private ArrayList<Objeto3d> tiros2;
+    private ArrayList<Objeto3d> tiros3;
+    private ArrayList<Objeto3d> tiros4;
+    private ArrayList<Objeto3d> tiros5;
 
     private ArrayList<ArrayList<Objeto3d>> objetosCenario;
     private ArrayList<Objeto3d> cena;
@@ -215,7 +222,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     //private Objeto3d objeto3dxquadro;
     private int nivel = 1;
     private int resgateOuro = 0;
-    private GirarOBJ girarx= new GirarOBJ();
+    private GirarOBJ girarx = new GirarOBJ();
 
     private int tempoDeEspera = 1;
     private int tempoDisparo = 0;
@@ -361,6 +368,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     int faseInit[] = {}; //Fully white
     private boolean comMusica = true;
     private boolean comSons = true;
+    private boolean alterouNave = false;
+    private Bitmap tiroNovo = null;
     private boolean x = false, y = false, z = false;
     float white[] = {0.3f, 0.3f, 0.3f, 1.0f}; //Fully white
     float green[] = {0.0f, 1.0f, 0.0f, 1.0f}; //Bright green
@@ -557,8 +566,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     }
 
-    public void tartarugaF(int fase, boolean comSons, boolean comMusica, Nave nivelNave) {
+    public void tartarugaF(int fase, boolean comSons, boolean comMusica, Nave nivelNave, boolean alterouNave, Bitmap tiroNovo) {
         tempoDeEspera = 1;
+        this.alterouNave = alterouNave;
+        this.tiroNovo = tiroNovo;
         this.fase = fase;
         this.comSons = comSons;
         this.comMusica = comMusica;
@@ -596,13 +607,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
         onSurfaceCreated(gl2, this.eglConfig);
         onSurfaceChanged(gl2, (int) wTela, (int) h);
+         carregamentoDireto2 = true;
 
-        Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.nuvem);
-        for (Objeto3d o : asteroide) {
-
-            o.LoadTexture(bitmap2);
-
-        }
+        //  Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
 
 
     }
@@ -1027,23 +1034,129 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 if (tiros == null) {
                     tiros = new ArrayList<>();
                 }
+                if (tiros0 == null) {
+                    tiros0 = new ArrayList<>();
+                }
+                if (tiros1 == null) {
+                    tiros1 = new ArrayList<>();
+                }
+                if (tiros2 == null) {
+                    tiros2 = new ArrayList<>();
+                }
+                if (tiros3 == null) {
+                    tiros3 = new ArrayList<>();
+                }
+                if (tiros4 == null) {
+                    tiros4 = new ArrayList<>();
+                }
+                if (tiros5 == null) {
+                    tiros5 = new ArrayList<>();
+                }
                 carga++;
                 break;
             case 13:
 
-                if (!carregamentoDireto) {
-                    if (tiros.size() < QTD_DE_TIROS) {
-                        int i = tiros.size();
-                        tiros.add(new Objeto3d(context, asset, "tiroz.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
-                        tiros.get(i).vezes(1.8f);
-                        tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
+                if (carregamentoDireto2) {
 
-                        tiros.get(i).setOrigem("Fenix1");
-                        tiros.get(i).setMover("nulo");
+
+                    if (tiros0.size() < QTD_DE_TIROS) {
+                        int i = tiros0.size();
+                        tiros0.add(new Objeto3d(context, asset, "tirozzx.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros0.get(i).vezes(1.8f);
+                        tiros0.get(i).setCores(new Vetor3(1f, 0f, 0f));
+
+                        tiros0.get(i).setOrigem("Fenix1");
+                        tiros0.get(i).setMover("nulo");
+                    } else if (tiros1.size() < QTD_DE_TIROS) {
+                        int i = tiros1.size();
+                        tiros1.add(new Objeto3d(context, asset, "tirozx.obj", R.drawable.micel, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros1.get(i).vezes(2.5f);
+                        tiros1.get(i).setCores(new Vetor3(1f, 1f, 1f));
+
+                        tiros1.get(i).setOrigem("Fenix1");
+                        tiros1.get(i).setMover("nulo");
+                    } else if (tiros2.size() < QTD_DE_TIROS) {
+                        int i = tiros2.size();
+                        tiros2.add(new Objeto3d(context, asset, "tirozx.obj", R.drawable.tiroe, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros2.get(i).vezes(2.0f);
+                        tiros2.get(i).setCores(new Vetor3(1f, 1f, 1f));
+
+                        tiros2.get(i).setOrigem("Fenix1");
+                        tiros2.get(i).setMover("nulo");
+                    } else if (tiros3.size() < QTD_DE_TIROS) {
+                        int i = tiros3.size();
+                        tiros3.add(new Objeto3d(context, asset, "tirozx.obj", R.drawable.xurikan, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros3.get(i).vezes(2.5f);
+                        tiros3.get(i).setCores(new Vetor3(1f, 1f, 1f));
+
+                        tiros3.get(i).setOrigem("Fenix1");
+                        tiros3.get(i).setMover("nulo");
+                    } else if (tiros4.size() < QTD_DE_TIROS) {
+                        int i = tiros4.size();
+                        tiros4.add(new Objeto3d(context, asset, "tiroz.obj", R.drawable.raio, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros4.get(i).vezes(2.5f);
+                        tiros4.get(i).setCores(new Vetor3(1f, 1f, 1f));
+
+                        tiros4.get(i).setOrigem("Fenix1");
+                        tiros4.get(i).setMover("nulo");
+                    } else if (tiros5.size() < QTD_DE_TIROS) {
+                        int i = tiros5.size();
+                        tiros5.add(new Objeto3d(context, asset, "tirozzx.obj", R.drawable.tironave, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros5.get(i).vezes(1.8f);
+                        tiros5.get(i).setCores(new Vetor3(0f, 0f, 1f));
+
+                        tiros5.get(i).setOrigem("Fenix1");
+                        tiros5.get(i).setMover("nulo");
                     } else {
+
+                        switch (nivelNave.get_id() - 1) {
+                            case 0:
+                                tiros = tiros0;
+                                break;
+                            case 1:
+                                tiros = tiros1;
+                                break;
+                            case 2:
+                                tiros = tiros2;
+                                break;
+                            case 3:
+                                tiros = tiros3;
+                                break;
+                            case 4:
+                                tiros = tiros4;
+                                break;
+                            case 5:
+                                tiros = tiros5;
+                                break;
+                        }
+
+                       carregamentoDireto2 = false;
+
                         carga++;
                     }
+
+
                 } else {
+                    switch (nivelNave.get_id() - 1) {
+                        case 0:
+                            tiros = tiros0;
+                            break;
+                        case 1:
+                            tiros = tiros1;
+                            break;
+                        case 2:
+                            tiros = tiros2;
+                            break;
+                        case 3:
+                            tiros = tiros3;
+                            break;
+                        case 4:
+                            tiros = tiros4;
+                            break;
+                        case 5:
+                            tiros = tiros5;
+                            break;
+                    }
                     carga++;
                 }
 
@@ -1101,8 +1214,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             tiros = new ArrayList<>();
         if (nuvens == null)
             nuvens = new ArrayList<>();
-
-
 
 
         if (Fenix == null) {
@@ -1342,13 +1453,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 
 
-
     public void nuvens() throws IOException {
 
         for (int p = 0; p < 3; p++) {
             // char v = alfabeto.charAt(p );
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                switch (p){
+                switch (p) {
                     case 0:
                         nuvens.add(new Objeto3d(context, asset, "nuvema.obj", R.drawable.nuvem_mara, new Vetor3(escala * 5f, escala * 5f, escala * 5f), "nuvem"));
                         break;
@@ -1371,8 +1481,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
 
             nuvens.get(p).vezes(0.8f);
-            nuvens.get(p).setCores(new Vetor3(1f,1f,1f));
-            nuvens.get(p).setPosition(new Vetor3((float) (-1 + (Math.random() * 2)), (DISTANCIA-2)-p*0.01f, ((p*10f)*-1)-60f));
+            nuvens.get(p).setCores(new Vetor3(1f, 1f, 1f));
+            nuvens.get(p).setPosition(new Vetor3((float) (-1 + (Math.random() * 2)), (DISTANCIA - 2) - p * 0.01f, ((p * 10f) * -1) - 60f));
             nuvens.get(p).setRefletir(true);
         }
 
@@ -2430,10 +2540,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         obj.setEsplodirNave(true);
                         obj2.setEsplodirNave(true);
                         if (!obj.getOrigem().equals("BOSS")) {
-                            if("inimigosB".equals(obj.getNomeRef())){
+                            if ("inimigosB".equals(obj.getNomeRef())) {
                                 obj.setVida(-1);
 
-                            }else {
+                            } else {
                                 obj.setVida(-1);
 
                             }
@@ -2489,7 +2599,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         }
 
-                      //  obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
+                        //  obj2.setPosition(new Vetor3(-1000, obj2.getPosition().y, -1002));
                         ;
                         //  }
                         // }
@@ -2499,10 +2609,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         //       for (Objeto3d p : tiros) {
                         // if (obj2.getOrigem().equals("Fenix1")) {
 
-                        if("inimigosB".equals(obj.getNomeRef())){
+                        if ("inimigosB".equals(obj.getNomeRef())) {
                             obj.setVida(obj.getVida() - (danoNoInimigo * 30));
 
-                        }else {
+                        } else {
                             obj.setVida(obj.getVida() - (danoNoInimigo * 30));
 
                         }
@@ -2834,12 +2944,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 switch (tiros.get(i).getMover()) {
                     case "nulo":
-                        //tiros.get(i).setGiroPosition(new Vetor3(0, 0,0));
+                        tiros.get(i).setGiroPosition(new Vetor3(1, 1, 1));
 
                         switch (nivelTiro) {
                             case 12:
                                 tiros.get(i).setPosition(new Vetor3(Fenix.get(indexNave).getPosition().getX(), Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ())));
-                                tiros.get(i).setCores(new Vetor3(0f, 0f, 1f));
+                                //      tiros.get(i).setCores(new Vetor3(0f, 0f, 1f));
 
                                 break;
                             case 24:
@@ -2848,7 +2958,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                 } else {
                                     tiros.get(i).setPosition(new Vetor3((Fenix.get(indexNave).getPosition().getX() + 0.05f), Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ())));
                                 }
-                                tiros.get(i).setCores(new Vetor3(0f, 1f, 0f));
+                                //   tiros.get(i).setCores(new Vetor3(0f, 1f, 0f));
 
                                 break;
                             case 36:
@@ -2860,7 +2970,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     tiros.get(i).setPosition(new Vetor3(Fenix.get(indexNave).getPosition().getX(), Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ()) - 0.1f));
 
                                 }
-                                tiros.get(i).setCores(new Vetor3(1f, 0f, 1f));
+                                //     tiros.get(i).setCores(new Vetor3(1f, 0f, 1f));
 
                                 break;
 
@@ -2876,7 +2986,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     tiros.get(i).setPosition(new Vetor3(Fenix.get(indexNave).getPosition().getX() + 0.05f, Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ()) - 0.1f));
 
                                 }
-                                tiros.get(i).setCores(new Vetor3(1f, 1f, 0f));
+                                //    tiros.get(i).setCores(new Vetor3(1f, 1f, 0f));
 
                                 break;
                             case 60:
@@ -2894,7 +3004,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     tiros.get(i).setPosition(new Vetor3(Fenix.get(indexNave).getPosition().getX() + 0.05f, Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ()) - 0.1f));
 
                                 }
-                                tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
+                                //   tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
 
                                 break;
 
@@ -2976,11 +3086,11 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     private void moverNuvens(Objeto3d objeto3d) {
 
-        objeto3d.getPosition().z+=velocidade;
+        objeto3d.getPosition().z += velocidade;
 
-        if( objeto3d.getPosition().z>=-58){
-            objeto3d.getPosition().z=-100;
-            objeto3d.getPosition().x= (float) (-1 + (Math.random() * 2));
+        if (objeto3d.getPosition().z >= -58) {
+            objeto3d.getPosition().z = -100;
+            objeto3d.getPosition().x = (float) (-1 + (Math.random() * 2));
         }
 
     }
@@ -3760,8 +3870,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 statusFase.zerarFase(v);
             } else {
                 // if ((fase + 1) <= 60)
-            statusFase.atualizarFase(v);
-                }
+                statusFase.atualizarFase(v);
+            }
             BDRecompensa BDR = new BDRecompensa(context);
             recompensa = BDR.buscar(1);
             recompensa.setValor(recompensa.getValor() + resgateOuro);
@@ -3927,13 +4037,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 break;
             case 2:
                 pp.setPosition(new Vetor3(pp.getPosition().x + velocidade, pp.getPosition().getY(), pp.getPosition().z));
-                girarx. girarOBJ(pp, (limit) * -1, dir, velocidadeG);
+                girarx.girarOBJ(pp, (limit) * -1, dir, velocidadeG);
                 if (pp.getPosition().x >= 1.1f)
                     pp.setDr(3);
                 break;
             case 3:
                 pp.setPosition(new Vetor3(pp.getPosition().x - velocidade, pp.getPosition().getY(), pp.getPosition().z));
-                girarx. girarOBJ(pp, limit, dir, velocidadeG);
+                girarx.girarOBJ(pp, limit, dir, velocidadeG);
                 if (pp.getPosition().x <= -1.1f)
                     pp.setDr(2);
                 break;
@@ -4176,8 +4286,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //        if(proximoIni<faseInit.length)
 //               proximoIni++;
     }
-
-
 
 
     public void moverInimigoB(int modo, int time, float giroybolhas, int p) {
@@ -5097,16 +5205,16 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             terreno2.draw((GL11) gl2);
 
 
-       //     if (chefeDafase < 4) {
-                for (int p = 0; p < cena.size(); p++) {
-                    cena.get(p).draw((GL11) gl2);
-                }
-         //   }
+            //     if (chefeDafase < 4) {
+            for (int p = 0; p < cena.size(); p++) {
+                cena.get(p).draw((GL11) gl2);
+            }
+            //   }
 
-                 for (int p = 0; p < nuvens.size(); p++) {
-                    if (nuvens != null && nuvens.get(p).getPosition().z>-68f && fase<50)
-                        nuvens.get(p).draw((GL11) gl2);
-                }
+            for (int p = 0; p < nuvens.size(); p++) {
+                if (nuvens != null && nuvens.get(p).getPosition().z > -68f && fase < 50)
+                    nuvens.get(p).draw((GL11) gl2);
+            }
 
 
             Fenix.get(indexNave).draw((GL11) gl2);
@@ -5415,7 +5523,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //                    && o.getPosition().z < -59
 //                   // && o.getPassou().equals("N")
 //            ) {
-            if (!o.isEsplodirNave() && o.getPosition().z>-68f) {
+            if (!o.isEsplodirNave() && o.getPosition().z > -68f) {
                 o.draw((GL11) gl2);
 
 
