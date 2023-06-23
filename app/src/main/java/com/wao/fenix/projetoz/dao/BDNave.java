@@ -109,18 +109,25 @@ public class BDNave {
         Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa,liberado FROM upgade_nave WHERE habilitado = '" + habilitado+"'", null);
         cursor.moveToNext();
         Nave c = new Nave();
-        c.set_id(cursor.getInt(0));
-        c.setNome(cursor.getString(1));
-        c.setAtaque(cursor.getInt(2));
-        c.setEscudo(cursor.getInt(3));
-        c.setPuchar(cursor.getInt(4));
-        c.setHabilitado(cursor.getString(5));
-        c.setBomba(cursor.getInt(6));
-        c.setEscudoNivel(cursor.getInt(7));
-        c.setDano(cursor.getInt(8));
-        c.setDefesa(cursor.getInt(9));
-        c.setLiberado(cursor.getString(10));
+        try {
 
+
+            c.set_id(cursor.getInt(0));
+            c.setNome(cursor.getString(1));
+            c.setAtaque(cursor.getInt(2));
+            c.setEscudo(cursor.getInt(3));
+            c.setPuchar(cursor.getInt(4));
+            c.setHabilitado(cursor.getString(5));
+            c.setBomba(cursor.getInt(6));
+            c.setEscudoNivel(cursor.getInt(7));
+            c.setDano(cursor.getInt(8));
+            c.setDefesa(cursor.getInt(9));
+            c.setLiberado(cursor.getString(10));
+        }catch (Exception e){
+            cursor.close();
+            fechar();
+            return  buscar(1);
+        }
         cursor.close();
         fechar();
         return c;

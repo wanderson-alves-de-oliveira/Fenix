@@ -15,7 +15,7 @@ import java.util.Date;
  */
 
 public class ConectionDB extends SQLiteOpenHelper {
-    private static final String nomeDB = "Fenix6";
+    private static final String nomeDB = "Fenix7";
     private static final int vers = 1;
     private Context context;
 
@@ -75,7 +75,7 @@ public class ConectionDB extends SQLiteOpenHelper {
 
         ContentValues valores = new ContentValues();
         valores.put("nome", "FENIX");
-        valores.put("habilitado", "0");
+        valores.put("habilitado", "1");
         valores.put("liberado", "S");
         valores.put("ataque", 0);
         valores.put("escudo", 0);
@@ -98,7 +98,7 @@ public class ConectionDB extends SQLiteOpenHelper {
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
-        valores.put("nome", "GRIFON");
+        valores.put("nome", "HIDRA");
         valores.put("habilitado", "20");
         valores.put("liberado", "N");
         valores.put("ataque", 0);
@@ -122,7 +122,7 @@ public class ConectionDB extends SQLiteOpenHelper {
         db.insert("upgade_nave", null, valores);
 
         valores = new ContentValues();
-        valores.put("nome", "MERMAID");
+        valores.put("nome", "GRIFON");
         valores.put("habilitado", "40");
         valores.put("liberado", "N");
         valores.put("ataque", 0);

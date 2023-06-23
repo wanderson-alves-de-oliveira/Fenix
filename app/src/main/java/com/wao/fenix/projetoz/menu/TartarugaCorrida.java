@@ -211,7 +211,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private ArrayList<Objeto3d> tiros3;
     private ArrayList<Objeto3d> tiros4;
     private ArrayList<Objeto3d> tiros5;
-
+    private int idSon=0;
     private ArrayList<ArrayList<Objeto3d>> objetosCenario;
     private ArrayList<Objeto3d> cena;
 
@@ -260,7 +260,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     //private MediaPlayer musica;
     private ArrayList<MediaPlayer> boom;
-    private MediaPlayer disparo;
+    private ArrayList<MediaPlayer> listaDisparo;
+
+ //   private MediaPlayer disparo;
     private MediaPlayer victory;
 
     private boolean pause = true;
@@ -338,7 +340,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private float moduloz = -35;
     private float acelerarando = 0;
     private Nave nivelNave;
+
     private int nivelBomba;
+    private int repetirSom=1;
 
     public boolean isLimitVelocidadeBoo() {
         return limitVelocidadeBoo;
@@ -1076,7 +1080,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         tiros1.get(i).setMover("nulo");
                     } else if (tiros2.size() < QTD_DE_TIROS && nivelNave.get_id()==3) {
                         int i = tiros2.size();
-                        tiros2.add(new Objeto3d(context, asset, "tirozx.obj", R.drawable.tiroe, new Vetor3(0.5f, 0.5f, 0.5f), ""));
+                        tiros2.add(new Objeto3d(context, asset, "tirozx.obj", R.drawable.tironavea, new Vetor3(0.5f, 0.5f, 0.5f), ""));
                         tiros2.get(i).vezes(2.0f);
                         tiros2.get(i).setCores(new Vetor3(1f, 1f, 1f));
 
@@ -2332,9 +2336,57 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.boom.add(MediaPlayer.create(context, R.raw.boom));
 
 
-        this.disparo = MediaPlayer.create(context, R.raw.tiro);
+
+        this.listaDisparo = new ArrayList<>();
+
+        int idsom=0;
+        float volumex=0;
+
+
+        switch (nivelNave.get_id()){
+            case 1:
+            case 6:
+                idsom= R.raw.tiro;
+                volumex= 0.4f;
+                repetirSom=1;
+                break;
+            case 2:
+                idsom= R.raw.disparo_b;
+                volumex= 0.2f;
+                repetirSom=1;
+
+                break;
+            case 3:
+                idsom= R.raw.disparo_f;
+                volumex= 1f;
+                repetirSom=3;
+
+                break;
+            case 4:
+                idsom= R.raw.disparo_h;
+                volumex= 0.6f;
+                repetirSom=2;
+                break;
+            case 5:
+                idsom= R.raw.disparo_d;
+                volumex= 1f;
+                repetirSom=3;
+
+                break;
+            }
+
+      for(int i = 0;i<5;i++) {
+          this.listaDisparo.add(MediaPlayer.create(context,idsom));
+
+          this.listaDisparo.get(i).setVolume(volumex, volumex);
+
+      }
+
+
+
+   //   this.disparo = MediaPlayer.create(context, idsom);
         this.victory = MediaPlayer.create(context, R.raw.victory);
-        this.disparo.setVolume(0.4f, 0.4f);
+    //    this.disparo.setVolume(0.4f, 0.4f);
 
 /////////////////////////////////////////
     }
@@ -2345,11 +2397,19 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             switch (s) {
                 case 1:
 
-                    if (this.disparo.isPlaying()) {
+                    for(int i = 0;i<repetirSom;i++) {
 
+                        if (this.listaDisparo.get(i).isPlaying() ) {
+                            // this.listaDisparo.get(idSon).pause();
 
-                    } else {
-                        this.disparo.start();
+                        } else {
+
+//                        if (  !fogo) {
+//                            this.listaDisparo.get(idSon).pause();
+//                        }else {
+                            this.listaDisparo.get(i).start();
+                            //       }
+                        }
                     }
                     break;
                 case 2:
@@ -2910,14 +2970,22 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             if (Fenix.get(indexNave).getPeca() == null) {
                 Fenix.get(indexNave).getGiroPosition().z = giroyFenix;
             }
+            int sonid=0;
             for (int i = nivelTiroIndex; i < nivelTiro; i++) {
                 if (tiros.get(i).getTime() >= 50 || tiros.get(i).getPosition().z < -64) {
                     tiros.get(i).setMover("nulo");
                     tiros.get(i).setTime(0);
 
                 }
-                if (tiros.get(i).getTime() == 1)
+                idSon = sonid;
+                if (tiros.get(i).getTime() == 1) {
                     son(1);
+                    if(sonid<repetirSom-1) {
+                       sonid++;
+                    }else {
+                        sonid =  0;
+                    }
+                }
 
                 switch (tiros.get(i).getMover()) {
                     case "nulo":
@@ -2927,7 +2995,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             case 12:
                                 tiros.get(i).setPosition(new Vetor3(Fenix.get(indexNave).getPosition().getX(), Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ() - 0.1f)));
                                 //      tiros.get(i).setCores(new Vetor3(0f, 0f, 1f));
-
+                             //   repetirSom=1;
                                 break;
                             case 24:
                                 if (i < 12) {
@@ -2936,7 +3004,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                                     tiros.get(i).setPosition(new Vetor3((Fenix.get(indexNave).getPosition().getX() + 0.05f), Fenix.get(indexNave).getPosition().getY(), (Fenix.get(indexNave).getPosition().getZ())));
                                 }
                                 //   tiros.get(i).setCores(new Vetor3(0f, 1f, 0f));
-
+                             //   repetirSom=2;
                                 break;
                             case 36:
                                 if (i < 12) {
@@ -2948,7 +3016,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                                 }
                                 //     tiros.get(i).setCores(new Vetor3(1f, 0f, 1f));
-
+                              //  repetirSom=3;
                                 break;
 
                             case 48:
@@ -2964,7 +3032,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                                 }
                                 //    tiros.get(i).setCores(new Vetor3(1f, 1f, 0f));
-
+                              //  repetirSom=4;
                                 break;
                             case 60:
                                 if (i < 12) {
@@ -2982,7 +3050,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                                 }
                                 //   tiros.get(i).setCores(new Vetor3(1f, 0f, 0f));
-
+                             //   repetirSom=5;
                                 break;
 
                         }
@@ -5955,7 +6023,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             idDisparoQTD = 0;
                         }
 
-
+                   //     repetirSom=1;
                         break;
                     case 24:
                         tiros.get(idDisparo).setMover("disparar");
@@ -5970,6 +6038,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             idDisparo2 = 12;
                             idDisparoQTD = 0;
                         }
+                     //   repetirSom=2;
                         break;
                     case 36:
                         tiros.get(idDisparo).setMover("disparar");
@@ -5991,6 +6060,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             idDisparo3 = 24;
                             idDisparoQTD = 0;
                         }
+                     //   repetirSom=3;
                         break;
 
                     case 48:
@@ -6017,6 +6087,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             idDisparo4 = 36;
                             idDisparoQTD = 0;
                         }
+                   //     repetirSom=4;
                         break;
 
                     case 60:
@@ -6046,7 +6117,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                             idDisparo5 = 48;
                             idDisparoQTD = 0;
                         }
-
+                      //  repetirSom=5;
 
                         break;
 
