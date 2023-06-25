@@ -1330,6 +1330,7 @@ public class Objeto3d implements Serializable {
                         case "inimigosE2":
                         case "Fenix1":
                         case "nuvem":
+                        case "AT":
                         case "boss":
                             float[] ambientLight = new float[]{cores.x, cores.y, cores.z, 1.0f};//cor amarela do ambiente
                             float[] posicaoLuz = new float[]{-1f, -80, -65f, 1};

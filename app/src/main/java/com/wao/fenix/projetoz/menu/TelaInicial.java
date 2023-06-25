@@ -16,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -1261,6 +1260,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 //                   bolhas.get(p).draw((GL11) gl2);
 //                }
 
+                if (fasecarregada == 0) {
 
                 this.btUpgrade.draw((GL11) gl2);
                 this.btStart.draw((GL11) gl2);
@@ -1274,7 +1274,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 //   nivelEscudoP.get(0).setPosition(new Vetor3(x,y,z-velocidade));
 
 
-                if (fasecarregada == 0) {
 
                     Fenixt.get(indexNave).draw((GL11) gl2);
                     painelMode.get(3).draw((GL11) gl2);
@@ -1444,6 +1443,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
 
         if (fasecarregada == 2) {
+
+            if (!carregouValores) {
             distanciaX = -5;
             Fenixt.get(indexNave).setPosition(new Vetor3(4.84f, 0.34f, -0.78f));
             if (Fenixt.get(indexNave).getPeca() != null) {
@@ -1458,7 +1459,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             nivelEscudoT.getPosition().y = -0.030f;
             valorAdiquiridoObj.setPosition(new Vetor3(4.985f, -0.01f, -0.089f));
 
-            if (!carregouValores) {
                 for (int i=0;i<5;i++) {
                     nivelIma.get(i).getPosition().x = 4.99f;
                     nivelAtaque.get(i).getPosition().x = 4.99f;
@@ -1470,10 +1470,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                 painel_a.LoadTexture(bitmap2);
                 carregouValores = true;
-            }
-            if (barra != null) {
-                barra.getPosition().setX(distanciaX * -1);
-                barra.getPosition().setZ(-0.9f);
+                if (barra != null) {
+                    barra.getPosition().setX(distanciaX * -1);
+                    barra.getPosition().setZ(-0.9f);
+                }
             }
         } else if (fasecarregada == 6) {
             distanciaX = -5;
@@ -1508,50 +1508,49 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
         } else if (fasecarregada == 3) {
 
-            distanciaX = 5f;
+            if (!carregouValores) {
+                distanciaX = 5f;
 
-            float xd = -5.15f;
-            float yd = 0.27f;
+                float xd = -5.15f;
+                float yd = 0.27f;
 
-            for (int i = 0; i < 6; i++) {
-                Fenixt.get(i).setPosition(new Vetor3(xd, yd, -0.92f));
-                if (Fenixt.get(i).getPeca() != null) {
-                    Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
-                }
-                xd = xd + 0.27f;
-                if (i == 1 || i == 3 || i == 5) {
-                    xd = -5.15f;
-                    switch (i) {
-                        case 1:
-                            yd = 0.0f;
-                            break;
-                        case 3:
-                            yd = -0.27f;
-                            break;
-                        case 5:
-                            yd = -0.55f;
-                            break;
+                for (int i = 0; i < 6; i++) {
+                    Fenixt.get(i).setPosition(new Vetor3(xd, yd, -0.92f));
+                    if (Fenixt.get(i).getPeca() != null) {
+                        Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
+                    }
+                    xd = xd + 0.27f;
+                    if (i == 1 || i == 3 || i == 5) {
+                        xd = -5.15f;
+                        switch (i) {
+                            case 1:
+                                yd = 0.0f;
+                                break;
+                            case 3:
+                                yd = -0.27f;
+                                break;
+                            case 5:
+                                yd = -0.55f;
+                                break;
+
+                        }
+
 
                     }
 
+                }
+                btback.setPosition(new Vetor3(-5.023f, -0.092f, -0.089f));
+                carregouValores = true;
 
+                if (barra != null) {
+                    barra.getPosition().setX(distanciaX * -1);
+                    barra.getPosition().setZ(-1f);
                 }
 
             }
-            btback.setPosition(new Vetor3(-5.023f, -0.092f, -0.089f));
-
-
-            if (!carregouValores) {
-//                texturaValores = ConvertBitimap.getBitmap(String.valueOf(recompensa.getValor()));
-//                valorAdiquiridoObj.LoadTexture(texturaValores);
-                carregouValores = true;
-            }
-            if (barra != null) {
-                barra.getPosition().setX(distanciaX * -1);
-                barra.getPosition().setZ(-1f);
-            }
         } else if (fasecarregada == 4) {
 
+            if (!carregouValores) {
             distanciaX = 10f;
 
             float xd = -10.18f;
@@ -1580,7 +1579,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             btback.setPosition(new Vetor3(-10.023f, -0.092f, -0.089f));
 
 
-            if (!carregouValores) {
 
                 Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.notab);
 
@@ -2089,6 +2087,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 nivelEscudoR = nivelNave.getEscudo();
                 nivelBombaR = nivelNave.getBomba();
                 nivelAtaqueR = nivelNave.getAtaque();
+                carregouValores = false;
 
             } else {
                 fasecarregada = 0;
@@ -2138,10 +2137,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         nivelAtaqueR++;
                         nivelNave.setAtaque(nivelAtaqueR);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2:
@@ -2157,11 +2156,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         nivelEscudoR++;
                         nivelNave.setEscudo(nivelEscudoR);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 3:
@@ -2175,10 +2174,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         nivelImaR++;
                         nivelNave.setPuchar(nivelImaR);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:
@@ -2192,10 +2191,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         nivelBombaR++;
                         nivelNave.setBomba(nivelBombaR);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 0:
@@ -2228,10 +2227,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         carregouValores = false;
                         nivelNave.setDano(nivelNave.getDano() + 1);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2:
@@ -2246,11 +2245,11 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                         nivelNave.setEscudoNivel(naveaux.getEscudoNivel() + 1);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 3:
@@ -2264,10 +2263,10 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                         nivelNave.setDefesa(naveaux.getDefesa() + 1);
                     } else {
-                        Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(context, "No stars", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Max level", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 0:
@@ -2341,6 +2340,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                             fasecarregada = 3;
                             tipoDeCard = 0;
                             naveSelecionada = indexNave;
+
+                            carregouValores = false;
                         }
 
                     }else  if (fasecarregada == 2) {
@@ -2476,7 +2477,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     } else if (fasecarregada == 5) {
                         if (event.getY() > h * 0.5 && event.getY() < h * 0.60 && event.getX() > this.wTela * 0.2 && event.getX() < this.wTela * 0.9) {
 
-                            Nave navex = new BDNave(context).buscarHabilitado(fase);
+                            Nave navex = new BDNave(context).buscar(naveSelecionada+1);
 
                             indexNave = navex.get_id() - 1;
                             nivelNave = navex;
