@@ -227,12 +227,31 @@ public class MudaTextura {
 //
 //        }
 
+
+
+
         for (int i = 0; i < cartaANIMAL.getHeight(); i++) {
             for (int j = 0; j < cartaANIMAL.getWidth(); j++) {
                 Color cor = cartaANIMAL.getColor(i, j);
 
+
+                int op =(int)  (100 * Math.random());
+
+                if(op<2){
+                    setcor(i, j, cores.get(0));
+                }else if(op>=2 && op <50){
+                    setcor(i, j, cores.get(1));
+                }else if(op>=50 && op <98){
+                    setcor(i, j,  cores.get(2));
+                }else {
+                    setcor(i, j,  cores.get(3));
+                }
+
+
                 Collections.sort(cores);
-                setcor(i, j, cores.get((int) (5 * Math.random())));
+
+
+
 //                if (j % 2 == 0 && i % 2 == 0) {
 //                    setcor(i, j, c);
 //                } else if (j % 2 != 0 && i % 2 != 0) {

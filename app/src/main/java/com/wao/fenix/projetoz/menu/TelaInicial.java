@@ -56,7 +56,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private boolean comMusica = true;
     private boolean comSons = true;
     private boolean jogar = false;
-    Bitmap btmTiro = null;
+    //Bitmap btmTiro = null;
     private TartarugaCorrida tut;
     private int indexNave = 0;
     private int indexNaveDeOrigem = 0;
@@ -149,6 +149,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
     private MediaPlayer musica;
     private MediaPlayer musicaBossFase;
     private Nave nivelNave;
+
+
+    private int buscaS =1;
     private Recompensa recompensa;
 
 
@@ -251,8 +254,15 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         faseInit = new int[]{0, 1, 2, 3, 4, 5, 2, 3, 4, 1, 5, 0, 2};
         EstatusFase v = new BDEstatusFase(context).buscarUltima();
         int ult = Math.toIntExact(v.getId());
+
+
+
+        BDNave BDNS = new BDNave(context);
+        buscaS = BDNS.buscarIdnaveSelecionada();
+        indexNave = buscaS-1;
+        naveSelecionada = buscaS-1;
         BDNave BDN = new BDNave(context);
-        nivelNave = BDN.buscar(1);
+        nivelNave = BDN.buscar(buscaS);
         nivelNaveX = nivelNave;
         nivelImaR = nivelNave.getPuchar();
         nivelEscudoR = nivelNave.getEscudo();
@@ -277,7 +287,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
         frame.setVisibility(View.VISIBLE);
 
         frame.addView(btamostra);
-        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
+      //  btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
 
 //
 //        EstatusFase vb = new BDEstatusFase(context).buscarUltima();
@@ -332,13 +342,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "inimigod.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -50.5f));
                         //    Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
                         // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
                         Fenixaux.getGiroPosition().x = 270f;
                         Fenixaux.getGiroPosition().y = 180;
 
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
 
                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
@@ -353,10 +362,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     } else if (i == 2) {
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "grifon.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                         Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -50.5f));
                         Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
-                        Fenixaux.setRefletir(true);
+                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
                         Fenixaux.setNomeRef("Fenix");
                         Fenixt.add(Fenixaux);
@@ -364,13 +372,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "heli.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -50.5f));
                         Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
                         // Fenixaux.setGiroPosition(new Vetor3(0, 0, 50));
                         Fenixaux.getGiroPosition().x = 270f;
                         Fenixaux.getGiroPosition().y = 180;
 
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
 
                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
@@ -385,10 +392,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     } else if (i == 3) {
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "pegazus.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
                         Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -50.5f));
                         Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
-                        Fenixaux.setRefletir(true);
+                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
                         Fenixaux.setNomeRef("Fenix");
                         Fenixt.add(Fenixaux);
@@ -396,9 +402,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                         Objeto3d Fenixaux = new Objeto3d(context, asset, "navez.obj", nav, new Vetor3(escala * 0.6f, escala * 0.6f, escala * 0.6f), "");
 
                         Fenixaux.setEstado("NBateu");
-                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -0.5f));
+                        Fenixaux.setPosition(new Vetor3(0, -0.05f, -50.5f));
                         Fenixaux.setGiroPosition(new Vetor3(95, 0, 0f));
-                        posinicialF = new Vetor3(Fenixaux.getPosition());
 
                         Fenixaux.setRefletir(true);
                         Fenixaux.setFenix(true);
@@ -407,6 +412,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
 
                     }
+
+
                 }
 
 
@@ -986,6 +993,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 } else {
                     liberado = true;
                 }
+                posinicialF = new Vetor3(new Vetor3(0, -0.05f, -0.5f));
 
                 carga++;
                 break;
@@ -1215,7 +1223,6 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             gl.glTranslatef(distanciaX, 0.04f, -0.01f);
 
 
-            moverTela();
 
 
 //            girar+=0.1f;
@@ -1227,6 +1234,12 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
             }
             if (carga > 1 && tut.carga < 4 || tut.carga > 7 && tut.carga < 14) {
+
+
+
+
+
+
 
                 this.telaIntro.draw((GL11) gl2);
             } else if (tut.carga >= 14) {
@@ -1255,10 +1268,15 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             if (tut.carga > 13) {
 
 
-                //controleDeTela();
-//                for (int p = 0; p < bolhas.size(); p++) {
-//                   bolhas.get(p).draw((GL11) gl2);
-//                }
+                Fenixt.get(0).draw((GL11) gl2);
+                Fenixt.get(1).getPeca().draw((GL11) gl2);
+                Fenixt.get(1).draw((GL11) gl2);
+                Fenixt.get(2).draw((GL11) gl2);
+                Fenixt.get(3).draw((GL11) gl2);
+                Fenixt.get(4).getPeca().draw((GL11) gl2);
+                Fenixt.get(4).draw((GL11) gl2);
+                Fenixt.get(5).draw((GL11) gl2);
+
 
                 if (fasecarregada == 0) {
 
@@ -1274,14 +1292,21 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 //   nivelEscudoP.get(0).setPosition(new Vetor3(x,y,z-velocidade));
 
 
+//
+//                    this.btback.draw((GL11) gl2);
+
+
+
 
                     Fenixt.get(indexNave).draw((GL11) gl2);
+
+
                     painelMode.get(3).draw((GL11) gl2);
 
                     if (Fenixt.get(indexNave).getPeca() != null)
                         Fenixt.get(indexNave).getPeca().draw((GL11) gl2);
 
-
+                    moverTela();
                 } else if (fasecarregada == 2) {
                     painelMode.get(0).draw((GL11) gl2);
                     if (tipoDeCard != 0)
@@ -1313,7 +1338,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nivelEscudoP.get(nivelEscudoR < 4 ? 5 : 4).draw((GL11) gl2);
 
                     nivelIma.get(nivelImaR).draw((GL11) gl2);
-
+                    moverTela();
                 } else if (fasecarregada == 6) {
                     painelMode.get(0).draw((GL11) gl2);
                     if (tipoDeCard != 0)
@@ -1346,22 +1371,19 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     nivelEscudoP.get(naveaux.getEscudoNivel() - 1).draw((GL11) gl2);
 
-
+                    moverTela();
                 } else if (fasecarregada == 3) {
                     this.btback.draw((GL11) gl2);
+                    Fenixt.get(0).draw((GL11) gl2);
+                    Fenixt.get(1).getPeca().draw((GL11) gl2);
+                    Fenixt.get(1).draw((GL11) gl2);
+                    Fenixt.get(2).draw((GL11) gl2);
+                    Fenixt.get(3).draw((GL11) gl2);
+                    Fenixt.get(4).getPeca().draw((GL11) gl2);
+                    Fenixt.get(4).draw((GL11) gl2);
+                    Fenixt.get(5).draw((GL11) gl2);
 
-
-                    for (int i = 0; i < 6; i++) {
-                        if (Fenixt.get(i).getPeca() != null) {
-                            Fenixt.get(i).getPeca().draw((GL11) gl2);
-                            Fenixt.get(i).draw((GL11) gl2);
-
-                        } else {
-                            Fenixt.get(i).draw((GL11) gl2);
-                        }
-
-                    }
-
+                    moverTela();
 
                 } else if (fasecarregada == 4) {
                     painelMode.get(0).draw((GL11) gl2);
@@ -1393,6 +1415,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     nivelIma.get(naveaux.getDefesa() - 1).draw((GL11) gl2);
                     nivelAtaque.get(naveaux.getDano() - 1).draw((GL11) gl2);
                     nivelEscudo.get(naveaux.getEscudoNivel() - 1).draw((GL11) gl2);
+
+                    moverTela();
                 } else if (fasecarregada == 5) {
                     painelMode.get(0).draw((GL11) gl2);
                     Fenixt.get(naveSelecionada).draw((GL11) gl2);
@@ -1406,7 +1430,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     nomeNave.draw((GL11) gl2);
 
-
+                    moverTela();
                 }
 
             } else {
@@ -1421,6 +1445,8 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                     }
 
                 }
+
+                moverTela();
             }
 
 
@@ -1508,13 +1534,13 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
             }
         } else if (fasecarregada == 3) {
 
-            if (!carregouValores) {
+            if (!carregouValores && Fenixt != null) {
                 distanciaX = 5f;
 
                 float xd = -5.15f;
                 float yd = 0.27f;
 
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < Fenixt.size(); i++) {
                     Fenixt.get(i).setPosition(new Vetor3(xd, yd, -0.92f));
                     if (Fenixt.get(i).getPeca() != null) {
                         Fenixt.get(i).getPeca().setPosition(Fenixt.get(i).getPosition());
@@ -1630,7 +1656,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 barra.getPosition().setX(distanciaX * -1);
                 barra.getPosition().setZ(-1f);
             }
-        } else {
+        } else if (fasecarregada == 0){
             distanciaX = 0;
             if (posinicialF != null)
                 if (Fenixt != null && !Fenixt.isEmpty()) {
@@ -2036,7 +2062,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                                     Looper.getMainLooper().getThread().interrupt();
                                 }
                             }
-                            tut.tartarugaF(fase, comSons, comMusica, nivelNave,true,btmTiro);
+                            tut.tartarugaF(fase, comSons, comMusica, nivelNave,true);
                             carregouValores = false;
                         }
 
@@ -2439,32 +2465,17 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                             if (fase >= Integer.valueOf(nivelNaveX.getHabilitado())  || "S".equals(nivelNaveX.getLiberado())) {
                                 indexNave = naveSelecionada;
+
+                                BDNave BDNS = new BDNave(context);
+                                BDNS.atualizarIdnaveSelecionada(indexNave+1);
+
                                 nivelNave = nivelNaveX;
                                 nivelImaR = nivelNaveX.getPuchar();
                                 nivelEscudoR = nivelNaveX.getEscudo();
                                 nivelBombaR = nivelNaveX.getBomba();
                                 nivelAtaqueR = nivelNaveX.getAtaque();
                                 fasecarregada = 0;
-                                switch (indexNave){
-                                    case 0:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.starfull);
-                                        break;
-                                    case 1:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroa);
-                                        break;
-                                    case 2:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroc);
-                                        break;
-                                    case 3:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiroe);
-                                        break;
-                                    case 4:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tironave);
-                                        break;
-                                    case 5:
-                                        btmTiro = BitmapFactory.decodeResource(context.getResources(), R.drawable.tirox);
-                                        break;
-                                }
+
 
                             }
                         }else if (event.getY() > h * 0.75 && event.getX() < this.wTela * 0.3) {

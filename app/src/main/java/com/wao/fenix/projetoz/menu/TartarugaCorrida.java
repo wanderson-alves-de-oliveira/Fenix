@@ -71,7 +71,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private Vetor3 positiomAnteriorBoss;
     // private int total;
     private int indexOuro = 0;
-    private final int VIDASMAX = 500000;
+    private final int VIDASMAX = 5;
 
     private int po = 0;
     private int timeLine = 0;
@@ -343,13 +343,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private int nivelBomba;
     private int repetirSom = 1;
 
- //   public boolean isLimitVelocidadeBoo() {
-//        return limitVelocidadeBoo;
-//    }
-//
-//    public void setLimitVelocidadeBoo(boolean limitVelocidadeBoo) {
-//        this.limitVelocidadeBoo = limitVelocidadeBoo;
-//    }
+
 
 
     public boolean isBossEliminado() {
@@ -372,7 +366,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     private boolean comMusica = true;
     private boolean comSons = true;
     private boolean alterouNave = false;
-    private Bitmap tiroNovo = null;
+   // private Bitmap tiroNovo = null;
     private boolean x = false, y = false, z = false;
     float white[] = {0.3f, 0.3f, 0.3f, 1.0f}; //Fully white
     float green[] = {0.0f, 1.0f, 0.0f, 1.0f}; //Bright green
@@ -434,81 +428,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
         this.asset = asset;
     }
 
-//    public long getRecordeVelhoD() {
-//        return recordeVelhoD;
-//    }
-//
-//    public void setRecordeVelhoD(long recordeVelhoD) {
-//        this.recordeVelhoD = recordeVelhoD;
-//    }
-//
-//    public String getArquivo() {
-//        return arquivo;
-//    }
-//
-//    public void setArquivo(String arquivo) {
-//        this.arquivo = arquivo;
-//    }
-//
-//    public File getPegaArquivo() {
-//        return pegaArquivo;
-//    }
-//
-//    public void setPegaArquivo(File pegaArquivo) {
-//        this.pegaArquivo = pegaArquivo;
-//    }
-//
-//    public long getPalavrasConquistadas() {
-//        return palavrasConquistadas;
-//    }
-//
-//    public void setPalavrasConquistadas(long palavrasConquistadas) {
-//        this.palavrasConquistadas = palavrasConquistadas;
-//    }
 
-//    public long getPalavrasConquistadasDeReset() {
-//        return palavrasConquistadasDeReset;
-//    }
-//
-//    public void setPalavrasConquistadasDeReset(long palavrasConquistadasDeReset) {
-//        this.palavrasConquistadasDeReset = palavrasConquistadasDeReset;
-//    }
-//
-//    public String getMensagem() {
-//        return mensagem;
-//    }
-//
-//    public void setMensagem(String mensagem) {
-//        this.mensagem = mensagem;
-//    }
-//
-//    public String getTipo() {
-//        return tipo;
-//    }
-//
-//    public void setTipo(String tipo) {
-//        this.tipo = tipo;
-//    }
-//
-//    public int getVariante() {
-//        return variante;
-//    }
-//
-//    public boolean isVenceu() {
-//        return venceu;
-//    }
-//
-//    public void setVenceu(boolean venceu) {
-//        this.venceu = venceu;
-//    }
-//
-//    public boolean isPerdeu() {
-//        return perdeu;
-//    }
-//
-//    public void setPerdeu(boolean perdeu) {
-//        this.perdeu = perdeu;
-//    }
 
     public boolean isHoraDoBoss() {
         return horaDoBoss;
@@ -569,10 +489,10 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     }
 
-    public void tartarugaF(int fase, boolean comSons, boolean comMusica, Nave nivelNave, boolean alterouNave, Bitmap tiroNovo) {
+    public void tartarugaF(int fase, boolean comSons, boolean comMusica, Nave nivelNave, boolean alterouNave) {
         tempoDeEspera = 1;
         this.alterouNave = indexNave != (nivelNave.get_id() - 1);
-        this.tiroNovo = tiroNovo;
+     //   this.tiroNovo = tiroNovo;
         this.fase = fase;
         this.comSons = comSons;
         this.comMusica = comMusica;
@@ -2945,8 +2865,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     nivelNave.setBomba(nivelBomba >= 0 ? nivelBomba : 0);
                     BDNave BDN = new BDNave(context);
                     BDN.atualizarNave(nivelNave);
-//                    texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelBomba + 1));
-//                    btEspecial.LoadTexture(texturaValoresBombas);
+                    texturaValoresBombas = ConvertBitimap.getBitmapRedondo(String.valueOf(nivelBomba + 1));
+                    btEspecial.LoadTexture(texturaValoresBombas);
                    if (nivelBomba >= 0)
                         btEspecial.setTimeBtEspecial(0);
                     else
@@ -5410,7 +5330,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 }
                 if (timeLine == 1) {
                     localz = 62f;
-                    localy = -17.00f;
+                    localy = -1*((this.h*0.01231f));
                     localx = Fenix.get(indexNave).getPosition().x * -1;
                 }
             } else {
@@ -5520,57 +5440,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
         }
     }
-
-//    private void controleDeTela() {
-//        if (iniciarTelaDeSelecao)
-//            surgirListagenDeFases(recolher);
-//
-//
-//    }
-//
-//    public void surgirListagenDeFases(int recolher) {
-//
-//        switch (recolher) {
-//            case 1:
-//                for (int p = 0; p < bolhas.size(); p++) {
-//                    if (bolhas.get(0).getPosition().z > -0.1f) {
-//                        bolhas.get(p).getPosition().z -= 0.008f;
-//                        btStart.getPosition().z = -0.092f;
-//                    } else {
-//                        iniciarTelaDeSelecao = false;
-//                        btStart.getPosition().z = -0.089f;
-//
-//                    }
-//                }
-//                break;
-//            case 2:
-//                for (int p = 0; p < bolhas.size(); p++) {
-//                    if (bolhas.get(0).getPosition().z < 0.1f) {
-//                        bolhas.get(p).getPosition().z += 0.008f;
-//                        btUpgrade.getPosition().z = -0.092f;
-//
-//                    } else {
-//                        iniciarTelaDeSelecao = false;
-//                        btUpgrade.getPosition().z = -0.089f;
-//
-//                    }
-//                }
-//                break;
-//            case 3:
-//                for (int p = 0; p < bolhas.size(); p++) {
-//                    if (bolhas.get(0).getPosition().z < 0.1f) {
-//                        bolhas.get(p).getPosition().z += 0.008f;
-//                        btoptions.getPosition().z = -0.092f;
-//
-//                    } else {
-//                        iniciarTelaDeSelecao = false;
-//                        btoptions.getPosition().z = -0.089f;
-//
-//                    }
-//                }
-//                break;
-//        }
-//    }
 
 
     private void desenhar(Objeto3d o, String nome, int p) {
@@ -5715,17 +5584,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
             }
         }
-//        } else {
-//
-//            if (o.getTiroNave().get(ppp).getPosition().z > -65 && o.getTiroNave().get(ppp).getPosition().z < -59 &&
-//                    o.getTiroNave().get(ppp).getPosition().x > -1.5f &&
-//                    o.getTiroNave().get(ppp).getPosition().x < 1.5f) {
-//
-//                o.getTiroNave().get(ppp).draw((GL11) gl2);
-//                o.getTiroNave().get(ppp).setImpacto(false);
-//
-//            }
-//        }
+
     }
 
     private void restart() {
@@ -5921,19 +5780,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             this.yr = (int) this.animal.getY() - this.yy;
             this.animal.setY(this.yy + this.yr);
 
-          //   Fenix.get(indexNave).getPosition().z=-61f;
 
-
-//             if(Fenix.get(indexNave).getPosition().z>-61f ){
-//                 float g = 2;
-//                 float a = (0.2f * turbo);
-//                 float xp = (g/a)/0.2f;
-//                 this.animal.setY((int) xp);
-//             }
-//             else if(Fenix.get(indexNave).getPosition().z<-65f ){
-//                    this.yr = (int) this.animal.getY() - this.yy;
-//                  this.animal.setY(this.yy + this.yr);
-//             }
 
 
 
@@ -5981,34 +5828,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     /////////////////////////////////////////////////////
     int tempo = 0;
 
-//    private void luping() {
-//
-//
-//        if (tempo <= 90) {
-//            if (giroy < 0) {
-//                giroy = 358;
-//            }
-//            giroy -= 2;
-//            tempo++;
-//
-//        } else {
-//            tempo = 0;
-//            luping = false;
-//            veloz = veloz * -1;
-//            velox = velox * -1;
-//            distanciaR = 0f;
-//
-//            if (moduloR == 0) {
-//                moduloR = 1;
-//
-//            } else {
-//                moduloR = 0;
-//
-//            }
-//        }
-//
-//
-//    }
+
 
     private void dispararAtaqueEspecial() {
 

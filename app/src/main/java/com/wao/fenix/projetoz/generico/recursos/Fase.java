@@ -44,7 +44,7 @@ public class Fase {
         }
 
 
-       base = 3;
+    //   base = 3;
 
         for (int ii = 0; ii < base; ii++) {
 

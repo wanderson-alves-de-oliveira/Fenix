@@ -104,6 +104,27 @@ public class BDNave {
         return c;
     }
 
+
+    public int buscarIdnaveSelecionada() {
+
+        Cursor cursor = db.rawQuery("SELECT naveselecionada_num FROM upgade_nave LIMIT 1" , null);
+        cursor.moveToNext();
+        int c = (cursor.getInt(0));
+        cursor.close();
+        fechar();
+        return c==0?1:c;
+    }
+
+    public void atualizarIdnaveSelecionada(int id) {
+
+        ContentValues valores = new ContentValues();
+        valores.put("naveselecionada_num", id);
+        db.update( "upgade_nave", valores,null  , null  );
+        fechar();
+    }
+
+
+
     public Nave buscarHabilitado(final int habilitado) {
 
         Cursor cursor = db.rawQuery("SELECT _id,nome,ataque,escudo,puchar,habilitado,bomba,escudo_nivel,dano,defesa,liberado FROM upgade_nave WHERE habilitado = '" + habilitado+"'", null);

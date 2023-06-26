@@ -46,6 +46,7 @@ public class ConectionDB extends SQLiteOpenHelper {
                 "bomba integer," +
                 "escudo_nivel integer," +
                 "dano integer," +
+                "naveselecionada_num integer," +
                 "defesa integer," +
                 "puchar integer); ");
 
