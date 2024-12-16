@@ -393,12 +393,8 @@ public class ConvertBitimap {
 
         Paint pincel = new Paint(  );
 
-//        int r =(int) (175 * Math.random()) + 20;
-//        int g=(int) (105 * Math.random()) + 80;
-//        int b = (int) (175 * Math.random()) + 80;
-//        pincel.setColor( Color.rgb( r,g,b));
 
-        pincel.setColor( Color.argb( 255,255,255,255));
+        pincel.setColor( Color.argb( 156,124,166,211));
 
         Bitmap bitmap = Bitmap.createBitmap(191,171,Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

@@ -4,15 +4,18 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdk 35
     buildToolsVersion "30.0.3"
-
+    android {
+        namespace 'com.wao.fenix'
+    }
     defaultConfig {
         applicationId "com.wao.fenix"
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 3
-        versionName "1.0.0.1"
+        minSdkVersion 26
+        //noinspection EditedTargetSdkVersion,EditedTargetSdkVersion
+        targetSdkVersion 35
+        versionCode 4
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -41,6 +44,7 @@ android {
             version '3.18.1'
         }
     }
+    namespace 'com.wao.fenix'
 }
 
 dependencies {
