@@ -27,7 +27,7 @@ tools:ignore="GoogleAppIndexingWarning" >
 <meta-data android:name="com.google.android.gms.version"
     android:value="@integer/google_play_services_version"/>
 
-<activity android:name="com.wao.fenix.projetoz.index.Tartaruga"
+<activity android:name="com.wao.myx.projetoz.index.Tartaruga"
     android:screenOrientation="portrait"
     android:exported="true">
     <intent-filter>

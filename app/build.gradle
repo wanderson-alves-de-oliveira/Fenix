@@ -7,10 +7,10 @@ android {
     compileSdk 35
     buildToolsVersion "30.0.3"
     android {
-        namespace 'com.wao.fenix'
+        namespace 'com.wao.myx'
     }
     defaultConfig {
-        applicationId "com.wao.fenix"
+        applicationId "com.wao.myx"
         minSdkVersion 26
         //noinspection EditedTargetSdkVersion,EditedTargetSdkVersion
         targetSdkVersion 35
@@ -44,7 +44,7 @@ android {
             version '3.18.1'
         }
     }
-    namespace 'com.wao.fenix'
+    namespace 'com.wao.myx'
 }
 
 dependencies {

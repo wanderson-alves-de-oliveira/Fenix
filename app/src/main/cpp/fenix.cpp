@@ -6,12 +6,12 @@
 //
 // In MainActivity.java:
 //    static {
-//       System.loadLibrary("fenix");
+//       System.loadLibrary("myx");
 //    }
 //
 // Or, in MainActivity.kt:
 //    companion object {
 //      init {
-//         System.loadLibrary("fenix")
+//         System.loadLibrary("myx")
 //      }
 //    }
