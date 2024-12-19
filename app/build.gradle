@@ -5,13 +5,12 @@ plugins {
 
 android {
     compileSdk 35
-    buildToolsVersion "30.0.3"
-    android {
-        namespace 'com.wao.myx'
-    }
+
+    namespace 'com.wao.myx'
+
     defaultConfig {
         applicationId "com.wao.myx"
-        minSdkVersion 26
+        minSdkVersion 21
         //noinspection EditedTargetSdkVersion,EditedTargetSdkVersion
         targetSdkVersion 35
         versionCode 30
