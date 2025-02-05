@@ -42,6 +42,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -2343,6 +2345,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
         } else {
             nivelNave.setAtaque(nivelNave.getAtaque() > 0 ? nivelNave.getAtaque() - 1 : 0);
+            nivelNave.setEscudoNivel(nivelNave.getEscudoNivel() > 0 ? nivelNave.getEscudoNivel() - 1 : 0);
+            nivelNave.setDano(nivelNave.getDano() > 0 ? nivelNave.getDano() - 1 : 0);
+            nivelNave.setDefesa(nivelNave.getDefesa() > 0 ? nivelNave.getDefesa() - 1 : 0);
 
             if (nivelNave.getAtaque() >= 0) {
                 BDNave BDN = new BDNave(context);
@@ -3663,7 +3668,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             }
             BDRecompensa BDR = new BDRecompensa(context);
             recompensa = BDR.buscar(1);
-            recompensa.setValor(recompensa.getValor() + resgateOuro);
+            recompensa.setValor(recompensa.getValor() + (resgateOuro*20));
             new BDRecompensa(context).atualizarRecompensa(recompensa);
 
             resgateOuro = 0;
@@ -5162,7 +5167,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
         } else {
 
-            float totaly = ((this.displayMetrics.heightPixels / 2) / this.displayMetrics.scaledDensity) * 0.0001f;
+            float totaly = (((float) this.displayMetrics.heightPixels / 2) / this.displayMetrics.scaledDensity) * 0.0001f;
             gl.glLoadIdentity();
 
             if (carga < 14) {
@@ -5179,9 +5184,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 tempoDeEspera--;
 
 
-            } else {
-
-
             }
             try {
 
@@ -5192,7 +5194,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 ///  carga++;
 
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -5323,7 +5324,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
 
         } catch (Exception e) {
-            Log.e("TC", e.getMessage());
         }
     }
 
@@ -5396,12 +5396,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
             invulneravel = false;
             //    ceu.setPosition(new Vetor3(0, -16, -65f));
 
-            for (int i = 0; i < vaiPraCena.length; i++) {
-                vaiPraCena[i] = false;
-            }
-            for (int i = 0; i < ativarBoss.length; i++) {
-                ativarBoss[i] = false;
-            }
+            Arrays.fill(vaiPraCena, false);
+            Arrays.fill(ativarBoss, false);
         }
 
     }
@@ -5419,23 +5415,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public boolean calculoarColisao(Objeto3d obj, Objeto3d obj2) {
-        boolean vai = false;
-        float d = obj.testImpacto(obj2);
-
-        if (d <= 1) {
-            colidiu = true;
-            veloy = (veloy) * -1;
-            velox = (velox) * -1;
-            veloz = (veloz) * -1;
-
-        } else {
-
-        }
-        return vai;
-        /////////////////////////////////
-    }
 
     //FAZ ATUALIZAÇÕES NA ESTRUTURA DOS OBJETOS
     @Override
@@ -5458,7 +5437,6 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void validarToque() {
 
 
@@ -5754,10 +5732,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 Esplosao esp = filtro(o.getNomeRef(), objeto3ds.indexOf(o));
                 o.setAtirando(false);
                 if (o.getTiroTime() != null) {
-                    for (int i = 0; i < o.getTiroTime().length; i++) {
-
-                        o.getTiroTime()[i] = 0;
-                    }
+                    Arrays.fill(o.getTiroTime(), 0);
                 }
 
                 if (o.getTiroNave() != null) {
@@ -5775,18 +5750,13 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 o.setAbatido(false);
             }
             horaDoBoss = false;
-            for (int i = 0; i < vaiPraCena.length; i++) {
-                vaiPraCena[i] = false;
-            }
-            for (int i = 0; i < ativarBoss.length; i++) {
-                ativarBoss[i] = false;
-            }
+            Arrays.fill(vaiPraCena, false);
+            Arrays.fill(ativarBoss, false);
         }
     }
 
 
     ///GERENCIA O TOQUE NA TELA
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onTouch(View view, MotionEvent event) {
 
@@ -5806,7 +5776,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 limitVelocidade = 0;
                 limitVelocidadeBoo = false;
                 if (event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
-                    if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
+                    if ((int) event.getX() > posX && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
                         dispararAtaqueEspecial();
 
                     } else {
@@ -5816,7 +5786,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 if (event.getPointerCount() > 1) {
                     if (event.getPointerId(1) == 1) {
-                        if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
+                        if ((int) event.getX(event.getPointerId(1)) > posX && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 70 && (int) event.getY(event.getPointerId(0)) < posY * 90) {
                             dispararAtaqueEspecial();
 
                         } else {
@@ -5831,7 +5801,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 if (this.perdeu == false) {
 
-                    if ((int) event.getX() > posX * 1 && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
+                    if ((int) event.getX() > posX && (int) event.getX() < posX * 20 && (int) event.getY(event.getPointerId(0)) > 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
                         tempo = 0;
 
                         luping = true;
@@ -5848,7 +5818,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                         //    quadroInserirPalavra.setPosition(new Vetor3(0f, 2f, 0f));
 
 
-                    } else if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 15 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
+                    } else if ((int) event.getX() > 0 && (int) event.getX() < posX * 15 && (int) event.getY(event.getPointerId(0)) > posY * 10 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
 
                         if (this.pause) {
                             this.pause = false;
@@ -5858,12 +5828,12 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                         }
 
-                    } else if (this.pause == false && (int) event.getX() > this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
+                    } else if (!this.pause && (int) event.getX() > this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
 
                         this.pause = true;
 
 
-                    } else if (this.pause == false && (int) event.getX() > this.wTela * 0 && (int) event.getX() < this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
+                    } else if (!this.pause && (int) event.getX() > this.wTela * 0 && (int) event.getX() < this.wTela * 0.5 && (int) event.getY(event.getPointerId(0)) > posY * 50) {
 
                         this.parar();
 
@@ -5871,22 +5841,19 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                     } else if ((int) event.getX() > posX * 85 && (int) event.getX() < posX * 100 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 20) {
 
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            retornarQuadro = true;
-                        }
+                        retornarQuadro = true;
                     }
-                    if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 90) {
+                    if (!inicio && ((int) event.getX() > 0) && ((int) event.getY(event.getPointerId(0)) > (posY * 90))) {
                         this.inicio = true;
                         try {
                             this.estatusDojogo(2);
                         } catch (IOException e1) {
-                            e1.printStackTrace();
                         }
 //                        this.animal.setY((int) (this.h * 0.5));
 //                        this.animal.setX((int) (this.w * 0.5));
 
                     }
-                    if (inicio == false && (int) event.getX() > posX * 0 && (int) event.getY(event.getPointerId(0)) > posY * 70
+                    if (!inicio && (int) event.getX() > 0 && (int) event.getY(event.getPointerId(0)) > posY * 70
                             && (int) event.getY(event.getPointerId(0)) < posY * 90) {
                         this.inicio = true;
                         // this.estatusDojogo( 0 );
@@ -5914,9 +5881,9 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 }
 
-                if ((int) event.getX() > posX * 0 && (int) event.getX() < posX * 35 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
+                if ((int) event.getX() > 0 && (int) event.getX() < posX * 35 && (int) event.getY(event.getPointerId(0)) > 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
                     rotatef[0] = 90;
-                } else if ((int) event.getX() > posX * 65 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > posY * 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
+                } else if ((int) event.getX() > posX * 65 && (int) event.getX() < posX * 120 && (int) event.getY(event.getPointerId(0)) > 0 && (int) event.getY(event.getPointerId(0)) < posY * 10) {
                     rotatef[0] = 30;
 
                 }
@@ -5924,7 +5891,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
                 return true;
 
             } else if (event.getAction() == MotionEvent.ACTION_MOVE && this.pause) {
-                if (luping == false && event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
+                if (!luping && event.getPointerCount() == 1 && event.getPointerId(0) == 0) {
 //                    this.pontoDoEixoYFimm = event.getY();
 //                    this.pontoDoEixoXFimm = event.getX();
                     this.moverPersonagem(event);
@@ -5933,10 +5900,8 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 
                 if (event.getPointerCount() > 1) {
                     if (event.getPointerId(1) == 1) {
-                        if ((int) event.getX(event.getPointerId(1)) > posX * 1 && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(1)) > posY * 70 && (int) event.getY(event.getPointerId(1)) < posY * 90) {
+                        if ((int) event.getX(event.getPointerId(1)) > posX && (int) event.getX(event.getPointerId(1)) < posX * 20 && (int) event.getY(event.getPointerId(1)) > posY * 70 && (int) event.getY(event.getPointerId(1)) < posY * 90) {
                             dispararAtaqueEspecial();
-
-                        } else {
 
                         }
                     }
@@ -5964,7 +5929,7 @@ public class TartarugaCorrida extends AppCompatActivity implements GLSurfaceView
 //                this.pontoDoEixoXFimm = 0;
 //                this.pontoDoEixoYInicio = 0;
 //                this.pontoDoEixoXInicio = 0;
-                if (perdeu == false && this.pause == false && (int) event.getX() > this.w * 0 && (int) event.getX() < this.w * 0.4 && (int) event.getY(event.getPointerId(0)) > posY * 50 && (int) event.getY(event.getPointerId(0)) < posY * 60) {
+                if (!perdeu && !this.pause && (int) event.getX() > this.w * 0 && (int) event.getX() < this.w * 0.4 && (int) event.getY(event.getPointerId(0)) > posY * 50 && (int) event.getY(event.getPointerId(0)) < posY * 60) {
 
                     this.parar();
 

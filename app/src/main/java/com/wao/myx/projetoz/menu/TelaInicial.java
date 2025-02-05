@@ -1320,7 +1320,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
                     nivelImaT.draw((GL11) gl2);
                     valorAdiquiridoObj.draw((GL11) gl2);
-                    vedeorecompensa.draw((GL11) gl2);
+                //    vedeorecompensa.draw((GL11) gl2);
                     nivelAtaqueP.get(nivelAtaqueR < 4 ? 5 : 4).draw((GL11) gl2);
                     nivelBombaP.get(nivelBombaR == 4 ? 1 : 0).draw((GL11) gl2);
 
@@ -1352,7 +1352,7 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
 
 
                     valorAdiquiridoObj.draw((GL11) gl2);
-                    vedeorecompensa.draw((GL11) gl2);
+                  //  vedeorecompensa.draw((GL11) gl2);
                     nivelAtaqueP.get(naveaux.getDano() - 1).draw((GL11) gl2);
 
                     Fenixt.get(indexNave).draw((GL11) gl2);
@@ -2224,9 +2224,9 @@ public class TelaInicial extends AppCompatActivity implements GLSurfaceView.Rend
                 }
                 break;
             case 0:
-                recompensa.setValor(recompensa.getValor() + 450);
-                new BDRecompensa(context).atualizarRecompensa(recompensa);
-                carregouValores = false;
+//                recompensa.setValor(recompensa.getValor() + 450);
+//                new BDRecompensa(context).atualizarRecompensa(recompensa);
+//                carregouValores = false;
 
                 break;
 
