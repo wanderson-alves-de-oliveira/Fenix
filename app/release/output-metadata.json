@@ -4,17 +4,18 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.wao.fenix",
+  "applicationId": "com.wao.myx",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 3,
-      "versionName": "1.0.0.1",
+      "versionCode": 31,
+      "versionName": "1.0.0",
       "outputFile": "app-release.apk"
     }
   ],
-  "elementType": "File"
+  "elementType": "File",
+  "minSdkVersionForDexing": 21
 }
